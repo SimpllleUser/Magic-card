@@ -15,7 +15,6 @@ export const useModalStore = defineStore('modal', () => {
   };
 
   const show = (key: string) => {
-    console.log(modalList.value[key]);
     modalList.value[key]?.show();
   };
   const hide = (key: string) => modalList.value[key]?.hide();
