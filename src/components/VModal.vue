@@ -46,7 +46,6 @@
   const options = computed(() => Object.fromEntries(Object.entries(props).filter(([key]) => key !== EXCESS_KEY_PROP)));
 
   const show = () => {
-    console.log('show');
     state.value = true;
   };
   const hide = () => {

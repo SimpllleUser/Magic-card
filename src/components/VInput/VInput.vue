@@ -1,37 +1,29 @@
 <script setup lang="ts">
-  import { computed, useSlots } from 'vue';
+  import { defineProps, defineEmits, ref, watchEffect, useSlots } from 'vue';
   import { QInputProps } from 'quasar';
-  import { omit } from 'lodash';
-  import { useVModel } from '@vueuse/core';
-  import { IForm } from 'components/VInput/types';
+  import { NumberOrString } from 'boot/types';
 
-  type ModelValue = Pick<QInputProps, 'modelValue'>;
+  const props = defineProps<QInputProps>();
 
-  interface Emits {
-    (event: '', payload: ModelValue): void;
-  }
+  const emit = defineEmits<{ (event: 'update:modelValue', payload: NumberOrString): void }>();
 
-  const props = defineProps<QInputProps & { form: IForm }>();
+  const internalValue = ref(props.modelValue);
 
-  const emit = defineEmits<Emits>();
+  watchEffect(() => {
+    internalValue.value = props.modelValue;
+  });
 
-  const slotsKeys = ['default', 'prepend', 'append', 'before', 'after', 'label', 'error', 'hint', 'counter', 'loading'];
-  const slots = useSlots();
-  const activeSlots = computed(() => slotsKeys.filter((slot) => Object.keys(slots).includes(slot)));
+  const onInput = (value: NumberOrString) => {
+    emit('update:modelValue', value);
+  };
 
-  const data = useVModel(props, 'modelValue', emit);
-
-  const params = omit(props, 'modelValue');
+  const activeSlots = useSlots();
 </script>
 
 <template>
-  <div>
-    <q-input v-model="data" v-bind="params">
-      <template v-for="slot in activeSlots" :key="slot" #[slot]="data">
-        <slot :name="slot" :props="data"></slot>
-      </template>
-    </q-input>
-  </div>
+  <q-input v-model="internalValue" v-bind="props" @input="onInput" v-on="$attrs">
+    <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
+      <slot :name="slotName"></slot>
+    </template>
+  </q-input>
 </template>
-
-<style lang="scss" scoped></style>

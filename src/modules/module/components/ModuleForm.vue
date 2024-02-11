@@ -3,13 +3,13 @@
   import VInput from 'components/VInput/VInput.vue';
   import { ref } from 'vue';
 
-  const test = ref('');
+  const name = ref('');
 </script>
 
 <template>
   <v-modal id="form-module" title="Module form">
     <div>
-      <VInput v-model="test" />
+      <VInput v-model="name" />
     </div>
   </v-modal>
 </template>
