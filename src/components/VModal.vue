@@ -1,40 +1,9 @@
 <script lang="ts" setup>
   import { computed, onMounted, ref } from 'vue';
   import { useModalStore } from 'stores/modal';
+  import { QDialogProps } from 'quasar';
 
-  interface QuasarDialogProps {
-    modelValue: boolean;
-    title?: string;
-    message?: string;
-    cancel?: string;
-    persistent?: boolean;
-    ok?: string;
-    preventClose?: boolean;
-    stackButtons?: boolean;
-    separator?: string;
-    formProps?: Record<string, any>;
-    position?: 'top' | 'right' | 'bottom' | 'left';
-    noBackdropDismiss?: boolean;
-    noEscDismiss?: boolean;
-    noRefocus?: boolean;
-    autoClose?: boolean;
-    minimized?: boolean;
-    maximized?: boolean;
-    fullWidth?: boolean;
-    fullHeight?: boolean;
-    square?: boolean;
-    flat?: boolean;
-    bordered?: boolean;
-    elevated?: boolean;
-    preventDefaults?: boolean;
-    noRouting?: boolean;
-    noRouteDismiss?: boolean;
-    persistentPlaceholder?: boolean;
-    seamless?: boolean;
-    [key: string]: any; // Для обработки дополнительных свойств
-  }
-
-  interface Props extends QuasarDialogProps {
+  interface Props extends QDialogProps {
     id: string;
   }
 

@@ -1,27 +1,33 @@
 <script setup lang="ts">
-  import { defineProps, defineEmits, ref, watchEffect, useSlots } from 'vue';
+  import { defineProps, defineEmits, ref, watchEffect, useSlots, computed } from 'vue';
   import { QInputProps } from 'quasar';
+  import { omit } from 'lodash';
   import { NumberOrString } from 'boot/types';
+  import { EXCESS_PROPS } from 'components/VInput/constants';
 
-  const props = defineProps<QInputProps>();
+  const props = defineProps<QInputProps & { modelValue: any }>();
 
-  const emit = defineEmits<{ (event: 'update:modelValue', payload: NumberOrString): void }>();
+  const internalProps = omit(props, EXCESS_PROPS);
 
-  const internalValue = ref(props.modelValue);
+  const emit = defineEmits<{ (event: 'update:modelValue', payload: any): void }>();
+
+  const internalValue = ref(props.modelValue.value);
+
+  const activeSlots = useSlots();
+
+  const internalRules = computed(() => props.modelValue?.rules || []);
 
   watchEffect(() => {
-    internalValue.value = props.modelValue;
+    internalValue.value = props.modelValue.value;
   });
 
   const onInput = (value: NumberOrString) => {
-    emit('update:modelValue', value);
+    emit('update:modelValue', { ...props.modelValue, value });
   };
-
-  const activeSlots = useSlots();
 </script>
 
 <template>
-  <q-input v-model="internalValue" v-bind="props" @input="onInput" v-on="$attrs">
+  <q-input v-model="internalValue" @input="onInput" :bind="internalProps" :rules="internalRules" v-on="$attrs">
     <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
       <slot :name="slotName"></slot>
     </template>
