@@ -6,3 +6,4 @@ export interface Todo {
 export interface Meta {
   totalCount: number;
 }
+
