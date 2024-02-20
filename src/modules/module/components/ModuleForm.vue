@@ -4,6 +4,7 @@
   import VInput from 'components/VInput/VInput.vue';
 
   import validationRules from 'components/VForm/validationRules';
+  import { useForm } from 'components/VForm/useForm';
 
   const { rules } = validationRules;
 
@@ -29,17 +30,18 @@
         : () => true
     );
 
-  const formData = ref({
+  const { formData, onSubmit, onReset } = useForm({
     name: {
       value: 'Some name',
-      rules: computed(() => getRules(['length: 10']))
+      rules: ['length: 10']
     }
   });
+
   const onSave = () => {
-    canShowError.value = true;
+    onSubmit();
   };
   const onsReset = () => {
-    canShowError.value = false;
+    onReset();
   };
 </script>
 

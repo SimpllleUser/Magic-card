@@ -28,16 +28,18 @@
   });
 
   const onInput = (value: NumberOrString) => {
+    console.log({ ...props.modelValue, value });
     emit('update:modelValue', { ...props.modelValue, value });
   };
 </script>
 
 <template>
+  {{ props.modelValue.value }}
   <q-input
     v-model="internalValue"
+    v-on="$attrs"
     @input="onInput"
     :bind="internalProps"
-    v-on="$attrs"
     bottom-slots
     :error-message="inputError.internalErrors"
     :error="inputError.existError"
