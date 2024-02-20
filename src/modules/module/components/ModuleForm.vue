@@ -2,11 +2,8 @@
   import { computed, ref } from 'vue';
   import VModal from 'components/VModal.vue';
   import VInput from 'components/VInput/VInput.vue';
-  import { useValidationInput } from 'components/VInput/useValidationInput';
 
   import validationRules from 'components/VForm/validationRules';
-
-  const validationInput = useValidationInput([]);
 
   const { rules } = validationRules;
 
@@ -15,13 +12,27 @@
   const select = ref(3);
   const canShowError = ref(false);
 
+  const getRuleArguments = (ruleKey: string): any => {
+    const [rule, paramsInString] = ruleKey?.split(':') || [];
+    const paramsInArray = paramsInString?.split(',') || [];
+    return { ruleKey: rule, paramsInArray };
+  };
+
   const getRules = (keys: Array<string>): Array<any> =>
-    keys.map((key) => (canShowError.value ? rules[key] : () => true));
+    keys.map((key) =>
+      canShowError.value
+        ? (value: any) => {
+            const { ruleKey, paramsInArray } = getRuleArguments(key);
+            const params = [value, ...paramsInArray];
+            return rules[ruleKey](...params);
+          }
+        : () => true
+    );
 
   const formData = ref({
     name: {
       value: 'Some name',
-      rules: computed(() => getRules(['required', 'alpha_spaces']))
+      rules: computed(() => getRules(['length: 10']))
     }
   });
   const onSave = () => {

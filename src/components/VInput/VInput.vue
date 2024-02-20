@@ -4,6 +4,7 @@
   import { omit } from 'lodash';
   import { NumberOrString } from 'boot/types';
   import { EXCESS_PROPS } from 'components/VInput/constants';
+  import { useInputErrors } from 'components/VInput/useInputErrors';
 
   const props = defineProps<QInputProps & { modelValue: any }>();
 
@@ -15,16 +16,12 @@
 
   const activeSlots = useSlots();
 
-  const isString = (value: unknown): boolean => typeof value === 'string';
-
-  const internalErrors = computed(
-    () =>
-      props.modelValue?.rules
-        .map((rule) => rule(internalValue.value))
-        .filter(isString)
-        .at(0) || ''
+  const inputError = computed(() =>
+    useInputErrors({
+      rules: props.modelValue?.rules,
+      value: internalValue
+    })
   );
-  const existError = computed(() => Boolean(internalErrors.value));
 
   watchEffect(() => {
     internalValue.value = props.modelValue?.value || '';
@@ -42,8 +39,8 @@
     :bind="internalProps"
     v-on="$attrs"
     bottom-slots
-    :error-message="internalErrors"
-    :error="existError"
+    :error-message="inputError.internalErrors"
+    :error="inputError.existError"
   >
     <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
       <slot :name="slotName"></slot>

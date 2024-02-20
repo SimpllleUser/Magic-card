@@ -24,8 +24,9 @@ export default {
       return new Date(value) < new Date(referenceDate) || `Дата должна быть до ${referenceDate}`;
     },
 
-    between(value: number, min: number, max: number): boolean | string {
-      return (value >= min && value <= max) || `Значение должно быть между ${min} и ${max}`;
+    between(value: string, min: string, max: string): boolean | string {
+      const actualValue = Number(value);
+      return (actualValue >= Number(min) && actualValue <= Number(max)) || `Значение должно быть между ${min} и ${max}`;
     },
 
     confirmed(value: string, confirmedValue: string): boolean | string {
@@ -43,9 +44,9 @@ export default {
       );
     },
 
-    date_format(value: string, format: string): boolean | string {
-      return moment(value, format, true).isValid() || `Неверный формат даты. Ожидается формат ${format}`;
-    },
+    // date_format(value: string, format: string): boolean | string {
+    //   return moment(value, format, true).isValid() || `Неверный формат даты. Ожидается формат ${format}`;
+    // },
 
     decimal(value: string): boolean | string {
       return /^\d+(\.\d{1,2})?$/.test(value) || 'Неверный формат числа';
@@ -87,8 +88,8 @@ export default {
       return value !== comparisonValue || 'Значение совпадает с запрещенным';
     },
 
-    length(value: string, length: number): boolean | string {
-      return value.length === length || `Длина должна быть равной ${length}`;
+    length(value: string, length: string | number): boolean | string {
+      return value.length === Number(length) || `Длина должна быть равной ${length}`;
     },
 
     max(value: number, maxValue: number): boolean | string {
