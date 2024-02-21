@@ -5,7 +5,7 @@ export function useInputErrors({ rules, value }: { rules: Array<unknown>; value:
   const internalErrors = computed(
     () =>
       rules
-        .map((rule) => rule(value.value))
+        .map((rule) => rule(value))
         .filter(isString)
         .at(0) || ''
   );

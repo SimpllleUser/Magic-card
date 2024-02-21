@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { mapValues } from 'lodash';
 import validationRules from 'components/VForm/validationRules';
 
@@ -13,6 +13,8 @@ const getRuleArguments = (ruleKey: string): any => {
 };
 
 export function useForm(initialFormConfig: Record<string, InputItem>) {
+  const canShowError = ref(false);
+
   const getRules = (keys: Array<string>): Array<any> =>
     keys.map((key) =>
       canShowError.value
@@ -23,8 +25,6 @@ export function useForm(initialFormConfig: Record<string, InputItem>) {
           }
         : () => true
     );
-
-  const canShowError = ref(false);
 
   const initedData = mapValues(initialFormConfig, (inputParams: InputItem) => ({
     value: ref(inputParams.value),
@@ -42,6 +42,8 @@ export function useForm(initialFormConfig: Record<string, InputItem>) {
     canShowError.value = false;
     action && action();
   };
+
+  /// PUT COMPUTED ERRORS IN FORM AND USE FGOR THIS SEPRATED COMPOSABLE
 
   return { formData, onSubmit, onReset };
 }

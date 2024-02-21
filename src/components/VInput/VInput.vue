@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { defineProps, defineEmits, ref, watchEffect, useSlots, computed } from 'vue';
+  import { defineProps, defineEmits, ref, watchEffect, useSlots, computed, watch } from 'vue';
   import { QInputProps } from 'quasar';
   import { omit } from 'lodash';
   import { NumberOrString } from 'boot/types';
@@ -19,26 +19,28 @@
   const inputError = computed(() =>
     useInputErrors({
       rules: props.modelValue?.rules,
-      value: internalValue
+      value: props.modelValue?.value
     })
   );
 
-  watchEffect(() => {
-    internalValue.value = props.modelValue?.value || '';
+  watch(internalValue, () => {
+    emit('update:modelValue', { ...props.modelValue, value: internalValue.value });
   });
 
-  const onInput = (value: NumberOrString) => {
-    console.log({ ...props.modelValue, value });
-    emit('update:modelValue', { ...props.modelValue, value });
-  };
+  // watchEffect(() => {
+  //   internalValue.value = props.modelValue?.value || '';
+  // });
+
+  // const onInput = (value: NumberOrString) => {
+  //   emit('update:modelValue', { ...props.modelValue, value });
+  // };
 </script>
 
 <template>
-  {{ props.modelValue.value }}
+  {{ internalValue }}
   <q-input
     v-model="internalValue"
     v-on="$attrs"
-    @input="onInput"
     :bind="internalProps"
     bottom-slots
     :error-message="inputError.internalErrors"
