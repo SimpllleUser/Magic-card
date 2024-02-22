@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { InputTypes } from 'components/types';
+  import { InputTypes } from 'components/VForm/types';
   import { ref, computed, defineAsyncComponent } from 'vue';
 
   interface Props {
@@ -10,9 +10,9 @@
   const props = defineProps<Props>();
 
   const component = {
-    'v-input': defineAsyncComponent(() => import('components/VInput/VInput.vue')),
-    'v-checkbox': defineAsyncComponent(() => import('components/VInput/VCheckbox.vue')),
-    'v-select': defineAsyncComponent(() => import('components/VInput/VSelect.vue'))
+    'v-input': defineAsyncComponent(() => import('components/VForm/VInput/VInput.vue')),
+    'v-checkbox': defineAsyncComponent(() => import('components/VForm/VInput/VCheckbox.vue')),
+    'v-select': defineAsyncComponent(() => import('components/VForm/VInput/VSelect.vue'))
   };
 
   const activeComponent = computed(() => component[`v-${props.type}`]);

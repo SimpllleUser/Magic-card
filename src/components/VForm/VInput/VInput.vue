@@ -2,16 +2,16 @@
   import { defineProps, defineEmits, ref, useSlots, watch } from 'vue';
   import { QInputProps } from 'quasar';
   import { omit } from 'lodash';
-  import { EXCESS_PROPS } from 'components/VInput/constants';
-  import { FormInputItem } from 'components/types';
+  import { EXCESS_PROPS } from 'components/VForm/VInput/constants';
+  import { FormInputItem } from 'components/VForm/types';
 
-  const props = defineProps<{ modelValue: FormInputItem } & QInputProps>();
+  const props = defineProps<QInputProps & { modelValue: FormInputItem }>();
 
   const internalProps = omit(props, EXCESS_PROPS);
 
-  const emit = defineEmits<{ (event: 'update:modelValue', payload: unknown): void }>();
+  const emit = defineEmits<{ (event: 'update:modelValue', payload: FormInputItem): void }>();
 
-  const internalValue = ref(props.modelValue?.value || '');
+  const internalValue = ref(props.modelValue.value);
 
   const activeSlots = useSlots();
 
