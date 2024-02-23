@@ -1,5 +1,5 @@
-import { ref, watchEffect } from 'vue';
-import { mapValues } from 'lodash';
+import { computed, ref, watchEffect } from 'vue';
+import { cloneDeep, mapValues } from 'lodash';
 import { useValidation } from 'components/VForm/composables/useValidation';
 import { FormItemConfig, InputItemConfig } from '../types';
 import { CallbackFunction } from 'boot/types';
@@ -36,8 +36,11 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>) {
 
   const onReset = (action?: CallbackFunction) => {
     canShowError.value = false;
+    formData.value = cloneDeep(initialFormConfig);
     action && action();
   };
 
-  return { formData, onSubmit, onReset };
+  const formDataValue = computed(() => mapValues(formData.value, (item) => item.value));
+
+  return { formData, onSubmit, onReset, formDataValue };
 }

@@ -1,33 +1,34 @@
 <script setup lang="ts">
-  import { defineProps, defineEmits, ref, useSlots, watch } from 'vue';
   import { QInputProps } from 'quasar';
-  import { omit } from 'lodash';
+  import { defineProps, defineEmits, ref, useSlots, watch } from 'vue';
+  import { useVModel } from '@vueuse/core';
   import { EXCESS_PROPS } from 'components/VForm/VInput/constants';
-  import { FormInputItem } from 'components/VForm/types';
+  import { omit } from 'lodash';
+  import { FormCheckItem } from 'components/VForm/types';
 
-  const props = defineProps<QInputProps & { modelValue: FormInputItem }>();
+  const props = defineProps<QInputProps & { modelValue: FormCheckItem }>();
 
   const internalProps = omit(props, EXCESS_PROPS);
 
-  const emit = defineEmits<{ (event: 'update:modelValue', payload: FormInputItem): void }>();
-
-  const internalValue = ref(props.modelValue.value);
+  const emit = defineEmits<{ (event: 'update:modelValue', payload: FormCheckItem): void }>();
+  const data = useVModel(props, 'modelValue', emit);
 
   const activeSlots = useSlots();
 
-  watch(internalValue, () => {
-    emit('update:modelValue', { ...props.modelValue, value: internalValue.value });
-  });
+  const onChangeInput = () => {
+    emit('update:modelValue', { ...props.modelValue, value: data.value.value });
+  };
 </script>
 
 <template>
   <q-input
-    v-model="internalValue"
+    v-model="data.value"
     v-on="$attrs"
+    @update:model-value="onChangeInput"
     :bind="internalProps"
+    bottom-slots
     :error="Boolean(modelValue.error)"
     :error-message="modelValue.error"
-    bottom-slots
   >
     <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
       <slot :name="slotName"></slot>

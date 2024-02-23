@@ -6,6 +6,7 @@ export interface IWordCard {
 
 export interface IModule {
   id: string;
-  name: string;
-  word: Array<IWordCard>;
+  title: string;
+  description: string;
+  // word: Array<IWordCard>;
 }

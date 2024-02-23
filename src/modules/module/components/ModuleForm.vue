@@ -4,20 +4,26 @@
 
   import { useForm } from 'components/VForm/composables/useForm';
   import { ValidationRule } from 'components/VForm/types';
+  import { useModulesStore } from 'src/modules/module/store/modules';
 
-  const { formData, onSubmit, onReset } = useForm({
+  const moduleStore = useModulesStore();
+
+  const initialData = {
     title: {
-      value: '',
+      value: 'TITLE',
       rules: [ValidationRule.Required]
     },
     description: {
-      value: '',
+      value: 'DESCRIPTION',
       rules: [ValidationRule.Required]
     }
-  });
+  };
+
+  const { formData, onSubmit, onReset, formDataValue } = useForm({ ...initialData });
 
   const onSave = () => {
     onSubmit();
+    moduleStore.create(formDataValue.value);
   };
   const onsReset = () => {
     onReset();
@@ -27,8 +33,8 @@
 <template>
   <v-modal id="form-module" title="Module form">
     <div>
-      <VInput v-model="formData.name" />
-      <VInput v-model="formData.name" type="textarea" />
+      <VInput v-model="formData.title" />
+      <VInput v-model="formData.description" type="textarea" />
       <q-btn @click="onSave">Save</q-btn>
       <q-btn @click="onsReset">Reset</q-btn>
     </div>
