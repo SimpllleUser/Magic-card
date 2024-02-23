@@ -41,6 +41,7 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>) {
   };
 
   const formDataValue = computed(() => mapValues(formData.value, (item) => item.value));
+  const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
 
-  return { formData, onSubmit, onReset, formDataValue };
+  return { formData, onSubmit, onReset, formDataValue, isValid };
 }

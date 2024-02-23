@@ -24,7 +24,7 @@
 <template>
   <q-checkbox
     v-model="data.value"
-    v-bind="internalProps"
+    :bind="internalProps"
     v-on="$attrs"
     @update:model-value="onChangeInput"
     :error="Boolean(modelValue.error)"

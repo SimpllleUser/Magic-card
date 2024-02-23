@@ -10,19 +10,20 @@
 
   const initialData = {
     title: {
-      value: 'TITLE',
+      value: '',
       rules: [ValidationRule.Required]
     },
     description: {
-      value: 'DESCRIPTION',
+      value: '',
       rules: [ValidationRule.Required]
     }
   };
 
-  const { formData, onSubmit, onReset, formDataValue } = useForm({ ...initialData });
+  const { formData, onSubmit, onReset, formDataValue, isValid } = useForm({ ...initialData });
 
   const onSave = (action: CallableFunction) => {
     onSubmit();
+    if (!isValid.value) return;
     moduleStore.create(formDataValue.value);
     action();
   };
@@ -37,7 +38,7 @@
       <div>
         <VInput v-model="formData.title" />
         <VInput v-model="formData.description" type="textarea" />
-        <q-btn @click="onSave(hide)">Save</q-btn>
+        <q-btn @click="onSave(hide)" :disable="!isValid">Save</q-btn>
         <q-btn @click="onsReset">Reset</q-btn>
       </div>
     </template>

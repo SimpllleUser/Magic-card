@@ -16,7 +16,8 @@
   const activeSlots = useSlots();
 
   const onChangeInput = () => {
-    emit('update:modelValue', { ...props.modelValue, value: data.value.value });
+    console.log(data.value);
+    emit('update:modelValue', data.value);
   };
 </script>
 
@@ -25,7 +26,7 @@
     v-model="data.value"
     v-on="$attrs"
     @update:model-value="onChangeInput"
-    v-bind="internalProps"
+    :bind="internalProps"
     bottom-slots
     :error="Boolean(modelValue.error)"
     :error-message="modelValue.error"

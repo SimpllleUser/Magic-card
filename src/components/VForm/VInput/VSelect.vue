@@ -26,7 +26,7 @@
     v-model="data.value"
     v-on="$attrs"
     @update:model-value="onChangeInput"
-    v-bind="internalProps"
+    :bind="internalProps"
     :error="Boolean(modelValue.error)"
     :error-message="modelValue.error"
     :options="modelValue.options"
