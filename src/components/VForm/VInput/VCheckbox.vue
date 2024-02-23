@@ -4,6 +4,7 @@
   import { EXCESS_PROPS } from 'components/VForm/VInput/constants';
   import { omit } from 'lodash';
   import { FormCheckItem } from 'components/VForm/types';
+  import { useVModel } from '@vueuse/core';
 
   const props = defineProps<QCheckboxProps & { modelValue: FormCheckItem }>();
 
@@ -11,20 +12,21 @@
 
   const emit = defineEmits<{ (event: 'update:modelValue', payload: FormCheckItem): void }>();
 
-  const internalValue = ref(props.modelValue.value);
+  const data = useVModel(props, 'modelValue', emit);
 
   const activeSlots = useSlots();
 
-  watch(internalValue, () => {
-    emit('update:modelValue', { ...props.modelValue, value: internalValue.value });
-  });
+  const onChangeInput = () => {
+    emit('update:modelValue', { ...props.modelValue, value: data.value.value });
+  };
 </script>
 
 <template>
   <q-checkbox
-    v-model="internalValue"
-    :bind="internalProps"
+    v-model="data.value"
+    v-bind="internalProps"
     v-on="$attrs"
+    @update:model-value="onChangeInput"
     :error="Boolean(modelValue.error)"
     :error-message="modelValue.error"
   >

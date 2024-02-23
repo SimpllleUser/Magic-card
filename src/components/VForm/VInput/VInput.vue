@@ -2,8 +2,8 @@
   import { QInputProps } from 'quasar';
   import { defineProps, defineEmits, ref, useSlots, watch } from 'vue';
   import { useVModel } from '@vueuse/core';
-  import { EXCESS_PROPS } from 'components/VForm/VInput/constants';
   import { omit } from 'lodash';
+  import { EXCESS_PROPS } from 'components/VForm/VInput/constants';
   import { FormCheckItem } from 'components/VForm/types';
 
   const props = defineProps<QInputProps & { modelValue: FormCheckItem }>();
@@ -25,7 +25,7 @@
     v-model="data.value"
     v-on="$attrs"
     @update:model-value="onChangeInput"
-    :bind="internalProps"
+    v-bind="internalProps"
     bottom-slots
     :error="Boolean(modelValue.error)"
     :error-message="modelValue.error"
