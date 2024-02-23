@@ -21,9 +21,10 @@
 
   const { formData, onSubmit, onReset, formDataValue } = useForm({ ...initialData });
 
-  const onSave = () => {
+  const onSave = (action: CallableFunction) => {
     onSubmit();
     moduleStore.create(formDataValue.value);
+    action();
   };
   const onsReset = () => {
     onReset();
@@ -32,12 +33,14 @@
 
 <template>
   <v-modal id="form-module" title="Module form">
-    <div>
-      <VInput v-model="formData.title" />
-      <VInput v-model="formData.description" type="textarea" />
-      <q-btn @click="onSave">Save</q-btn>
-      <q-btn @click="onsReset">Reset</q-btn>
-    </div>
+    <template #default="{ hide }">
+      <div>
+        <VInput v-model="formData.title" />
+        <VInput v-model="formData.description" type="textarea" />
+        <q-btn @click="onSave(hide)">Save</q-btn>
+        <q-btn @click="onsReset">Reset</q-btn>
+      </div>
+    </template>
   </v-modal>
 </template>
 

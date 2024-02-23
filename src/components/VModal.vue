@@ -29,7 +29,7 @@
   <q-dialog v-model="state" v-bind="options">
     <q-card>
       <q-card-section>
-        <slot></slot>
+        <slot :hide="hide"></slot>
       </q-card-section>
     </q-card>
   </q-dialog>
