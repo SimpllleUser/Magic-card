@@ -1,10 +1,18 @@
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ComputedRef, Ref, ref, watchEffect } from 'vue';
 import { cloneDeep, mapValues } from 'lodash';
 import { useValidation } from 'components/VForm/composables/useValidation';
-import { FormItemConfig, InputItemConfig } from '../types';
+import { FormInputItem, FormItemConfig, InputItemConfig } from '../types';
 import { CallbackFunction } from 'boot/types';
 
-export function useForm(initialFormConfig: Record<string, InputItemConfig>) {
+export type UseFormResult = {
+  formData: Ref<Record<string, FormInputItem>>;
+  onSubmit: CallbackFunction;
+  onReset: CallbackFunction;
+  formDataValue: ComputedRef<Record<string, any>>;
+  isValid: ComputedRef<boolean>;
+};
+
+export function useForm(initialFormConfig: Record<string, InputItemConfig>): UseFormResult {
   const canShowError = ref(false);
 
   const getInitDataForm = (initialDataParams: Record<string, InputItemConfig>) => {
@@ -13,7 +21,9 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>) {
         ...inputParams,
         value: ref(inputParams.value),
         rules: inputParams.rules,
-        error: ''
+        error: '',
+        label: inputParams.label ?? '',
+        hint: inputParams.hint ?? ''
       };
     });
   };

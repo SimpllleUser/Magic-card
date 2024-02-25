@@ -1,46 +1,45 @@
 <script setup lang="ts">
   import VModal from 'components/VModal.vue';
   import VInput from 'components/VForm/VInput/VInput.vue';
+  import VForm from 'components/VForm/_index.vue';
 
   import { useForm } from 'components/VForm/composables/useForm';
-  import { ValidationRule } from 'components/VForm/types';
+  import { ActionForm, ValidationRule } from 'components/VForm/types';
   import { useModulesStore } from 'src/modules/module/store/modules';
+  import { EntityUnform } from 'boot/types';
+  import { IModule } from 'src/modules/module/types';
 
   const moduleStore = useModulesStore();
 
   const initialData = {
     title: {
       value: '',
+      label: 'Title',
       rules: [ValidationRule.Required]
     },
     description: {
       value: '',
+      label: 'Description',
       rules: [ValidationRule.Required]
     }
   };
 
-  const { formData, onSubmit, onReset, formDataValue, isValid } = useForm({ ...initialData });
+  const form = useForm({ ...initialData });
+  const { formData } = form;
 
-  const onSave = (action: CallableFunction) => {
-    onSubmit();
-    if (!isValid.value) return;
-    moduleStore.create(formDataValue.value);
+  const onSubmit = (data: EntityUnform<IModule>, action: CallableFunction) => {
+    moduleStore.create(data);
     action();
-  };
-  const onsReset = () => {
-    onReset();
   };
 </script>
 
 <template>
   <v-modal id="form-module" title="Module form">
     <template #default="{ hide }">
-      <div>
+      <VForm :action="ActionForm.Create" :config="form" @on-submit="onSubmit($event, hide)">
         <VInput v-model="formData.title" />
         <VInput v-model="formData.description" type="textarea" />
-        <q-btn @click="onSave(hide)" :disable="!isValid">Save</q-btn>
-        <q-btn @click="onsReset">Reset</q-btn>
-      </div>
+      </VForm>
     </template>
   </v-modal>
 </template>

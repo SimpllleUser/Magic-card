@@ -1,5 +1,10 @@
+export enum ActionForm {
+  Create,
+  Edit
+}
+
 type SelectValue = string | Record<string, unknown>;
-type BaseInput<T> = { value: T; rules: Array<ValidationRule> };
+type BaseInput<T> = { value: T; rules: Array<ValidationRule>; label?: string; hint?: string };
 type BaseForm<T> = T & { error: string };
 
 export type InputItem = BaseInput<string>;

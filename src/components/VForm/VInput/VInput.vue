@@ -16,7 +16,6 @@
   const activeSlots = useSlots();
 
   const onChangeInput = () => {
-    console.log(data.value);
     emit('update:modelValue', data.value);
   };
 </script>
@@ -24,6 +23,8 @@
 <template>
   <q-input
     v-model="data.value"
+    :label="data.label"
+    :hint="data.hint"
     v-on="$attrs"
     @update:model-value="onChangeInput"
     :bind="internalProps"
