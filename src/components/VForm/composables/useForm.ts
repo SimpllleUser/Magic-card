@@ -10,25 +10,33 @@ export type UseFormResult = {
   onReset: CallbackFunction;
   formDataValue: ComputedRef<Record<string, any>>;
   isValid: ComputedRef<boolean>;
+  updateInputValue: CallbackFunction;
+};
+
+const getInitDataForm = (initialDataParams: Record<string, InputItemConfig>) => {
+  return mapValues(initialDataParams, (inputParams: InputItemConfig) => {
+    return {
+      ...inputParams,
+      value: ref(inputParams.value),
+      rules: inputParams.rules,
+      error: '',
+      label: inputParams.label ?? '',
+      hint: inputParams.hint ?? ''
+    };
+  });
 };
 
 export function useForm(initialFormConfig: Record<string, InputItemConfig>): UseFormResult {
   const canShowError = ref(false);
 
-  const getInitDataForm = (initialDataParams: Record<string, InputItemConfig>) => {
-    return mapValues(initialDataParams, (inputParams: InputItemConfig) => {
-      return {
-        ...inputParams,
-        value: ref(inputParams.value),
-        rules: inputParams.rules,
-        error: '',
-        label: inputParams.label ?? '',
-        hint: inputParams.hint ?? ''
-      };
+  const formData = ref<Record<string, FormItemConfig>>(getInitDataForm(initialFormConfig));
+
+  const updateInputValue = (values: Record<string, unknown>) => {
+    if (!Object.values(values).length) return;
+    Object.keys(values).forEach((key) => {
+      formData.value[key] = { ...formData.value[key], value: values[key] };
     });
   };
-
-  const formData = ref<Record<string, FormItemConfig>>(getInitDataForm(initialFormConfig));
 
   watchEffect(() => {
     for (const key in formData.value) {
@@ -53,5 +61,5 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
   const formDataValue = computed(() => mapValues(formData.value, (item) => item.value));
   const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
 
-  return { formData, onSubmit, onReset, formDataValue, isValid };
+  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue };
 }

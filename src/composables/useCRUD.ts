@@ -18,8 +18,8 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = []) {
     return _.cloneDeep(data.value);
   };
 
-  const update = (id: string, updatedItem: Partial<T>) => {
-    const index = _.findIndex(data.value, { id });
+  const update = (updatedItem: Partial<T>) => {
+    const index = _.findIndex(data.value, { id: updatedItem.id });
 
     if (index !== -1) {
       data.value[index] = _.merge({}, data.value[index], updatedItem);

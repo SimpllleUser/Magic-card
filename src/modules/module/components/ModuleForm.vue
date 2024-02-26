@@ -8,10 +8,18 @@
   import { useModulesStore } from 'src/modules/module/store/modules';
   import { EntityUnform } from 'boot/types';
   import { IModule } from 'src/modules/module/types';
+  import { computed } from 'vue';
+
+  interface Props {
+    module?: IModule;
+    formId: string;
+  }
+
+  const props = defineProps<Props>();
 
   const moduleStore = useModulesStore();
 
-  const initialData = {
+  const formConfig = {
     title: {
       value: '',
       label: 'Title',
@@ -23,20 +31,30 @@
       rules: [ValidationRule.Required]
     }
   };
+  /// ?CREATE TYPE ITEM FOR INIT OF PROPERTY ITEM FORM
 
-  const form = useForm({ ...initialData });
+  const form = useForm({ ...formConfig });
   const { formData } = form;
 
+  const onShowModal = () => {
+    if (!props.module?.id) return;
+    form.updateInputValue(props.module);
+  };
+
   const onSubmit = (data: EntityUnform<IModule>, action: CallableFunction) => {
-    moduleStore.create(data);
+    const storeAction = props.module?.id ? moduleStore.update : moduleStore.create;
+    storeAction(data);
+    form.onReset();
     action();
   };
+
+  const formAction = computed((): ActionForm => (props.module?.id ? ActionForm.Edit : ActionForm.Create));
 </script>
 
 <template>
-  <v-modal id="form-module" title="Module form">
+  <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
-      <VForm :action="ActionForm.Create" :config="form" @on-submit="onSubmit($event, hide)">
+      <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
         <VInput v-model="formData.title" />
         <VInput v-model="formData.description" type="textarea" />
       </VForm>

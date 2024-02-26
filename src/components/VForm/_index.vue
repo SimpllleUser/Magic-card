@@ -10,6 +10,7 @@
 
   interface Emits {
     (event: 'on-submit', payload: Record<string, any>): void;
+    (event: 'on-cancel'): void;
   }
 
   const props = defineProps<Props>();
@@ -22,9 +23,14 @@
     });
   };
 
+  const onCancel = () => {
+    props.config.onReset();
+    emit('on-cancel');
+  };
+
   const _SAVE = 'Save';
   const _CREATE = 'Create';
-  const _RESET = 'Reset';
+  const _CANCEL = 'Cancel';
 
   const actionName = computed(() => (props.action ? _SAVE : _CREATE));
 </script>
@@ -37,7 +43,7 @@
       </div>
       <div class="row justify-end">
         <q-btn :label="actionName" type="submit" color="primary" />
-        <q-btn :label="_RESET" @click="config.onReset" color="primary" flat class="q-ml-sm" />
+        <q-btn :label="_CANCEL" @click="onCancel" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
   </div>

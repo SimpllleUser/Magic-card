@@ -7,18 +7,26 @@
     id: string;
   }
 
+  interface Emits {
+    (event: 'show'): void;
+    (event: 'hide'): void;
+  }
+
   const { initModal } = useModalStore();
 
   const props = defineProps<Props>();
+  const emit = defineEmits<Emits>();
   const state = ref<boolean>(false);
   const EXCESS_KEY_PROP = 'modelValue';
   const options = computed(() => Object.fromEntries(Object.entries(props).filter(([key]) => key !== EXCESS_KEY_PROP)));
 
   const show = () => {
     state.value = true;
+    emit('show');
   };
   const hide = () => {
     state.value = false;
+    emit('hide');
   };
 
   onMounted(() => {
