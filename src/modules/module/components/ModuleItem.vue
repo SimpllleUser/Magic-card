@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { IModule } from 'src/modules/module/types';
+  import { useModalPlugin } from 'src/composables/useModalPlugin';
 
   interface Props {
     module: IModule;
@@ -7,10 +8,25 @@
 
   interface Emits {
     (event: 'on-edit', payload: IModule): void;
+    (event: 'on-remove', payload: string): void;
   }
+
+  const confirmModalTexts = {
+    title: 'Are you want remove module ?'
+  };
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
+  const { confirm } = useModalPlugin();
+
+  const confirmModal = () => {
+    confirm({
+      ...confirmModalTexts,
+      onOk: () => {
+        emit('on-remove', props.module.id);
+      }
+    });
+  };
 </script>
 
 <template>
@@ -24,7 +40,7 @@
 
     <q-card-actions align="right" class="modules-item__actions">
       <q-btn flat @click="emit('on-edit', module)">Edit</q-btn>
-      <q-btn flat>Remove</q-btn>
+      <q-btn flat @click="confirmModal">Remove</q-btn>
     </q-card-actions>
   </q-card>
 </template>

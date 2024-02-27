@@ -8,6 +8,7 @@
   import { IModule } from 'src/modules/module/types';
 
   const moduleStore = useModulesStore();
+  const { remove: removeModule } = moduleStore;
   const modules = computed(() => moduleStore.modules);
 
   const editModal = useModal('edit-module');
@@ -21,20 +22,23 @@
       editModal.show();
     });
   };
+
+  const _EMPTY_STATE_TITLE = 'You can add new module';
 </script>
 
 <template>
   <div class="q-px-xs">
     <module-form form-id="edit-module" v-if="currentModule" :module="currentModule" />
     <module-form form-id="create-module" />
-    <!--    <module-form :module="currentModule" />-->
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
-        <module-item :module="module" class="q-ma-sm" @on-edit="setEditModule" />
+        <module-item :module="module" class="q-ma-sm" @on-edit="setEditModule" @on-remove="removeModule" />
       </div>
     </div>
     <div>
-      <div v-if="!modules.length"><h4 class="text-blue-grey-8 text-center">You can add new module</h4></div>
+      <div v-if="!modules.length">
+        <h4 class="text-blue-grey-8 text-center">{{ _EMPTY_STATE_TITLE }}</h4>
+      </div>
       <div class="row justify-center">
         <div class="col-3 row justify-center">
           <q-btn
