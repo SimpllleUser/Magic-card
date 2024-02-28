@@ -10,10 +10,10 @@ interface IConfirmParams {
 export function useModalPlugin() {
   const $q = useQuasar();
   const confirm = (
-    { title, message, html, onOk, onCancel }: IConfirmParams = {
+    { title, message, onOk, html, onCancel }: IConfirmParams = {
       title: '',
       message: '',
-      html: false,
+      html: true,
       onOk: () => {
         /// empt
       },
@@ -22,19 +22,21 @@ export function useModalPlugin() {
       }
     }
   ) => {
+    const CONFIRM_PARAMS = {
+      message: message ? `<div class="dialog-plugin q-pa-sm">${message}</div>` : ''
+    };
+
     $q.dialog({
-      title,
-      message,
-      html,
+      title: `<div class="dialog-plugin bg-secondary text-dark q-pa-sm">${title}</div>`,
+      ...CONFIRM_PARAMS,
+      html: true,
       cancel: {
-        outline: true,
-        color: 'secondary'
+        flat: true,
+        color: 'primary'
       },
       persistent: true,
       ok: {
-        push: true,
-        class: 'text-black',
-        color: 'secondary'
+        color: 'primary'
       }
     })
       .onOk(() => {

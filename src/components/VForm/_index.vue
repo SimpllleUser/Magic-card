@@ -42,11 +42,9 @@
         <slot />
       </div>
       <div class="row justify-end">
+        <q-btn :label="_CANCEL" @click="onCancel" color="primary" flat class="q-ml-sm btn-cancel" />
         <q-btn :label="actionName" type="submit" color="primary" />
-        <q-btn :label="_CANCEL" @click="onCancel" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
   </div>
 </template>
-
-<style scoped lang="scss"></style>
