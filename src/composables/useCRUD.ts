@@ -2,13 +2,14 @@ import { ref, Ref } from 'vue';
 import _ from 'lodash';
 import { generateId } from 'src/helpers/id-generator';
 import { EntityUnform } from 'boot/types';
+import { useLocalStorage } from '@vueuse/core';
 
 interface CrudItem {
   id: string;
 }
 
-export function useCRUD<T extends CrudItem>(initialValue: Array<T> = []) {
-  const data: Ref<T[]> = ref(initialValue);
+export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], key?: string) {
+  const data: Ref<T[]> = key ? useLocalStorage(key, initialValue) : ref(initialValue);
 
   const create = (item: Required<EntityUnform<T>>): void => {
     data.value.push({ ...item, id: generateId() });
