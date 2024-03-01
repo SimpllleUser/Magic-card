@@ -1,15 +1,17 @@
 import { ref, Ref } from 'vue';
 import _ from 'lodash';
 import { generateId } from 'src/helpers/id-generator';
+import { EntityUnform } from 'boot/types';
+import { useLocalStorage } from '@vueuse/core';
 
 interface CrudItem {
   id: string;
 }
 
-export function useCRUD<T extends CrudItem>(initialValue: Array<T> = []) {
-  const data: Ref<T[]> = ref(initialValue);
+export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], key?: string) {
+  const data: Ref<T[]> = key ? useLocalStorage(key, initialValue) : ref(initialValue);
 
-  const create = (item: Required<T>) => {
+  const create = (item: Required<EntityUnform<T>>): void => {
     data.value.push({ ...item, id: generateId() });
   };
 
@@ -17,8 +19,8 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = []) {
     return _.cloneDeep(data.value);
   };
 
-  const update = (id: string, updatedItem: Partial<T>) => {
-    const index = _.findIndex(data.value, { id });
+  const update = (updatedItem: Partial<T>) => {
+    const index = _.findIndex(data.value, { id: updatedItem.id });
 
     if (index !== -1) {
       data.value[index] = _.merge({}, data.value[index], updatedItem);

@@ -1,1 +1,8 @@
 // app global css in SCSS form
+.q-card__section.q-card__section--vert.q-dialog__title:has(.dialog-plugin) {
+  padding: 0;
+}
+
+.q-card__section.q-card__section--vert:has(.dialog-plugin) {
+  padding: 0;
+}
