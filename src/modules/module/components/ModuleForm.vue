@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import VModal from 'components/VModal.vue';
   import VInput from 'components/VForm/VInput/VInput.vue';
+  // import input from 'components/VForm/VInput/VInput.vue';
   import VForm from 'components/VForm/_index.vue';
 
   import { useForm } from 'components/VForm/composables/useForm';
@@ -9,6 +10,8 @@
   import { EntityUnform } from 'boot/types';
   import { IModule } from 'src/modules/module/types';
   import { computed } from 'vue';
+  import FormInput from 'components/VForm/VInput/FormInput.vue';
+  import { useInput } from 'components/VForm/VInput/form-inputs';
 
   interface Props {
     module?: IModule;
@@ -20,43 +23,44 @@
   const moduleStore = useModulesStore();
 
   const formConfig = {
-    title: {
+    title: useInput({
       value: '',
       label: 'Title',
       rules: [ValidationRule.Required]
-    },
-    description: {
+    }),
+    description: useInput({
       value: '',
       label: 'Description',
-      rules: [ValidationRule.Required]
-    },
-    titleFrom: {
-      value: '',
-      label: 'From',
-      rules: [ValidationRule.Required]
-    },
-    titleTo: {
-      value: '',
-      label: 'To',
-      rules: [ValidationRule.Required]
-    },
-    items: [
-      {
-        value: 'Word - 1',
-        label: 'Word - 1',
-        rules: [ValidationRule.Required]
-      },
-      {
-        value: 'Word - 2',
-        label: 'Word - 2',
-        rules: [ValidationRule.Required]
-      },
-      {
-        value: 'Word - 3',
-        label: 'Word - 3',
-        rules: [ValidationRule.Required]
-      }
-    ]
+      rules: [ValidationRule.Required],
+      type: 'textarea'
+    })
+    // titleFrom: {
+    //   value: '',
+    //   label: 'From',
+    //   rules: [ValidationRule.Required]
+    // },
+    // titleTo: {
+    //   value: '',
+    //   label: 'To',
+    //   rules: [ValidationRule.Required]
+    // }
+    // items: [
+    //   {
+    //     value: 'Word - 1',
+    //     label: 'Word - 1',
+    //     rules: [ValidationRule.Required]
+    //   },
+    //   {
+    //     value: 'Word - 2',
+    //     label: 'Word - 2',
+    //     rules: [ValidationRule.Required]
+    //   },
+    //   {
+    //     value: 'Word - 3',
+    //     label: 'Word - 3',
+    //     rules: [ValidationRule.Required]
+    //   }
+    // ]
   };
   /// ?CREATE TYPE ITEM FOR INIT OF PROPERTY ITEM FORM
 
@@ -81,30 +85,29 @@
 <template>
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
-      {{ form.formDataValue }}
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
         <div class="row">
           <div class="col">
-            <VInput v-model="formData.title" />
+            <FormInput v-model="formData.title" />
           </div>
           <div class="col">
-            <VInput v-model="formData.description" type="textarea" />
+            <FormInput v-model="formData.description" />
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <VInput v-model="formData.titleFrom" />
-          </div>
-          <div class="col">
-            <VInput v-model="formData.titleTo" />
-          </div>
-        </div>
-        <div>
-          <h3>Words</h3>
-          <div>
-            <VInput v-for="(item, index) in formData.items" :key="item.label" v-model="formData.items[index]" />
-          </div>
-        </div>
+        <!--        <div class="row">-->
+        <!--          <div class="col">-->
+        <!--            <VInput v-model="formData.titleFrom" hint="12312" />-->
+        <!--          </div>-->
+        <!--          <div class="col">-->
+        <!--            <VInput v-model="formData.titleTo" />-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <div>-->
+        <!--          <h3>Words</h3>-->
+        <!--          <div>-->
+        <!--            <VInput v-for="(item, index) in formData.items" :key="item.label" v-model="formData.items[index]" />-->
+        <!--          </div>-->
+        <!--        </div>-->
       </VForm>
     </template>
   </v-modal>

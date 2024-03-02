@@ -1,5 +1,23 @@
 import { Ref } from 'vue';
+import { QCheckboxProps, QInputProps, QSelectProps } from 'quasar';
 
+export type IUseFormInput = FormInputProps & { component: ComponentTypes; error?: string };
+
+export type FormInputProps = Pick<Partial<QInputProps | QCheckboxProps | QSelectProps>, 'onUpdate:modelValue'> &
+  Required<{
+    value: InputValue;
+    label: string;
+    rules?: Array<ValidationRule>;
+  }>;
+
+export type InputValueBase = string | number | boolean;
+export type InputValue = InputValueBase | Array<InputValueBase> | Record<string, InputValueBase>;
+
+export enum ComponentTypes {
+  Input = 'Input',
+  Select = 'Select',
+  Checkbox = 'Checkbox'
+}
 export enum ActionForm {
   Create,
   Edit
