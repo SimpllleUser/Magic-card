@@ -1,23 +1,29 @@
+import { Ref } from 'vue';
+
 export enum ActionForm {
   Create,
   Edit
 }
 
 type SelectValue = string | Record<string, unknown>;
-type BaseInput<T> = { value: T; rules: Array<ValidationRule>; label?: string; hint?: string };
-type BaseForm<T> = T & { error: string };
+type BaseInput<T> = { value: T; rules: Array<ValidationRule>; label?: string; hint?: string; error?: string };
+type BaseForm<T> = T & { value: Ref<T>; error?: string };
 
 export type InputItem = BaseInput<string>;
 export type SelectItem = BaseInput<SelectValue> & { options: Array<unknown> };
 export type CheckItem = BaseInput<boolean>;
+export type InputList = Array<InputItemConfig>;
 
-export type InputItemConfig = InputItem | SelectItem | CheckItem;
+export type InputItemConfig = InputItem | SelectItem | CheckItem | InputList;
 
 export type FormInputItem = BaseForm<InputItem>;
 export type FormSelectItem = BaseForm<SelectItem>;
 export type FormCheckItem = BaseForm<CheckItem>;
+export type FormItemList = Array<FormItemConfig>;
 
-export type FormItemConfig = FormInputItem | FormSelectItem | FormCheckItem;
+export type FormItemConfig = FormInputItem | FormSelectItem | FormCheckItem | FormItemList;
+
+export type FormDataValue = Record<string, number | string | Array<FormDataValue>>;
 
 export enum ValidationRule {
   After = 'after',

@@ -35,7 +35,7 @@
 </script>
 <template>
   <q-dialog v-model="state" v-bind="options">
-    <q-card class="q-pa-none">
+    <q-card class="q-pa-none" style="min-width: 48rem">
       <q-card-section class="q-pa-sm q-pb-none bg-secondary text-dark">
         <div class="text-h6">{{ title }}</div>
       </q-card-section>

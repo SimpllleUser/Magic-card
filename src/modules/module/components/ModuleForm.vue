@@ -29,7 +29,34 @@
       value: '',
       label: 'Description',
       rules: [ValidationRule.Required]
-    }
+    },
+    titleFrom: {
+      value: '',
+      label: 'From',
+      rules: [ValidationRule.Required]
+    },
+    titleTo: {
+      value: '',
+      label: 'To',
+      rules: [ValidationRule.Required]
+    },
+    items: [
+      {
+        value: 'Word - 1',
+        label: 'Word - 1',
+        rules: [ValidationRule.Required]
+      },
+      {
+        value: 'Word - 2',
+        label: 'Word - 2',
+        rules: [ValidationRule.Required]
+      },
+      {
+        value: 'Word - 3',
+        label: 'Word - 3',
+        rules: [ValidationRule.Required]
+      }
+    ]
   };
   /// ?CREATE TYPE ITEM FOR INIT OF PROPERTY ITEM FORM
 
@@ -54,9 +81,30 @@
 <template>
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
+      {{ form.formDataValue }}
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
-        <VInput v-model="formData.title" />
-        <VInput v-model="formData.description" type="textarea" />
+        <div class="row">
+          <div class="col">
+            <VInput v-model="formData.title" />
+          </div>
+          <div class="col">
+            <VInput v-model="formData.description" type="textarea" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <VInput v-model="formData.titleFrom" />
+          </div>
+          <div class="col">
+            <VInput v-model="formData.titleTo" />
+          </div>
+        </div>
+        <div>
+          <h3>Words</h3>
+          <div>
+            <VInput v-for="(item, index) in formData.items" :key="item.label" v-model="formData.items[index]" />
+          </div>
+        </div>
       </VForm>
     </template>
   </v-modal>
