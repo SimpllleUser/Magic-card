@@ -1,7 +1,7 @@
 import { computed, ComputedRef, Ref, ref, watchEffect } from 'vue';
 import { cloneDeep, mapValues } from 'lodash';
 import { useValidation } from 'components/VForm/composables/useValidation';
-import { FormDataValue, FormInputItem, FormItemConfig, FormItemList, InputItemConfig } from '../types';
+import { FormDataValue, FormInputItem, FormItemConfig, InputItemConfig } from '../types';
 import { CallbackFunction } from 'boot/types';
 
 export type UseFormResult = {
@@ -13,7 +13,7 @@ export type UseFormResult = {
   updateInputValue: CallbackFunction;
 };
 
-const getInputParams = (inputParams: InputItemConfig): FormItemConfig => {
+const getInputParams = (inputParams: FormInputProps): FormItemConfig => {
   if (Array.isArray(inputParams)) return inputParams.map(getInputParams);
   return {
     ...inputParams,
@@ -49,8 +49,52 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
     for (const key in formData.value) {
       if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
         const input = formData.value[key];
+        if (Array.isArray(input.value)) {
+          input.value.forEach((inputItem) => {
+            for (const key in inputItem) {
+              if (Object.keys(inputItem).includes('error')) {
+                const currentItem = inputItem[key];
+                const existError = Object.keys(inputItem).includes('error');
+                currentItem.error = existError && canShowError.value ? useValidation(currentItem) : '';
+              }
+            }
+          });
+          // input.value.forEach((someItem: FormItemConfig) => {
+          //   const internalInput = someItem;
+          //   console.log(useValidation(internalInput), canShowError.value, internalInput);
+          //   internalInput.error = canShowError.value ? useValidation(internalInput) : '';
+          // });
+        }
         input.error = canShowError.value ? useValidation(input) : '';
       }
+    }
+  });
+
+  const mapToValue = (item: any): any => {
+    if (item?.id) {
+      return item;
+    }
+    if (Array.isArray(item.value)) {
+      return Object.values(item.value).map((item) =>
+        Object.fromEntries(
+          Object.entries(item)
+            .filter(([key]) => key !== 'id')
+            .map(([key, value]) => [key, mapToValue(value)])
+        )
+      );
+    }
+    return {
+      ...item,
+      error: canShowError.value ? useValidation(item) : ''
+    };
+  };
+
+  const testFormData = computed({
+    set(newValue) {
+      formData.value = newValue;
+    },
+    get() {
+      return mapValues(formData.value, mapToValue);
     }
   });
 
@@ -68,5 +112,5 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
   const formDataValue = computed(() => mapValues(formData.value, getInputValue));
   const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
 
-  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue };
+  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue, testFormData };
 }

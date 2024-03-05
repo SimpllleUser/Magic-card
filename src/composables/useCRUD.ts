@@ -8,8 +8,13 @@ interface CrudItem {
   id: string;
 }
 
-export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], key?: string) {
-  const data: Ref<T[]> = key ? useLocalStorage(key, initialValue) : ref(initialValue);
+interface IUseCrudConfig {
+  key?: string;
+  returnAsObject?: boolean;
+}
+
+export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig) {
+  const data: Ref<T[]> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
 
   const create = (item: Required<EntityUnform<T>>): void => {
     data.value.push({ ...item, id: generateId() });
@@ -30,6 +35,8 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], key?: s
   const remove = (id: string) => {
     _.remove(data.value, { id });
   };
+
+  if (config?.returnAsObject) return { data, create, read, update, remove };
 
   return [data, create, read, update, remove];
 }

@@ -16,7 +16,8 @@ export type InputValue = InputValueBase | Array<InputValueBase> | Record<string,
 export enum ComponentTypes {
   Input = 'Input',
   Select = 'Select',
-  Checkbox = 'Checkbox'
+  Checkbox = 'Checkbox',
+  FormInputList = 'FormInputList'
 }
 export enum ActionForm {
   Create,
@@ -25,7 +26,7 @@ export enum ActionForm {
 
 type SelectValue = string | Record<string, unknown>;
 type BaseInput<T> = { value: T; rules: Array<ValidationRule>; label?: string; hint?: string; error?: string };
-type BaseForm<T> = T & { value: Ref<T>; error?: string };
+type BaseForm<T> = T & { value: Ref<T> | Array<FormItemConfig>; error?: string };
 
 export type InputItem = BaseInput<string>;
 export type SelectItem = BaseInput<SelectValue> & { options: Array<unknown> };

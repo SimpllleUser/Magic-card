@@ -4,6 +4,7 @@
   import { omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
   import { components } from 'components/VForm/VInput/form-inputs';
+  import FormInputList from 'components/VForm/VInput/FormInputList.vue';
 
   type _INPUT_EVENT_NAME = 'update:modelValue';
   const _INPUT_PROPS_KEY = 'modelValue';

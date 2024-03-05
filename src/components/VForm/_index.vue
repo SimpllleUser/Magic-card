@@ -42,8 +42,15 @@
         <slot />
       </div>
       <div class="row justify-end">
-        <q-btn :label="_CANCEL" @click="onCancel" color="primary" flat class="q-ml-sm btn-cancel" />
-        <q-btn :label="actionName" type="submit" color="primary" />
+        <q-btn
+          :label="_CANCEL"
+          @click="onCancel"
+          color="text-dark"
+          outline="secondary"
+          flat
+          class="q-ml-sm btn-cancel border-secondary q-mr-sm"
+        />
+        <q-btn :label="actionName" type="submit" color="secondary text-black" />
       </div>
     </q-form>
   </div>

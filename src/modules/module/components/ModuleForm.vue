@@ -11,7 +11,8 @@
   import { IModule } from 'src/modules/module/types';
   import { computed } from 'vue';
   import FormInput from 'components/VForm/VInput/FormInput.vue';
-  import { useInput } from 'components/VForm/VInput/form-inputs';
+  import { useCheckbox, useFormInputList, useInput } from 'components/VForm/VInput/form-inputs';
+  // import FormInputList from 'components/VForm/VInput/FormInputList.vue';
 
   interface Props {
     module?: IModule;
@@ -21,6 +22,21 @@
   const props = defineProps<Props>();
 
   const moduleStore = useModulesStore();
+
+  const formInputItem = {
+    name: useInput({
+      value: '',
+      label: 'Name',
+      rules: [ValidationRule.Required]
+    }),
+    isChecked: useCheckbox({
+      value: '',
+      label: 'Checked',
+      rules: [ValidationRule.Required]
+    })
+  };
+
+  const formItemsLIst = [];
 
   const formConfig = {
     title: useInput({
@@ -33,7 +49,8 @@
       label: 'Description',
       rules: [ValidationRule.Required],
       type: 'textarea'
-    })
+    }),
+    items: useFormInputList(new Array(3).fill(formInputItem))
     // titleFrom: {
     //   value: '',
     //   label: 'From',
@@ -65,7 +82,7 @@
   /// ?CREATE TYPE ITEM FOR INIT OF PROPERTY ITEM FORM
 
   const form = useForm({ ...formConfig });
-  const { formData } = form;
+  const { formData, testFormData } = form;
 
   const onShowModal = () => {
     if (!props.module?.id) return;
@@ -85,14 +102,19 @@
 <template>
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
+      <!--      <FormInputList v-model="formItemsLIst" :config="formInputItem" />-->
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
-        <div class="row">
+        {{ testFormData.items }}
+        <!-- <div class="row">
           <div class="col">
             <FormInput v-model="formData.title" />
           </div>
           <div class="col">
             <FormInput v-model="formData.description" />
           </div>
+        </div> -->
+        <div class="row">
+          <FormInput v-model="testFormData.items" />
         </div>
         <!--        <div class="row">-->
         <!--          <div class="col">-->
