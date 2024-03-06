@@ -104,7 +104,7 @@
     <template #default="{ hide }">
       <!--      <FormInputList v-model="formItemsLIst" :config="formInputItem" />-->
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
-        {{ testFormData.items }}
+        {{ formData.items.value }}
         <!-- <div class="row">
           <div class="col">
             <FormInput v-model="formData.title" />
@@ -114,7 +114,7 @@
           </div>
         </div> -->
         <div class="row">
-          <FormInput v-model="testFormData.items" />
+          <FormInput v-model="formData.items" />
         </div>
         <!--        <div class="row">-->
         <!--          <div class="col">-->

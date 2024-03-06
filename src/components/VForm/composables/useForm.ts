@@ -89,15 +89,6 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
     };
   };
 
-  const testFormData = computed({
-    set(newValue) {
-      formData.value = newValue;
-    },
-    get() {
-      return mapValues(formData.value, mapToValue);
-    }
-  });
-
   const onSubmit = (action?: CallbackFunction) => {
     canShowError.value = true;
     action && action();
@@ -112,5 +103,5 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
   const formDataValue = computed(() => mapValues(formData.value, getInputValue));
   const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
 
-  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue, testFormData };
+  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue };
 }
