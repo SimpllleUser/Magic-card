@@ -1,12 +1,11 @@
 <script setup lang="ts">
   import { watch } from 'vue';
   import { useVModel } from '@vueuse/core';
-  import { cloneDeep, mapValues } from 'lodash';
+  import { cloneDeep } from 'lodash';
   import { useCRUD } from 'src/composables/useCRUD';
   import { generateId } from 'src/helpers/id-generator';
   import { FormInputProps } from 'components/VForm/types';
   import FormInput from 'components/VForm/VInput/FormInput.vue';
-  import { log } from 'util';
 
   type IModelValue = Array<Record<string, FormInputProps>>;
   interface Props {
@@ -28,24 +27,33 @@
     ...cloneDeep(data.value[0])
   });
 
+  const onCreate = () => {
+    create(getBaseItem());
+    onEmitValue();
+  };
+  const onRemove = (id: string) => {
+    remove(id);
+    onEmitValue();
+  };
+
   const { data: formInputItems, create, remove } = useCRUD<IModelValue>([], { returnAsObject: true });
-  formInputItems.value.forEach(() => create(getBaseItem));
+  formInputItems.value.forEach(onCreate);
+
+  const onEmitValue = () => {
+    emit('update:modelValue', formInputItems.value);
+  };
 
   watch(
-    () => [props.modelValue, formInputItems.value],
-    (newValue) => {
-      console.log(newValue[1]);
-      emit('update:modelValue', newValue[1]);
-    },
-    {
-      deep: true
+    () => props.modelValue,
+    (value) => {
+      formInputItems.value = value;
     }
   );
 </script>
 <template>
   <div class="row justify-between q-pb-md full-width">
     <div class="text-h6">FormInputsList</div>
-    <div><q-btn icon="add" class="border-secondary" flat dense @click="create(getBaseItem())" /></div>
+    <div><q-btn icon="add" class="border-secondary" flat dense @click="onCreate" /></div>
   </div>
   <div class="form-input-list full-width">
     <div
@@ -63,7 +71,7 @@
         </div>
       </div>
       <div>
-        <q-btn icon="delete" dense unelevated @click="remove(formInputItems[rowIndex].id)" flat />
+        <q-btn icon="delete" dense unelevated @click="onRemove(formInputItems[rowIndex].id)" flat />
       </div>
     </div>
     <div></div>

@@ -38,97 +38,33 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
 
   const formData = ref<Record<string, FormItemConfig>>(getInitDataForm(initialFormConfig));
 
-  // const activateValidationRule = (item: any): any => {
-  //   if (Array.isArray(item.value)) {
-  //     // return item.value.map((item) => mapValues(item, activateValidationRule));
-  //     return item.value.map((inputRow) => {
-  //       console.log(inputRow);
-  //       return Object.fromEntries(
-  //         Object.entries(inputRow).map(([key, value]) =>
-  //           key === 'id' ? [key, value] : [key, activateValidationRule(value)]
-  //         )
-  //       );
-  //     });
-  //   }
-  //   return {
-  //     ...item,
-  //     _rules: canShowError.value ? item.rules : []
-  //   };
-  // };
-
-  watch(
-    () => canShowError.value,
-    () => {
-      for (const key in formData.value) {
-        const item = formData.value[key] as any;
-        if (Array.isArray(item.value)) {
-          item.value = item.value.map((inputItem) => {
-            return mapValues(inputItem, (item) => {
-              if (typeof item !== 'object') return item;
-              return {
-                ...item,
-                _rules: canShowError.value ? item.rules : []
-              };
-            });
+  const activateRulesInForm = () => {
+    for (const key in formData.value) {
+      const item = formData.value[key] as any;
+      if (Array.isArray(item.value)) {
+        item.value = item.value.map((inputItem) => {
+          return mapValues(inputItem, (item) => {
+            if (typeof item !== 'object') return item;
+            return {
+              ...item,
+              _rules: canShowError.value ? item.rules : []
+            };
           });
-        }
-        item._rules = canShowError.value ? item.rules : [];
+        });
       }
+      item._rules = canShowError.value ? item.rules : [];
     }
-  );
+  };
 
-  // watchEffect(() => {
-  //   console.log(canShowError.value);
-  //   for (const key in formData.value) {
-  //     const item = formData.value[key] as any;
-  //     if (Array.isArray(item.value)) {
-  //       item.value = item.value.map((inputItem) => {
-  //         return mapValues(inputItem, (item) => {
-  //           if (typeof item !== 'object') return item;
-  //           return {
-  //             ...item,
-  //             _rules: canShowError.value ? item.rules : []
-  //           };
-  //         });
-  //       });
-  //       item.modelValue = item.value.map((inputItem) => {
-  //         return mapValues(inputItem, (item) => {
-  //           if (typeof item !== 'object') return item;
-  //           return {
-  //             ...item,
-  //             _rules: canShowError.value ? item.rules : []
-  //           };
-  //         });
-  //       });
-  //     }
-  //     item._rules = item.rules;
-  //   }
-  // });
+  watch(() => canShowError.value, activateRulesInForm);
+
+  watchEffect(activateRulesInForm);
 
   const updateInputValue = (values: FormDataValue) => {
     if (!Object.values(values).length) return;
     Object.keys(values).forEach((key) => {
       formData.value[key] = { ...formData.value[key], value: values[key] };
     });
-  };
-
-  const mapToValue = (item: any): any => {
-    if (item?.id) {
-      return item;
-    }
-    if (Array.isArray(item.value)) {
-      return Object.values(item.value).map((item) =>
-        Object.fromEntries(
-          Object.entries(item)
-            .filter(([key]) => key !== 'id')
-            .map(([key, value]) => [key, mapToValue(value)])
-        )
-      );
-    }
-    return {
-      ...item,
-      error: canShowError.value ? useValidation(item) : ''
-    };
   };
 
   const onSubmit = (action?: CallbackFunction) => {

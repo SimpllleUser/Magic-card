@@ -24,13 +24,10 @@
     emit('update:modelValue', data.value);
   };
 
-  const errorMessage = computed(() =>
-    internalProps.value._rules?.map((key) => rules[key](data.value.value).at(0) || '')
-  );
+  const errorMessage = computed(() => internalProps.value._rules?.map((key) => rules[key](data.value.value)).at(0));
   const error = computed(() => Boolean(errorMessage.value));
 </script>
 <template>
-  {{ Array.isArray(data.value) ? '' : data.value }}
   <component
     :is="componentType"
     v-model="data.value"

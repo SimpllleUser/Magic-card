@@ -114,7 +114,6 @@
           </div>
         </div>
         <div class="row">
-          {{ formData.items.value }}
           <FormInput v-model="formData.items" />
         </div>
         <!--        <div class="row">-->
