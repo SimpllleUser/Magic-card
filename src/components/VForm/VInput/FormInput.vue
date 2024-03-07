@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed, defineEmits, defineProps, useSlots } from 'vue';
-  import { IUseFormInput, ValidationRule } from 'components/VForm/types';
+  import { IUseFormInput } from 'components/VForm/types';
   import { isString, omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
   import { components } from 'components/VForm/VInput/form-inputs';
@@ -33,7 +33,6 @@
   const error = computed(() => Boolean(errorMessage.value));
 </script>
 <template>
-  {{ errorMessage }}
   <component
     :is="componentType"
     v-model="data.value"
