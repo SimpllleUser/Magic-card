@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed, defineEmits, defineProps, useSlots } from 'vue';
   import { IUseFormInput, ValidationRule } from 'components/VForm/types';
-  import { omit } from 'lodash';
+  import { isString, omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
   import { components } from 'components/VForm/VInput/form-inputs';
   import { rules } from 'components/VForm/composables/rules';
@@ -24,10 +24,16 @@
     emit('update:modelValue', data.value);
   };
 
-  const errorMessage = computed(() => internalProps.value._rules?.map((key) => rules[key](data.value.value)).at(0));
+  const errorMessage = computed(() =>
+    internalProps.value._rules
+      ?.map((key) => rules[key](data.value.value))
+      .filter(isString)
+      .at(0)
+  );
   const error = computed(() => Boolean(errorMessage.value));
 </script>
 <template>
+  {{ errorMessage }}
   <component
     :is="componentType"
     v-model="data.value"
