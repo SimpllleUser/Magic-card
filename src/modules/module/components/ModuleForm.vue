@@ -36,6 +36,7 @@
     })
   };
 
+  console.log(useFormInputList(new Array(3).fill(formInputItem)));
   const formItemsLIst = [];
 
   const formConfig = {
@@ -104,16 +105,16 @@
     <template #default="{ hide }">
       <!--      <FormInputList v-model="formItemsLIst" :config="formInputItem" />-->
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
-        {{ formData.items.value }}
-        <!-- <div class="row">
+        <div class="row">
           <div class="col">
             <FormInput v-model="formData.title" />
           </div>
           <div class="col">
             <FormInput v-model="formData.description" />
           </div>
-        </div> -->
+        </div>
         <div class="row">
+          {{ formData.items.value }}
           <FormInput v-model="formData.items" />
         </div>
         <!--        <div class="row">-->

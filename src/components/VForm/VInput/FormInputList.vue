@@ -6,6 +6,7 @@
   import { generateId } from 'src/helpers/id-generator';
   import { FormInputProps } from 'components/VForm/types';
   import FormInput from 'components/VForm/VInput/FormInput.vue';
+  import { log } from 'util';
 
   type IModelValue = Array<Record<string, FormInputProps>>;
   interface Props {
@@ -28,11 +29,13 @@
   });
 
   const { data: formInputItems, create, remove } = useCRUD<IModelValue>([], { returnAsObject: true });
+  formInputItems.value.forEach(() => create(getBaseItem));
 
   watch(
-    () => formInputItems,
-    () => {
-      emit('update:modelValue', formInputItems.value);
+    () => [props.modelValue, formInputItems.value],
+    (newValue) => {
+      console.log(newValue[1]);
+      emit('update:modelValue', newValue[1]);
     },
     {
       deep: true

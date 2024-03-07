@@ -17,7 +17,7 @@ const [useInput, useSelect, useCheckbox] = [ComponentTypes.Input, ComponentTypes
 
 const useFormInputList = (formInputsParams: Array<Record<string, FormInputProps>>) => ({
   component: ComponentTypes.FormInputList,
-  modelValue: formInputsParams,
+  value: formInputsParams,
   config: mapValues(formInputsParams, () => '')
 });
 

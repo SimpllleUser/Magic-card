@@ -1,4 +1,4 @@
-import { computed, ComputedRef, Ref, ref, watchEffect } from 'vue';
+import { computed, ComputedRef, Ref, ref, watch, watchEffect } from 'vue';
 import { cloneDeep, mapValues } from 'lodash';
 import { useValidation } from 'components/VForm/composables/useValidation';
 import { FormDataValue, FormInputItem, FormItemConfig, InputItemConfig } from '../types';
@@ -13,7 +13,7 @@ export type UseFormResult = {
   updateInputValue: CallbackFunction;
 };
 
-const getInputParams = (inputParams: FormInputProps): FormItemConfig => {
+const getInputParams = (inputParams: any): FormItemConfig => {
   if (Array.isArray(inputParams)) return inputParams.map(getInputParams);
   return {
     ...inputParams,
@@ -26,7 +26,7 @@ const getInputParams = (inputParams: FormInputProps): FormItemConfig => {
 };
 
 const getInputValue = (input: FormItemConfig): FormDataValue => {
-  if (Array.isArray(input.value)) return input.map(getInputValue);
+  // if (Array.isArray(input.value)) return input.map(getInputValue);
   return input.value;
 };
 
@@ -38,37 +38,79 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
 
   const formData = ref<Record<string, FormItemConfig>>(getInitDataForm(initialFormConfig));
 
+  // const activateValidationRule = (item: any): any => {
+  //   if (Array.isArray(item.value)) {
+  //     // return item.value.map((item) => mapValues(item, activateValidationRule));
+  //     return item.value.map((inputRow) => {
+  //       console.log(inputRow);
+  //       return Object.fromEntries(
+  //         Object.entries(inputRow).map(([key, value]) =>
+  //           key === 'id' ? [key, value] : [key, activateValidationRule(value)]
+  //         )
+  //       );
+  //     });
+  //   }
+  //   return {
+  //     ...item,
+  //     _rules: canShowError.value ? item.rules : []
+  //   };
+  // };
+
+  watch(
+    () => canShowError.value,
+    () => {
+      for (const key in formData.value) {
+        const item = formData.value[key] as any;
+        if (Array.isArray(item.value)) {
+          item.value = item.value.map((inputItem) => {
+            return mapValues(inputItem, (item) => {
+              if (typeof item !== 'object') return item;
+              return {
+                ...item,
+                _rules: canShowError.value ? item.rules : []
+              };
+            });
+          });
+        }
+        item._rules = canShowError.value ? item.rules : [];
+      }
+    }
+  );
+
+  // watchEffect(() => {
+  //   console.log(canShowError.value);
+  //   for (const key in formData.value) {
+  //     const item = formData.value[key] as any;
+  //     if (Array.isArray(item.value)) {
+  //       item.value = item.value.map((inputItem) => {
+  //         return mapValues(inputItem, (item) => {
+  //           if (typeof item !== 'object') return item;
+  //           return {
+  //             ...item,
+  //             _rules: canShowError.value ? item.rules : []
+  //           };
+  //         });
+  //       });
+  //       item.modelValue = item.value.map((inputItem) => {
+  //         return mapValues(inputItem, (item) => {
+  //           if (typeof item !== 'object') return item;
+  //           return {
+  //             ...item,
+  //             _rules: canShowError.value ? item.rules : []
+  //           };
+  //         });
+  //       });
+  //     }
+  //     item._rules = item.rules;
+  //   }
+  // });
+
   const updateInputValue = (values: FormDataValue) => {
     if (!Object.values(values).length) return;
     Object.keys(values).forEach((key) => {
       formData.value[key] = { ...formData.value[key], value: values[key] };
     });
   };
-
-  watchEffect(() => {
-    for (const key in formData.value) {
-      if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
-        const input = formData.value[key];
-        if (Array.isArray(input.value)) {
-          input.value.forEach((inputItem) => {
-            for (const key in inputItem) {
-              if (Object.keys(inputItem).includes('error')) {
-                const currentItem = inputItem[key];
-                const existError = Object.keys(inputItem).includes('error');
-                currentItem.error = existError && canShowError.value ? useValidation(currentItem) : '';
-              }
-            }
-          });
-          // input.value.forEach((someItem: FormItemConfig) => {
-          //   const internalInput = someItem;
-          //   console.log(useValidation(internalInput), canShowError.value, internalInput);
-          //   internalInput.error = canShowError.value ? useValidation(internalInput) : '';
-          // });
-        }
-        input.error = canShowError.value ? useValidation(input) : '';
-      }
-    }
-  });
 
   const mapToValue = (item: any): any => {
     if (item?.id) {

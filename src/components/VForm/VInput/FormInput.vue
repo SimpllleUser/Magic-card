@@ -1,17 +1,17 @@
 <script setup lang="ts">
   import { computed, defineEmits, defineProps, useSlots } from 'vue';
-  import { IUseFormInput } from 'components/VForm/types';
+  import { IUseFormInput, ValidationRule } from 'components/VForm/types';
   import { omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
   import { components } from 'components/VForm/VInput/form-inputs';
-  import FormInputList from 'components/VForm/VInput/FormInputList.vue';
+  import { rules } from 'components/VForm/composables/rules';
 
   type _INPUT_EVENT_NAME = 'update:modelValue';
   const _INPUT_PROPS_KEY = 'modelValue';
 
-  const props = defineProps<{ modelValue: IUseFormInput }>();
+  const props = defineProps<{ modelValue: any }>();
 
-  const internalProps = omit(props.modelValue, ['value']);
+  const internalProps = computed(() => omit(props.modelValue, ['value']));
 
   const componentType = computed(() => components[props.modelValue.component]);
 
@@ -23,16 +23,22 @@
   const onChangeInput = () => {
     emit('update:modelValue', data.value);
   };
+
+  const errorMessage = computed(() =>
+    internalProps.value._rules?.map((key) => rules[key](data.value.value).at(0) || '')
+  );
+  const error = computed(() => Boolean(errorMessage.value));
 </script>
 <template>
+  {{ Array.isArray(data.value) ? '' : data.value }}
   <component
     :is="componentType"
     v-model="data.value"
     v-bind="internalProps"
     @update:model-value="onChangeInput"
     bottom-slots
-    :error-message="modelValue.error"
-    :error="Boolean(modelValue.error)"
+    :error-message="errorMessage"
+    :error="error"
   >
     <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
       <slot :name="slotName"></slot>
