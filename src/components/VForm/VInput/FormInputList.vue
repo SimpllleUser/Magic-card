@@ -16,7 +16,7 @@
   const _INPUT_PROPS_KEY = 'modelValue';
 
   interface Emits {
-    (event: _INPUT_EVENT_NAME, payload: IModelValue);
+    (event: _INPUT_EVENT_NAME, payload: IModelValue): void;
   }
 
   const props = defineProps<Props>();
