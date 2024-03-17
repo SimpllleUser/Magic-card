@@ -47,6 +47,9 @@
     () => props.modelValue,
     (value) => {
       formInputItems.value = value;
+    },
+    {
+      deep: true
     }
   );
 </script>
