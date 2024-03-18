@@ -18,8 +18,8 @@
 
   const onSubmitHandler = () => {
     props.config.onSubmit(() => {
-      if (!props.config.isValid.value) return;
-      emit('on-submit', props.config.formDataValue.value);
+      if (!props.config.isValid) return;
+      emit('on-submit', props.config.formDataValue);
     });
   };
 

@@ -10,24 +10,29 @@ export type UseFormResult = {
   onReset: CallbackFunction;
   formDataValue: ComputedRef<Record<string, any>>;
   isValid: ComputedRef<boolean>;
-  updateInputValue: CallbackFunction;
 };
 
 const getInputParams = (inputParams: any): FormItemConfig => {
   if (Array.isArray(inputParams)) return inputParams.map(getInputParams);
+  if (!Object.keys(inputParams).includes('value')) {
+    console.log(inputParams);
+    return inputParams;
+  }
   return {
     ...inputParams,
-    value: ref(inputParams.value),
-    rules: inputParams.rules,
+    value: ref(inputParams?.value),
+    rules: inputParams?.rules || [],
     error: '',
-    label: inputParams.label ?? '',
-    hint: inputParams.hint ?? ''
+    label: inputParams?.label ?? '',
+    hint: inputParams?.hint ?? ''
   };
 };
 
 const getInputValue = (input: FormItemConfig): FormDataValue => {
-  // if (Array.isArray(input.value)) return input.map(getInputValue);
-  return input.value;
+  if (Array.isArray(input.value)) {
+    return input.value.map((item) => mapValues(item, (fieldValues) => fieldValues?.value ?? fieldValues));
+  }
+  return input.value ?? input;
 };
 
 const getInitDataForm = (initialDataParams: Record<string, InputItemConfig>) =>
@@ -52,20 +57,15 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
           });
         });
       }
-      item._rules = canShowError.value ? item.rules : [];
+      if (item?.value) {
+        item._rules = canShowError.value ? item.rules : [];
+      }
     }
   };
 
   watch(() => canShowError.value, activateRulesInForm);
 
   watchEffect(activateRulesInForm);
-
-  const updateInputValue = (values: FormDataValue) => {
-    if (!Object.values(values).length) return;
-    Object.keys(values).forEach((key) => {
-      formData.value[key] = { ...formData.value[key], value: values[key] };
-    });
-  };
 
   const onSubmit = (action?: CallbackFunction) => {
     canShowError.value = true;
@@ -78,8 +78,10 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
     action && action();
   };
 
-  const formDataValue = computed(() => mapValues(formData.value, getInputValue));
+  const formDataValue = computed(() => {
+    return mapValues(formData.value, getInputValue);
+  });
   const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
 
-  return { formData, onSubmit, onReset, formDataValue, isValid, updateInputValue };
+  return { formData, onSubmit, onReset, formDataValue, isValid };
 }

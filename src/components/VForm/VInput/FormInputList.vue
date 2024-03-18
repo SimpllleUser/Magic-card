@@ -24,7 +24,7 @@
   const data = useVModel(props, _INPUT_PROPS_KEY, emit);
   const getBaseItem = () => ({
     id: generateId(),
-    ...cloneDeep(data.value[0])
+    ...cloneDeep(props.config)
   });
 
   const onCreate = () => {
