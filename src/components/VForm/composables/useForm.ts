@@ -1,74 +1,61 @@
-import { computed, ComputedRef, Ref, ref, watch, watchEffect } from 'vue';
-import { cloneDeep, mapValues } from 'lodash';
+import { ComputedRef, computed, ref, watch, watchEffect } from 'vue';
+import { cloneDeep, mapValues, isArray } from 'lodash';
 import { useValidation } from 'components/VForm/composables/useValidation';
-import { FormDataValue, FormInputItem, FormItemConfig, InputItemConfig } from '../types';
 import { CallbackFunction } from 'boot/types';
+import { BaseFormItemConfig, ValidationRule } from '../types';
+import { BaseType } from 'typescript';
 
-export type UseFormResult = {
-  formData: Ref<Record<string, FormInputItem>>;
-  onSubmit: CallbackFunction;
-  onReset: CallbackFunction;
-  formDataValue: ComputedRef<Record<string, any>>;
+interface InputParams {
+  value: BaseFormItemConfig;
+  rules?: Array<ValidationRule>;
+  label?: string | undefined;
+  hint?: string | undefined;
+  _rules?: Array<ValidationRule>;
+}
+
+type InputValue = Record<string, BaseType>;
+
+type FormData = Record<string, InputParams>;
+
+type FormConfig = Record<string, InputParams>;
+
+interface FormActions {
+  onSubmit?: CallbackFunction;
+  onReset?: CallbackFunction;
+}
+
+interface FormComputed<T> {
+  formDataValue: ComputedRef<T>;
   isValid: ComputedRef<boolean>;
-};
+}
 
-const getInputParams = (inputParams: any): FormItemConfig => {
-  if (Array.isArray(inputParams)) return inputParams.map(getInputParams);
-  if (!Object.keys(inputParams).includes('value')) {
-    console.log(inputParams);
-    return inputParams;
-  }
-  return {
-    ...inputParams,
-    value: ref(inputParams?.value),
-    rules: inputParams?.rules || [],
-    error: '',
-    label: inputParams?.label ?? '',
-    hint: inputParams?.hint ?? ''
-  };
-};
-
-const getInputValue = (input: FormItemConfig): FormDataValue => {
-  if (Array.isArray(input.value)) {
-    return input.value.map((item) => mapValues(item, (fieldValues) => fieldValues?.value ?? fieldValues));
-  }
-  return input.value ?? input;
-};
-
-const getInitDataForm = (initialDataParams: Record<string, InputItemConfig>) =>
-  mapValues(initialDataParams, getInputParams);
-
-export function useForm(initialFormConfig: Record<string, InputItemConfig>): UseFormResult {
+export function useForm<T>(initialFormConfig: FormConfig): FormActions & FormComputed<T> {
   const canShowError = ref(false);
-
-  const formData = ref<Record<string, FormItemConfig>>(getInitDataForm(initialFormConfig));
+  const formData = ref<FormData>(getInitDataForm(initialFormConfig));
 
   const activateRulesInForm = () => {
     for (const key in formData.value) {
-      const item = formData.value[key] as any;
-      if (Array.isArray(item.value)) {
-        item.value = item.value.map((inputItem) => {
+      const item = formData.value[key];
+      if (isArray(item.value)) {
+        item.value = item.value.map((inputItem: BaseFormItemConfig) => {
           return mapValues(inputItem, (item) => {
             if (typeof item !== 'object') return item;
             return {
               ...item,
-              _rules: canShowError.value ? item.rules : []
+              _rules: canShowError.value ? item?.rules : []
             };
           });
         });
-      }
-      if (item?.value) {
+      } else if (item.rules) {
         item._rules = canShowError.value ? item.rules : [];
       }
     }
   };
 
-  watch(() => canShowError.value, activateRulesInForm);
-
-  watchEffect(activateRulesInForm);
-
   const onSubmit = (action?: CallbackFunction) => {
     canShowError.value = true;
+    activateRulesInForm();
+    console.log('Form data:', formData.value);
     action && action();
   };
 
@@ -81,7 +68,38 @@ export function useForm(initialFormConfig: Record<string, InputItemConfig>): Use
   const formDataValue = computed(() => {
     return mapValues(formData.value, getInputValue);
   });
-  const isValid = computed(() => Object.values(formData.value).every((input) => !useValidation(input)));
+
+  const isValid = computed(() => Object.values(formData.value).every((input: InputParams) => !useValidation(input)));
+
+  watch(() => canShowError.value, activateRulesInForm);
+  watchEffect(activateRulesInForm);
 
   return { formData, onSubmit, onReset, formDataValue, isValid };
+}
+
+function getInputParams(inputParams: InputParams): InputParams {
+  if (Array.isArray(inputParams)) return inputParams.map(getInputParams);
+  if (!Object.keys(inputParams).includes('value')) {
+    return inputParams;
+  }
+  const { value, rules, ...rest } = inputParams;
+  return {
+    ...rest,
+    value: value ?? '',
+    rules: rules ?? [],
+    label: inputParams.label ?? '',
+    hint: inputParams.hint ?? ''
+  };
+}
+
+function getInputValue<T>(input: InputParams): T | Array<T> {
+  if (Array.isArray(input.value)) {
+    return input.value.map((item) => mapValues(item, (fieldValues) => fieldValues?.value ?? fieldValues)) as T[];
+  }
+  const inputValue = input.value ?? input;
+  return inputValue as T;
+}
+
+function getInitDataForm(initialDataParams: FormConfig): FormData {
+  return mapValues(initialDataParams, getInputParams);
 }
