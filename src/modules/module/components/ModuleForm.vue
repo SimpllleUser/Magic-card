@@ -2,7 +2,8 @@
   import { ref } from 'vue';
   import VModal from 'components/VModal.vue';
   import VForm from 'components/VForm/_index.vue';
-  import { useForm } from 'components/VForm/composables/useForm';
+  // import { useForm } from 'components/VForm/composables/useForm';
+  import { useForm } from 'src/shared/ui/VForm/useForm';
   import { ActionForm, ComponentTypes, ValidationRule } from 'components/VForm/types';
   import { useModulesStore } from 'src/modules/module/store/modules';
   import { EntityUnform } from 'boot/types';
@@ -24,7 +25,7 @@
     return {
       id: item.id,
       name: useInput({
-        value: item.name,
+        value: item.name || '',
         label: 'Name',
         rules: [ValidationRule.Required]
       }),
@@ -40,19 +41,19 @@
     return {
       id: data?.id || '',
       title: useInput({
-        value: data?.title,
+        value: data?.title || '',
         label: 'Title',
         rules: [ValidationRule.Required]
       }),
       description: useInput({
-        value: data?.description,
+        value: data?.description || '',
         label: 'Description',
         rules: [ValidationRule.Required],
         type: 'textarea'
       }),
       items: {
         component: ComponentTypes.FormInputList,
-        value: data?.items?.map(getFormInputItem) ?? [],
+        value: data?.items ? data?.items?.map(getFormInputItem) : [],
         config: getFormInputItem({})
       }
     };
@@ -79,16 +80,16 @@
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
+        <div class="col">
+          <FormInput v-model="form.form.title" />
+        </div>
         <div class="row">
           <div class="col">
-            <FormInput v-model="form.formData.title" />
-          </div>
-          <div class="col">
-            <FormInput v-model="form.formData.description" />
+            <FormInput v-model="form.form.description" />
           </div>
         </div>
         <div class="row">
-          <FormInput v-model="form.formData.items" />
+          <FormInput v-model="form.form.items" />
         </div>
       </VForm>
     </template>

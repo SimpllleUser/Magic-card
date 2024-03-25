@@ -1,9 +1,8 @@
-import { CallbackFunction } from 'boot/types';
 import { ValidationRule } from 'components/VForm/types';
 
-type Rule = CallbackFunction<any, boolean | string>;
+type Rule = (...params: any) => boolean | string;
 
-export const rules: Record<ValidationRule, Rule> = {
+export const rules: { [key: string]: Rule } = {
   [ValidationRule.After](value: string, referenceDate: string): boolean | string {
     return new Date(value) > new Date(referenceDate) || `Дата должна быть после ${referenceDate}`;
   },
