@@ -19,6 +19,9 @@ export enum ComponentTypes {
   Checkbox = 'Checkbox',
   FormInputList = 'FormInputList'
 }
+
+//  FormInputList = 'FormInputList'
+
 export enum ActionForm {
   Create,
   Edit

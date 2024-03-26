@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import VModal from 'components/VModal.vue';
   import VForm from 'components/VForm/_index.vue';
   // import { useForm } from 'components/VForm/composables/useForm';
@@ -10,7 +10,9 @@
   import { IModule } from 'src/modules/module/types';
   import { computed } from 'vue';
   import FormInput from 'components/VForm/VInput/FormInput.vue';
-  import { useCheckbox, useInput } from 'components/VForm/VInput/form-inputs';
+  // import { useCheckbox, useInput } from 'components/VForm/VInput/form-inputs';
+
+  import { useText, useCheck, useInputList } from 'src/shared/ui/VForm/form-inputs';
 
   interface Props {
     module?: IModule;
@@ -24,15 +26,14 @@
   const getFormInputItem = (item: any): any => {
     return {
       id: item.id,
-      name: useInput({
-        value: item.name || '',
+      name: useText({
+        value: item?.name || '',
         label: 'Name',
         rules: [ValidationRule.Required]
       }),
-      isChecked: useCheckbox({
-        value: item.isChecked,
-        label: 'Checked',
-        rules: [ValidationRule.Required]
+      isChecked: useCheck({
+        value: item?.isChecked,
+        label: 'Checked'
       })
     };
   };
@@ -40,22 +41,21 @@
   const getFormConfig = (data: any): any => {
     return {
       id: data?.id || '',
-      title: useInput({
+      title: useText({
         value: data?.title || '',
         label: 'Title',
         rules: [ValidationRule.Required]
       }),
-      description: useInput({
+      description: useText({
         value: data?.description || '',
         label: 'Description',
-        rules: [ValidationRule.Required],
-        type: 'textarea'
+        rules: [ValidationRule.Required]
+        // type: 'textarea'
       }),
-      items: {
-        component: ComponentTypes.FormInputList,
+      items: useInputList({
         value: data?.items ? data?.items?.map(getFormInputItem) : [],
         config: getFormInputItem({})
-      }
+      })
     };
   };
 
@@ -80,6 +80,7 @@
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
+        {{ formId }}
         <div class="col">
           <FormInput v-model="form.form.title" />
         </div>

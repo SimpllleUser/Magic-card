@@ -13,7 +13,10 @@
 
   const internalProps = computed(() => omit(props.modelValue, ['value']));
 
-  const componentType = computed(() => components[props.modelValue.component]);
+  const componentType = computed(() => {
+    if (!props.modelValue) return 'div';
+    return components[props.modelValue.component];
+  });
 
   const emit = defineEmits<{ (event: _INPUT_EVENT_NAME, payload: IUseFormInput): void }>();
   const data = useVModel(props, _INPUT_PROPS_KEY, emit);
@@ -34,6 +37,7 @@
 </script>
 <template>
   <component
+    v-if="internalProps && data"
     :is="componentType"
     v-model="data.value"
     v-bind="internalProps"

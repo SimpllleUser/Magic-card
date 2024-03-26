@@ -1,13 +1,13 @@
 import { ValidationRule } from 'src/components/VForm/types';
 
 export type SimpleValueTypes = string | number | boolean;
+
 // type NotSimpleValueType = SimpleValueTypes | Array<NotSimpleValueType> | Record<string, NotSimpleValueType>;
 
 export enum FormInputTypes {
   Input = 'Input',
   Check = 'Checkbox',
-  Select = 'Select',
-  InputList = 'FormInputList'
+  Select = 'Select'
 }
 
 export type SimpleFormInputType =

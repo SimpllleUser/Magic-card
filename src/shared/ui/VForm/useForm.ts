@@ -1,7 +1,7 @@
-import { has, isObject, mapValues } from 'lodash';
+import { cloneDeep, has, mapValues } from 'lodash';
 import { useValidation } from 'src/components/VForm/composables/useValidation';
 import { computed, ComputedRef, ref, Ref, watch, watchEffect } from 'vue';
-import { FormInputTypes, SimpleFormInputConfig, SimpleFormInputType, SimpleValueTypes, UseFormParams } from './types';
+import { SimpleFormInputConfig, UseFormParams } from './types';
 
 export function useForm<T>(formConfig: UseFormParams): {
   form: Ref<any>;
@@ -13,33 +13,21 @@ export function useForm<T>(formConfig: UseFormParams): {
   const canShowError = ref(false);
 
   const form = ref<UseFormParams>(formConfig);
-  const formValue = computed((): T => getValueFromForm(form.value));
 
-  /// зробити активацію правил для форми по аналогії з activateRulesInForm
+  const formValue = computed((): T => getFormValue(form.value));
 
-  const activateRulesOfForm = () => {
-    for (const key in form.value) {
+  const activateRulesOfForm = (allowActivateValidation: boolean): void => {
+    if (!allowActivateValidation) return;
+    Object.keys(form.value).forEach((key) => {
       const item = form.value[key];
-      if (isObject(item.value)) {
-        console.log({ item }, has(item, 'rules'));
-        item.value = mapValues(item.value, (inputItem: SimpleFormInputConfig) => {
-          return mapValues(inputItem, (item: SimpleFormInputConfig) => {
-            if (!has(item, 'rules')) return item;
-            return {
-              ...item,
-              _rules: canShowError.value ? item?.rules : []
-            };
-          });
-        });
-      } else if (item.rules) {
-        item._rules = canShowError.value ? item.rules : [];
-      }
-    }
+      if (!has(item, 'value')) return;
+      item.activateValidation && item.activateValidation(allowActivateValidation);
+    });
   };
 
   const onSubmit = (action?: CallableFunction) => {
     canShowError.value = true;
-    activateRulesOfForm();
+    activateRulesOfForm(canShowError.value);
     action && action();
   };
 
@@ -52,11 +40,11 @@ export function useForm<T>(formConfig: UseFormParams): {
   watch(
     () => canShowError.value,
     () => {
-      canShowError.value && activateRulesOfForm();
+      activateRulesOfForm(canShowError.value);
     }
   );
   watchEffect(() => {
-    canShowError.value && activateRulesOfForm();
+    activateRulesOfForm(canShowError.value);
   });
 
   const isValid = computed((): boolean => isValidForm(form.value));
@@ -70,39 +58,14 @@ export function useForm<T>(formConfig: UseFormParams): {
   };
 }
 
-const getValueFromInput = (item: SimpleFormInputConfig | SimpleValueTypes): SimpleValueTypes => {
-  if (typeof item !== 'object') return item;
-  return item.value;
-};
-
-const collectionOfGetvalueFromForm = {
-  [FormInputTypes.Input]: (item: SimpleFormInputConfig) => item.value,
-  [FormInputTypes.Check]: (item: SimpleFormInputConfig) => item.value,
-  [FormInputTypes.Select]: (item: SimpleFormInputConfig) => item.value,
-  [FormInputTypes.InputList]: (item: { value: Array<Record<string, SimpleFormInputConfig>> }) => {
-    return Array.isArray(item.value)
-      ? item.value?.map((inputItem: Record<string, SimpleFormInputConfig>) => {
-          return mapValues(inputItem, getValueFromInput);
-        })
-      : [];
-  }
-};
-
-function getValueFromForm<T>(form: UseFormParams): T {
-  return mapValues(form, (item: SimpleFormInputConfig & { component: SimpleFormInputType }) => {
-    if (typeof item !== 'object') return item;
-    return collectionOfGetvalueFromForm[item.component as FormInputTypes](item);
-  }) as T;
-}
-
-function cloneDeep<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value));
+function getFormValue<T>(form: any): any {
+  return mapValues(form, (item) => (has(item, 'value') ? item.getValue() : item)) as T;
 }
 
 function isValidForm(form: UseFormParams): boolean {
   return Object.values(form as unknown as { [key: string]: SimpleFormInputConfig })
-    .filter((item: SimpleFormInputConfig) => has(item, 'rules'))
+    .filter((item: SimpleFormInputConfig) => has(item, 'value'))
     .every((item: SimpleFormInputConfig) => {
-      return !useValidation(item);
+      return item?.isValid && item?.isValid(useValidation);
     });
 }
