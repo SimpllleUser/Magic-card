@@ -3,13 +3,13 @@ import { useText } from 'src/shared/ui/VForm/form-inputs';
 import { IInputString } from 'src/shared/ui/VForm/form-inputs/base-inputs';
 import { IModule } from '../types';
 
-export interface IFormConfig {
+export interface IModuleFormConfig {
   id: string;
   title: IInputString;
   description: IInputString;
 }
 
-export const getFormConfig = (data?: IModule): IFormConfig => {
+export const getFormConfig = (data?: IModule): IModuleFormConfig => {
   return {
     id: data?.id || '',
     title: useText({

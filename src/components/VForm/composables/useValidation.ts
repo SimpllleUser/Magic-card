@@ -3,7 +3,7 @@ import { isString } from 'lodash';
 import { rules } from 'components/VForm/composables/rules';
 import { isBoolean } from 'lodash';
 import { ValidationRule } from '../types';
-import { SimpleFormInputConfig } from 'src/shared/ui/VForm/types';
+import { IFormInput } from 'src/shared/ui/VForm/types';
 
 const getRuleArguments = (ruleKey: string): { ruleKey: string; paramsInArray: string[] } => {
   const [rule, paramsInString] = ruleKey?.split(':') || [];
@@ -17,7 +17,7 @@ const getRules = (keys: Array<ValidationRule>): ((value: unknown) => boolean | s
     const params = [value, ...paramsInArray];
     return rules[ruleKey](...params) as boolean | string;
   });
-export function useValidation(input: SimpleFormInputConfig) {
+export function useValidation(input: IFormInput) {
   const error = computed((): string => {
     const actualRules = getRules(input?.rules || []);
     const resultValidation =

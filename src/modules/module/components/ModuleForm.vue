@@ -1,15 +1,15 @@
 <script setup lang="ts">
-  import { ref, toRefs, watch } from 'vue';
+  import { ref, toRefs } from 'vue';
   import VModal from 'components/VModal.vue';
   import VForm from 'components/VForm/_index.vue';
+  import FormInput from 'components/VForm/VInput/FormInput.vue';
   import { useForm } from 'src/shared/ui/VForm/useForm';
-  import { ActionForm, ComponentTypes, ValidationRule } from 'components/VForm/types';
+  import { ActionForm } from 'components/VForm/types';
   import { useModulesStore } from 'src/modules/module/store/modules';
   import { EntityUnform } from 'boot/types';
   import { IModule } from 'src/modules/module/types';
   import { computed } from 'vue';
-  import FormInput from 'components/VForm/VInput/FormInput.vue';
-  import { getFormConfig, IFormConfig } from 'src/modules/module/model/form';
+  import { getFormConfig, IModuleFormConfig } from 'src/modules/module/model/form';
 
   interface Props {
     module?: IModule;
@@ -20,11 +20,11 @@
 
   const moduleStore = useModulesStore();
 
-  const generateForm = (params?: IModule) => useForm<IModule>(getFormConfig(params || {} as IModule));
+  const generateForm = (params?: IModule) => useForm(getFormConfig(params || {}));
 
   const form = ref(generateForm());
 
-  const { inputs } = toRefs<{ inputs: IFormConfig }>(form.value);
+  const { inputs } = toRefs<{ inputs: IModuleFormConfig }>(form.value);
 
   const onShowModal = () => {
     if (!props.module?.id) return;

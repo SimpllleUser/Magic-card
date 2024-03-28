@@ -1,9 +1,9 @@
 import { cloneDeep, has, mapValues } from 'lodash';
 import { useValidation } from 'src/components/VForm/composables/useValidation';
 import { computed, ComputedRef, ref, Ref, watch, watchEffect } from 'vue';
-import { SimpleFormInputConfig, UseFormParams } from './types';
+import { FormConfig, IFormInput } from './types';
 
-export function useForm<T>(formConfig: any): {
+export function useForm<T>(formConfig: FormConfig): {
   inputs: Ref<any>;
   formValue: ComputedRef<T>;
   isValid: ComputedRef<boolean>;
@@ -12,14 +12,14 @@ export function useForm<T>(formConfig: any): {
 } {
   const canShowError = ref(false);
 
-  const inputs = ref<UseFormParams>(formConfig);
+  const inputs = ref<FormConfig>(formConfig);
 
   const formValue = computed<T>(() => getFormValue(inputs.value));
 
   const activateRulesOfForm = (allowActivateValidation: boolean): void => {
     if (!allowActivateValidation) return;
-    Object.keys(inputs.value).forEach((key) => {
-      const item = inputs.value[key];
+    Object.keys(inputs.value).forEach((key: string) => {
+      const item = inputs.value[key] as IFormInput;
       if (!has(item, 'value')) return;
       item.activateValidation && item.activateValidation(allowActivateValidation);
     });
@@ -33,7 +33,7 @@ export function useForm<T>(formConfig: any): {
 
   const onReset = (action?: CallableFunction) => {
     canShowError.value = false;
-    inputs.value = cloneDeep<UseFormParams>(formConfig);
+    inputs.value = cloneDeep<FormConfig>(formConfig);
     action && action();
   };
 
@@ -62,10 +62,10 @@ function getFormValue<T>(form: any): any {
   return mapValues(form, (item) => (has(item, 'value') ? item.getValue() : item)) as T;
 }
 
-function isValidForm(form: UseFormParams): boolean {
+function isValidForm(form: FormConfig): boolean {
   return Object.values(form as unknown as { [key: string]: any })
-    .filter((item: SimpleFormInputConfig) => has(item, 'value'))
-    .every((item: SimpleFormInputConfig) => {
+    .filter((item: IFormInput) => has(item, 'value'))
+    .every((item: IFormInput) => {
       return item?.isValid && item?.isValid(useValidation);
     });
 }
