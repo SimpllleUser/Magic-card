@@ -4,19 +4,18 @@
   import { cloneDeep } from 'lodash';
   import { useCRUD } from 'src/composables/useCRUD';
   import { generateId } from 'src/helpers/id-generator';
-  import { FormInputProps } from 'components/VForm/types';
-  import FormInput from 'components/VForm/VInput/FormInput.vue';
+  import { IFormInput } from '../types';
 
-  type IModelValue = Array<Record<string, FormInputProps>>;
+  type IModelValue = Array<Record<string, IFormInput>>;
   interface Props {
-    modelValue: IModelValue;
-    config: IModelValue;
+    modelValue: IFormInput;
+    config: IFormInput;
   }
   type _INPUT_EVENT_NAME = 'update:modelValue';
   const _INPUT_PROPS_KEY = 'modelValue';
 
   interface Emits {
-    (event: _INPUT_EVENT_NAME, payload: IModelValue): void;
+    (event: _INPUT_EVENT_NAME, payload: IFormInput): void;
   }
 
   const props = defineProps<Props>();
@@ -36,7 +35,7 @@
     onEmitValue();
   };
 
-  const { data: formInputItems, create, remove } = useCRUD<IModelValue>([], { returnAsObject: true });
+  const { data: formInputItems, create, remove } = useCRUD<IFormInput & { id: string }>([], { returnAsObject: true });
   formInputItems.value.forEach(onCreate);
 
   const onEmitValue = () => {

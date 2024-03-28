@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { ActionForm } from 'components/VForm/types';
-  import { UseFormResult } from 'components/VForm/composables/useForm';
+  import { ActionForm } from './types';
+  import { IFormEntity } from './useForm';
 
   interface Props {
     action: ActionForm;
-    config: UseFormResult;
+    config: IFormEntity;
   }
 
   interface Emits {

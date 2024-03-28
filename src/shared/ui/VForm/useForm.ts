@@ -1,7 +1,15 @@
 import { cloneDeep, has, mapValues } from 'lodash';
-import { useValidation } from 'src/components/VForm/composables/useValidation';
+import { useValidation } from 'src/shared/ui/VForm/validation/useValidation';
 import { computed, ComputedRef, ref, Ref, watch, watchEffect } from 'vue';
 import { FormConfig, IFormInput } from './types';
+
+export interface IFormEntity {
+  inputs: Ref<unknown>;
+  formValue: ComputedRef<unknown>;
+  isValid: ComputedRef<boolean>;
+  onSubmit: (action?: CallableFunction) => void;
+  onReset: (action?: CallableFunction) => void;
+}
 
 export function useForm<T>(formConfig: FormConfig): {
   inputs: Ref<any>;

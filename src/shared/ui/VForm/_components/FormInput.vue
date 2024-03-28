@@ -1,15 +1,15 @@
 <script setup lang="ts">
-  import { computed, defineEmits, defineProps, useSlots } from 'vue';
-  import { IUseFormInput } from 'components/VForm/types';
+  import { computed, defineEmits, defineProps, Ref, useSlots } from 'vue';
   import { isString, omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
-  import { components } from 'components/VForm/VInput/form-inputs';
-  import { rules } from 'components/VForm/composables/rules';
+  import { rules } from 'src/shared/ui/VForm/validation/rules';
+  import { IFormInput, IUseFormInput } from '../types';
+  import { components } from 'src/shared/ui/VForm/constants';
 
   type _INPUT_EVENT_NAME = 'update:modelValue';
   const _INPUT_PROPS_KEY = 'modelValue';
 
-  const props = defineProps<{ modelValue: any }>();
+  const props = defineProps<{ modelValue: IFormInput }>();
 
   const internalProps = computed(() => omit(props.modelValue, ['value']));
 
@@ -19,7 +19,7 @@
   });
 
   const emit = defineEmits<{ (event: _INPUT_EVENT_NAME, payload: IUseFormInput): void }>();
-  const data = useVModel(props, _INPUT_PROPS_KEY, emit);
+  const data: Ref<IFormInput> = useVModel(props, _INPUT_PROPS_KEY, emit);
 
   const activeSlots = useSlots();
 
@@ -29,7 +29,7 @@
 
   const errorMessage = computed(() =>
     internalProps.value._rules
-      ?.map((key) => rules[key](data.value.value))
+      ?.map((key: string) => rules[key](data.value.value))
       .filter(isString)
       .at(0)
   );
@@ -51,3 +51,4 @@
     </template>
   </component>
 </template>
+src/shared/ui/VForm/composables/rules

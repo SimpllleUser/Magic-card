@@ -1,15 +1,15 @@
 <script setup lang="ts">
   import { ref, toRefs } from 'vue';
   import VModal from 'components/VModal.vue';
-  import VForm from 'components/VForm/_index.vue';
-  import FormInput from 'components/VForm/VInput/FormInput.vue';
+  import VForm from 'src/shared/ui/VForm/_index.vue';
+  import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
   import { useForm } from 'src/shared/ui/VForm/useForm';
-  import { ActionForm } from 'components/VForm/types';
   import { useModulesStore } from 'src/modules/module/store/modules';
   import { EntityUnform } from 'boot/types';
   import { IModule } from 'src/modules/module/types';
   import { computed } from 'vue';
   import { getFormConfig, IModuleFormConfig } from 'src/modules/module/model/form';
+  import { ActionForm } from 'src/shared/ui/VForm/types';
 
   interface Props {
     module?: IModule;

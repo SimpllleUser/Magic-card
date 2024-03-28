@@ -1,4 +1,5 @@
-import { ComponentTypes, ValidationRule } from 'components/VForm/types';
+import { ValidationRule } from 'src/shared/ui/VForm/validation/rules';
+import { ComponentTypes } from '../types';
 
 export interface ValidationFunction {
   (params: { rules: Array<ValidationRule>; value: string | boolean | Array<string> }): boolean;

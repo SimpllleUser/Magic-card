@@ -1,4 +1,4 @@
-import { ValidationRule } from 'src/components/VForm/types';
+import { ValidationRule } from 'src/shared/ui/VForm/validation/rules';
 import { useText } from 'src/shared/ui/VForm/form-inputs';
 import { IInputString } from 'src/shared/ui/VForm/form-inputs/base-inputs';
 import { IModule } from '../types';

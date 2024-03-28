@@ -1,6 +1,6 @@
 import { has, mapValues } from 'lodash';
 import { BaseInputOptions, IBaseInputs } from './base-inputs';
-import { ComponentTypes } from 'src/components/VForm/types';
+import { ComponentTypes } from '../types';
 
 const hasValue = (item: any): boolean => has(item, 'value');
 
