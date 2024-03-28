@@ -8,5 +8,4 @@ export interface IModule {
   id: string;
   title: string;
   description: string;
-  // word: Array<IWordCard>;
 }

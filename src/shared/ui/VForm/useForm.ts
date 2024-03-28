@@ -3,8 +3,8 @@ import { useValidation } from 'src/components/VForm/composables/useValidation';
 import { computed, ComputedRef, ref, Ref, watch, watchEffect } from 'vue';
 import { SimpleFormInputConfig, UseFormParams } from './types';
 
-export function useForm<T>(formConfig: UseFormParams): {
-  form: Ref<any>;
+export function useForm<T>(formConfig: any): {
+  inputs: Ref<any>;
   formValue: ComputedRef<T>;
   isValid: ComputedRef<boolean>;
   onSubmit: (action?: CallableFunction) => void;
@@ -12,14 +12,14 @@ export function useForm<T>(formConfig: UseFormParams): {
 } {
   const canShowError = ref(false);
 
-  const form = ref<UseFormParams>(formConfig);
+  const inputs = ref<UseFormParams>(formConfig);
 
-  const formValue = computed((): T => getFormValue(form.value));
+  const formValue = computed<T>(() => getFormValue(inputs.value));
 
   const activateRulesOfForm = (allowActivateValidation: boolean): void => {
     if (!allowActivateValidation) return;
-    Object.keys(form.value).forEach((key) => {
-      const item = form.value[key];
+    Object.keys(inputs.value).forEach((key) => {
+      const item = inputs.value[key];
       if (!has(item, 'value')) return;
       item.activateValidation && item.activateValidation(allowActivateValidation);
     });
@@ -33,7 +33,7 @@ export function useForm<T>(formConfig: UseFormParams): {
 
   const onReset = (action?: CallableFunction) => {
     canShowError.value = false;
-    form.value = cloneDeep<UseFormParams>(formConfig);
+    inputs.value = cloneDeep<UseFormParams>(formConfig);
     action && action();
   };
 
@@ -47,10 +47,10 @@ export function useForm<T>(formConfig: UseFormParams): {
     activateRulesOfForm(canShowError.value);
   });
 
-  const isValid = computed((): boolean => isValidForm(form.value));
+  const isValid = computed((): boolean => isValidForm(inputs.value));
 
   return {
-    form,
+    inputs,
     formValue,
     isValid,
     onSubmit,
@@ -63,7 +63,7 @@ function getFormValue<T>(form: any): any {
 }
 
 function isValidForm(form: UseFormParams): boolean {
-  return Object.values(form as unknown as { [key: string]: SimpleFormInputConfig })
+  return Object.values(form as unknown as { [key: string]: any })
     .filter((item: SimpleFormInputConfig) => has(item, 'value'))
     .every((item: SimpleFormInputConfig) => {
       return item?.isValid && item?.isValid(useValidation);

@@ -12,7 +12,6 @@ export interface BaseInputOptions<T> {
 
 interface InputParams<T> {
   value: T;
-  component: ComponentTypes;
   rules?: Array<ValidationRule>;
   hint?: string;
   label?: string;
@@ -52,3 +51,7 @@ const generateBaseInput =
 export const useText = generateBaseInput<string>(ComponentTypes.Input);
 export const useCheck = generateBaseInput<boolean>(ComponentTypes.Checkbox);
 export const useSelect = generateBaseInput<string | Array<string>>(ComponentTypes.Select);
+
+export type IInputString = IBaseInputs<string>;
+export type ICheckBox = IBaseInputs<boolean>;
+export type ISelect = IBaseInputs<string | Array<string>>;
