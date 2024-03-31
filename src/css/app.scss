@@ -6,3 +6,8 @@
 .q-card__section.q-card__section--vert:has(.dialog-plugin) {
   padding: 0;
 }
+
+
+.border-secondary {
+  border: 1px solid var(--q-secondary)
+}
