@@ -47,3 +47,4 @@
 </template>
 
 <style scoped></style>
+src/shared/stores/modal

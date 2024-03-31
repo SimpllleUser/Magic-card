@@ -2,7 +2,7 @@
   import { watch } from 'vue';
   import { useVModel } from '@vueuse/core';
   import { cloneDeep } from 'lodash';
-  import { useCRUD } from 'src/composables/useCRUD';
+  import { useCRUD } from 'src/shared/composables/useCRUD';
   import { generateId } from 'src/helpers/id-generator';
   import { IFormInput } from '../types';
 

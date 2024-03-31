@@ -1,11 +1,11 @@
 <script lang="ts" setup>
   import { ref, computed, nextTick } from 'vue';
-  import ModuleItem from 'src/modules/module/components/ModuleItem.vue';
-  import ModuleForm from 'src/modules/module/components/ModuleForm.vue';
+  import ModuleItem from 'src/features/module/components/ModuleItem.vue';
+  import ModuleForm from 'src/features/module/components/ModuleForm.vue';
 
-  import { useModulesStore } from 'src/modules/module/store/modules';
-  import { useModal } from 'src/composables/useModal';
-  import { IModule } from 'src/modules/module/types';
+  import { useModulesStore } from 'src/features/module/store/modules';
+  import { useModal } from 'src/shared/composables/useModal';
+  import { IModule } from 'src/features/module/types/module';
 
   const moduleStore = useModulesStore();
   const { remove: removeModule } = moduleStore;
@@ -55,3 +55,4 @@
 </template>
 
 <style scoped></style>
+src/features/module/module

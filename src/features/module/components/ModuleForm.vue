@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import { ref, toRefs } from 'vue';
-  import VModal from 'components/VModal.vue';
+  import VModal from 'src/shared/ui/VModal/_index.vue';
   import VForm from 'src/shared/ui/VForm/_index.vue';
   import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
   import { useForm } from 'src/shared/ui/VForm/useForm';
-  import { useModulesStore } from 'src/modules/module/store/modules';
+  import { useModulesStore } from 'src/features/module/store/modules';
   import { EntityUnform } from 'boot/types';
-  import { IModule } from 'src/modules/module/types';
+  import { IModule } from 'src/features/module/types/module';
   import { computed } from 'vue';
-  import { getFormConfig, IModuleFormConfig } from 'src/modules/module/model/form';
+  import { getFormConfig, IModuleFormConfig } from 'src/features/module/types/form';
   import { ActionForm } from 'src/shared/ui/VForm/types';
 
   interface Props {
@@ -57,3 +57,4 @@
     </template>
   </v-modal>
 </template>
+src/features/module/types/formsrc/features/module/module

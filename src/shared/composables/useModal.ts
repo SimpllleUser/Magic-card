@@ -1,4 +1,4 @@
-import { useModalStore } from 'stores/modal';
+import { useModalStore } from 'src/stores/modal';
 
 export function useModal(key: string) {
   const modal = useModalStore();

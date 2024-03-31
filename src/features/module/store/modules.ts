@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { IModule } from '../types';
-import { useCRUD } from 'src/composables/useCRUD';
+import { IModule } from '../types/module';
+import { useCRUD } from 'src/shared/composables/useCRUD';
 
 export const useModulesStore = defineStore('modules', () => {
   // !TO REPO
