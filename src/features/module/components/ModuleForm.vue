@@ -3,6 +3,7 @@
   import VModal from 'src/shared/ui/VModal/_index.vue';
   import VForm from 'src/shared/ui/VForm/_index.vue';
   import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
+  import WordsForm from 'src/features/words/components/WordsForm.vue';
   import { useForm } from 'src/shared/ui/VForm/useForm';
   import { useModulesStore } from 'src/features/module/store/modules';
   import { EntityUnform } from 'boot/types';
@@ -52,6 +53,9 @@
           <div class="col">
             <FormInput v-model="inputs.description" />
           </div>
+        </div>
+        <div class="row full-width">
+          <words-form />
         </div>
       </VForm>
     </template>
