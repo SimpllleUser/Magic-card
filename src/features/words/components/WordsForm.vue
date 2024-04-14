@@ -3,11 +3,10 @@
   import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from '../constants';
   import InputSplitter from './InputSplitter.vue';
   import InputSeparatedSymbol from './InputSeparatedSymbol.vue';
+  import WordsList from './WordsList.vue';
 
   const text = ref('');
   const textSeparated = ref<Array<Array<string>>>([]);
-  const separatorWordItems = ref(',');
-  const separatorDefinition = ref(':');
 
   const setSeparatedValue = (value: Array<Array<string>>) => {
     textSeparated.value = value;
@@ -25,7 +24,7 @@
         v-model="text"
         @update-separated-value="setSeparatedValue"
         :separator-word-items="separatedOnWordItems"
-        :separator-definition="separatorDefinition"
+        :separator-definition="separatedOnDefinitions"
       />
     </div>
     <div class="row justify-between">
@@ -33,12 +32,13 @@
         <input-separated-symbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
       </div>
       <div>
+        {{ separatedOnDefinitions }}
         <input-separated-symbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
       </div>
     </div>
-    <div class="row justify-center">Result of list words with definition</div>
+    <!-- <div class="row justify-center">Result of list words with definition</div> -->
     <div>
-      {{ textSeparated }}
+      <words-list :words="textSeparated" />
     </div>
   </div>
 </template>

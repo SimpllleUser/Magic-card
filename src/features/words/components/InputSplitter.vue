@@ -42,9 +42,12 @@
   );
 
   const separatedValue = (text: string): Array<Array<string>> =>
-    separateByString(inputValue.value, props.separatorWordItems).map((item: string) =>
-      separateByString(item, props.separatorDefinition)
-    );
+    separateByString(inputValue.value, props.separatorWordItems)
+      .map((item: string) => separateByString(item, props.separatorDefinition))
+      .map((item: Array<string>) => {
+        if (item.length <= 2) return item;
+        return [item[0], item.slice(1).join(', ')];
+      });
 </script>
 
 <template>
