@@ -1,15 +1,21 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from '../constants';
   import InputSplitter from './InputSplitter.vue';
   import InputSeparatedSymbol from './InputSeparatedSymbol.vue';
   import WordsList from './WordsList.vue';
+  import { WordEntity } from '../types/word';
+  import { generateId } from 'src/helpers/id-generator';
+  import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';
 
   const text = ref('');
-  const textSeparated = ref<Array<Array<string>>>([]);
+  const textSeparated = ref<Array<WordEntity>>([]);
 
   const setSeparatedValue = (value: Array<Array<string>>) => {
-    textSeparated.value = value;
+    textSeparated.value = value.map((item) => ({
+      id: generateId(),
+      from: item[0],
+      to: item[1]
+    }));
   };
 
   const separatedOnWordItems = ref('');
@@ -27,17 +33,15 @@
         :separator-definition="separatedOnDefinitions"
       />
     </div>
-    <div class="row justify-between">
+    <div class="row justify-between q-pt-md">
       <div>
         <input-separated-symbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
       </div>
       <div>
-        {{ separatedOnDefinitions }}
         <input-separated-symbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
       </div>
     </div>
-    <!-- <div class="row justify-center">Result of list words with definition</div> -->
-    <div>
+    <div class="q-pt-md">
       <words-list :words="textSeparated" />
     </div>
   </div>

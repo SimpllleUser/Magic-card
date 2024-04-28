@@ -55,10 +55,9 @@
           </div>
         </div>
         <div class="row full-width">
-          <words-form />
+          <WordsForm />
         </div>
       </VForm>
     </template>
   </v-modal>
 </template>
-src/features/module/types/formsrc/features/module/module
