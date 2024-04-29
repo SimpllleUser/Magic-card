@@ -7,11 +7,22 @@
   import { generateId } from 'src/helpers/id-generator';
   import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';
 
+  import { useVModel } from '@vueuse/core';
+
+  interface Props {
+    modelValue: Array<WordEntity>;
+  }
+
+  const props = defineProps<Props>();
+  const emit = defineEmits(['update:modelValue']);
+
+  const wordsListModel = useVModel(props, 'modelValue', emit);
+
   const text = ref('');
-  const textSeparated = ref<Array<WordEntity>>([]);
+  // const textSeparated = ref<Array<WordEntity>>([]);
 
   const setSeparatedValue = (value: Array<Array<string>>) => {
-    textSeparated.value = value.map((item) => ({
+    wordsListModel.value = value.map((item) => ({
       id: generateId(),
       from: item[0],
       to: item[1]
@@ -42,7 +53,7 @@
       </div>
     </div>
     <div class="q-pt-md">
-      <words-list :words="textSeparated" />
+      <words-list :words="wordsListModel" />
     </div>
   </div>
 </template>
