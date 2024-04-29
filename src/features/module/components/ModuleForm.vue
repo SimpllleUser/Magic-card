@@ -11,6 +11,7 @@
   import { computed } from 'vue';
   import { getFormConfig, IModuleFormConfig } from 'src/features/module/types/form';
   import { ActionForm } from 'src/shared/ui/VForm/types';
+  import { WordEntity } from 'src/features/words/types/word';
 
   interface Props {
     module?: IModule;
@@ -21,6 +22,8 @@
 
   const moduleStore = useModulesStore();
 
+  const wordsList = ref<Array<WordEntity>>([]);
+
   const generateForm = (params?: IModule) => useForm(getFormConfig(params || {}));
 
   const form = ref(generateForm());
@@ -30,11 +33,12 @@
   const onShowModal = () => {
     if (!props.module?.id) return;
     form.value = generateForm(props.module);
+    wordsList.value = props.module.words;
   };
 
   const onSubmit = (data: EntityUnform<IModule>, action: CallableFunction) => {
     const storeAction = props.module?.id ? moduleStore.update : moduleStore.create;
-    storeAction(data);
+    storeAction({ ...data, words: wordsList.value });
     form.value.onReset();
     action();
   };
@@ -47,15 +51,15 @@
     <template #default="{ hide }">
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
         <div class="col">
-          <FormInput v-model="inputs.title" />
+          <FormInput v-model="form.inputs.title" />
         </div>
         <div class="row">
           <div class="col">
-            <FormInput v-model="inputs.description" />
+            <FormInput v-model="form.inputs.description" />
           </div>
         </div>
         <div class="row full-width">
-          <WordsForm />
+          <WordsForm v-model="wordsList" />
         </div>
       </VForm>
     </template>
