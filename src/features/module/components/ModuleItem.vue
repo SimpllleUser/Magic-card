@@ -9,6 +9,7 @@
   interface Emits {
     (event: 'on-edit', payload: IModule): void;
     (event: 'on-remove', payload: string): void;
+    (event: 'view_detail', payload: string): void;
   }
 
   const confirmModalTexts = {
@@ -39,8 +40,9 @@
     <q-separator />
 
     <q-card-actions align="right" class="modules-item__actions">
-      <q-btn flat @click="emit('on-edit', module)">Edit</q-btn>
-      <q-btn flat @click="confirmModal">Remove</q-btn>
+      <q-btn flat @click="emit('view-detail', module.id)" color="primary" icon="play_arrow" />
+      <q-btn flat @click="emit('on-edit', module)" color="primary" icon="edit" />
+      <q-btn flat @click="confirmModal" color="primary" icon="delete" />
     </q-card-actions>
   </q-card>
 </template>

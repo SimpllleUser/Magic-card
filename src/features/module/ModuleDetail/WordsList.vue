@@ -1,0 +1,62 @@
+<script lang="ts" setup>
+  import { WordEntity } from 'src/features/words/types/word';
+  import { ref, watch } from 'vue';
+
+  interface Props {
+    words: WordEntity[];
+  }
+
+  const props = defineProps<Props>();
+
+  const getAllWordIds = (): Array<string> => props.words.map((word) => word.id) || [];
+
+  const selectedWords = ref(getAllWordIds());
+  const isSelectedAll = ref(true);
+
+  watch(selectedWords, (value) => {
+    isSelectedAll.value = value.length === props.words.length;
+  });
+
+  const onCheckSelectAll = () => {
+    selectedWords.value = isSelectedAll.value ? getAllWordIds() : [];
+  };
+
+  const chipCounter = {
+    size: 'md',
+    outline: true,
+    square: true,
+    color: 'primary'
+  };
+</script>
+
+<template>
+  <div>
+    <div class="row justify-between q-py-sm">
+      <q-chip v-bind="chipCounter">
+        <b> Selected: </b> <span class="q-ml-sm">{{ selectedWords.length }} / {{ props.words.length }}</span>
+      </q-chip>
+      <q-btn color="secondary" class="text-black" label="Play" />
+    </div>
+    <q-list bordered separator class="words-list">
+      <q-item>
+        <q-item-section>
+          <q-checkbox v-model="isSelectedAll" @update:model-value="onCheckSelectAll" label="All" />
+        </q-item-section>
+        <q-item-section><b>From</b></q-item-section>
+        <q-item-section><b>To</b></q-item-section>
+      </q-item>
+      <q-item clickable v-for="word in words" :key="word.id">
+        <q-item-section> <q-checkbox v-model="selectedWords" :val="word.id" /> </q-item-section>
+        <q-item-section>{{ word.from }}</q-item-section>
+        <q-item-section>{{ word.to }}</q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+  .words-list {
+    max-height: 25rem;
+    overflow-y: auto;
+  }
+</style>
