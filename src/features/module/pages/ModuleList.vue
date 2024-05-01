@@ -2,6 +2,7 @@
   import { ref, computed, nextTick } from 'vue';
   import ModuleItem from 'src/features/module/components/ModuleItem.vue';
   import ModuleForm from 'src/features/module/components/ModuleForm.vue';
+  import ModuleDetail from 'src/features/module/components/ModuleDetail.vue';
 
   import { useModulesStore } from 'src/features/module/store/modules';
   import { useModal } from 'src/shared/composables/useModal';
@@ -13,8 +14,10 @@
 
   const editModal = useModal('edit-module');
   const createModule = useModal('create-module');
+  const detailModule = useModal('detail-module');
 
   const currentModule = ref<IModule | null>(null);
+  const detailViewModule = ref<IModule | null>(null);
 
   const setEditModule = (moduleItem: IModule) => {
     currentModule.value = moduleItem;
@@ -23,16 +26,32 @@
     });
   };
 
+  const setDetailViewModule = (id: string) => {
+    detailViewModule.value = moduleStore.getById(id);
+    detailModule.show();
+  };
+
+  const resetDetailViewModule = () => {
+    detailViewModule.value = null;
+  };
+
   const _EMPTY_STATE_TITLE = 'You can add new module';
 </script>
 
 <template>
   <div class="q-px-xs">
     <module-form form-id="edit-module" v-if="currentModule" :module="currentModule" />
+    <module-detail :module="detailViewModule" @hide="resetDetailViewModule" />
     <module-form form-id="create-module" />
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
-        <module-item :module="module" class="q-ma-sm" @on-edit="setEditModule" @on-remove="removeModule" />
+        <module-item
+          :module="module"
+          class="q-ma-sm"
+          @on-edit="setEditModule"
+          @on-remove="removeModule"
+          @view-detail="setDetailViewModule"
+        />
       </div>
     </div>
     <div>

@@ -65,9 +65,9 @@
   };
 
   const rows = computed(() =>
-    props.words
-      .map((word: WordEntity, index: number) => ({ ...word, index, number: index + 1 }))
-      .map((word: WordEntity) => ({
+    props?.words
+      ?.map((word: WordEntity, index: number) => ({ ...word, index, number: index + 1 }))
+      ?.map((word: WordEntity) => ({
         ...word,
         actions: [
           {

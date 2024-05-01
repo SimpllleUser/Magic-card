@@ -5,7 +5,7 @@ import { useCRUD } from 'src/shared/composables/useCRUD';
 export const useModulesStore = defineStore('modules', () => {
   // !TO REPO
   // Може все таки зробити spread через bject
-  const [modules, create, read, update, remove] = useCRUD<IModule>([], { key: 'modules' });
+  const moduleCrud = useCRUD<IModule>([], { key: 'modules', returnAsObject: true });
 
-  return { modules, create, read, update, remove };
+  return { ...moduleCrud, modules: moduleCrud.data };
 });

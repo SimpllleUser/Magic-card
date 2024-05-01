@@ -36,8 +36,9 @@
 <template>
   <q-dialog v-model="state" v-bind="options">
     <q-card class="q-pa-none" style="min-width: 48rem">
-      <q-card-section class="q-pa-sm q-pb-none bg-primary text-white">
+      <q-card-section class="q-pa-sm q-pb-none bg-primary text-white row justify-between">
         <div class="text-h6">{{ title }}</div>
+        <q-btn outline dense icon="close" @click="hide" />
       </q-card-section>
       <q-card-section class="q-pa-sm q-pt-none">
         <slot :hide="hide"></slot>
@@ -45,6 +46,3 @@
     </q-card>
   </q-dialog>
 </template>
-
-<style scoped></style>
-src/shared/stores/modal

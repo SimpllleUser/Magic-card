@@ -36,7 +36,9 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?
     _.remove(data.value, { id });
   };
 
-  if (config?.returnAsObject) return { data, create, read, update, remove };
+  const getById = (id: string): T | undefined => _.find(data.value, { id });
 
-  return [data, create, read, update, remove];
+  if (config?.returnAsObject) return { data, create, read, update, remove, getById };
+
+  return [data, create, read, update, remove, getById];
 }
