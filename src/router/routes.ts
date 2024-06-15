@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 import moduleRouter from '../features/module/routes';
+import quizeRouter from '../features/quize/routes';
 
 const routes: RouteRecordRaw[] = [
   // {
@@ -12,7 +13,8 @@ const routes: RouteRecordRaw[] = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   },
-  ...moduleRouter
+  ...moduleRouter,
+  ...quizeRouter
 ];
 
 export default routes;
