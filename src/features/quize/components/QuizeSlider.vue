@@ -2,12 +2,20 @@
   import { ref } from 'vue';
   import { useQuize } from 'src/features/quize/composables/useQuize';
   import { WordEntity } from 'src/features/words/types/word';
+  import { useModulesStore } from 'src/features/module/store/modules';
+  import { useModal } from 'src/shared/composables/useModal';
+  import QuizeResultList from 'src/features/quize/components/QuizeResultList.vue';
+
+  const moduleStore = useModulesStore();
 
   const props = defineProps<{
     words: Array<WordEntity>;
   }>();
 
-  const { queueOfQuestion, getVariantsOfQuestion, setAnswer, isSelectedVariant, total } = useQuize(props.words);
+  const { queueOfQuestion, getVariantsOfQuestion, setAnswer, isSelectedVariant, resultOfQuize, resetResult } = useQuize(
+    props.words
+  );
+  const quizeResultModal = useModal('quize-result-modal');
 
   const options = queueOfQuestion.value.map((question, index) => {
     return {
@@ -25,9 +33,19 @@
     }),
     {}
   );
+
+  const onToFinnish = () => {
+    quizeResultModal.show();
+  };
+
+  const onResetResult = () => {
+    resetResult();
+    quizeResultModal.hide();
+  };
 </script>
 
 <template>
+  <quize-result-list :result="resultOfQuize" @reset="onResetResult" />
   <div>
     <div>
       <q-carousel
@@ -36,15 +54,16 @@
         transition-next="slide-left"
         animated
         control-color="primary"
-        class="rounded-borders"
+        class="carousel-main rounded-borders"
       >
         <q-carousel-slide
           v-for="item in queueOfQuestion"
           :key="item.id"
           :name="item.id"
-          class="column no-wrap flex-center"
+          height="200px"
+          class="no-wrap flex-center"
         >
-          <div class="q-mt-md text-h4 text-center">{{ item.question }}</div>
+          <div class="q-mt-md text-h1 text-center q-pb-lg">{{ item.question }}</div>
           <div class="row justify-center wrap">
             <q-btn
               class="q-ma-sm"
@@ -55,7 +74,7 @@
               @click="setAnswer(item.id, variant.id)"
               no-caps
             >
-              <span class="text-black">{{ variant.word }} - {{ variant.id === item.id }}</span>
+              <span class="text-black">{{ variant.word }}</span>
             </q-btn>
           </div>
         </q-carousel-slide>
@@ -63,6 +82,13 @@
     </div>
     <div class="row justify-center">
       <q-btn-toggle v-model="activeSlide" :options="options" />
+      <q-btn class="q-ml-md" color="primary" outline @click="onToFinnish">Finish</q-btn>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .carousel-main {
+    height: initial;
+  }
+</style>

@@ -1,8 +1,7 @@
-import { computed, ref } from 'vue';
+import { computed, ComputedRef, Ref, ref } from 'vue';
 import { WordEntity } from 'src/features/words/types/word';
 import { getRandomizedArray } from 'src/features/quize/utils';
-import { find, findIndex } from 'lodash';
-import { Dialog } from 'quasar';
+import { cloneDeep, find, findIndex } from 'lodash';
 
 enum CheckKey {
   FROM = 'from',
@@ -14,19 +13,29 @@ interface QuizeConfig {
 
 interface QuizeWord {
   id: string;
-  isAnswered: boolean;
-  isCorrect: boolean;
-  question: string;
+  from: string;
+  to: string;
+  isCorrect?: boolean;
+  answer?: string;
 }
 
 export interface Quiestion {
   id: string;
   question: string;
 }
-export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { checkByKey: CheckKey.FROM }) {
+
+interface UseQuize {
+  isSelectedVariant: (wordId: string, answerId: string) => boolean;
+  queueOfQuestion: ComputedRef<Array<Quiestion>>;
+  setAnswer: (wordId: string, answerId: string) => void;
+  getVariantsOfQuestion: (word: WordEntity, currentWordsId: string) => Array<{ id: string; word: string }>;
+  resultOfQuize: Ref<Array<QuizeWord>>;
+  resetResult: () => void;
+}
+export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { checkByKey: CheckKey.FROM }): UseQuize {
   const initialWords = getRandomizedArray(words);
-  const answers = ref<Record<string, string>>({});
-  const queueOfQuestion = ref(
+  const answerOfQuestion = ref<Record<string, string>>({});
+  const queueOfQuestion = computed(() =>
     initialWords.map(
       (word: WordEntity): Quiestion => ({
         id: word.id,
@@ -36,29 +45,24 @@ export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { check
   );
 
   const setAnswer = (wordId: string, answerId: string) => {
-    answers.value = {
-      ...answers.value,
+    answerOfQuestion.value = {
+      ...answerOfQuestion.value,
       [wordId]: answerId
     };
-    const actualWordIndex = findIndex(queueOfQuestion.value, { id: wordId });
-    const answerWord = find(total.value, { id: answerId })!;
-    total.value[actualWordIndex] = {
-      ...total.value[actualWordIndex],
-      isCorrect: total.value[actualWordIndex].id === answerId,
+
+    const actualWordIndex = findIndex(resultOfQuize.value, { id: wordId });
+    const answerWord = find(resultOfQuize.value, { id: answerId });
+    resultOfQuize.value[actualWordIndex] = {
+      ...resultOfQuize.value[actualWordIndex],
+      isCorrect: resultOfQuize.value[actualWordIndex].id === answerId,
       answer: answerWord[config.checkByKey === CheckKey.FROM ? CheckKey.TO : CheckKey.FROM]
     };
   };
 
-  const isPutAnswer = (wordId: string): string | undefined => answers.value[wordId];
+  const isPutAnswer = (wordId: string): string | undefined => answerOfQuestion.value[wordId];
   const isSelectedVariant = (wordId: string, answerId: string) => isPutAnswer(wordId) === answerId;
 
-  const total = ref<Array<WordEntity & { isCorrect?: boolean }>>(initialWords);
-
-  const getResults = () => {
-    return total.value.every((word) => word?.isCorrect);
-  };
-
-  const results = computed(getResults);
+  const resultOfQuize = ref<Array<QuizeWord>>(cloneDeep(initialWords));
 
   const fromWordToVariant = (word: WordEntity): { id: string; word: string } => ({
     id: word.id,
@@ -74,13 +78,17 @@ export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { check
     ]);
   };
 
+  const resetResult = () => {
+    answerOfQuestion.value = {};
+    resultOfQuize.value = cloneDeep(initialWords);
+  };
+
   return {
     isSelectedVariant,
     queueOfQuestion,
     setAnswer,
-    getResults,
     getVariantsOfQuestion,
-    total,
-    results
+    resultOfQuize,
+    resetResult
   };
 }
