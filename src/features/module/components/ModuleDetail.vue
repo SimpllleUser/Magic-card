@@ -35,7 +35,7 @@
     </q-card>
     <q-card>
       <q-card-section class="q-pb-sm">
-        <WordsList :words="module.words || []" />
+        <WordsList :module-id="module.id" :words="module.words || []" />
       </q-card-section>
     </q-card>
   </v-modal>

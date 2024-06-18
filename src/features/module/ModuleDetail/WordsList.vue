@@ -1,12 +1,15 @@
 <script lang="ts" setup>
   import { WordEntity } from 'src/features/words/types/word';
-  import { ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
+  import { RouteLocationRaw, useRouter } from 'vue-router';
 
   interface Props {
+    moduleId: string;
     words: WordEntity[];
   }
 
   const props = defineProps<Props>();
+  const router = useRouter();
 
   const getAllWordIds = (): Array<string> => props.words.map((word) => word.id) || [];
 
@@ -27,6 +30,16 @@
     square: true,
     color: 'primary'
   };
+
+  const quizeRoute = computed(
+    (): RouteLocationRaw => ({
+      name: 'QuizePage',
+      params: { id: props.moduleId }
+    })
+  );
+  const pushTo = (routeParams: RouteLocationRaw) => {
+    router.push(routeParams);
+  };
 </script>
 
 <template>
@@ -35,7 +48,7 @@
       <q-chip v-bind="chipCounter">
         <b> Selected: </b> <span class="q-ml-sm">{{ selectedWords.length }} / {{ props.words.length }}</span>
       </q-chip>
-      <q-btn color="secondary" class="text-black" label="Play" />
+      <q-btn color="secondary" class="text-black" label="Play" target="" @click="pushTo(quizeRoute)" />
     </div>
     <q-list bordered separator class="words-list">
       <q-item>
