@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { useQuize } from 'src/features/quize/composables/useQuize';
+  import { computed, ref } from 'vue';
   import { WordEntity } from 'src/features/words/types/word';
-  import { useModulesStore } from 'src/features/module/store/modules';
+  import { useQuize } from 'src/features/quize/composables/useQuize';
   import { useModal } from 'src/shared/composables/useModal';
   import QuizeResultList from 'src/features/quize/components/QuizeResultList.vue';
-
-  const moduleStore = useModulesStore();
 
   const props = defineProps<{
     words: Array<WordEntity>;
@@ -20,12 +17,12 @@
   const options = queueOfQuestion.value.map((question, index) => {
     return {
       label: index + 1,
-      value: question.id,
+      value: index,
       slot: `btn-${index}`
     };
   });
 
-  const activeSlide = ref<string>(options[0].value);
+  const slideIndex = ref<string>(options[0].value);
   const variantsOfQuestion = queueOfQuestion.value.reduce(
     (variants, question) => ({
       ...variants,
@@ -41,47 +38,40 @@
   const onResetResult = () => {
     resetResult();
     quizeResultModal.hide();
+    slideIndex.value = options[0].value;
   };
+
+  const activeItem = computed(() => queueOfQuestion.value[slideIndex.value]);
 </script>
 
 <template>
   <quize-result-list :result="resultOfQuize" @reset="onResetResult" />
   <div>
-    <div>
-      <q-carousel
-        v-model="activeSlide"
-        transition-prev="slide-right"
-        transition-next="slide-left"
-        animated
-        control-color="primary"
-        class="carousel-main rounded-borders"
-      >
-        <q-carousel-slide
-          v-for="item in queueOfQuestion"
-          :key="item.id"
-          :name="item.id"
-          height="200px"
-          class="no-wrap flex-center"
-        >
-          <div class="q-mt-md text-h1 text-center q-pb-lg">{{ item.question }}</div>
-          <div class="row justify-center wrap">
-            <q-btn
-              class="q-ma-sm"
-              :outline="!isSelectedVariant(item.id, variant.id)"
-              color="secondary"
-              v-for="variant in variantsOfQuestion[item.id]"
-              :key="variant"
-              @click="setAnswer(item.id, variant.id)"
-              no-caps
-            >
-              <span class="text-black">{{ variant.word }}</span>
-            </q-btn>
+    <q-btn @click="onResetResult" color="primary">Refresh</q-btn>
+    <transition name="slide-fade" mode="out-in">
+      <div :key="activeItem.id">
+        <div control-color="primary" class="carousel-main rounded-borders">
+          <div height="200px" class="no-wrap flex-center">
+            <div class="q-mt-md text-h1 text-center q-pb-lg">{{ activeItem.question }}</div>
+            <div class="row justify-center wrap">
+              <q-btn
+                class="q-ma-sm"
+                :outline="!isSelectedVariant(activeItem.id, variant.id)"
+                color="secondary"
+                v-for="variant in variantsOfQuestion[activeItem.id]"
+                :key="variant"
+                @click="setAnswer(activeItem.id, variant.id)"
+                no-caps
+              >
+                <span class="text-black">{{ variant.word }}</span>
+              </q-btn>
+            </div>
           </div>
-        </q-carousel-slide>
-      </q-carousel>
-    </div>
+        </div>
+      </div>
+    </transition>
     <div class="row justify-center">
-      <q-btn-toggle v-model="activeSlide" :options="options" />
+      <q-btn-toggle v-model="slideIndex" :options="options" />
       <q-btn class="q-ml-md" color="primary" outline @click="onToFinnish">Finish</q-btn>
     </div>
   </div>
@@ -90,5 +80,19 @@
 <style lang="scss" scoped>
   .carousel-main {
     height: initial;
+    overflow: hidden;
+  }
+
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    opacity: 0;
   }
 </style>

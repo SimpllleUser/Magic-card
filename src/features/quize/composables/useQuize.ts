@@ -2,6 +2,7 @@ import { computed, ComputedRef, Ref, ref } from 'vue';
 import { WordEntity } from 'src/features/words/types/word';
 import { getRandomizedArray } from 'src/features/quize/utils';
 import { cloneDeep, find, findIndex } from 'lodash';
+import { generateId } from 'src/helpers/id-generator';
 
 enum CheckKey {
   FROM = 'from',
@@ -33,16 +34,21 @@ interface UseQuize {
   resetResult: () => void;
 }
 export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { checkByKey: CheckKey.FROM }): UseQuize {
-  const initialWords = getRandomizedArray(words);
+  const initialWords = ref(getRandomizedArray(words));
+  const initWords = () => {
+    initialWords.value = [...getRandomizedArray(words)];
+  };
+
   const answerOfQuestion = ref<Record<string, string>>({});
-  const queueOfQuestion = computed(() =>
-    initialWords.map(
+  const queueOfQuestion = computed(() => {
+    return initialWords.value.map(
       (word: WordEntity): Quiestion => ({
         id: word.id,
-        question: word[config.checkByKey]
+        question: word[config.checkByKey],
+        key: generateId()
       })
-    )
-  );
+    );
+  });
 
   const setAnswer = (wordId: string, answerId: string) => {
     answerOfQuestion.value = {
@@ -62,7 +68,7 @@ export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { check
   const isPutAnswer = (wordId: string): string | undefined => answerOfQuestion.value[wordId];
   const isSelectedVariant = (wordId: string, answerId: string) => isPutAnswer(wordId) === answerId;
 
-  const resultOfQuize = ref<Array<QuizeWord>>(cloneDeep(initialWords));
+  const resultOfQuize = ref<Array<QuizeWord>>(cloneDeep(initialWords.value));
 
   const fromWordToVariant = (word: WordEntity): { id: string; word: string } => ({
     id: word.id,
@@ -80,7 +86,8 @@ export function useQuize(words: Array<WordEntity>, config: QuizeConfig = { check
 
   const resetResult = () => {
     answerOfQuestion.value = {};
-    resultOfQuize.value = cloneDeep(initialWords);
+    resultOfQuize.value = cloneDeep(initialWords.value);
+    initWords();
   };
 
   return {
