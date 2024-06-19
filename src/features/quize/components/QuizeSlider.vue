@@ -22,7 +22,7 @@
     };
   });
 
-  const slideIndex = ref<string>(options[0].value);
+  const slideIndex = ref<number>(0);
   const variantsOfQuestion = queueOfQuestion.value.reduce(
     (variants, question) => ({
       ...variants,
@@ -38,7 +38,7 @@
   const onResetResult = () => {
     resetResult();
     quizeResultModal.hide();
-    slideIndex.value = options[0].value;
+    slideIndex.value = 0;
   };
 
   const activeItem = computed(() => queueOfQuestion.value[slideIndex.value]);

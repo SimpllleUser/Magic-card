@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+  import { useRouter } from 'vue-router';
   import VModal from 'src/shared/ui/VModal/_index.vue';
   import { computed } from 'vue';
-  import { emit } from 'cluster';
+
   interface ResultItem {
     id: string;
     word: string;
@@ -16,6 +17,7 @@
     (event: 'reset'): void;
   }
 
+  const router = useRouter();
   const MODAL_ID = 'quize-result-modal';
   const TITLE = 'Result of quize !';
 
@@ -61,6 +63,10 @@
   const resetQuize = () => {
     emit('reset');
   };
+
+  const toHome = () => {
+    router.push({ name: 'HomePage' });
+  };
 </script>
 
 <template>
@@ -71,7 +77,7 @@
       </div>
       <div class="actions row justify-center items-center q-mt-sm">
         <q-btn color="secondary" class="text-black" @click="resetQuize">Try again</q-btn>
-        <q-btn class="q-ml-md text-black" color="secondary">To home</q-btn>
+        <q-btn class="q-ml-md text-black" color="secondary" @click="toHome">To home</q-btn>
       </div>
     </div>
   </v-modal>
