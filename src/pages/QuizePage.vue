@@ -15,10 +15,15 @@
 
 <template>
   <div>
-    <div>
+    <div class="row justify-center items-center slider-page">
       <quize-slider :words="wordList"></quize-slider>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+  .slider-page {
+    height: 50vh;
+    margin-top: auto;
+  }
+</style>

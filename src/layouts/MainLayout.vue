@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Magic card </q-toolbar-title>
+        <q-toolbar-title> <q-btn to="/" flat> Magic card </q-btn> </q-toolbar-title>
       </q-toolbar>
     </q-header>
 

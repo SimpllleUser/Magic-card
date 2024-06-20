@@ -57,6 +57,8 @@
   const handleUpdateSeparatedValue = () => {
     emit('update-separated-value', separatedValue(inputValue.value));
   };
+
+  watch(() => [props.separatorDefinition, props.separatorWordItems], handleUpdateSeparatedValue);
 </script>
 
 <template>

@@ -47,7 +47,6 @@
 <template>
   <quize-result-list :result="resultOfQuize" @reset="onResetResult" />
   <div>
-    <q-btn @click="onResetResult" color="primary">Refresh</q-btn>
     <transition name="slide-fade" mode="out-in">
       <div :key="activeItem.id">
         <div control-color="primary" class="carousel-main rounded-borders">
