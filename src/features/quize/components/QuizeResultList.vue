@@ -28,31 +28,30 @@
     {
       label: '#',
       field: 'index',
-      align: 'left',
-      sortable: true
+      name: 'index',
+      align: 'left'
     },
     {
       label: 'From',
       field: 'from',
-      align: 'left',
-      sortable: true
+      name: 'from',
+      align: 'left'
     },
     {
       label: 'To',
       field: 'to',
-      align: 'left',
-      sortable: true
+      name: 'to',
+      align: 'left'
     },
     {
       name: 'answer',
+      field: 'answer',
       required: true,
       label: 'Answer',
-      align: 'left',
-      field: (row: ResultItem) => row.answer,
-      sortable: true
+      align: 'center'
     }
   ];
-
+  console.log(props.result);
   const rows = computed(() =>
     props.result.map((item, index) => ({
       ...item,
@@ -67,16 +66,48 @@
   const toHome = () => {
     router.push({ name: 'HomePage' });
   };
+
+  const getIconAnswer = (flag: boolean): string => (flag ? 'check_bold' : 'close');
+  const getColorAnswer = (flag: boolean): string => (flag ? 'green' : 'red');
 </script>
 
 <template>
   <v-modal :id="MODAL_ID" :title="TITLE">
     <div>
       <div>
-        <q-table flat :rows="rows" :columns="COLUMNS" row-key="id" />
+        <q-table flat :rows="rows" :columns="COLUMNS">
+          <template v-slot:body-cell-to="props">
+            <q-td :props="props">
+              {{ props.row.to || '-' }}
+            </q-td>
+          </template>
+          <template v-slot:body-cell-answer="props">
+            <q-td :props="props">
+              <div class="row items-center justify-center">
+                <div class="q-pr-sm">
+                  <q-icon
+                    :color="getColorAnswer(props.row?.isCorrect)"
+                    :name="getIconAnswer(props.row?.isCorrect)"
+                    style="justify-content: initial"
+                  />
+                </div>
+                <div>
+                  {{ props.row.answer }}
+                </div>
+              </div>
+            </q-td>
+          </template>
+        </q-table>
       </div>
       <div class="actions row justify-center items-center q-mt-sm">
-        <q-btn color="secondary" class="text-black" @click="resetQuize">Try again</q-btn>
+        <q-btn
+          @click="resetQuize"
+          label="Try again"
+          color="text-dark"
+          outline="secondary"
+          flat
+          class="q-ml-sm btn-cancel border-secondary q-mr-sm"
+        />
         <q-btn class="q-ml-md text-black" color="secondary" @click="toHome">To home</q-btn>
       </div>
     </div>
