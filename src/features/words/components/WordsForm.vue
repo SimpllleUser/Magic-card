@@ -36,24 +36,26 @@
 
 <template>
   <div class="full-width">
-    <div>
-      <input-splitter
-        v-model="text"
-        @update-separated-value="setSeparatedValue"
-        :separator-word-items="separatedOnWordItems"
-        :separator-definition="separatedOnDefinitions"
-      />
-    </div>
-    <div class="row justify-between q-pt-md">
+    <div v-if="false">
       <div>
-        <input-separated-symbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
+        <input-splitter
+          v-model="text"
+          @update-separated-value="setSeparatedValue"
+          :separator-word-items="separatedOnWordItems"
+          :separator-definition="separatedOnDefinitions"
+        />
       </div>
-      <div>
-        <input-separated-symbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
+      <div class="row justify-between q-pt-md">
+        <div>
+          <input-separated-symbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
+        </div>
+        <div>
+          <input-separated-symbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
+        </div>
       </div>
     </div>
     <div class="q-pt-md">
-      <words-list :words="wordsListModel" />
+      <words-list v-model="wordsListModel" :words="wordsListModel" />
     </div>
   </div>
 </template>

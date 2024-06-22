@@ -12,6 +12,7 @@
   import { getFormConfig, IModuleFormConfig } from 'src/features/module/types/form';
   import { ActionForm } from 'src/shared/ui/VForm/types';
   import { WordEntity } from 'src/features/words/types/word';
+  import { cloneDeep } from 'lodash';
 
   interface Props {
     module?: IModule;
@@ -33,11 +34,12 @@
   const onShowModal = () => {
     if (!props.module?.id) return;
     form.value = generateForm(props.module);
-    wordsList.value = props.module.words;
+    wordsList.value = cloneDeep(props.module.words);
   };
 
   const onSubmit = (data: EntityUnform<IModule>, action: CallableFunction) => {
     const storeAction = props.module?.id ? moduleStore.update : moduleStore.create;
+    console.log(wordsList.value);
     storeAction({ ...data, words: wordsList.value });
     form.value.onReset();
     action();
@@ -50,16 +52,18 @@
   <v-modal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
-        <div class="col">
-          <FormInput v-model="form.inputs.title" />
-        </div>
-        <div class="row">
+        <div class="q-pa-md">
           <div class="col">
-            <FormInput v-model="form.inputs.description" />
+            <FormInput v-model="form.inputs.title" />
           </div>
-        </div>
-        <div class="row full-width">
-          <WordsForm v-model="wordsList" />
+          <div class="row">
+            <div class="col">
+              <FormInput v-model="form.inputs.description" />
+            </div>
+          </div>
+          <div class="row full-width">
+            <WordsForm v-model="wordsList" />
+          </div>
         </div>
       </VForm>
     </template>

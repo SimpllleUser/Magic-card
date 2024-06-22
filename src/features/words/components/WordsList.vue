@@ -1,39 +1,38 @@
 <script setup lang="ts">
-  import { ref, defineProps, watch } from 'vue';
+  import { defineProps, watch, computed } from 'vue';
   import { WordEntity } from '../types/word';
+  import { generateId } from 'src/helpers/id-generator';
 
   interface Props {
     words: Array<WordEntity>;
+    modelValue: Array<WordEntity>;
   }
 
   interface Emit {
     (event: 'update-list', word: WordEntity): void;
+    (event: 'update:modelValue', payload: Array<WordEntity>): void;
   }
 
   const props = defineProps<Props>();
 
   const emit = defineEmits<Emit>();
 
-  const rows = ref(props.words);
-
-  const onRemoveWord = (wordId: string) => {
-    rows.value = rows.value.filter(({ id }) => id !== wordId);
-  };
-
   const getEditableWordItem = (word: WordEntity, index: number) => ({
     ...word,
-    index
+    index,
+    number: index + 1
   });
 
-  watch(
-    () => props.words,
-    () => {
-      rows.value = props.words.map(getEditableWordItem);
-    },
-    {
-      immediate: true
-    }
-  );
+  const updateModelValue = (value: Array<WordEntity>) => emit('update:modelValue', value);
+
+  const modelValue = computed({
+    get: () => props.modelValue.map(getEditableWordItem),
+    set: updateModelValue
+  });
+
+  const onRemoveWord = (wordId: string) => {
+    modelValue.value = modelValue.value.filter(({ id }) => id !== wordId);
+  };
 
   const COLUMNS = [
     { name: 'number', label: '#', align: 'left', field: 'number' },
@@ -52,19 +51,38 @@
     noDataLabel: 'Empty list of words',
     noResultsLabel: 'Not find of words'
   };
+
+  const setInput = (value: string, { key, index }: { key: string; index: number }) => {
+    const list: Array<WordEntity> = [...modelValue.value];
+    list[index][key] = value;
+    updateModelValue(list);
+  };
+
+  const addWord = () => {
+    updateModelValue([{ id: generateId(), from: '', to: '' }, ...props.modelValue]);
+  };
 </script>
 
 <template>
   <div>
-    <q-table :rows="rows" v-bind="TABLE_CONFIG">
+    <div class="word-list__actions q-py-sm row justify-end">
+      <q-btn color="primary" label="Add" @click="addWord" />
+    </div>
+    <q-table :rows="modelValue" v-bind="TABLE_CONFIG">
       <template v-slot:body-cell-from="props">
         <q-td :props="props">
-          <q-input v-model="rows[props.row.index].from" />
+          <q-input
+            :model-value="modelValue[props.row.index].from"
+            @update:model-value="setInput($event, { key: 'from', index: props.row.index })"
+          />
         </q-td>
       </template>
       <template v-slot:body-cell-to="props">
         <q-td :props="props">
-          <q-input v-model="rows[props.row.index].to" />
+          <q-input
+            :model-value="modelValue[props.row.index].to"
+            @update:model-value="setInput($event, { key: 'to', index: props.row.index })"
+          />
         </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
