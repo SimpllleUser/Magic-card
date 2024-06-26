@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue';
   import { SELECTOR_LABEL, TEXT_INPUT_LABEL, BASE_SPARATED_SYMBOLS } from '../constants';
+  import { find } from 'lodash';
 
   interface Props {
     modelValue: string;
@@ -25,15 +26,14 @@
     emit('update:modelValue', value);
   };
 
+  const isCustomSeparator = ref(false);
+
   const separatdeSymbol = computed({
     get: () => props.modelValue,
     set: (value: string | Option) => {
-      handleEmitUpdateModelValue(typeof value === 'object' && 'value' in value ? value.value : value);
+      handleEmitUpdateModelValue(isCustomSeparator.value ? value : value.value);
     }
   });
-
-  const isCustomSeparator = ref(false);
-  separatdeSymbol.value = BASE_SPARATED_SYMBOLS[0].value;
 
   const seperatorTypeSwitcherLabel = computed(() =>
     isCustomSeparator.value ? 'Use default separators' : 'Use custom separator'

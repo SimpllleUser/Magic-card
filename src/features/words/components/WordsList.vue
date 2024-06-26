@@ -4,8 +4,8 @@
   import { generateId } from 'src/helpers/id-generator';
 
   interface Props {
-    words: Array<WordEntity>;
     modelValue: Array<WordEntity>;
+    allowAddWord?: boolean;
   }
 
   interface Emit {
@@ -13,7 +13,9 @@
     (event: 'update:modelValue', payload: Array<WordEntity>): void;
   }
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    allowAddWord: true
+  });
 
   const emit = defineEmits<Emit>();
 

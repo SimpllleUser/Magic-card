@@ -41,9 +41,10 @@
   });
 
   watch(
-    () => inputValue.value,
-    (value: string) => {
-      emit('update-separated-value', separatedValue(value));
+    () => [inputValue.value, props.separatorWordItems, props.separatorDefinition],
+    () => {
+      if (!inputValue.value.trim().length) return;
+      emit('update-separated-value', separatedValue(inputValue.value));
     }
   );
 
@@ -64,8 +65,8 @@
     <div class="full-width">
       <q-input class="full-width" v-model="inputValue" v-bind="baseInputConfig" />
     </div>
-    <div>
+    <!--    <div>
       <q-btn v-bind="BUTTON_REFRESH_CONFIG" @click="handleUpdateSeparatedValue" />
-    </div>
+    </div>-->
   </div>
 </template>
