@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { IModule } from '../types/module';
   import VModal from 'src/shared/ui/VModal/_index.vue';
-  import WordsList from 'src/features/module/ModuleDetail/WordsList.vue';
+  import WordsList from 'src/features/words/components/WordsList.vue';
 
   interface Props {
     module: IModule;

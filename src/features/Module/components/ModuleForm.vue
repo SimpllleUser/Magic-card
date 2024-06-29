@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, toRefs } from 'vue';
+  import { ref } from 'vue';
   import VModal from 'src/shared/ui/VModal/_index.vue';
   import VForm from 'src/shared/ui/VForm/_index.vue';
   import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
@@ -9,7 +9,7 @@
   import { EntityUnform } from 'boot/types';
   import { IModule } from 'src/features/module/types/module';
   import { computed } from 'vue';
-  import { getFormConfig, IModuleFormConfig } from 'src/features/module/types/form';
+  import { getFormConfig } from 'src/features/module/types/form';
   import { ActionForm } from 'src/shared/ui/VForm/types';
   import { WordEntity } from 'src/features/words/types/word';
   import { cloneDeep } from 'lodash';
@@ -29,8 +29,6 @@
 
   const form = ref(generateForm());
 
-  const { inputs } = toRefs<{ inputs: IModuleFormConfig }>(form.value);
-
   const onShowModal = () => {
     if (!props.module?.id) return;
     form.value = generateForm(props.module);
@@ -39,7 +37,6 @@
 
   const onSubmit = (data: EntityUnform<IModule>, action: CallableFunction) => {
     const storeAction = props.module?.id ? moduleStore.update : moduleStore.create;
-    console.log(wordsList.value);
     storeAction({ ...data, words: wordsList.value });
     form.value.onReset();
     action();
@@ -49,7 +46,7 @@
 </script>
 
 <template>
-  <v-modal :id="formId" title="Module form" @show="onShowModal">
+  <VModal :id="formId" title="Module form" @show="onShowModal">
     <template #default="{ hide }">
       <VForm :action="formAction" :config="form" @on-submit="onSubmit($event, hide)" @on-cancel="hide">
         <div class="q-pa-md">
@@ -67,5 +64,5 @@
         </div>
       </VForm>
     </template>
-  </v-modal>
+  </VModal>
 </template>
