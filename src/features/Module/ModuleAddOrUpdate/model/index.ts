@@ -7,6 +7,7 @@ import {WordEntity} from "src/features/words/types/word";
 import {EntityUnform} from "boot/types";
 
 /// ADD FIX
+/// EXAMPLE FOR FSD - > https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src/shared/ui/VPrice/VPrice.vue
 /// - Refactor by FSD VForm
 /// - Fix es lint problem
 
