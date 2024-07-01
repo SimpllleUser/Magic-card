@@ -25,7 +25,7 @@
       <Imports @import="setImportedWords" />
     </div>
     <div>
-      <words-list v-model="wordsListModel" :words="wordsListModel" />
+      <words-list v-model="wordsListModel" />
     </div>
   </div>
 </template>

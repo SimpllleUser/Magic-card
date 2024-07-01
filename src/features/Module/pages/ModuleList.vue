@@ -2,6 +2,7 @@
   import { ref, computed, nextTick } from 'vue';
   import ModuleItem from 'src/features/module/components/ModuleItem.vue';
   import ModuleForm from 'src/features/module/components/ModuleForm.vue';
+  import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
   import ModuleDetail from 'src/features/module/components/ModuleDetail.vue';
 
   import { useModulesStore } from 'src/features/module/store/modules';
@@ -40,9 +41,9 @@
 
 <template>
   <div class="q-px-xs">
-    <module-form form-id="edit-module" v-if="currentModule" :module="currentModule" />
+    <ModuleAddOrUpdate form-id="edit-module" v-if="currentModule" :module="currentModule" />
     <module-detail :module="detailViewModule" @hide="resetDetailViewModule" />
-    <module-form form-id="create-module" />
+    <ModuleAddOrUpdate form-id="create-module" />
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
         <module-item

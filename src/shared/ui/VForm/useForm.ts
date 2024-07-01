@@ -11,13 +11,7 @@ export interface IFormEntity {
   onReset: (action?: CallableFunction) => void;
 }
 
-export function useForm<T>(formConfig: FormConfig): {
-  inputs: Ref<any>;
-  formValue: ComputedRef<T>;
-  isValid: ComputedRef<boolean>;
-  onSubmit: (action?: CallableFunction) => void;
-  onReset: (action?: CallableFunction) => void;
-} {
+export function useForm<T>(formConfig: FormConfig): IFormEntity {
   const canShowError = ref(false);
 
   const inputs = ref<FormConfig>(formConfig);

@@ -1,75 +1,108 @@
-<script lang="ts" setup>
-  import { WordEntity } from 'src/features/words/types/word';
-  import { computed, ref, watch } from 'vue';
-  import { RouteLocationRaw, useRouter } from 'vue-router';
+<script setup lang="ts">
+  import { defineProps, watch, computed } from 'vue';
+  import { WordEntity } from '../types/word';
+  import { generateId } from 'src/helpers/id-generator';
 
   interface Props {
-    moduleId: string;
-    words: WordEntity[];
+    modelValue: Array<WordEntity>;
+    allowAddWord?: boolean;
   }
 
-  const props = defineProps<Props>();
-  const router = useRouter();
+  interface Emit {
+    (event: 'update-list', word: WordEntity): void;
+    (event: 'update:modelValue', payload: Array<WordEntity>): void;
+  }
 
-  const getAllWordIds = (): Array<string> => props.words.map((word) => word.id) || [];
-
-  const selectedWords = ref(getAllWordIds());
-  const isSelectedAll = ref(true);
-
-  watch(selectedWords, (value) => {
-    isSelectedAll.value = value.length === props.words.length;
+  const props = withDefaults(defineProps<Props>(), {
+    allowAddWord: true
   });
 
-  const onCheckSelectAll = () => {
-    selectedWords.value = isSelectedAll.value ? getAllWordIds() : [];
+  const emit = defineEmits<Emit>();
+
+  const getEditableWordItem = (word: WordEntity, index: number) => ({
+    ...word,
+    index,
+    number: index + 1
+  });
+
+  const updateModelValue = (value: Array<WordEntity>) => emit('update:modelValue', value);
+
+  const modelValue = computed({
+    get: () => props.modelValue.map(getEditableWordItem),
+    set: updateModelValue
+  });
+
+  const onRemoveWord = (wordId: string) => {
+    modelValue.value = modelValue.value.filter(({ id }) => id !== wordId);
   };
 
-  const chipCounter = {
-    size: 'md',
-    outline: true,
-    square: true,
-    color: 'primary'
+  const COLUMNS = [
+    { name: 'number', label: '#', align: 'left', field: 'number' },
+    { name: 'from', label: 'From', align: 'left', field: 'from' },
+    { name: 'to', label: 'To', align: 'left', field: 'to' },
+    { name: 'actions', label: 'Actions', align: 'right', field: 'action' }
+  ];
+
+  const TABLE_CONFIG = {
+    // title: 'Words list',
+    columns: COLUMNS,
+    rowKey: 'name',
+    separator: 'horizontal',
+    flat: true,
+    bordered: true,
+    noDataLabel: 'Empty list of words',
+    noResultsLabel: 'Not find of words'
   };
 
-  const quizeRoute = computed(
-    (): RouteLocationRaw => ({
-      name: 'QuizePage',
-      params: { id: props.moduleId }
-    })
-  );
-  const pushTo = (routeParams: RouteLocationRaw) => {
-    router.push(routeParams);
+  const setInput = (value: string, { key, index }: { key: string; index: number }) => {
+    const list: Array<WordEntity> = [...modelValue.value];
+    list[index][key] = value;
+    updateModelValue(list);
+  };
+
+  const addWord = () => {
+    updateModelValue([{ id: generateId(), from: '', to: '' }, ...props.modelValue]);
   };
 </script>
 
 <template>
   <div>
-    <div class="row justify-between q-py-sm">
-      <q-chip v-bind="chipCounter">
-        <b> Selected: </b> <span class="q-ml-sm">{{ selectedWords.length }} / {{ props.words.length }}</span>
-      </q-chip>
-      <q-btn color="secondary" class="text-black" label="Play" target="" @click="pushTo(quizeRoute)" />
+    <div class="word-list__actions q-py-sm row justify-end">
+      <q-btn color="primary" label="Add" @click="addWord" />
     </div>
-    <q-list bordered separator class="words-list">
-      <q-item>
-        <q-item-section>
-          <q-checkbox v-model="isSelectedAll" @update:model-value="onCheckSelectAll" label="All" />
-        </q-item-section>
-        <q-item-section><b>From</b></q-item-section>
-        <q-item-section><b>To</b></q-item-section>
-      </q-item>
-      <q-item clickable v-for="word in words" :key="word.id">
-        <q-item-section> <q-checkbox v-model="selectedWords" :val="word.id" /> </q-item-section>
-        <q-item-section>{{ word.from }}</q-item-section>
-        <q-item-section>{{ word.to }}</q-item-section>
-      </q-item>
-    </q-list>
+    <q-table :rows="modelValue" v-bind="TABLE_CONFIG">
+      <template v-slot:body-cell-from="props">
+        <q-td :props="props">
+          <q-input
+            :model-value="modelValue[props.row.index].from"
+            @update:model-value="setInput($event, { key: 'from', index: props.row.index })"
+          />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-to="props">
+        <q-td :props="props">
+          <q-input
+            :model-value="modelValue[props.row.index].to"
+            @update:model-value="setInput($event, { key: 'to', index: props.row.index })"
+          />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-actions="props">
+        <q-td :props="props">
+          <div class="actions row justify-end">
+            <q-btn
+              v-bind="{
+                icon: 'delete',
+                color: 'primary',
+                outline: true,
+                size: 'sm',
+                rounded: true
+              }"
+              @click="onRemoveWord(props.row.id)"
+            />
+          </div>
+        </q-td>
+      </template>
+    </q-table>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .words-list {
-    max-height: 25rem;
-    overflow-y: auto;
-  }
-</style>
