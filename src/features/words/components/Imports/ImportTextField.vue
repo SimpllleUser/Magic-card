@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import VModal from 'src/shared/ui/VModal/_index.vue';
+  import VModal from 'src/shared/ui/VModal/VModal.vue';
   import InputSplitter from 'src/features/words/components/InputSplitter.vue';
   import InputSeparatedSymbol from 'src/features/words/components/InputSeparatedSymbol.vue';
   import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';

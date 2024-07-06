@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VModal from 'src/shared/ui/VModal/_index.vue';
+  import VModal from 'src/shared/ui/VModal/VModal.vue';
   import { computed } from 'vue';
   import { emit } from 'cluster';
   interface ResultItem {

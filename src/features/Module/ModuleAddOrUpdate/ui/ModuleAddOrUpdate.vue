@@ -2,7 +2,7 @@
   import { toRefs } from 'vue';
   import { IModule } from 'src/features/module/types/module';
   import { useModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate/model';
-  import VModal from 'src/shared/ui/VModal/_index.vue';
+  import VModal from 'src/shared/ui/VModal/VModal.vue';
   import VForm from 'src/shared/ui/VForm/_index.vue';
   import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
   import WordsForm from 'src/features/words/components/WordsForm.vue';

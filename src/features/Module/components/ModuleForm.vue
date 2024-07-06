@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import VModal from 'src/shared/ui/VModal/_index.vue';
+  import VModal from 'src/shared/ui/VModal/VModal.vue';
   import VForm from 'src/shared/ui/VForm/_index.vue';
   import FormInput from 'src/shared/ui/VForm/_components/FormInput.vue';
   import WordsForm from 'src/features/words/components/WordsForm.vue';
