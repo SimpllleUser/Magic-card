@@ -1,8 +1,9 @@
 import { computed } from 'vue';
 import { isString } from 'lodash';
-import { rules, ValidationRule } from 'src/shared/ui/VForm/validation/rules';
 import { isBoolean } from 'lodash';
-import { IFormInput } from 'src/shared/ui/VForm/types';
+import { ValidationRule } from './types';
+import { rules } from './rules';
+import { IFormInput } from 'src/shared/ui/VForm';
 
 const getRuleArguments = (ruleKey: string): { ruleKey: string; paramsInArray: string[] } => {
   const [rule, paramsInString] = ruleKey?.split(':') || [];

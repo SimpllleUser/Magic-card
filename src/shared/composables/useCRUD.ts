@@ -13,7 +13,33 @@ interface IUseCrudConfig {
   returnAsObject?: boolean;
 }
 
-export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig) {
+// Function overloads declaration
+export function useCRUD<T extends CrudItem>(
+  initialValue: Array<T>,
+  config: IUseCrudConfig & { returnAsObject: true }
+): {
+  data: Ref<T[]>;
+  create: (item: Required<EntityUnform<T>>) => void;
+  read: () => T[];
+  update: (updatedItem: Partial<T>) => void;
+  remove: (id: string) => void;
+  getById: (id: string) => T | undefined;
+};
+
+export function useCRUD<T extends CrudItem>(
+  initialValue: Array<T>,
+  config?: IUseCrudConfig
+): [
+  Ref<T[]>,
+  (item: Required<EntityUnform<T>>) => void,
+  () => T[],
+  (updatedItem: Partial<T>) => void,
+  (id: string) => void,
+  (id: string) => T | undefined
+];
+
+// Implementation of the function
+export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig): any {
   const data: Ref<T[]> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
 
   const create = (item: Required<EntityUnform<T>>): void => {
@@ -24,9 +50,8 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?
     return _.cloneDeep(data.value);
   };
 
-  const update = (updatedItem: Partial<T>) => {
+  const update = (updatedItem: Partial<T> & { id: string }) => {
     const index = _.findIndex(data.value, { id: updatedItem.id });
-
     if (index !== -1) {
       data.value[index] = _.merge({}, data.value[index], updatedItem);
     }
@@ -38,7 +63,9 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?
 
   const getById = (id: string): T | undefined => _.find(data.value, { id });
 
-  if (config?.returnAsObject) return { data, create, read, update, remove, getById };
+  if (config?.returnAsObject) {
+    return { data, create, read, update, remove, getById };
+  }
 
   return [data, create, read, update, remove, getById];
 }

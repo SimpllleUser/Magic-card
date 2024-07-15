@@ -4,23 +4,22 @@
   import { cloneDeep } from 'lodash';
   import { useCRUD } from 'src/shared/composables/useCRUD';
   import { generateId } from 'src/helpers/id-generator';
-  import { IFormInput } from '../types';
+  import { IFormInput } from 'src/shared/ui/VForm/base';
+  import { FormInput } from 'src/shared/ui/VForm/base/FormInput';
 
-  type IModelValue = Array<Record<string, IFormInput>>;
+  // type IModelValue = Array<Record<string, IFormInput>>;
   interface Props {
     modelValue: IFormInput;
     config: IFormInput;
   }
-  type _INPUT_EVENT_NAME = 'update:modelValue';
-  const _INPUT_PROPS_KEY = 'modelValue';
 
   interface Emits {
-    (event: _INPUT_EVENT_NAME, payload: IFormInput): void;
+    (event: 'update:modelValue', payload: IFormInput): void;
   }
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
-  const data = useVModel(props, _INPUT_PROPS_KEY, emit);
+  const data = useVModel(props, 'modelValue', emit);
   const getBaseItem = () => ({
     id: generateId(),
     ...cloneDeep(props.config)

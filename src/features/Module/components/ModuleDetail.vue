@@ -1,8 +1,7 @@
 <script lang="ts" setup>
   import { IModule } from '../types/module';
-  import { VModal } from 'src/shared/ui/VModal/ui';
+  import { VModal } from 'src/shared/ui/VModal';
   import WordsList from 'src/features/words/components/WordsList.vue';
-  import { watchEffect, ref } from 'vue';
 
   interface Props {
     module: IModule;

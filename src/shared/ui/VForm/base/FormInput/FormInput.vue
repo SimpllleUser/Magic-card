@@ -1,13 +1,9 @@
 <script setup lang="ts">
   import { computed, defineEmits, defineProps, Ref, useSlots } from 'vue';
-  import { isString, omit } from 'lodash';
   import { useVModel } from '@vueuse/core';
-  import { rules } from 'src/shared/ui/VForm/validation/rules';
-  import { IFormInput, IUseFormInput } from '../types';
-  import { components } from 'src/shared/ui/VForm/constants';
-
-  type _INPUT_EVENT_NAME = 'update:modelValue';
-  const _INPUT_PROPS_KEY = 'modelValue';
+  import { isString, omit } from 'lodash';
+  import { rules } from 'src/shared/composables/validation/rules';
+  import { IFormInput, IUseFormInput, components } from 'src/shared/ui/VForm';
 
   const props = defineProps<{ modelValue: IFormInput }>();
 
@@ -18,8 +14,8 @@
     return components[props.modelValue.component];
   });
 
-  const emit = defineEmits<{ (event: _INPUT_EVENT_NAME, payload: IUseFormInput): void }>();
-  const data: Ref<IFormInput> = useVModel(props, _INPUT_PROPS_KEY, emit);
+  const emit = defineEmits<{ (event: 'update:modelValue', payload: IUseFormInput): void }>();
+  const data: Ref<IFormInput> = useVModel(props, 'modelValue', emit);
 
   const activeSlots = useSlots();
 
@@ -51,4 +47,7 @@
     </template>
   </component>
 </template>
-src/shared/ui/VForm/composables/rules
+
+<style lang="scss" scoped>
+  @import './styles.scss';
+</style>

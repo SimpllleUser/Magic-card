@@ -1,5 +1,6 @@
-import { ValidationRule } from 'src/shared/ui/VForm/validation/rules';
 import { ComponentTypes } from '../types';
+import { ValidationRule } from 'src/shared/composables/validation';
+import { IBaseInputs, InputParams } from 'src/shared/ui/VForm/composable';
 
 export interface ValidationFunction {
   (params: { rules: Array<ValidationRule>; value: string | boolean | Array<string> }): boolean;
@@ -9,22 +10,6 @@ export interface BaseInputOptions<T> {
   activateValidation(canShowError: boolean): void;
   getValue(): T;
   isValid(functionValidator: ValidationFunction): boolean;
-}
-
-interface InputParams<T> {
-  value: T;
-  rules?: Array<ValidationRule>;
-  hint?: string;
-  label?: string;
-}
-
-export interface IBaseInputs<T> extends BaseInputOptions<T> {
-  value: T;
-  component: ComponentTypes;
-  rules?: Array<ValidationRule>;
-  _rules?: Array<ValidationRule>;
-  hint?: string;
-  label?: string;
 }
 
 const generateBaseInput =
