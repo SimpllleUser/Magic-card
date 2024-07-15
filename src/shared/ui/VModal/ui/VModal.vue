@@ -25,17 +25,17 @@
   onMounted(() => init(props.id));
 </script>
 <template>
-  <QDialog v-model="state" v-bind="options">
-    <QCard class="q-pa-none" style="min-width: 48rem">
-      <QCardSection class="q-pa-sm q-pb-none bg-primary text-white row justify-between">
+  <q-dialog v-model="state" v-bind="options" @hide="emit('hide')">
+    <q-card class="q-pa-none" style="min-width: 48rem">
+      <q-card-section class="q-pa-sm q-pb-none bg-primary text-white row justify-between">
         <div class="text-h6">{{ title }}</div>
         <QBtn outline dense icon="close" @click="hide" />
-      </QCardSection>
-      <QCardSection class="q-pa-sm q-pt-none">
+      </q-card-section>
+      <q-card-section class="q-pa-sm q-pt-none">
         <slot :hide="hide"></slot>
-      </QCardSection>
-    </QCard>
-  </QDialog>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <style lang="scss" scoped>

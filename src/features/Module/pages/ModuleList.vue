@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { ref, computed, nextTick } from 'vue';
   import ModuleItem from 'src/features/module/components/ModuleItem.vue';
-  import ModuleForm from 'src/features/module/components/ModuleForm.vue';
   import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
   import ModuleDetail from 'src/features/module/components/ModuleDetail.vue';
 
@@ -34,6 +33,7 @@
 
   const resetDetailViewModule = () => {
     detailViewModule.value = null;
+    currentModule.value = null;
   };
 
   const _EMPTY_STATE_TITLE = 'You can add new module';
@@ -41,12 +41,12 @@
 
 <template>
   <div class="q-px-xs">
-    <ModuleAddOrUpdate form-id="edit-module" v-if="currentModule" :module="currentModule" />
-    <module-detail :module="detailViewModule" @hide="resetDetailViewModule" />
+    <ModuleDetail :module="currentModule" @hide="resetDetailViewModule" />
+    <ModuleAddOrUpdate form-id="edit-module" :module="currentModule" @hide="resetDetailViewModule" />
     <ModuleAddOrUpdate form-id="create-module" />
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
-        <module-item
+        <ModuleItem
           :module="module"
           class="q-ma-sm"
           @on-edit="setEditModule"

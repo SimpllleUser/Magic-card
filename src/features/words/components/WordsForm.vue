@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useVModel } from '@vueuse/core';
 
-  import WordsList from './WordsList.vue';
+  import WordsListForm from './WordsListForm.vue';
   import Imports from './Imports/_index.vue';
   import { WordEntity } from '../types/word';
 
@@ -25,7 +25,7 @@
       <Imports @import="setImportedWords" />
     </div>
     <div>
-      <words-list v-model="wordsListModel" />
+      <WordsListForm v-model="wordsListModel" />
     </div>
   </div>
 </template>

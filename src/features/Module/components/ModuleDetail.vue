@@ -1,7 +1,8 @@
 <script lang="ts" setup>
   import { IModule } from '../types/module';
-  import VModal from 'src/shared/ui/VModal/ui/VModal.vue';
+  import { VModal } from 'src/shared/ui/VModal/ui';
   import WordsList from 'src/features/words/components/WordsList.vue';
+  import { watchEffect, ref } from 'vue';
 
   interface Props {
     module: IModule;
@@ -18,15 +19,7 @@
 </script>
 
 <template>
-  <v-modal
-    :id="MODAL_ID"
-    title="Module detail"
-    @hide="
-      () => {
-        emit('hide');
-      }
-    "
-  >
+  <VModal :id="MODAL_ID" title="Module detail" @hide="emit('hide')">
     <q-card class="q-mb-sm">
       <q-card-section>
         <div class="text-h6">{{ module.title }}</div>
@@ -34,11 +27,11 @@
       </q-card-section>
     </q-card>
     <q-card>
-      <q-card-section class="q-pb-sm">
-        <WordsList :module-id="module.id" :words="module.words || []" />
+      <q-card-section class="q-pb-sm" v-if="module.words">
+        <WordsList :module-id="module.id" :words="module.words" />
       </q-card-section>
     </q-card>
-  </v-modal>
+  </VModal>
 </template>
 
 <style scoped></style>

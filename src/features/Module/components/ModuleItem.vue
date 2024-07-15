@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { IModule } from 'src/features/module/types';
+  import { IModule } from 'src/features/module/types/module';
   import { useModalPlugin } from 'src/shared/composables/useModalPlugin';
 
   interface Props {

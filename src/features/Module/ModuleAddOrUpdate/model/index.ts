@@ -22,7 +22,6 @@ interface IUseModuleAddOrUpdate {
 
 export function useModuleAddOrUpdate(module: IModule): IUseModuleAddOrUpdate {
   const moduleStore = useModulesStore();
-
   const getFormConfig = (data?: IModule): IModuleFormConfig => {
     return {
       id: data?.id || '',
@@ -50,14 +49,16 @@ export function useModuleAddOrUpdate(module: IModule): IUseModuleAddOrUpdate {
   };
 
   const onSubmitModule = (data: EntityUnform<IModule>, action: CallableFunction) => {
-    console.log(data);
     const storeAction = module?.id ? moduleStore.update : moduleStore.create;
     storeAction({ ...data, words: wordsList.value });
     form.value.onReset();
     action();
   };
 
-  const formAction = computed((): ActionForm => (module?.id ? ActionForm.Edit : ActionForm.Create));
+  const formAction = computed((): ActionForm => {
+    console.log(form.value.formValue.id);
+    return form.value.formValue.id ? ActionForm.Edit : ActionForm.Create;
+  });
 
   return {
     form,

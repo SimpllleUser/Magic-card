@@ -1,12 +1,12 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import VModal from 'src/shared/ui/VModal/VModal.vue';
+  import { VModal } from 'src/shared/ui/VModal';
   import InputSplitter from 'src/features/words/components/InputSplitter.vue';
   import InputSeparatedSymbol from 'src/features/words/components/InputSeparatedSymbol.vue';
   import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';
   import { WordEntity } from 'src/features/words/types/word';
   import { generateId } from 'src/helpers/id-generator';
-  import WordsList from 'src/features/words/components/WordsList.vue';
+  import WordsList from 'src/features/words/components/WordsListForm.vue';
   interface Emits {
     (event: 'import', payload: Array<WordEntity>): void;
   }
