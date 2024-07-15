@@ -45,7 +45,7 @@
 </script>
 
 <template>
-  <quize-result-list :result="resultOfQuize" @reset="onResetResult" />
+  <QuizeResultList :result="resultOfQuize" @reset="onResetResult" />
   <div>
     <div>
       <q-carousel

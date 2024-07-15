@@ -16,7 +16,7 @@
 <template>
   <div>
     <div>
-      <quize-slider :words="wordList"></quize-slider>
+      <QuizeSlider :words="wordList" />
     </div>
   </div>
 </template>
