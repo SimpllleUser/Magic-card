@@ -1,4 +1,4 @@
-import { computed, Ref, ref } from 'vue';
+import { computed, ComputedRef, Ref, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useForm } from 'src/shared/ui/VForm/useForm';
 import { useText } from 'src/shared/ui/VForm/form-inputs';
@@ -14,7 +14,7 @@ import { useModulesStore, IModule, IModuleFormConfig } from 'src/entities/Module
 
 interface IUseModuleAddOrUpdate {
   form: any;
-  formAction: ActionForm;
+  formAction: ComputedRef<ActionForm>;
   wordsList: Ref<Array<WordEntity>>;
   initDataModule: CallableFunction;
   onSubmitModule: CallableFunction;
@@ -48,16 +48,17 @@ export function useModuleAddOrUpdate(module: IModule): IUseModuleAddOrUpdate {
     wordsList.value = cloneDeep(module.words);
   };
 
+  const isEdit = computed(() => form.value.formValue?.id);
+
   const onSubmitModule = (data: EntityUnform<IModule>, action: CallableFunction) => {
-    const storeAction = module?.id ? moduleStore.update : moduleStore.create;
+    const storeAction = isEdit.value ? moduleStore.update : moduleStore.create;
     storeAction({ ...data, words: wordsList.value });
     form.value.onReset();
     action();
   };
 
   const formAction = computed((): ActionForm => {
-    console.log(form.value.formValue.id);
-    return form.value.formValue.id ? ActionForm.Edit : ActionForm.Create;
+    return isEdit.value ? ActionForm.Edit : ActionForm.Create;
   });
 
   return {
