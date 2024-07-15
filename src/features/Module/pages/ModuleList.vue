@@ -41,7 +41,7 @@
 
 <template>
   <div class="q-px-xs">
-    <ModuleDetail :module="currentModule" @hide="resetDetailViewModule" />
+    <ModuleDetail :module="detailViewModule" @hide="resetDetailViewModule" />
     <ModuleAddOrUpdate form-id="edit-module" :module="currentModule" @hide="resetDetailViewModule" />
     <ModuleAddOrUpdate form-id="create-module" />
     <div v-if="modules.length" class="row">

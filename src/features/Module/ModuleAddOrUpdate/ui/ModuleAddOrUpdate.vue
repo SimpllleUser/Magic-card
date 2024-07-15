@@ -33,7 +33,6 @@
       <VForm :action="formAction" :config="form" @on-submit="onSubmitModule($event, hide)" @on-cancel="hide">
         <div class="q-pa-md">
           <div class="col">
-            {{ formAction }}
             <FormInput v-model="form.inputs.title" />
           </div>
           <div class="row">
