@@ -2,10 +2,10 @@
   import { ref, computed, nextTick } from 'vue';
   import ModuleItem from 'src/features/module/components/ModuleItem.vue';
   import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
-  import ModuleDetail from 'src/features/module/components/ModuleDetail.vue';
-  import { useModulesStore } from 'src/features/module/store/modules';
   import { useModal } from 'src/shared/composables/useModal';
   import { IModule } from 'src/features/module/types/module';
+  import { ModuleDetail } from 'src/features/Module/PrepareToQuize/ui/ModuleDetail';
+  import { useModulesStore } from 'src/entities/Module';
 
   const moduleStore = useModulesStore();
   const { remove: removeModule } = moduleStore;

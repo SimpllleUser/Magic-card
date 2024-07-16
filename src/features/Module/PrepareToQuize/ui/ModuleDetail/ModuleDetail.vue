@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-  import { IModule } from '../types/module';
   import { VModal } from 'src/shared/ui/VModal';
   import WordsList from 'src/features/words/components/WordsList.vue';
+  import { MODAL } from './constants';
+  import { IModule } from 'src/entities/Module';
 
   interface Props {
     module: IModule;
@@ -13,12 +14,10 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
-
-  const MODAL_ID = 'detail-module';
 </script>
 
 <template>
-  <VModal :id="MODAL_ID" title="Module detail" @hide="emit('hide')">
+  <VModal :id="MODAL.ID" :title="MODAL.TITLE" @hide="emit('hide')">
     <q-card class="q-mb-sm">
       <q-card-section>
         <div class="text-h6">{{ module.title }}</div>
@@ -33,4 +32,6 @@
   </VModal>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+  @import './styles.scss';
+</style>
