@@ -40,7 +40,7 @@ export function useCRUD<T extends CrudItem>(
 
 // Implementation of the function
 export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig): any {
-  const data: Ref<T[]> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
+  const data: Ref<Array<T>> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
 
   const create = (item: Required<EntityUnform<T>>): void => {
     data.value.push({ ...item, id: generateId() });

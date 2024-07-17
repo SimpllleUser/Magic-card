@@ -4,7 +4,7 @@ import { useCRUD } from 'src/shared/composables/useCRUD';
 
 const CONFIG = {
   ID: 'modules',
-  LS_KEY: ''
+  LS_KEY: 'modules'
 };
 
 export const useModulesStore = defineStore(CONFIG.ID, () => {
