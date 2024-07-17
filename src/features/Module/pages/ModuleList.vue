@@ -2,7 +2,7 @@
   import { ref, computed, nextTick } from 'vue';
   import ModuleItem from 'src/features/module/components/ModuleItem.vue';
   import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
-  import { useModal } from 'src/shared/composables/useModal';
+  import { useModal } from 'src/shared/lib/use/useModal';
   import { IModule } from 'src/features/module/types/module';
   import { ModuleDetail } from 'src/features/Module/PrepareToQuize';
   import { useModulesStore } from 'src/entities/Module';

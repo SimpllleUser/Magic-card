@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useModal } from 'src/shared/composables/useModal';
+  import { useModal } from 'src/shared/lib/use/useModal';
 
   import ImportTextField from 'src/features/words/components/Imports/ImportTextField.vue';
   import { WordEntity } from 'src/features/words/types/word';

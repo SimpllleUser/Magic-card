@@ -1,5 +1,5 @@
 import { QCheckboxProps, QInputProps, QSelectProps } from 'quasar';
-import { ValidationRule } from 'src/shared/composables/validation';
+import { ValidationRule } from 'src/shared/lib/use/validation';
 
 export type InputValueBase = string | number | boolean;
 export type InputValue = InputValueBase | Array<InputValueBase> | Record<string, InputValueBase>;

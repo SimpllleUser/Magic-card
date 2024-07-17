@@ -1,12 +1,9 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useQuize } from 'src/features/quize/composables/useQuize';
+  import { useQuize } from 'src/shared/lib/use/useQuize';
+  import { useModal } from 'src/shared/lib/use/useModal';
   import { WordEntity } from 'src/features/words/types/word';
-  import { useModulesStore } from 'src/features/module/store/modules';
-  import { useModal } from 'src/shared/composables/useModal';
   import QuizeResultList from 'src/features/quize/components/QuizeResultList.vue';
-
-  const moduleStore = useModulesStore();
 
   const props = defineProps<{
     words: Array<WordEntity>;
@@ -88,7 +85,5 @@
 </template>
 
 <style lang="scss" scoped>
-  .carousel-main {
-    height: initial;
-  }
+  @import './styles.scss';
 </style>

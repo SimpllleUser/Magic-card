@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { IModule } from './types';
-import { useCRUD } from 'src/shared/composables/useCRUD';
+import { useCRUD } from 'src/shared/lib/use/useCRUD';
 
 const CONFIG = {
   ID: 'modules',

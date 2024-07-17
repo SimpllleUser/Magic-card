@@ -1,7 +1,7 @@
 import { computed, ComputedRef, Ref, ref } from 'vue';
-import { WordEntity } from 'src/features/words/types/word';
-import { getRandomizedArray } from 'src/features/quize/utils';
 import { cloneDeep, find, findIndex } from 'lodash';
+import { WordEntity } from '@/features/words/types/word';
+import { getRandomizedArray } from 'src/shared/lib/utils/random';
 
 enum CheckKey {
   FROM = 'from',

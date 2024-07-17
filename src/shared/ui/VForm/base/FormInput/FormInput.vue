@@ -2,7 +2,7 @@
   import { computed, defineEmits, defineProps, Ref, useSlots } from 'vue';
   import { useVModel } from '@vueuse/core';
   import { isString, omit } from 'lodash';
-  import { rules } from 'src/shared/composables/validation/rules';
+  import { rules } from 'src/shared/lib/use/validation/rules';
   import { IFormInput, IUseFormInput, components } from 'src/shared/ui/VForm';
 
   const props = defineProps<{ modelValue: IFormInput }>();

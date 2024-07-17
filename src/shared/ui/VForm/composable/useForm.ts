@@ -1,5 +1,5 @@
 import { cloneDeep, has, mapValues } from 'lodash';
-import { useValidation } from 'src/shared/composables/validation/useValidation';
+import { useValidation } from 'src/shared/lib/use/validation/useValidation';
 import { computed, ComputedRef, ref, Ref, watch, watchEffect } from 'vue';
 import { FormConfig, IFormInput } from 'src/shared/ui/VForm';
 

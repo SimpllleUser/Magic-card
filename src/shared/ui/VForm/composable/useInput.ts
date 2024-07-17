@@ -1,5 +1,5 @@
 import { ComponentTypes } from '../types';
-import { ValidationRule } from 'src/shared/composables/validation';
+import { ValidationRule } from 'src/shared/lib/use/validation';
 import { IBaseInputs, InputParams } from 'src/shared/ui/VForm/composable';
 
 export interface ValidationFunction {

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { useCRUD } from 'src/shared/composables/useCRUD';
+import { useCRUD } from 'src/shared/lib/use/useCRUD';
 import { IModule } from 'src/entities/Module';
 
 /// DEPRECATED

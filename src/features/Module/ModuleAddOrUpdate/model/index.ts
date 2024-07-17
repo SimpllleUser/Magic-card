@@ -1,8 +1,8 @@
 import { computed, ComputedRef, Ref, ref } from 'vue';
 import { cloneDeep } from 'lodash';
-import { ValidationRule } from 'src/shared/composables/validation';
+import { ValidationRule } from 'src/shared/lib/use/validation';
 import { ActionForm, useForm, useText } from 'src/shared/ui/VForm';
-import { EntityUnform } from 'boot/types';
+import { EntityUnform } from 'src/boot/types';
 import { WordEntity } from 'src/features/words/types/word';
 import { useModulesStore, IModule, IModuleFormConfig } from 'src/entities/Module';
 

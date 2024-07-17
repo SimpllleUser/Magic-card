@@ -1,5 +1,5 @@
 import { IModule } from 'src/entities/Module';
-import { ValidationRule } from 'src/shared/composables/validation';
+import { ValidationRule } from 'src/shared/lib/use/validation';
 import { IInputString, useText } from 'src/shared/ui/VForm';
 
 export interface IModuleFormConfig {

@@ -3,7 +3,7 @@ import { isString } from 'lodash';
 import { isBoolean } from 'lodash';
 import { ValidationRule } from './types';
 import { rules } from './rules';
-import { IFormInput } from 'src/shared/ui/VForm';
+import { IFormInput } from '@/shared/ui/VForm';
 
 const getRuleArguments = (ruleKey: string): { ruleKey: string; paramsInArray: string[] } => {
   const [rule, paramsInString] = ruleKey?.split(':') || [];

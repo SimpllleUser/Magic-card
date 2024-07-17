@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { IModule } from 'src/features/module/types/module';
-  import { useModalPlugin } from 'src/shared/composables/useModalPlugin';
+  import { useModalPlugin } from 'src/shared/lib/use/useModalPlugin';
 
   interface Props {
     module: IModule;

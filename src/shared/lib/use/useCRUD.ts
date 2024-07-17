@@ -1,7 +1,7 @@
 import { ref, Ref } from 'vue';
 import _ from 'lodash';
 import { generateId } from 'src/helpers/id-generator';
-import { EntityUnform } from 'boot/types';
+import { EntityUnform } from 'src/boot/types';
 import { useLocalStorage } from '@vueuse/core';
 
 interface CrudItem {

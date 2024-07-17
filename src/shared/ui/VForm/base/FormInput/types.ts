@@ -1,4 +1,4 @@
-import { ValidationRule } from 'src/shared/composables/validation';
+import { ValidationRule } from 'src/shared/lib/use/validation';
 import { ComponentTypes } from 'src/shared/ui/VForm';
 
 export interface IFormInput {
