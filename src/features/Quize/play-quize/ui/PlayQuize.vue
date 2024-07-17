@@ -3,7 +3,7 @@
   import { useQuize } from 'src/shared/lib/use/useQuize';
   import { useModal } from 'src/shared/lib/use/useModal';
   import { WordEntity } from 'src/features/words/types/word';
-  import QuizeResultList from 'src/features/quize/components/QuizeResultList.vue';
+  import { QuizeResultModal } from 'src/widgets/Quize';
 
   const props = defineProps<{
     words: Array<WordEntity>;
@@ -42,7 +42,7 @@
 </script>
 
 <template>
-  <QuizeResultList :result="resultOfQuize" @reset="onResetResult" />
+  <QuizeResultModal :result="resultOfQuize" @reset="onResetResult" />
   <div>
     <div>
       <q-carousel

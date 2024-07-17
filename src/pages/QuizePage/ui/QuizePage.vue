@@ -3,7 +3,7 @@
   import { computed } from 'vue';
   import { useModulesStore } from 'src/features/Module/store/modules';
   import { WordEntity } from 'src/features/words/types/word';
-  import QuizeSlider from 'src/features/quize/components/QuizeSlider.vue';
+  import { PlayQuize } from 'src/features/Quize/play-quize';
   import { getRandomizedArray } from 'src/shared/lib/utils/random';
 
   const moduleId = useRoute();
@@ -16,7 +16,7 @@
 <template>
   <div>
     <div>
-      <QuizeSlider :words="wordList" />
+      <PlayQuize :words="wordList" />
     </div>
   </div>
 </template>

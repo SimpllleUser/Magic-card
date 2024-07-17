@@ -1,12 +1,7 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { VModal } from 'src/shared/ui/VModal';
-  interface ResultItem {
-    id: string;
-    word: string;
-    isCorrect: boolean;
-    answer: string;
-  }
+  import { COLUMNS, MODAL, ResultItem } from 'src/widgets/Quize/QuizeResultModal';
   interface Props {
     result: Array<ResultItem>;
   }
@@ -15,40 +10,8 @@
     (event: 'reset'): void;
   }
 
-  const MODAL_ID = 'quize-result-modal';
-  const TITLE = 'Result of quize !';
-
   const props = defineProps<Props>();
   const emit = defineEmits<Emit>();
-
-  const COLUMNS = [
-    {
-      label: '#',
-      field: 'index',
-      align: 'left',
-      sortable: true
-    },
-    {
-      label: 'From',
-      field: 'from',
-      align: 'left',
-      sortable: true
-    },
-    {
-      label: 'To',
-      field: 'to',
-      align: 'left',
-      sortable: true
-    },
-    {
-      name: 'answer',
-      required: true,
-      label: 'Answer',
-      align: 'left',
-      field: (row: ResultItem) => row.answer,
-      sortable: true
-    }
-  ];
 
   const rows = computed(() =>
     props.result.map((item, index) => ({
@@ -63,7 +26,7 @@
 </script>
 
 <template>
-  <VModal :id="MODAL_ID" :title="TITLE">
+  <VModal :id="MODAL.ID" :title="MODAL.TITLE">
     <div>
       <div>
         <q-table flat :rows="rows" :columns="COLUMNS" row-key="id" />

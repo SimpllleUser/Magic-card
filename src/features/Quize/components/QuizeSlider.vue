@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useQuize } from '@/shared/lib/use/useQuize';
+  import { useQuize } from 'src/shared/lib/use/useQuize';
   import { WordEntity } from 'src/features/words/types/word';
   import { useModulesStore } from 'src/features/module/store/modules';
   import { useModal } from 'src/shared/lib/use/useModal';
-  import QuizeResultList from 'src/features/quize/components/QuizeResultList.vue';
+  import { QuizeResultModal } from 'src/widgets/Quize/QuizeResultModal';
 
   const moduleStore = useModulesStore();
 
@@ -45,7 +45,7 @@
 </script>
 
 <template>
-  <QuizeResultList :result="resultOfQuize" @reset="onResetResult" />
+  <QuizeResultModal :result="resultOfQuize" @reset="onResetResult" />
   <div>
     <div>
       <q-carousel
