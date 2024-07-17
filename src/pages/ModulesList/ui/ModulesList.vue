@@ -4,16 +4,17 @@
   import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
   import { useModal } from 'src/shared/composables/useModal';
   import { IModule } from 'src/features/module/types/module';
-  import { ModuleDetail } from 'src/features/Module/PrepareToQuize';
+  import { MODAL, ModuleDetail } from 'src/features/Module/PrepareToQuize';
   import { useModulesStore } from 'src/entities/Module';
+  import { EMPTY_MODULES_TEXT, MODAL_ID } from './constants';
 
   const moduleStore = useModulesStore();
   const { remove: removeModule } = moduleStore;
   const modules = computed(() => moduleStore.modules);
 
-  const editModal = useModal('edit-module');
-  const createModule = useModal('create-module');
-  const detailModule = useModal('detail-module');
+  const editModal = useModal(MODAL_ID.EDIT_MODULE);
+  const createModule = useModal(MODAL_ID.CREATE_MODULE);
+  const detailModule = useModal(MODAL.ID);
 
   const currentModule = ref<IModule | null>(null);
   const detailViewModule = ref<IModule | null>(null);
@@ -34,15 +35,13 @@
     detailViewModule.value = null;
     currentModule.value = null;
   };
-
-  const _EMPTY_STATE_TITLE = 'You can add new module';
 </script>
 
 <template>
   <div class="q-px-xs">
     <ModuleDetail :module="detailViewModule" @hide="resetDetailViewModule" />
-    <ModuleAddOrUpdate form-id="edit-module" :module="currentModule" @hide="resetDetailViewModule" />
-    <ModuleAddOrUpdate form-id="create-module" />
+    <ModuleAddOrUpdate :form-id="MODAL_ID.EDIT_MODULE" :module="currentModule" @hide="resetDetailViewModule" />
+    <ModuleAddOrUpdate :form-id="MODAL_ID.CREATE_MODULE" />
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
         <ModuleItem
@@ -56,7 +55,7 @@
     </div>
     <div>
       <div v-if="!modules.length">
-        <h4 class="text-blue-grey-8 text-center">{{ _EMPTY_STATE_TITLE }}</h4>
+        <h4 class="text-blue-grey-8 text-center">{{ EMPTY_MODULES_TEXT }}</h4>
       </div>
       <div class="row justify-center">
         <div class="col-3 row justify-center">
@@ -73,5 +72,6 @@
   </div>
 </template>
 
-<style scoped></style>
-src/features/module/module
+<style scoped lang="scss">
+  @import './styles.scss';
+</style>
