@@ -2,8 +2,9 @@
   import { useVModel } from '@vueuse/core';
 
   import WordsListForm from './WordsListForm.vue';
-  import Imports from './Imports/_index.vue';
+  // import Imports from './Imports/_index.vue';
   import { WordEntity } from '../types/word';
+  import { ImportMain } from 'src/widgets/Words/ImportWords';
 
   interface Props {
     modelValue: Array<WordEntity>;
@@ -22,7 +23,7 @@
 <template>
   <div class="full-width">
     <div class="actions">
-      <Imports @import="setImportedWords" />
+      <ImportMain @import="setImportedWords" />
     </div>
     <div>
       <WordsListForm v-model="wordsListModel" />

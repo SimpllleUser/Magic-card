@@ -3,6 +3,7 @@
 
   import { WordEntity } from 'src/features/words/types/word';
   import { ImportTextField } from 'src/widgets/Words/ImportWords/ImportTextField';
+  import { BUTTON_BASE_CONFIG } from './constants';
 
   interface Emits {
     (event: 'import', payload: Array<WordEntity>): void;
@@ -12,11 +13,7 @@
 
   const IMPORT_BUTTONS = [
     {
-      label: 'Text field',
-      modalId: 'import-text-field-modal',
-      color: 'primary',
-      outline: true,
-      size: 'sm',
+      ...BUTTON_BASE_CONFIG,
       click: () => {
         useModal('import-text-field-modal').show();
       }
@@ -34,3 +31,7 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  @import './styles.scss';
+</style>
