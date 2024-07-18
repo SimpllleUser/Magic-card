@@ -3,8 +3,8 @@ import { cloneDeep } from 'lodash';
 import { ValidationRule } from 'src/shared/lib/use/validation';
 import { ActionForm, useForm, useText } from 'src/shared/ui/VForm';
 import { EntityUnform } from 'src/boot/types';
-import { WordEntity } from 'src/features/words/types/word';
 import { useModulesStore, IModule, IModuleFormConfig } from 'src/entities/Module';
+import { WordEntity } from 'src/widgets/Words';
 
 /// ADD FIX
 /// EXAMPLE FOR FSD - > https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src/shared/ui/VPrice/VPrice.vue

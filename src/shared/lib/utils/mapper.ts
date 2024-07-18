@@ -24,5 +24,3 @@ export const mapForm = (formItem: any) => {
   }
   return mapFormInput(actualForm);
 };
-
-// const res = _.mapValues(data, mapForm)

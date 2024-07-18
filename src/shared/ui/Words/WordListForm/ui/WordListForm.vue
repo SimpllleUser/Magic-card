@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { defineProps, computed } from 'vue';
-  import { generateId } from '@/shared/lib/utils/id-generator';
+  import { generateId } from 'src/shared/lib/utils/id-generator';
+  import { WordEntity } from 'src/widgets/Words';
   import { TABLE_CONFIG } from './constants';
-  import { WordEntity } from '@/features/words/types/word';
 
   interface Props {
     modelValue: Array<WordEntity>;

@@ -1,5 +1,5 @@
-import { WordEntity } from 'src/features/words/types/word';
 import { IInputString } from 'src/shared/ui/VForm';
+import { WordEntity } from 'src/widgets/Words';
 
 export interface IModule {
   id: string;

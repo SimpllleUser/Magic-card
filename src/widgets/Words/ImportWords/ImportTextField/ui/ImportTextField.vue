@@ -3,9 +3,9 @@
   import { VModal } from 'src/shared/ui/VModal';
   import { InputSplitter } from 'src/shared/ui/Inputs';
   import { WordListForm } from 'src/shared/ui/Words/WordListForm';
-  import { WordEntity } from 'src/features/words/types/word';
   import { generateId } from 'src/shared/lib/utils/id-generator';
   import { BUTTON_CONFIG, DEFAULT_SEPARATED_VALUES, MODAL } from './constants';
+  import { WordEntity } from '@/widgets/Words';
   import {
     InputSeparatedSymbol,
     TITLE_SEPARATDE_ON_WORD_ITEMS,
