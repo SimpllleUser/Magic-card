@@ -1,9 +1,8 @@
 <script setup lang="ts">
   import { useVModel } from '@vueuse/core';
-
-  import { WordEntity } from '../types/word';
+  import { WordEntity } from 'src/widgets/Words';
   import { ImportMain } from 'src/widgets/Words/ImportWords';
-  import { WordListForm } from 'src/shared/ui/WordListForm';
+  import { WordListForm } from 'src/shared/ui/Words/WordListForm';
 
   interface Props {
     modelValue: Array<WordEntity>;
@@ -29,3 +28,7 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  @import './styles.scss';
+</style>

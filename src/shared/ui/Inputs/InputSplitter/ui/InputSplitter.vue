@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed, watch } from 'vue';
-  import { separateByString } from '../helpers/separates';
+  import { separateByString } from 'src/shared/lib/utils/separates';
+  import { BASE_INPUT_CONFIG } from './constants';
 
   interface Props {
     modelValue: string;
@@ -15,23 +16,6 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emit>();
-
-  const LABEL = 'Enter words';
-  const PLACEHOLDER = 'Enter words to split';
-  const ROW = 1;
-  const BUTTON_REFRESH_CONFIG = {
-    icon: 'system_update_alt',
-    color: 'primary',
-    outline: true,
-    flat: true
-  };
-
-  const baseInputConfig = {
-    label: LABEL,
-    placeholder: PLACEHOLDER,
-    rows: ROW,
-    autogrow: true
-  };
 
   const inputValue = computed({
     get: () => props.modelValue,
@@ -63,7 +47,7 @@
 <template>
   <div class="row no-wrap items-center">
     <div class="full-width">
-      <q-input class="full-width" v-model="inputValue" v-bind="baseInputConfig" />
+      <q-input class="full-width" v-model="inputValue" v-bind="BASE_INPUT_CONFIG" />
     </div>
     <!--    <div>
       <q-btn v-bind="BUTTON_REFRESH_CONFIG" @click="handleUpdateSeparatedValue" />

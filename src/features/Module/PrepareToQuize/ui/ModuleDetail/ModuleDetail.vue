@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { VModal } from 'src/shared/ui/VModal';
-  import WordsList from 'src/features/words/components/WordsList.vue';
+  import { WordsList } from 'src/shared/ui/Words';
   import { MODAL } from './constants';
   import { IModule } from 'src/entities/Module';
 
