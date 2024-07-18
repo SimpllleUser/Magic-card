@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue';
-  import { SELECTOR_LABEL, TEXT_INPUT_LABEL, BASE_SPARATED_SYMBOLS } from '../constants';
+  import { SELECTOR_LABEL, TEXT_INPUT_LABEL, BASE_SPARATED_SYMBOLS } from './constants';
 
   interface Props {
     modelValue: string;
@@ -79,8 +79,6 @@
   </div>
 </template>
 
-<style>
-  .selector-separated-symbol {
-    min-width: 10rem;
-  }
+<style lang="scss" scoped>
+  @import './styles.scss';
 </style>

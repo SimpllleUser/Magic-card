@@ -2,12 +2,15 @@
   import { ref } from 'vue';
   import { VModal } from 'src/shared/ui/VModal';
   import InputSplitter from 'src/features/words/components/InputSplitter.vue';
-  import InputSeparatedSymbol from 'src/features/words/components/InputSeparatedSymbol.vue';
-  import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';
   import { WordEntity } from 'src/features/words/types/word';
   import { generateId } from 'src/shared/lib/utils/id-generator';
   import { BUTTON_CONFIG, DEFAULT_SEPARATED_VALUES, MODAL } from './constants';
   import { WordListForm } from 'src/shared/ui/WordListForm';
+  import {
+    InputSeparatedSymbol,
+    TITLE_SEPARATDE_ON_WORD_ITEMS,
+    TITLE_SEPARATED_ON_DEFINITIONS
+  } from 'src/shared/ui/Inputs/InputSeparatedSymbol';
   interface Emits {
     (event: 'import', payload: Array<WordEntity>): void;
   }
@@ -45,7 +48,7 @@
     <template #default="{ hide }">
       <div class="q-pa-md">
         <div>
-          <input-splitter
+          <InputSplitter
             v-model="text"
             @update-separated-value="setSeparatedValue"
             :separator-word-items="separatedOnWordItems"
@@ -54,10 +57,10 @@
         </div>
         <div class="row justify-between q-pt-md">
           <div>
-            <input-separated-symbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
+            <InputSeparatedSymbol :title="TITLE_SEPARATDE_ON_WORD_ITEMS" v-model="separatedOnWordItems" />
           </div>
           <div>
-            <input-separated-symbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
+            <InputSeparatedSymbol :title="TITLE_SEPARATED_ON_DEFINITIONS" v-model="separatedOnDefinitions" />
           </div>
         </div>
         <div>
