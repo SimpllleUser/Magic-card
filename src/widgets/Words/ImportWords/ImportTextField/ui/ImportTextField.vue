@@ -5,9 +5,9 @@
   import InputSeparatedSymbol from 'src/features/words/components/InputSeparatedSymbol.vue';
   import { TITLE_SEPARATDE_ON_WORD_ITEMS, TITLE_SEPARATED_ON_DEFINITIONS } from 'src/features/words/constants';
   import { WordEntity } from 'src/features/words/types/word';
-  import { generateId } from 'src/helpers/id-generator';
-  import WordsList from 'src/features/words/components/WordsListForm.vue';
+  import { generateId } from 'src/shared/lib/utils/id-generator';
   import { BUTTON_CONFIG, DEFAULT_SEPARATED_VALUES, MODAL } from './constants';
+  import { WordListForm } from 'src/shared/ui/WordListForm';
   interface Emits {
     (event: 'import', payload: Array<WordEntity>): void;
   }
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div>
-          <WordsList v-model="wordsListModel" :allow-add-word="false" />
+          <WordListForm v-model="wordsListModel" :allow-add-word="false" />
         </div>
         <div class="actions row justify-center q-pt-md">
           <q-btn v-bind="BUTTON_CONFIG" @click="onImport(hide)" />

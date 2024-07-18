@@ -3,7 +3,7 @@
   import { useVModel } from '@vueuse/core';
   import { cloneDeep } from 'lodash';
   import { useCRUD } from 'src/shared/lib/use/useCRUD';
-  import { generateId } from 'src/helpers/id-generator';
+  import { generateId } from 'src/shared/lib/utils/id-generator';
   import { IFormInput } from 'src/shared/ui/VForm/base';
   import { FormInput } from 'src/shared/ui/VForm/base/FormInput';
 

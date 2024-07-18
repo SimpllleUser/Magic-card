@@ -1,6 +1,6 @@
 import { ref, Ref } from 'vue';
 import _ from 'lodash';
-import { generateId } from 'src/helpers/id-generator';
+import { generateId } from 'src/shared/lib/utils/id-generator';
 import { EntityUnform } from 'src/boot/types';
 import { useLocalStorage } from '@vueuse/core';
 

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { defineProps, watch, computed } from 'vue';
-  import { WordEntity } from '../types/word';
-  import { generateId } from 'src/helpers/id-generator';
+  import { defineProps, computed } from 'vue';
+  import { generateId } from 'src/shared/lib/utils/id-generator';
+  import { TABLE_CONFIG } from './constants';
+  import { WordEntity } from '@/features/words/types/word';
 
   interface Props {
     modelValue: Array<WordEntity>;
@@ -34,24 +35,6 @@
 
   const onRemoveWord = (wordId: string) => {
     modelValue.value = modelValue.value.filter(({ id }) => id !== wordId);
-  };
-
-  const COLUMNS = [
-    { name: 'number', label: '#', align: 'left', field: 'number' },
-    { name: 'from', label: 'From', align: 'left', field: 'from' },
-    { name: 'to', label: 'To', align: 'left', field: 'to' },
-    { name: 'actions', label: 'Actions', align: 'right', field: 'action' }
-  ];
-
-  const TABLE_CONFIG = {
-    // title: 'Words list',
-    columns: COLUMNS,
-    rowKey: 'name',
-    separator: 'horizontal',
-    flat: true,
-    bordered: true,
-    noDataLabel: 'Empty list of words',
-    noResultsLabel: 'Not find of words'
   };
 
   const setInput = (value: string, { key, index }: { key: string; index: number }) => {
