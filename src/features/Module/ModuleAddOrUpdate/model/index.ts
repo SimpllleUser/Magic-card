@@ -6,10 +6,6 @@ import { EntityUnform } from 'src/boot/types';
 import { useModulesStore, IModule, IModuleFormConfig } from 'src/entities/Module';
 import { WordEntity } from 'src/widgets/Words';
 
-/// ADD FIX
-/// EXAMPLE FOR FSD - > https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src/shared/ui/VPrice/VPrice.vue
-/// - Refactor by FSD VForm
-
 interface IUseModuleAddOrUpdate {
   form: any;
   formAction: ComputedRef<ActionForm>;

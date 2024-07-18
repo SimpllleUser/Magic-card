@@ -1,6 +1,7 @@
 # Magic card app (magic-card)
 
-Magic card app
+# [Example of FSD](https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src)
+
 
 ## Install the dependencies
 ```bash
