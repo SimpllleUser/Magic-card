@@ -1,6 +1,8 @@
 # Magic card app (magic-card)
 
-# [Example of FSD](https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src)
+
+## [Example of FSD](https://github.com/AKosogorov/fake-cyber-web-store/blob/master/src)
+## [Second Example of FSD](https://github.com/hoachnt/fsd-vue-antd/tree/main/src)
 
 
 ## Install the dependencies
