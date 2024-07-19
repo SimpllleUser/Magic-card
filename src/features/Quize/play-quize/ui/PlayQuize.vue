@@ -2,8 +2,8 @@
   import { ref } from 'vue';
   import { useQuize } from 'src/shared/lib/use/useQuize';
   import { useModal } from 'src/shared/lib/use/useModal';
-  import { WordEntity } from 'src/features/words/types/word';
   import { QuizeResultModal } from 'src/widgets/Quize';
+  import { WordEntity } from 'src/widgets/Words';
 
   const props = defineProps<{
     words: Array<WordEntity>;

@@ -4,7 +4,7 @@
   import { VModal } from 'src/shared/ui/VModal';
   import { VForm, FormInput } from 'src/shared/ui/VForm';
   import { useModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate/model';
-  import WordsForm from 'src/features/words/components/WordsForm.vue';
+  import { WordsForm } from 'src/widgets/Words/WordsForm';
 
   interface Props {
     module?: IModule;

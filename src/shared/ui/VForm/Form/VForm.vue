@@ -2,7 +2,7 @@
   import { FORM_ACTIONS, CANCEL_BUTTON, SUBMIT_BUTTON } from 'src/shared/ui/VForm/Form/constants';
   import { computed } from 'vue';
   import { ActionForm } from 'src/shared/ui/VForm/Form/types';
-  import { IFormEntity } from 'src/shared/ui/_VForm/useForm';
+  import { IFormEntity } from 'src/shared/ui/VForm';
 
   interface Props {
     action: ActionForm;

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import { useRoute } from 'vue-router';
   import { computed } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useModulesStore } from 'src/features/Module/store/modules';
-  import { WordEntity } from 'src/features/words/types/word';
   import { PlayQuize } from 'src/features/Quize/play-quize';
   import { getRandomizedArray } from 'src/shared/lib/utils/random';
+  import { WordEntity } from 'src/widgets/Words';
 
   const moduleId = useRoute();
   const modulesStore = useModulesStore();
