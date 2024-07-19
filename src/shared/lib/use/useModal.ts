@@ -1,4 +1,4 @@
-import { useModalStore } from 'src/stores/modal';
+import { useModalStore } from 'src/shared/ui/VModal/model';
 
 export function useModal(key: string) {
   const modal = useModalStore();

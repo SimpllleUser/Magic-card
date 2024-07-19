@@ -1,34 +1,17 @@
-import { Ref, ref } from 'vue';
-import { useModalStore } from 'stores/modal';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { VModalAction } from './types';
 
-interface useVModal {
-  state: Ref<boolean>;
-  show: CallableFunction;
-  hide: CallableFunction;
-  init: (id: string) => void;
-}
-
-export function useVModal(emit: CallableFunction) {
-  const state = ref(false);
-  const { initModal } = useModalStore();
-
-  const show = () => {
-    state.value = true;
-    emit('show');
-  };
-  const hide = () => {
-    state.value = false;
-    emit('hide');
+export const useModalStore = defineStore('modal', () => {
+  const modalList = ref<Record<string, VModalAction>>({});
+  const initModal = (key: string, actions: VModalAction) => {
+    modalList.value[key] = actions;
   };
 
-  const init = (id: string) => {
-    initModal(id, { show, hide });
+  const show = (key: string) => {
+    modalList.value[key]?.show();
   };
+  const hide = (key: string) => modalList.value[key]?.hide();
 
-  return {
-    state,
-    show,
-    hide,
-    init
-  };
-}
+  return { modalList, initModal, show, hide };
+});

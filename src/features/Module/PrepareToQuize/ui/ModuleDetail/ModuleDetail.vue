@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { VModal } from 'src/shared/ui/VModal';
   import { WordsList } from 'src/shared/ui/Words';
-  import { MODAL } from './constants';
   import { IModule } from 'src/entities/Module';
+  import { MODAL } from './constants';
 
   interface Props {
     module: IModule;
@@ -25,7 +25,7 @@
       </q-card-section>
     </q-card>
     <q-card>
-      <q-card-section class="q-pb-sm" v-if="module.words">
+      <q-card-section class="q-pb-sm">
         <WordsList :module-id="module.id" :words="module.words" />
       </q-card-section>
     </q-card>
