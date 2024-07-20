@@ -25,7 +25,7 @@
       </q-card-section>
     </q-card>
     <q-card>
-      <q-card-section class="q-pb-sm">
+      <q-card-section class="q-pb-sm" v-if="module.words.length">
         <WordsList :module-id="module.id" :words="module.words" />
       </q-card-section>
     </q-card>

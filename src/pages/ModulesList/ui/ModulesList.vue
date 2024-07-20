@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed, nextTick } from 'vue';
-  import ModuleItem from 'src/features/module/components/ModuleItem.vue';
   import { ModuleAddOrUpdate } from 'src/features/module/ModuleAddOrUpdate';
+  import { ModuleCard } from 'src/widgets/Module';
   import { useModal } from 'src/shared/lib/use/useModal';
   import { IModule } from 'src/features/module/types/module';
   import { MODAL, ModuleDetail } from 'src/features/Module/PrepareToQuize';
@@ -44,7 +44,7 @@
     <ModuleAddOrUpdate :form-id="MODAL_ID.CREATE_MODULE" />
     <div v-if="modules.length" class="row">
       <div v-for="module in modules" :key="module.id" class="col-4">
-        <ModuleItem
+        <ModuleCard
           :module="module"
           class="q-ma-sm"
           @on-edit="setEditModule"

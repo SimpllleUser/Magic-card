@@ -32,7 +32,7 @@
 
 <template>
   <q-card flat bordered class="modules-item">
-    <q-card-section class="bg-accent text-white">
+    <q-card-section class="bg-accent text-black">
       <div class="text-h6">{{ module.title }}</div>
       <div class="text-subtitle2">{{ module.description }}</div>
     </q-card-section>
@@ -67,4 +67,7 @@
     }
   }
 </style>
-src/features/module/module
+
+<style lang="scss" scoped>
+  @import './styles';
+</style>
