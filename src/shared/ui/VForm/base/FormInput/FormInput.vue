@@ -1,51 +1,33 @@
 <script setup lang="ts">
-  import { computed, defineEmits, defineProps, Ref, useSlots } from 'vue';
-  import { useVModel } from '@vueuse/core';
-  import { isString, omit } from 'lodash';
-  import { rules } from 'src/shared/lib/use/validation/rules';
-  import { IFormInput, IUseFormInput, components } from 'src/shared/ui/VForm';
+  import { computed, defineProps, defineEmits } from 'vue';
+  import type { ABaseInput, TextInput } from 'base-form/src/shared/ui/inputs/models';
 
-  const props = defineProps<{ modelValue: IFormInput }>();
+  interface Props {
+    modelValue: TextInput;
+  }
 
-  const internalProps = computed(() => omit(props.modelValue, ['value']));
+  interface Emits {
+    (event: 'update:modelValue', payload: ABaseInput): void;
+  }
 
-  const componentType = computed(() => {
-    if (!props.modelValue) return 'div';
-    return components[props.modelValue.component];
+  const props = defineProps<Props>();
+  const emit = defineEmits<Emits>();
+
+  const input = computed({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value)
   });
-
-  const emit = defineEmits<{ (event: 'update:modelValue', payload: IUseFormInput): void }>();
-  const data: Ref<IFormInput> = useVModel(props, 'modelValue', emit);
-
-  const activeSlots = useSlots();
-
-  const onChangeInput = () => {
-    emit('update:modelValue', data.value);
-  };
-
-  const errorMessage = computed(() =>
-    internalProps.value._rules
-      ?.map((key: string) => rules[key](data.value.value))
-      .filter(isString)
-      .at(0)
-  );
-  const error = computed(() => Boolean(errorMessage.value));
 </script>
+
 <template>
-  <component
-    v-if="internalProps && data"
-    :is="componentType"
-    v-model="data.value"
-    v-bind="internalProps"
-    @update:model-value="onChangeInput"
-    bottom-slots
-    :error-message="errorMessage"
-    :error="error"
-  >
-    <template v-for="(_, slotName) in activeSlots" v-slot:[slotName] :key="slotName">
-      <slot :name="slotName"></slot>
-    </template>
-  </component>
+  <label v-if="input.label" class="label">{{ input.label }}</label>
+  <br />
+  <component :is="input.component" v-model="input" />
+  <br />
+  <span class="hint" v-if="input.hint">{{ input.hint }}</span>
+  <span v-if="!input.isValid()" class="invalid-field">
+    {{ input.getErrors() }}
+  </span>
 </template>
 
 <style lang="scss" scoped>

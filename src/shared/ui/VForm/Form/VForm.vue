@@ -1,47 +1,58 @@
 <script setup lang="ts">
-  import { FORM_ACTIONS, CANCEL_BUTTON, SUBMIT_BUTTON } from 'src/shared/ui/VForm/Form/constants';
-  import { computed } from 'vue';
-  import { ActionForm } from 'src/shared/ui/VForm/Form/types';
-  import { IFormEntity } from 'src/shared/ui/VForm';
+  import { CANCEL_BUTTON, SUBMIT_BUTTON } from 'src/shared/ui/VForm/Form/constants';
+  import { OnSubmitPayload, useForm, ActionForm } from 'base-form/src/shared/ui/form';
+  import { defineProps, defineEmits, onMounted, computed, ref, watch } from 'vue';
 
   interface Props {
-    action: ActionForm;
-    config: IFormEntity;
+    config: unknown;
+    params?: { action: ActionForm };
   }
 
   interface Emits {
-    (event: 'on-submit', payload: Record<string, any>): void;
-    (event: 'on-cancel'): void;
+    (event: 'on-submit', payload: OnSubmitPayload<unknown>): void;
   }
 
-  const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const actionName = computed(() => (props.action ? FORM_ACTIONS.SAVE : FORM_ACTIONS.CREATE));
+  const props = defineProps<Props>();
 
-  const onSubmitHandler = () => {
-    props.config.onSubmit(() => {
-      if (!props.config.isValid) return;
-      emit('on-submit', props.config.formValue);
+  const formConfig = ref(useForm(props.config));
+  watch(
+    () => props.config,
+    (newConfig) => {
+      formConfig.value = useForm(newConfig);
+    },
+    { deep: true }
+  );
+
+  const onSubmit = (isValid: boolean): void => {
+    emit('on-submit', {
+      value: formConfig.value.getValue(),
+      isValid,
+      ...formConfig.value.getActionStates(props.params)
     });
   };
 
-  const onCancel = () => {
-    props.config.onReset();
-    emit('on-cancel');
-  };
+  onMounted(() => {
+    formConfig.value.resetForm();
+  });
+
+  const submitButtonLabel = computed(() => formConfig.value.getAction(props?.params || {}));
+  const showButtonAction = computed(() => !formConfig.value.isActionNone(props?.params || {}));
 </script>
 
 <template>
   <div>
-    <q-form @submit="onSubmitHandler" class="q-gutter-md">
+    <q-form @submit="onSubmit" class="q-gutter-md">
       <div class="form-body">
-        <slot />
+        <slot :form="formConfig.form" />
       </div>
-      <div class="row justify-end">
-        <q-btn @click="onCancel" v-bind="CANCEL_BUTTON" />
-        <q-btn :label="actionName" v-bind="SUBMIT_BUTTON" />
-      </div>
+      <slot name="actions">
+        <div class="row justify-end">
+          <q-btn @click="formConfig.resetForm" v-bind="CANCEL_BUTTON" />
+          <q-btn :label="submitButtonLabel" v-bind="SUBMIT_BUTTON" />
+        </div>
+      </slot>
     </q-form>
   </div>
 </template>
