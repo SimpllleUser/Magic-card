@@ -1,6 +1,6 @@
 import { TextInput } from 'base-form/src/shared/ui/inputs/models';
-import input from 'base-form/src/shared/ui/inputs/models/InputConfigurator';
-
+import input from 'src/shared/ui/InputConfigurator/index';
+import { TextareaInput } from 'src/shared/ui/InputConfigurator/models/TextareaInput';
 interface FormData {
   id: string;
   title: string;
@@ -10,7 +10,7 @@ interface FormData {
 export class ModuleForm {
   id: string;
   title: TextInput;
-  description: TextInput;
+  description: TextareaInput;
   constructor(data?: FormData) {
     this.id = data?.id || '';
     this.title = input.text({
@@ -18,9 +18,9 @@ export class ModuleForm {
       label: 'Title',
       rules: { length: 5 }
     });
-    this.description = input.text({
+    this.description = input.textarea({
       value: data?.title,
-      label: 'Title',
+      label: 'Description',
       rules: { length: 5 }
     });
   }
