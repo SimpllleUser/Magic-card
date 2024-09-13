@@ -6,6 +6,7 @@
   import { BaseForm } from 'base-form/src/shared/ui/form/BaseForm';
   import { FormConfig, useEntity } from 'src/features/Module/ModuleAddOrUpdate/model/formConfig';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components';
+  import { ActionForm } from 'base-form/src/shared/ui/form';
 
   interface Props {
     module?: IModule;
@@ -35,8 +36,15 @@
 <template>
   <VModal :id="formId" title="Module form" @show="initDataModule(module)" @hide="onHide">
     <template #default="{ hide }">
-      <BaseForm :config="useEntity(module)" @on-submit="onSubmit($event, hide)">
+      <BaseForm
+        :config="useEntity(module)"
+        @on-submit="onSubmit($event, hide)"
+        :params="{
+          action: 'Create'
+        }"
+      >
         <template #default="{ form }: { form: FormConfig }">
+          {{ form }}
           <InputForm v-model="form.title" />
           <InputForm v-model="form.description" />
         </template>
