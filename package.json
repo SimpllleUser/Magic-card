@@ -13,6 +13,7 @@
     "build": "quasar build"
   },
   "dependencies": {
+    "base-form": "git+https://github.com/SimpllleUser/base-form.git",
     "@quasar/extras": "^1.16.4",
     "@vueuse/core": "^10.8.0",
     "axios": "^1.2.1",
