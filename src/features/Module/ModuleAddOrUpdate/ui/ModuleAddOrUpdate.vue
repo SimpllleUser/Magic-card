@@ -44,7 +44,6 @@
         }"
       >
         <template #default="{ form }: { form: FormConfig }">
-          {{ form }}
           <InputForm v-model="form.title" />
           <InputForm v-model="form.description" />
         </template>
