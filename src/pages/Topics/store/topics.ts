@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { Topic } from '@/core/models/Topic';
+import { useCRUD } from '@/shared/use/useCRUD';
 
 const MOCK = [
   {
@@ -30,9 +31,12 @@ const MOCK = [
 ];
 
 export const useTopicsStore = defineStore('topics', () => {
-  const items = ref<Array<Topic>>(MOCK);
+  const topicCrud = useCRUD<Topic>(MOCK, { key: 'topics', returnAsObject: true });
+
+  const items = computed(() => topicCrud.data);
 
   return {
-    items
+    ...topicCrud,
+    items: items.value
   };
 });

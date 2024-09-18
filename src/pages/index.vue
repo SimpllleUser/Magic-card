@@ -10,7 +10,7 @@
   <div>
     <VRow class="pa-4">
       <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
-        <TopicCard :topic="topic" />
+        <TopicCard :topic="topic" @remove="topicsStore.remove" />
       </VCol>
     </VRow>
   </div>
