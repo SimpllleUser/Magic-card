@@ -24,23 +24,20 @@
   const action = computed(() => (props.formData?.id ? ActionForm.Update : ActionForm.Create));
 
   const onSubmit = (params: Ref<Topic | Omit<Topic, 'id'>>) => {
-    console.log(params.value);
-    emit('submit', params.value);
+    if (params.isValid) emit('submit', params.value);
   };
 </script>
 
 <template>
   <BaseModal :id="id" :title="title">
-    <BaseForm
-      :config="useFormTopic(formData)"
-      :params="{
-        action
-      }"
-      @on-submit="onSubmit"
-    >
+    <BaseForm :config="useFormTopic(formData)" :params="{ action }" @on-submit="onSubmit">
       <template #default="{ form }: { form: TopicForm }">
-        <InputForm v-model="form.title" />
-        <InputForm v-model="form.description" />
+        <div class="mb-4">
+          <InputForm v-model="form.title" />
+        </div>
+        <div class="mb-4">
+          <InputForm v-model="form.description" />
+        </div>
       </template>
     </BaseForm>
   </BaseModal>

@@ -281,7 +281,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mdi/font@7.4.47", "@mdi/font@^7.4.47":
+"@mdi/font@7.4.47":
   version "7.4.47"
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-7.4.47.tgz#2ae522867da3a5c88b738d54b403eb91471903af"
   integrity sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw==
@@ -954,7 +954,7 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axios@^1.2.1, axios@^1.7.4:
+axios@^1.2.1:
   version "1.7.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.7.tgz#2f554296f9892a72ac8d8e4c5b79c14a91d0a47f"
   integrity sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==
@@ -981,17 +981,16 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 "base-form@git+https://github.com/SimpllleUser/base-form.git":
-  version "0.1.0"
-  resolved "git+https://github.com/SimpllleUser/base-form.git#17d05ad7c8f1c50fa41d4ca68742d3a161f4dc3e"
+  version "0.0.0"
+  resolved "git+https://github.com/SimpllleUser/base-form.git#def65034c1d1810b6a16ef0dcdd371120c1b8f0b"
   dependencies:
-    "@mdi/font" "^7.4.47"
-    axios "^1.7.4"
-    core-js "^3.8.3"
+    "@mdi/font" "7.4.47"
+    core-js "^3.37.1"
     lodash "^4.17.21"
-    pinia "^2.1.7"
-    vue "^3.2.13"
-    vue-router "^4.0.3"
-    vuetify "^3.7.1"
+    pinia "^2.2.4"
+    roboto-fontface "*"
+    vue "^3.4.31"
+    vuetify "^3.6.11"
 
 binary-extensions@^2.0.0:
   version "2.3.0"
@@ -1146,7 +1145,7 @@ confbox@^0.1.7:
   resolved "https://registry.yarnpkg.com/confbox/-/confbox-0.1.7.tgz#ccfc0a2bcae36a84838e83a3b7f770fb17d6c579"
   integrity sha512-uJcB/FKZtBMCJpK8MQji6bJHgu1tixKPxRLeGkNzBoOZzpnZUJm0jm2/sBDWcuBx1dYgxV4JU+g5hmNxCyAmdA==
 
-core-js@^3.37.1, core-js@^3.8.3:
+core-js@^3.37.1:
   version "3.38.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.38.1.tgz#aa375b79a286a670388a1a363363d53677c0383e"
   integrity sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==
@@ -2529,6 +2528,14 @@ pinia@^2.1.7:
     "@vue/devtools-api" "^6.6.3"
     vue-demi "^0.14.10"
 
+pinia@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.2.4.tgz#79b63b231a3da80968ab58f7721f575fe2c509ac"
+  integrity sha512-K7ZhpMY9iJ9ShTC0cR2+PnxdQRuwVIsXDO/WIEV/RnMC/vmSoKDTKW/exNQYPI+4ij10UjXqdNiEHwn47McANQ==
+  dependencies:
+    "@vue/devtools-api" "^6.6.3"
+    vue-demi "^0.14.10"
+
 pkg-types@^1.0.3, pkg-types@^1.1.1, pkg-types@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pkg-types/-/pkg-types-1.2.0.tgz#d0268e894e93acff11a6279de147e83354ebd42d"
@@ -3151,7 +3158,7 @@ vue-eslint-parser@^9.3.1, vue-eslint-parser@^9.4.3:
     lodash "^4.17.21"
     semver "^7.3.6"
 
-vue-router@^4.0.3, vue-router@^4.4.0:
+vue-router@^4.4.0:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.4.5.tgz#bdf535e4cf32414ebdea6b4b403593efdb541388"
   integrity sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==
@@ -3167,7 +3174,7 @@ vue-tsc@^2.0.26:
     "@vue/language-core" "2.1.6"
     semver "^7.5.4"
 
-vue@^3.2.13, vue@^3.4.21, vue@^3.4.31:
+vue@^3.4.21, vue@^3.4.31:
   version "3.5.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.6.tgz#025b1d411627883577457797eff93e85e61ef9c1"
   integrity sha512-zv+20E2VIYbcJOzJPUWp03NOGFhMmpCKOfSxVTmCYyYFFko48H9tmuQFzYj7tu4qX1AeXlp9DmhIP89/sSxxhw==
@@ -3178,7 +3185,7 @@ vue@^3.2.13, vue@^3.4.21, vue@^3.4.31:
     "@vue/server-renderer" "3.5.6"
     "@vue/shared" "3.5.6"
 
-vuetify@^3.5.9, vuetify@^3.6.11, vuetify@^3.7.1:
+vuetify@^3.5.9, vuetify@^3.6.11:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.7.1.tgz#102dc8b6c8795955d874da85375a98e369c102d6"
   integrity sha512-N1XlczbgeGt/O+JUk72QPrqcDaRIXUdptUciJqGyTvZ9cfMoSlEWs6TZO+dOOfXbKvmIMFMycYg4dgSHDpCPhg==

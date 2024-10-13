@@ -12,7 +12,7 @@ export class TopicForm {
     this.title = input.text({
       value: data?.title,
       label: 'Title',
-      rules: { required: true, min: 3 }
+      rules: { required: true }
     });
     this.description = input.textarea({
       value: data?.title,
