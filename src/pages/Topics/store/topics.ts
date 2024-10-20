@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Topic } from '@/core/models/Topic';
+import { mappedDictionaryOfTopic, Topic } from '@/core/models/Topic';
 import { useCRUD } from '@/shared/use/useCRUD';
 
 const MOCK = [
@@ -37,6 +37,8 @@ export const useTopicsStore = defineStore('topics', () => {
 
   return {
     ...topicCrud,
+    update: (topic: Topic) => topicCrud.update(mappedDictionaryOfTopic(topic)),
+    create: (topic: Topic) => topicCrud.create(mappedDictionaryOfTopic(topic)),
     items: items.value
   };
 });

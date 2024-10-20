@@ -1,11 +1,27 @@
 import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
 import input from 'base-form/src/shared/ui/inputs/config';
-import { Topic } from '@/core/models/Topic';
+import { DictionaryItem, Topic } from '@/core/models/Topic';
+import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
+
+const templateListDictionary = (data?: DictionaryItem = {}) => ({
+  id: data?.id || '',
+  from: input.text({
+    value: data?.from || '',
+    label: 'From',
+    rules: { required: true }
+  }),
+  to: input.text({
+    value: data?.from || '',
+    label: 'To',
+    rules: { required: true }
+  })
+});
 
 export class TopicForm {
   id: string;
   title: TextInput;
   description: TextareaInput;
+  dictionary: InputList<{ from: TextInput; to: TextInput }>;
 
   constructor(data?: Topic) {
     this.id = data?.id || '';
@@ -19,6 +35,7 @@ export class TopicForm {
       label: 'Description',
       rules: { required: true }
     });
+    this.dictionary = input.list(data?.dictionary?.map(templateListDictionary) || [], templateListDictionary());
   }
 }
 
