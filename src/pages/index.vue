@@ -50,8 +50,8 @@
 </template>
 <style lang="scss" scoped>
   .big-square-button {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     border-radius: 8px;
     display: flex;
     align-items: center;
