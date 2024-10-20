@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import TopicCard from '@/pages/Topics/components/TopicCard.vue';
-  import { useTopicsStore } from '@/pages/Topics/store/topics';
-  import TopicForm from '@/pages/Topics/components/TopicForm/TopicForm.vue';
+  import TopicCard from '@/features/Topics/TopicCard/index.vue';
+  import { useTopicsStore } from '@/features/Topics/store/topics';
+  import TopicForm from '@/features/Topics/TopicForm/index.vue';
   import { Topic } from '@/core/models/Topic';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';

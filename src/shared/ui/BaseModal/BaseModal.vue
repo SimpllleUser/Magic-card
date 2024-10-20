@@ -1,7 +1,8 @@
 <script lang="ts" setup>
   import { computed, onMounted, ref } from 'vue';
   import { useModalStore } from './store';
-  import {Icons} from "@/core/models/icons";
+  import { Icons } from '@/core/models/icons';
+  import { Colors, Variants } from '@/core/models/enums';
 
   interface Props {
     id: string;
@@ -49,9 +50,11 @@
 <template>
   <VDialog v-model="state" v-bind="options" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
-      <VCardTitle class="d-flex justify-space-between bg-primary text-white">
-        <span>{{ title }}</span>
-        <VBtn class="text-white" :icon="Icons.Close" @click="modalHide" />
+      <VCardTitle class="d-flex hide-center justify-space-between bg-primary text-white">
+        <slot name="header" :title="title" :close="modalHide">
+          <span>{{ title }}</span>
+          <VBtn :icon="Icons.Close" @click="modalHide" :variant="Variants.Plain" />
+        </slot>
       </VCardTitle>
       <VCardText>
         <slot :hide="modalHide"></slot>

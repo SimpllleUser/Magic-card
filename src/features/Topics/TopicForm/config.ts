@@ -39,4 +39,4 @@ export class TopicForm {
   }
 }
 
-export const useFormTopic = (data?: Topic) => new TopicForm(data);
+export const useTopicForm = (data?: Topic) => new TopicForm(data);

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ActionForm, BaseForm } from 'base-form/src/shared/ui/form/BaseForm';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { TopicForm, useFormTopic } from '@/pages/Topics/components/TopicForm/index';
+  import { TopicForm, useTopicForm } from '@/features/Topics/TopicForm/config';
   import { Topic } from '@/core/models/Topic';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
 
@@ -33,7 +33,7 @@
 
 <template>
   <BaseModal :id="id" :title="title">
-    <BaseForm :config="useFormTopic(formData)" :params="{ action }" @on-submit="onSubmit">
+    <BaseForm :config="useTopicForm(formData)" :params="{ action }" @on-submit="onSubmit">
       <template #default="{ form }: { form: TopicForm }">
         <div class="mb-4">
           <InputForm v-model="form.title" />

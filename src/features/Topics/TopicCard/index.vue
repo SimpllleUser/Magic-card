@@ -14,22 +14,25 @@
 
   defineProps<Props>();
   defineEmits<Emits>();
+  const router = useRouter();
 
   const modal = useModalStore();
+
+  const onUpdateTopic = () => {
+    modal.show(Modals.TopicUpdate);
+    $emit('update', topic);
+  };
+
+  const goToDetailTopic = (id: string) => {
+    router.push({ name: 'TopicDetail', params: { id } });
+  };
 </script>
 
 <template>
   <VCard :text="topic.description" :title="topic.title">
     <VCardActions>
-      <VBtn
-        @click="
-          () => {
-            modal.show(Modals.TopicUpdate);
-            $emit('update', topic);
-          }
-        "
-        >Edit</VBtn
-      >
+      <VBtn @click="goToDetailTopic(topic.id)">Detail</VBtn>
+      <VBtn @click="onUpdateTopic">Edit</VBtn>
       <VBtn @click="$emit('remove', topic.id)">Remove</VBtn>
     </VCardActions>
   </VCard>
