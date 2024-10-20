@@ -27,7 +27,6 @@
 </script>
 
 <template>
-  <div>List of card Topics</div>
   <div>
     <TopicForm :id="Modals.TopicUpdate" :form-data="currentTopic" title="Topic update" @submit="onUpdateSubmit" />
     <TopicForm :id="Modals.TopicCreate" title="Topic create" @submit="onCreateSubmit" />

@@ -1,15 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import DefaultLayout from '../layouts/default.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../pages/index.vue')
-  },
-  {
-    path: '/topic/:id',
-    name: 'TopicDetail',
-    component: () => import('../pages/topics/detail.vue')
+    component: DefaultLayout,
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: () => import('../pages/index.vue'),
+        meta: { title: 'Home' },
+        children: [
+          {
+            path: '/topic/:id',
+            name: 'TopicDetail',
+            component: () => import('../pages/topics/detail.vue'),
+            meta: { title: 'Topic detail' }
+          }
+        ]
+      }
+    ]
   }
 ];
 
