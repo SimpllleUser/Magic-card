@@ -2,6 +2,7 @@
   import { Topic } from '@/core/models/Topic';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
+  import { defineEmits } from 'vue';
 
   interface Props {
     topic: Topic;
@@ -13,14 +14,15 @@
   }
 
   defineProps<Props>();
-  defineEmits<Emits>();
+  const emit = defineEmits<Emits>();
+
   const router = useRouter();
 
   const modal = useModalStore();
 
-  const onUpdateTopic = () => {
+  const onUpdateTopic = (topic: Topic) => {
     modal.show(Modals.TopicUpdate);
-    $emit('update', topic);
+    emit('update', topic);
   };
 
   const goToDetailTopic = (id: string) => {
@@ -32,7 +34,7 @@
   <VCard :text="topic.description" :title="topic.title">
     <VCardActions>
       <VBtn @click="goToDetailTopic(topic.id)">Detail</VBtn>
-      <VBtn @click="onUpdateTopic">Edit</VBtn>
+      <VBtn @click="onUpdateTopic(topic)">Edit</VBtn>
       <VBtn @click="$emit('remove', topic.id)">Remove</VBtn>
     </VCardActions>
   </VCard>
