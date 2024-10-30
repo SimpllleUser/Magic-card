@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useTopicsStore } from '../../features/Topics/store/topics';
+  import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
 
   const route = useRoute();
   const topicId = computed(() => route.params.id!);
@@ -29,6 +30,9 @@
           <h3 class="text-h6">Dictionary list</h3>
         </VCardTitle>
         <VCardText> Items </VCardText>
+        <VCardText>
+          <ParserTextToDictionary />
+        </VCardText>
       </VCard>
     </VCol>
   </VRow>
