@@ -22,13 +22,14 @@
     words.value = value;
   };
 
-  const separatorToRowSymbol = ref('-');
+  const separatorToRowSymbol = ref(',');
 
-  const separatedToWordsOfRowsSymbol = ref(',');
+  const separatedToWordsOfRowsSymbol = ref('-');
 </script>
 
 <template>
   <div class="full-width">
+    {{ words }}
     <div>
       <InputSplitter
         v-model="text"

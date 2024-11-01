@@ -42,9 +42,9 @@
     }
   );
 
-  const separatdeSymbolSelected = computed(() => {
-    return BASE_SEPARATED_SYMBOLS.find((item) => item.value === separatdeSymbol.value);
-  });
+  // const separatdeSymbolSelected = computed(() => {
+  //   return BASE_SEPARATED_SYMBOLS.find((item) => item.value === separatdeSymbol.value);
+  // });
 </script>
 
 <template>
@@ -66,7 +66,7 @@
           filled
           item-title="label"
           item-value="value"
-          :items="BASE_SPARATED_SYMBOLS"
+          :items="BASE_SEPARATED_SYMBOLS"
           :label="SELECTOR_LABEL"
         />
       </div>
