@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, defineEmits, defineProps, watch } from 'vue';
+  import { watchEffect } from 'vue';
   import { separateByString } from '../helpers/separates';
   import { Icons } from '@/core/models/icons';
 
@@ -28,40 +28,28 @@
     autogrow: true
   };
 
-  const inputValue = computed({
-    get: () => props.modelValue,
-    set: (value: string) => {
-      emit('update:modelValue', value);
-    }
-  });
+  const emitSeparatedValue = () => {
+    const value = separateByString(props.modelValue, props.separatorWordItems)
+      .map((item) => separateByString(item, props.separatorDefinition))
+      .map((item) => (item.length <= 2 ? item : [item[0], item.slice(1).join(props.separatorDefinition)]));
+    emit('update-separated-value', value);
+  };
 
-  watch(
-    () => [inputValue.value, props.separatorDefinition, props.separatorWordItems],
-    (value: string) => {
-      emit('update-separated-value', separatedValue(value));
-    }
-  );
+  watchEffect(emitSeparatedValue);
 
-  const separatedValue = (text: string): Array<Array<string>> =>
-    separateByString(inputValue.value, props.separatorWordItems)
-      .map((item: string) => separateByString(item, props.separatorDefinition))
-      .map((item: Array<string>) => {
-        if (item.length <= 2) return item;
-        return [item[0], item.slice(1).join(', ')];
-      });
-
-  const handleUpdateSeparatedValue = () => {
-    emit('update-separated-value', separatedValue(inputValue.value));
+  const handleInput = (value: string) => {
+    emit('update:modelValue', value);
+    emitSeparatedValue();
   };
 </script>
 
 <template>
   <div class="row no-wrap items-center">
     <div class="full-width">
-      <VInput v-model="inputValue" class="full-width" v-bind="baseInputConfig" />
+      <VInput v-model="props.modelValue" @input="handleInput" class="full-width" v-bind="baseInputConfig" />
     </div>
     <div>
-      <VBtn :icon="Icons.Refresh" @click="handleUpdateSeparatedValue" />
+      <VBtn :icon="Icons.Refresh" @click="emitSeparatedValue" />
     </div>
   </div>
 </template>
