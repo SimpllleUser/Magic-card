@@ -1,22 +1,27 @@
 <script setup lang="ts">
   import { defineEmits, defineProps, ref } from 'vue';
-  // import { useVModel } from '@vueuse/core';
+  import { useVModel } from '@vueuse/core';
   import InputSplitter from './_components/InputSplitter.vue';
   import InputSeparatedSymbol from './_components/InputSeparatedSymbol.vue';
+  import { Icons } from '@/core/models/icons';
+  import { Colors, Variants } from '@/core/models/enums';
 
-  interface Props {
-    modelValue: Array<{ from: string; to: string; id?: string }>;
+  // interface Props {
+  //   modelValue: Array<{ from: string; to: string; id?: string }>;
+  // }
+
+  // const props = defineProps<Props>();
+
+  interface Emits {
+    (event: 'set-words', payload: Array<Array<string>>);
   }
 
-  const props = defineProps<Props>();
-  const emit = defineEmits(['update:modelValue']);
-
-  const words = ref([]);
+  const emit = defineEmits<Emits>();
 
   // const wordsListModel = useVModel(props, 'modelValue', emit);
+  const words = ref([]);
 
   const text = ref('');
-  // const textSeparated = ref<Array<WordEntity>>([]);
 
   const setSeparatedValue = (value: Array<Array<string>>) => {
     words.value = value;
@@ -29,7 +34,6 @@
 
 <template>
   <div class="full-width">
-    {{ words }}
     <div>
       <InputSplitter
         v-model="text"
@@ -51,5 +55,15 @@
         <VTextarea v-model="text" label="Text" />
       </VCol>
     </VRow>
+    <div class="d-flex items-center justify-center">
+      <VBtn
+        :append-icon="Icons.ArrowDown"
+        :color="Colors.Primary"
+        :variant="Variants.Outlined"
+        @click=   "emit('set-words', words)"
+      >
+        Add all words
+      </VBtn>
+    </div>
   </div>
 </template>

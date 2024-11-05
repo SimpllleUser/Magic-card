@@ -17,6 +17,12 @@ const routes = [
         name: 'TopicDetail',
         component: () => import('../pages/topics/detail.vue'),
         meta: { title: 'Topic detail' }
+      },
+      {
+        path: '/topic/update/:id',
+        name: 'TopicUpdate',
+        component: () => import('../pages/topics/update.vue'),
+        meta: { title: 'Topic update' }
       }
     ]
   }
