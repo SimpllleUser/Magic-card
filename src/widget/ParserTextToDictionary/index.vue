@@ -30,6 +30,8 @@
   const separatorToRowSymbol = ref(',');
 
   const separatedToWordsOfRowsSymbol = ref('-');
+
+  // TODO add logic like composable from component InputSplitter
 </script>
 
 <template>
@@ -44,10 +46,10 @@
     </div>
     <VRow>
       <VCol>
-        <InputSeparatedSymbol v-model="separatorToRowSymbol" title="Separated to rows" />
+        <InputSeparatedSymbol v-model="separatorToRowSymbol" label="Separated to rows" />
       </VCol>
       <VCol>
-        <InputSeparatedSymbol v-model="separatedToWordsOfRowsSymbol" title="Separated to words of row" />
+        <InputSeparatedSymbol v-model="separatedToWordsOfRowsSymbol" label="Separated to words of row" />
       </VCol>
     </VRow>
     <VRow>
@@ -60,7 +62,7 @@
         :append-icon="Icons.ArrowDown"
         :color="Colors.Primary"
         :variant="Variants.Outlined"
-        @click=   "emit('set-words', words)"
+        @click="emit('set-words', words)"
       >
         Add all words
       </VBtn>

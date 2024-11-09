@@ -41,6 +41,8 @@
     emit('update:modelValue', value);
     emitSeparatedValue();
   };
+
+  // TODO separate logic to composable and use in parser text to dictionary
 </script>
 
 <template>

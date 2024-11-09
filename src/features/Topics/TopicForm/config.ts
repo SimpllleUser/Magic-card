@@ -17,7 +17,7 @@ const templateListDictionary = (data?: DictionaryItem = {}) => ({
   })
 });
 
-export class TopicForm {
+export class TopicFormModel {
   id: string;
   title: TextInput;
   description: TextareaInput;
@@ -39,4 +39,4 @@ export class TopicForm {
   }
 }
 
-export const useTopicForm = (data?: Topic) => new TopicForm(data);
+export const useTopicForm = (data?: Topic) => new TopicFormModel(data);

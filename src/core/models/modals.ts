@@ -1,4 +1,5 @@
 export const Modals = {
   TopicCreate: 'topic-create-modal',
-  TopicUpdate: 'topic-update-modal'
+  TopicUpdate: 'topic-update-modal',
+  ImportWords: 'import-words'
 };

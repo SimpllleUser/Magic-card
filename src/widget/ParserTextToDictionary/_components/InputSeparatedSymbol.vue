@@ -4,7 +4,7 @@
 
   interface Props {
     modelValue: string;
-    title?: string;
+    label?: string;
   }
 
   interface Emit {
@@ -17,7 +17,7 @@
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    title: 'Separated symbol'
+    label: 'Separated symbol'
   });
   const emit = defineEmits<Emit>();
 
@@ -49,11 +49,10 @@
 
 <template>
   <div>
-    <div class="d-flex align-center justify-space-between">
+    <div>
       <div>
-        <b>{{ title }}</b>
+        <VCheckbox v-model="isCustomSeparator" class="pl-0" hide-details label="Use custom" />
       </div>
-      <div><VCheckbox v-model="isCustomSeparator" hide-details label="Use custom" /></div>
     </div>
     <div class="flex">
       <div v-if="isCustomSeparator" class="full-width">
@@ -67,7 +66,7 @@
           item-title="label"
           item-value="value"
           :items="BASE_SEPARATED_SYMBOLS"
-          :label="SELECTOR_LABEL"
+          :label="label"
         />
       </div>
     </div>
