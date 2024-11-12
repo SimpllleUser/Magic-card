@@ -11,8 +11,7 @@
 
   interface Props {
     formData?: Topic;
-    id: string;
-    title: string;
+    modalId: Modals.TopicUpdate | Modals.TopicCreate;
   }
 
   interface Emits {
@@ -20,13 +19,13 @@
   }
 
   const modal = useModalStore();
-  const distionary = ref([]);
   const emit = defineEmits<Emits>();
 
   const props = withDefaults(defineProps<Props>(), {
     formData: {}
   });
 
+  const modalTitle = computed(() => (props.modalId === Modals.TopicUpdate ? 'Topic update' : 'Topic create'));
   const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
 
   const onSubmit = (params: Ref<Topic | Omit<Topic, 'id'>>) => {
@@ -43,29 +42,31 @@
 </script>
 
 <template>
-  <BaseForm :config="useTopicForm(formData)" :params="{ action }" @on-submit="onSubmit">
-    <template #default="{ form }: { form: TopicFormModel }">
-      <div class="mb-4">
-        <InputForm v-model="form.title" />
-      </div>
-      <div class="mb-4">
-        <InputForm v-model="form.description" />
-      </div>
-      <div class="mb-4">
-        <BaseModal :id="Modals.ImportWords" title="Import words">
-          <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
-        </BaseModal>
-        <InputList v-model="form.dictionary" label="Dictionary">
-          <template #btn-add="{ addItem }">
-            <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="modal.show(Modals.ImportWords)">
-              Import
-            </VBtn>
-            <VBtn class="ml-4" :color="Colors.Primary" @click="addItem">Add</VBtn>
-          </template>
-        </InputList>
-      </div>
-    </template>
-  </BaseForm>
+  <BaseModal :id="modalId" :title="modalTitle">
+    <BaseForm :config="useTopicForm(formData)" :params="{ action }" @on-submit="onSubmit">
+      <template #default="{ form }: { form: TopicFormModel }">
+        <div class="mb-4">
+          <InputForm v-model="form.title" />
+        </div>
+        <div class="mb-4">
+          <InputForm v-model="form.description" />
+        </div>
+        <div class="mb-4">
+          <BaseModal :id="Modals.ImportWords" title="Import words">
+            <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
+          </BaseModal>
+          <InputList v-model="form.dictionary" label="Dictionary">
+            <template #btn-add="{ addItem }">
+              <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="modal.show(Modals.ImportWords)">
+                Import
+              </VBtn>
+              <VBtn class="ml-4" :color="Colors.Primary" @click="addItem">Add</VBtn>
+            </template>
+          </InputList>
+        </div>
+      </template>
+    </BaseForm>
+  </BaseModal>
 </template>
 
 <style scoped lang="sass"></style>
