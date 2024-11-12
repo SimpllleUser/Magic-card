@@ -1,16 +1,9 @@
 <script setup lang="ts">
-  import { defineEmits, defineProps, ref } from 'vue';
-  import { useVModel } from '@vueuse/core';
-  import InputSplitter from './_components/InputSplitter.vue';
+  import { defineEmits, ref } from 'vue';
   import InputSeparatedSymbol from './_components/InputSeparatedSymbol.vue';
   import { Icons } from '@/core/models/icons';
   import { Colors, Variants } from '@/core/models/enums';
-
-  // interface Props {
-  //   modelValue: Array<{ from: string; to: string; id?: string }>;
-  // }
-
-  // const props = defineProps<Props>();
+  import { separateByString } from './helpers/separates';
 
   interface Emits {
     (event: 'set-words', payload: Array<Array<string>>);
@@ -18,32 +11,26 @@
 
   const emit = defineEmits<Emits>();
 
-  // const wordsListModel = useVModel(props, 'modelValue', emit);
   const words = ref([]);
 
   const text = ref('');
-
-  const setSeparatedValue = (value: Array<Array<string>>) => {
-    words.value = value;
-  };
 
   const separatorToRowSymbol = ref(',');
 
   const separatedToWordsOfRowsSymbol = ref('-');
 
-  // TODO add logic like composable from component InputSplitter
+  watch(
+    () => [text.value, separatorToRowSymbol.value, separatedToWordsOfRowsSymbol.value],
+    () => {
+      words.value = separateByString(text.value, separatorToRowSymbol.value)
+        .map((item) => separateByString(item, separatedToWordsOfRowsSymbol.value))
+        .map((item) => (item.length <= 2 ? item : [item[0], item.slice(1).join(separatedToWordsOfRowsSymbol.value)]));
+    }
+  );
 </script>
 
 <template>
   <div class="full-width">
-    <div>
-      <InputSplitter
-        v-model="text"
-        :separator-definition="separatedToWordsOfRowsSymbol"
-        :separator-word-items="separatorToRowSymbol"
-        @update-separated-value="setSeparatedValue"
-      />
-    </div>
     <VRow>
       <VCol>
         <InputSeparatedSymbol v-model="separatorToRowSymbol" label="Separated to rows" />

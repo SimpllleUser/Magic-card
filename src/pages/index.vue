@@ -29,7 +29,7 @@
 <template>
   <div>
     <TopicForm :id="Modals.TopicUpdate" :form-data="currentTopic" title="Topic update" @submit="onUpdateSubmit" />
-    <TopicForm :id="Modals.TopicCreate" title="Topic create" @submit="onCreateSubmit" />
+    <!-- <TopicForm :id="Modals.TopicCreate" title="Topic create" @submit="onCreateSubmit" /> -->
     <VRow class="pa-4">
       <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
         <TopicCard :topic="topic" @remove="topicsStore.remove" @update="setCurrentTopic" />

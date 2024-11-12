@@ -982,7 +982,7 @@ balanced-match@^1.0.0:
 
 "base-form@git+https://github.com/SimpllleUser/base-form.git":
   version "0.0.0"
-  resolved "git+https://github.com/SimpllleUser/base-form.git#8b18caa9d68c12b0063ee1b111393438fa0c9d26"
+  resolved "git+https://github.com/SimpllleUser/base-form.git#9b1e05a17bc5e13f42bbfbe44cf200b434789236"
   dependencies:
     "@mdi/font" "7.4.47"
     core-js "^3.37.1"

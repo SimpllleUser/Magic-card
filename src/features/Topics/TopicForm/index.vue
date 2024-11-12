@@ -35,8 +35,6 @@
   };
 
   const onSetWords = (words: Array<Array<string>>, dicationary: unknown) => {
-    // console.log(words[0]);
-    // console.log(dicationary);
     words.forEach(([from, to]) => {
       dicationary.addByData({ from, to });
     });
