@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed, defineEmits, ref, watch, withDefaults } from 'vue';
-  import { BASE_SEPARATED_SYMBOLS, SELECTOR_LABEL, TEXT_INPUT_LABEL } from '../constants';
+  import { BASE_SEPARATED_SYMBOLS, TEXT_INPUT_LABEL } from '../constants';
 
   interface Props {
     modelValue: string;
@@ -33,18 +33,13 @@
   });
 
   const isCustomSeparator = ref(false);
-  // separatdeSymbol.value = BASE_SPARATED_SYMBOLS[0].value;
 
   watch(
     () => isCustomSeparator.value,
-    (value: string) => {
+    (value: boolean) => {
       separatdeSymbol.value = value ? '' : BASE_SEPARATED_SYMBOLS[0].value;
     }
   );
-
-  // const separatdeSymbolSelected = computed(() => {
-  //   return BASE_SEPARATED_SYMBOLS.find((item) => item.value === separatdeSymbol.value);
-  // });
 </script>
 
 <template>

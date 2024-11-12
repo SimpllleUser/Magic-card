@@ -10,7 +10,6 @@ export const BASE_SEPARATED_SYMBOLS = [
   { label: ';', value: ';' },
   { label: ':', value: ':' },
   { label: '.', value: '.' },
-  { label: '\\n', value: '\n' },
-  { label: '\\t', value: '\t' },
-  { label: '\\r', value: '\r' }
+  { label: 'New row', value: '\n' },
+  { label: 'Tab', value: '\t\t' }
 ];

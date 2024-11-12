@@ -6,26 +6,33 @@
   import { separateByString } from './helpers/separates';
 
   interface Emits {
-    (event: 'set-words', payload: Array<Array<string>>);
+    (event: 'set-words', payload: Array<Array<string>>): void;
   }
 
   const emit = defineEmits<Emits>();
 
   const words = ref([]);
 
-  const text = ref('');
+  const sourceText = ref('');
 
   const separatorToRowSymbol = ref(',');
 
   const separatedToWordsOfRowsSymbol = ref('-');
 
   watch(
-    () => [text.value, separatorToRowSymbol.value, separatedToWordsOfRowsSymbol.value],
+    () => [sourceText.value, separatorToRowSymbol.value, separatedToWordsOfRowsSymbol.value],
     () => {
-      words.value = separateByString(text.value, separatorToRowSymbol.value)
+      words.value = separateByString(sourceText.value, separatorToRowSymbol.value)
         .map((item) => separateByString(item, separatedToWordsOfRowsSymbol.value))
         .map((item) => (item.length <= 2 ? item : [item[0], item.slice(1).join(separatedToWordsOfRowsSymbol.value)]));
     }
+  );
+
+  const placeholderTextAreaInput = computed(() =>
+    new Array(3)
+      .fill(null)
+      .map((_, index) => `Word-${index + 1}${separatedToWordsOfRowsSymbol.value}Definition-${index + 1}`)
+      .join(separatorToRowSymbol.value)
   );
 </script>
 
@@ -41,7 +48,7 @@
     </VRow>
     <VRow>
       <VCol>
-        <VTextarea v-model="text" label="Text" />
+        <VTextarea v-model="sourceText" :auto-grow="true" :placeholder="placeholderTextAreaInput" :rows="5" />
       </VCol>
     </VRow>
     <div class="d-flex items-center justify-center">
