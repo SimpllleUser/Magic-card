@@ -23,6 +23,12 @@ const routes = [
         name: 'TopicUpdate',
         component: () => import('../pages/topics/update.vue'),
         meta: { title: 'Topic update' }
+      },
+      {
+        path: '/topic/create',
+        name: 'TopicCreate',
+        component: () => import('../pages/topics/create.vue'),
+        meta: { title: 'Topic Create' }
       }
     ]
   }
