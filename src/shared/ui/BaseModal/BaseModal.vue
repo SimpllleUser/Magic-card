@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useModalStore } from './store';
   import { Icons } from '@/core/models/icons';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { Variants } from '@/core/models/enums';
 
   interface Props {
     id: string;
@@ -25,8 +25,6 @@
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const options = computed(() => Object.fromEntries(Object.entries(props).filter(([key]) => key !== 'modelValue')));
-
   const state = ref(false);
   const show = () => {
     state.value = true;
@@ -48,12 +46,12 @@
 </script>
 
 <template>
-  <VDialog v-model="state" v-bind="options" max-width="700px" @hide="modalHide" @show="modalShow">
+  <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
       <VCardTitle class="d-flex hide-center justify-space-between bg-primary text-white">
-        <slot name="header" :title="title" :close="modalHide">
+        <slot :close="modalHide" name="header" :title="title">
           <span>{{ title }}</span>
-          <VBtn :icon="Icons.Close" @click="modalHide" :variant="Variants.Plain" />
+          <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />
         </slot>
       </VCardTitle>
       <VCardText>
