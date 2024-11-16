@@ -7,6 +7,8 @@ export const useModalState = (id: string): { state: Ref<boolean>; hide: Callable
 
   const state = ref(false);
   const show = () => {
+    /// TODO add set params and callback on show and hide, set callback on show in useModal argument
+
     state.value = true;
   };
   const hide = () => {
