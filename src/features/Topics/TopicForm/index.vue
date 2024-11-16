@@ -25,7 +25,6 @@
     formData: {}
   });
 
-  const modalTitle = computed(() => (props.modalId === Modals.TopicUpdate ? 'Topic update' : 'Topic create'));
   const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
 
   const onSubmit = (params: Ref<Topic | Omit<Topic, 'id'>>) => {
