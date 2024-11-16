@@ -1,40 +1,13 @@
 <script lang="ts" setup>
-  import { onMounted, ref } from 'vue';
-  import { useModalStore } from './store';
   import { Icons } from '@/core/models/icons';
   import { Variants } from '@/core/models/enums';
-
-  interface Props {
-    id: string;
-    title: string;
-    persistent?: boolean;
-    noClickAnimation?: boolean;
-    fullscreen?: boolean;
-  }
-
-  interface Emits {
-    (event: 'show'): void;
-    (event: 'hide'): void;
-  }
-
-  enum EmitActions {
-    Show = 'show',
-    Hide = 'hide'
-  }
+  import { EmitActions, Emits, Props } from './types';
+  import { useModalState } from './composable';
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const state = ref(false);
-  const show = () => {
-    state.value = true;
-  };
-  const hide = () => {
-    state.value = false;
-  };
-
-  const { initModal } = useModalStore();
-  onMounted(() => initModal(props.id, { hide, show }));
+  const { state, show, hide } = useModalState(props.id);
 
   const initActions = (action: CallableFunction, emitName: EmitActions) => () => {
     action && action();
@@ -60,5 +33,3 @@
     </VCard>
   </VDialog>
 </template>
-
-<style lang="scss" scoped></style>
