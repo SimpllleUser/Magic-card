@@ -5,6 +5,7 @@ export interface ConfirmModalContentMain {
   title: string;
   description?: string;
   type?: Colors;
+  onConfirm?: CallableFunction;
 }
 
 export interface BtnParams {

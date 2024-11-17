@@ -21,22 +21,21 @@
     router.push({ name: 'TopicCreate' });
   };
 
-  const currentId = ref('');
-
   const onRemoveTopic = (id: string) => {
     modal.show(Modals.TopicConfirmRemove, {
       title: 'Remove topic',
       description: 'Are you sure remove topic ?',
-      type: Colors.Error
+      type: Colors.Error,
+      onConfirm: () => {
+        topicsStore.remove(id);
+      }
     });
-
-    currentId.value = id;
   };
 </script>
 
 <template>
   <VRow class="pa-4">
-    <ConfirmModal :id="Modals.TopicConfirmRemove" @confirm="topicsStore.remove(currentId)" />
+    <ConfirmModal :id="Modals.TopicConfirmRemove" />
     <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
       <TopicCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
     </VCol>

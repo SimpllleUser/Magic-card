@@ -43,15 +43,18 @@
 
   const { state, show, hide } = useModalState(props.id, { onShow });
 
-  const initActions = (action: CallableFunction, emitName: EmitActions) => () => {
+  const initActions = (action: CallableFunction, emitName: EmitActions, callback?: CallableFunction) => () => {
     action && action();
     emitName && emit(emitName);
+    callback && callback();
   };
 
   const modalHide = initActions(hide, EmitActions.Hide);
   const modalShow = initActions(show, EmitActions.Show);
   const onCancel = initActions(hide, EmitActions.Cancel);
-  const onConfirm = initActions(hide, EmitActions.Confirm);
+  const onConfirm = initActions(hide, EmitActions.Confirm, () => {
+    additionalParams.value?.onConfirm();
+  });
 </script>
 
 <template>
