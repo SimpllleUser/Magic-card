@@ -55,11 +55,7 @@
         </BaseModal>
         <InputList v-model="form.dictionary" label="Dictionary">
           <template #btn-add="{ addItem }">
-            <VBtn
-              :color="Colors.Primary"
-              :variant="Variants.Outlined"
-              @click="modal.show(Modals.ImportWords, { message: 'Hello' })"
-            >
+            <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="modal.show(Modals.ImportWords)">
               Import
             </VBtn>
             <VBtn class="ml-4" :color="Colors.Primary" @click="addItem">Add</VBtn>

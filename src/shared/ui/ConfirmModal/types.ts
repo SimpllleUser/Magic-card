@@ -4,6 +4,7 @@ import { Icons } from '@/core/models/icons';
 export interface ConfirmModalContentMain {
   title: string;
   description?: string;
+  type?: Colors;
 }
 
 export interface BtnParams {
