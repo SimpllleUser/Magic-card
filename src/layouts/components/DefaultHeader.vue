@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Themes } from '@/core/models/enums';
+  import { Colors, Themes } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { useStorage } from '@vueuse/core';
   import { useTheme } from 'vuetify';
@@ -30,7 +30,7 @@
 </script>
 
 <template>
-  <v-app-bar :elevation="1">
+  <v-app-bar :color="Colors.Primary" :elevation="1">
     <template #prepend>
       <VBtn v-if="canGoToBack" class="ml-4" :icon="Icons.Back" @click="goToBack" />
     </template>

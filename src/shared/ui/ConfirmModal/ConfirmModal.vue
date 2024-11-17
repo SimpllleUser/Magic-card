@@ -31,7 +31,7 @@
     (): ConfirmModalContent => ({
       title: props.title || additionalParams.value.title || '',
       description: props.description || additionalParams.value.description || '',
-      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Outlined, color: Colors.Primary },
+      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Outlined, color: Colors.Secondary },
       confirmBtn: additionalParams.value.confirmBtn || { variant: Variants.Flat, color: Colors.Primary },
       type: additionalParams.value.type || Colors.Primary
     })

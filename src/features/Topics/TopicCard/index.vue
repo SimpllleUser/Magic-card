@@ -3,6 +3,7 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import { defineEmits } from 'vue';
+  import { Colors } from '@/core/models/enums';
 
   interface Props {
     topic: Topic;
@@ -33,9 +34,9 @@
 <template>
   <VCard :text="topic.description" :title="topic.title">
     <VCardActions>
-      <VBtn @click="goToDetailTopic(topic.id)">Detail</VBtn>
-      <VBtn @click="onUpdateTopic(topic)">Edit</VBtn>
-      <VBtn @click="$emit('remove', topic.id)">Remove</VBtn>
+      <VBtn :color="Colors.Primary" @click="goToDetailTopic(topic.id)">Detail</VBtn>
+      <VBtn :color="Colors.Primary" @click="onUpdateTopic(topic)">Edit</VBtn>
+      <VBtn :color="Colors.Error" @click="$emit('remove', topic.id)">Remove</VBtn>
     </VCardActions>
   </VCard>
 </template>
