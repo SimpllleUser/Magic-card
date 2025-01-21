@@ -2,6 +2,7 @@
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { useTopicsStore } from '../../features/Topics/store/topics';
   import { DictionaryItem } from '@/core/models/Topic';
+  import { Colors, Variants } from '@/core/models/enums';
   // import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
 
   const route = useRoute();
@@ -32,7 +33,7 @@
     ...item,
     number: index + 1
   });
-  const items = ref([]);
+  const items = ref(topic.value?.dictionary);
 </script>
 
 <template>
@@ -53,14 +54,18 @@
       <VCard>
         <VCardText>
           <BaseList
-            title="Dictionary"
+            header-title="Dictionary"
             v-model:selectedItems="items"
             :data="topic.dictionary"
             :keys="keys"
             :mapItem="mapItem"
             selectable
             hide-footer
-          />
+          >
+            <template #header-actions>
+              <VBtn :color="Colors.Primary" :variant="Variants.Elevated">Play</VBtn>
+            </template>
+          </BaseList>
         </VCardText>
       </VCard>
     </VCol>

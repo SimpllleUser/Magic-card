@@ -9,7 +9,7 @@
 
   const props = withDefaults(
     defineProps<{
-      title?: string;
+      headerTitle?: string;
       selectedItems: string[];
       data: Array<unknown>;
       keys: Array<BaseListKey>;
@@ -29,7 +29,7 @@
     (event: 'update:selectedItems', payload: string[]): void;
   }>();
 
-  const selectedIds = ref<Array<unknown>>([]);
+  const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item.id));
   const items = computed(() => props.data.map(props.mapItem));
   const headers = computed(() => props.keys.map(props.mapKey));
 
@@ -53,8 +53,9 @@
         <template v-slot:top>
           <VToolbar flat>
             <VToolbarTitle>
-              <slot name="title">{{ title }}</slot>
+              <slot name="header-title">{{ headerTitle }}</slot>
             </VToolbarTitle>
+            <slot name="header-actions"></slot>
           </VToolbar>
         </template>
       </VDataTable>
