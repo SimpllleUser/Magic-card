@@ -32,6 +32,7 @@
     ...item,
     number: index + 1
   });
+  const items = ref([]);
 </script>
 
 <template>
@@ -49,9 +50,18 @@
   </VRow>
   <VRow>
     <VCol>
+      {{ items }}
       <VCard>
         <VCardText>
-          <BaseList title="Dictionary" :data="topic.dictionary" :keys="keys" :mapItem="mapItem" hide-footer />
+          <BaseList
+            title="Dictionary"
+            v-model:selectedItems="items"
+            :data="topic.dictionary"
+            :keys="keys"
+            :mapItem="mapItem"
+            selectable
+            hide-footer
+          />
         </VCardText>
       </VCard>
     </VCol>
