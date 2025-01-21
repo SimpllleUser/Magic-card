@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import { useVModels } from '@vueuse/core';
   import { Nullable } from 'base-form/src/core/types/common';
 
   interface BaseListKey {
@@ -29,21 +28,27 @@
   const emit = defineEmits<{
     (event: 'update:selectedItems', payload: string[]): void;
   }>();
-  const { selectedItems } = useVModels(props, emit);
 
+  const selectedIds = ref<Array<unknown>>([]);
   const items = computed(() => props.data.map(props.mapItem));
   const headers = computed(() => props.keys.map(props.mapKey));
+
+  const onSelectItemOfList = (itemIds: string[]) => {
+    const items = props.data.filter((item) => itemIds.includes(item.id));
+    emit('update:selectedItems', items);
+  };
 </script>
 
 <template>
   <div>
     <div>
       <VDataTable
-        v-model="selectedItems"
+        v-model="selectedIds"
         :headers="headers"
         :items="items"
         :show-select="selectable"
         :hide-default-footer="hideFooter"
+        @update:modelValue="onSelectItemOfList"
       >
         <template v-slot:top>
           <VToolbar flat>

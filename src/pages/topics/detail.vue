@@ -50,7 +50,6 @@
   </VRow>
   <VRow>
     <VCol>
-      {{ items }}
       <VCard>
         <VCardText>
           <BaseList
