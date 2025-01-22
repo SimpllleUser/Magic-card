@@ -6,6 +6,7 @@
   // import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
 
   const route = useRoute();
+  const router = useRouter();
   const topicId = computed(() => route.params.id!);
 
   const topicsStore = useTopicsStore();
@@ -35,7 +36,6 @@
   });
   const items = ref(topic.value?.dictionary);
 </script>
-
 <template>
   <VRow>
     <VCol>
@@ -64,6 +64,21 @@
           >
             <template #header-actions>
               <VBtn :color="Colors.Primary" :variant="Variants.Elevated">Play</VBtn>
+            </template>
+            <template #empty-text>
+              <div>
+                <p>
+                  Let’s add some words
+                  <VBtn
+                    @click="router.push({ name: 'TopicUpdate', params: { id: topicId } })"
+                    :color="Colors.Primary"
+                    :variant="Variants.Contained"
+                    class="px-1"
+                  >
+                    go to edit module
+                  </VBtn>
+                </p>
+              </div>
             </template>
           </BaseList>
         </VCardText>

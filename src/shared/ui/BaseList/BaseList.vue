@@ -16,12 +16,15 @@
       withNumeration?: boolean;
       mapKey?: (value?: string) => string;
       mapItem?: (value?: string) => Nullable<string>;
+      // hideHeader?: boolean;
       hideFooter?: boolean;
       selectable?: boolean;
+      emptyText?: string;
     }>(),
     {
       mapKey: (value?: BaseListKey): BaseListKey => value,
-      mapItem: (value?: string) => value
+      mapItem: (value?: string) => value,
+      emptyText: 'The list is empty.'
     }
   );
 
@@ -37,6 +40,8 @@
     const items = props.data.filter((item) => itemIds.includes(item.id));
     emit('update:selectedItems', items);
   };
+
+  const hideHeader = computed(() => !items.value?.length);
 </script>
 
 <template>
@@ -47,16 +52,20 @@
         :headers="headers"
         :items="items"
         :show-select="selectable"
+        :hide-default-header="hideHeader"
         :hide-default-footer="hideFooter"
         @update:modelValue="onSelectItemOfList"
       >
-        <template v-slot:top>
+        <template #top>
           <VToolbar flat>
             <VToolbarTitle>
               <slot name="header-title">{{ headerTitle }}</slot>
             </VToolbarTitle>
             <slot name="header-actions"></slot>
           </VToolbar>
+        </template>
+        <template #no-data>
+          <slot name="empty-text">{{ emptyText }}</slot>
         </template>
       </VDataTable>
     </div>
