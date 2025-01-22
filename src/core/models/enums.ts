@@ -27,3 +27,8 @@ export enum Variants {
   Tonal = 'tonal',
   Plain = 'plain'
 }
+
+export enum Themes {
+  Light = 'light',
+  Dark = 'dark'
+}

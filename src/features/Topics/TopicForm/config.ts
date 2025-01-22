@@ -11,13 +11,13 @@ const templateListDictionary = (data?: DictionaryItem = {}) => ({
     rules: { required: true }
   }),
   to: input.text({
-    value: data?.from || '',
+    value: data?.to || '',
     label: 'To',
     rules: { required: true }
   })
 });
 
-export class TopicForm {
+export class TopicFormModel {
   id: string;
   title: TextInput;
   description: TextareaInput;
@@ -31,7 +31,7 @@ export class TopicForm {
       rules: { required: true }
     });
     this.description = input.textarea({
-      value: data?.title,
+      value: data?.description,
       label: 'Description',
       rules: { required: true }
     });
@@ -39,4 +39,4 @@ export class TopicForm {
   }
 }
 
-export const useFormTopic = (data?: Topic) => new TopicForm(data);
+export const useTopicForm = (data?: Topic) => new TopicFormModel(data);

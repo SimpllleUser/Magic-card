@@ -1,41 +1,13 @@
 <script lang="ts" setup>
-  import { computed, onMounted, ref } from 'vue';
-  import { useModalStore } from './store';
-  import {Icons} from "@/core/models/icons";
-
-  interface Props {
-    id: string;
-    title: string;
-    persistent?: boolean;
-    noClickAnimation?: boolean;
-    fullscreen?: boolean;
-  }
-
-  interface Emits {
-    (event: 'show'): void;
-    (event: 'hide'): void;
-  }
-
-  enum EmitActions {
-    Show = 'show',
-    Hide = 'hide'
-  }
+  import { Icons } from '@/core/models/icons';
+  import { Variants } from '@/core/models/enums';
+  import { EmitActions, Emits, Props } from './types';
+  import { useModalState } from './composable';
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const options = computed(() => Object.fromEntries(Object.entries(props).filter(([key]) => key !== 'modelValue')));
-
-  const state = ref(false);
-  const show = () => {
-    state.value = true;
-  };
-  const hide = () => {
-    state.value = false;
-  };
-
-  const { initModal } = useModalStore();
-  onMounted(() => initModal(props.id, { hide, show }));
+  const { state, show, hide } = useModalState(props.id);
 
   const initActions = (action: CallableFunction, emitName: EmitActions) => () => {
     action && action();
@@ -47,11 +19,13 @@
 </script>
 
 <template>
-  <VDialog v-model="state" v-bind="options" max-width="700px" @hide="modalHide" @show="modalShow">
+  <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
-      <VCardTitle class="d-flex justify-space-between bg-primary text-white">
-        <span>{{ title }}</span>
-        <VBtn class="text-white" :icon="Icons.Close" @click="modalHide" />
+      <VCardTitle class="d-flex hide-center justify-space-between bg-primary text-white">
+        <slot :close="modalHide" name="header" :title="title">
+          <span>{{ title }}</span>
+          <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />
+        </slot>
       </VCardTitle>
       <VCardText>
         <slot :hide="modalHide"></slot>
@@ -59,5 +33,3 @@
     </VCard>
   </VDialog>
 </template>
-
-<style lang="scss" scoped></style>

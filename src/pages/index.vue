@@ -1,57 +1,55 @@
 <script lang="ts" setup>
-  import TopicCard from '@/pages/Topics/components/TopicCard.vue';
-  import { useTopicsStore } from '@/pages/Topics/store/topics';
-  import TopicForm from '@/pages/Topics/components/TopicForm/TopicForm.vue';
+  import TopicCard from '@/features/Topics/TopicCard/index.vue';
+  import { useTopicsStore } from '@/features/Topics/store/topics';
   import { Topic } from '@/core/models/Topic';
-  import { useModalStore } from '@/shared/ui/BaseModal';
-  import { Modals } from '@/core/models/modals';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
+  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { Modals } from '@/core/models/modals';
+  import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
 
-  const topicsStore = useTopicsStore();
+  const router = useRouter();
   const modal = useModalStore();
 
-  const currentTopic = ref<Topic>({});
-  const setCurrentTopic = (topic: Topic | Record<string, unknown>) => {
-    currentTopic.value = topic;
+  const topicsStore = useTopicsStore();
+
+  const updateTopic = (topic: Topic | Record<string, unknown>) => {
+    router.push({ name: 'TopicUpdate', params: { id: topic.id } });
   };
 
-  const onUpdateSubmit = (topic: Topic) => {
-    topicsStore.update(topic);
-    modal.hide(Modals.TopicUpdate);
+  const createTopic = () => {
+    router.push({ name: 'TopicCreate' });
   };
-  const onCreateSubmit = (topic: Omit<Topic, 'id'>) => {
-    topicsStore.create(topic);
-    modal.hide(Modals.TopicCreate);
+
+  const onRemoveTopic = (id: string) => {
+    modal.show(Modals.TopicConfirmRemove, {
+      title: 'Remove topic',
+      description: 'Are you sure remove topic ?',
+      type: Colors.Error,
+      onConfirm: () => {
+        topicsStore.remove(id);
+      }
+    });
   };
 </script>
 
 <template>
-  <div>List of card Topics</div>
-  <div>
-    <TopicForm :id="Modals.TopicUpdate" :form-data="currentTopic" title="Topic update" @submit="onUpdateSubmit" />
-    <TopicForm :id="Modals.TopicCreate" title="Topic create" @submit="onCreateSubmit" />
-    <VRow class="pa-4">
-      <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
-        <TopicCard :topic="topic" @remove="topicsStore.remove" @update="setCurrentTopic" />
-      </VCol>
-      <VCol>
-        <VBtn
-          class="big-square-button"
-          :color="Colors.Primary"
-          :variant="Variants.Outlined"
-          @click="modal.show(Modals.TopicCreate)"
-        >
-          <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
-        </VBtn>
-      </VCol>
-    </VRow>
-  </div>
+  <VRow class="pa-4">
+    <ConfirmModal :id="Modals.TopicConfirmRemove" />
+    <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
+      <TopicCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
+    </VCol>
+    <VCol>
+      <VBtn class="big-square-button" :color="Colors.Secondary" :variant="Variants.Outlined" @click="createTopic">
+        <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
+      </VBtn>
+    </VCol>
+  </VRow>
 </template>
 <style lang="scss" scoped>
   .big-square-button {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     border-radius: 8px;
     display: flex;
     align-items: center;
