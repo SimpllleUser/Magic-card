@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   import DefaultHeader from './components/DefaultHeader.vue';
 </script>
 
@@ -7,11 +8,11 @@
     <DefaultHeader />
     <v-main class="px-4 mt-4">
       <div class="transition-wrapper">
-        <transition name="fade-scale" mode="out-in">
+        <AnimationFade>
           <div :key="$route.fullPath" class="content">
             <router-view />
           </div>
-        </transition>
+        </AnimationFade>
       </div>
     </v-main>
     <AppFooter />
@@ -22,17 +23,6 @@
     overflow: hidden;
     transition: height 0.3s ease;
     height: auto;
-  }
-
-  .fade-scale-enter-active,
-  .fade-scale-leave-active {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .fade-scale-enter-from,
-  .fade-scale-leave-to {
-    opacity: 0;
-    transform: scale(0.95);
   }
 
   .content {

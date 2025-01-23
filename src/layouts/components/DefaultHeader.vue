@@ -5,6 +5,7 @@
   import { useTheme } from 'vuetify';
   import { computed } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
+  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -33,11 +34,9 @@
   <v-app-bar :color="Colors.Primary" :elevation="1">
     <v-app-bar-title>
       <div class="title-wrapper">
-        <div>
-          <transition name="fade-scale" mode="out-in">
-            <VBtn v-if="canGoToBack" :icon="Icons.Back" @click="goToBack" />
-          </transition>
-        </div>
+        <AnimationFade>
+          <VBtn v-if="canGoToBack" :icon="Icons.Back" @click="goToBack" />
+        </AnimationFade>
         <div class="title" :class="{ 'with-btn-back': canGoToBack }">
           {{ route.meta?.title }}
         </div>
@@ -62,16 +61,5 @@
   }
   .with-btn-back {
     transform: translateX(50px);
-  }
-
-  .fade-scale-enter-active,
-  .fade-scale-leave-active {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .fade-scale-enter-from,
-  .fade-scale-leave-to {
-    opacity: 0;
-    transform: scale(0.95);
   }
 </style>
