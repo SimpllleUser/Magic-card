@@ -15,7 +15,10 @@ export enum Colors {
   Info = 'info',
   Light = 'light',
   Dark = 'dark',
-  Accent = 'accent'
+  Accent = 'accent',
+  Grey = 'grey',
+  GreyLight = 'grey-light',
+  GreyDark = 'grey-dark'
 }
 
 export enum Variants {

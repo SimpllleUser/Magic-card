@@ -29,7 +29,10 @@ const myCustomThemes = {
       error: '#EF4444',
       info: '#3B82F6',
       success: '#22C55E',
-      warning: '#F59E0B'
+      warning: '#F59E0B',
+      grey: '#64748B',
+      'grey-light': '#4B5563',
+      'grey-dark': '#1E293B'
     },
     variables: {
       'border-color': '#94A3B8',
@@ -63,11 +66,14 @@ const myCustomThemes = {
       'primary-darken-1': '#0284C7',
       secondary: '#34D399',
       'secondary-darken-1': '#10B981',
-      accent: '#A855F7', // Тот же ярко-пурпурный акцентный цвет
+      accent: '#A855F7',
       error: '#F87171',
       info: '#60A5FA',
       success: '#4ADE80',
-      warning: '#FACC15'
+      warning: '#FACC15',
+      grey: '#808080',
+      'grey-light': '#A0A0A0',
+      'grey-dark': '#606060'
     },
     variables: {
       'border-color': '#334155',

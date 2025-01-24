@@ -31,7 +31,7 @@
     (): ConfirmModalContent => ({
       title: props.title || additionalParams.value.title || '',
       description: props.description || additionalParams.value.description || '',
-      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Outlined, color: Colors.Secondary },
+      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Text, color: Colors.GreyLight },
       confirmBtn: additionalParams.value.confirmBtn || { variant: Variants.Flat, color: Colors.Primary },
       type: additionalParams.value.type || Colors.Primary
     })
@@ -60,7 +60,7 @@
 <template>
   <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
-      <VCardTitle class="d-flex hide-center justify-space-between" :class="`bg-${modalContent.type}`">
+      <VCardTitle class="d-flex hide-center align-center justify-space-between" :class="`bg-${modalContent.type}`">
         <slot :close="modalHide" name="header" :title="modalContent.title">
           <span>{{ modalContent.title }}</span>
           <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />
