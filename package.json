@@ -11,7 +11,7 @@
     "@mdi/font": "7.4.47",
     "@vueuse/core": "^11.2.0",
     "axios": "^1.2.1",
-    "base-form": "git+https://github.com/SimpllleUser/base-form.git",
+    "base-form": "git+https://github.com/SimpllleUser/base-form.git#v0.0.4",
     "core-js": "^3.37.1",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",

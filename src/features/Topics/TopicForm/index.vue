@@ -68,6 +68,9 @@
             </VBtn>
             <VBtn class="ml-4" :color="Colors.Primary" @click="addItem">Add</VBtn>
           </template>
+          <template #empty>
+            <div class="text-h6 text-center">You can add words for dictionary</div>
+          </template>
         </InputList>
       </div>
     </template>

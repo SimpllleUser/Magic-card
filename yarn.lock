@@ -980,9 +980,9 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-"base-form@git+https://github.com/SimpllleUser/base-form.git":
+"base-form@git+https://github.com/SimpllleUser/base-form.git#v0.0.4":
   version "0.0.0"
-  resolved "git+https://github.com/SimpllleUser/base-form.git#9b1e05a17bc5e13f42bbfbe44cf200b434789236"
+  resolved "git+https://github.com/SimpllleUser/base-form.git#0b02f30ec00a385dbc2bb169cddeb6f4ee0d8fc5"
   dependencies:
     "@mdi/font" "7.4.47"
     core-js "^3.37.1"
