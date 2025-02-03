@@ -25,8 +25,8 @@
           <VCardText class="d-flex justify-center py-10">
             <div>
               <VBtn
-                v-for="(variant, index) in actualVariants"
-                :key="index"
+                v-for="(variant, indexVariant) in actualVariants"
+                :key="indexVariant"
                 :active="actualQuestion.answerId === variant.id"
                 class="mx-1"
                 :color="Colors.Primary"
