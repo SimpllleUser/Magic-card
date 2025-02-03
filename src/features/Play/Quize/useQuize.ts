@@ -8,9 +8,15 @@ interface QuestionItem extends DictionaryItem {
   answer: Nullable<string>;
 }
 
-export function useQuiz(questions: DictionaryItem[]) {
+export function useQuiz(dictionary: DictionaryItem[]) {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
-  const getWordsinRandomOrder = setInRandomOrderWords(questions);
+  const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
+  const getVariantsOfQuestions = (questionsOfQuize: QuestionItem[]) =>
+    questionsOfQuize.map((item) => {
+      const otherVariants = shuffle(questions.value.filter(({ id }) => id !== item.id)).slice(0, 3);
+
+      return shuffle([item, ...otherVariants]);
+    });
 
   const getQuestions = () =>
     getWordsinRandomOrder().map(
@@ -22,18 +28,10 @@ export function useQuiz(questions: DictionaryItem[]) {
       })
     );
 
-  const shuffledQuestions = ref(getQuestions());
-
-  const variantsOfQuestions = ref(
-    shuffledQuestions.value.map((item) => {
-      const otherVariants = shuffle(shuffledQuestions.value.filter(({ id }) => id !== item.id)).slice(0, 3);
-
-      return shuffle([item, ...otherVariants]);
-    })
-  );
-
+  const questions = ref(getQuestions());
+  const variantsOfQuestions = ref(getVariantsOfQuestions(questions.value));
   const actualQuestionIndex = ref(0);
-  const actualQuestion = computed(() => shuffledQuestions.value[actualQuestionIndex.value]);
+  const actualQuestion = computed(() => questions.value[actualQuestionIndex.value]);
   const actualVariants = computed(() => variantsOfQuestions.value[actualQuestionIndex.value]);
 
   const setActualQuestionIndex = (value: number) => {
@@ -41,18 +39,18 @@ export function useQuiz(questions: DictionaryItem[]) {
   };
 
   const nextQuestion = () => {
-    const index = actualQuestionIndex.value === shuffledQuestions.value.length - 1 ? 0 : actualQuestionIndex.value + 1;
+    const index = actualQuestionIndex.value === questions.value.length - 1 ? 0 : actualQuestionIndex.value + 1;
 
     setActualQuestionIndex(index);
   };
 
   const prevQuestion = () => {
-    const index = actualQuestionIndex.value === 0 ? shuffledQuestions.value.length - 1 : actualQuestionIndex.value - 1;
+    const index = actualQuestionIndex.value === 0 ? questions.value.length - 1 : actualQuestionIndex.value - 1;
     setActualQuestionIndex(index);
   };
 
   const setAnswer = (question: QuestionItem, answer: QuestionItem) => {
-    shuffledQuestions.value[actualQuestionIndex.value] = {
+    questions.value[actualQuestionIndex.value] = {
       ...question,
       isCorrect: question.to === answer.to,
       answerId: answer.id,
@@ -61,8 +59,9 @@ export function useQuiz(questions: DictionaryItem[]) {
   };
 
   const reset = () => {
+    questions.value = getQuestions();
+    variantsOfQuestions.value = getVariantsOfQuestions(questions.value);
     actualQuestionIndex.value = 0;
-    shuffledQuestions.value = getQuestions();
   };
 
   return {
@@ -74,7 +73,7 @@ export function useQuiz(questions: DictionaryItem[]) {
     actualQuestion,
     variantsOfQuestions,
     actualVariants,
-    shuffledQuestions
+    questions
   };
 }
 
