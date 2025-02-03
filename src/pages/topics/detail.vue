@@ -3,6 +3,7 @@
   import { useTopicsStore } from '../../features/Topics/store/topics';
   import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
+  import Quize from '@/features/Play/Quize/Quize.vue';
   // import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
 
   const route = useRoute();
@@ -34,9 +35,12 @@
     ...item,
     number: index + 1
   });
-  const items = ref(topic.value?.dictionary);
+  const selectedWords = ref(topic.value?.dictionary);
 </script>
 <template>
+  <div class="pa-4">
+    <Quize :questions="topic.dictionary" />
+  </div>
   <VRow>
     <VCol>
       <VCard>
@@ -55,7 +59,7 @@
         <VCardText>
           <BaseList
             header-title="Dictionary"
-            v-model:selectedItems="items"
+            v-model:selectedItems="selectedWords"
             :data="topic.dictionary"
             :keys="keys"
             :mapItem="mapItem"

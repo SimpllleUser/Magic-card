@@ -48,6 +48,7 @@
     </VRow>
     <VRow>
       <VCol>
+        {{ placeholderTextAreaInput }}
         <VTextarea v-model="sourceText" :auto-grow="true" :placeholder="placeholderTextAreaInput" :rows="5" />
       </VCol>
     </VRow>
