@@ -3,7 +3,7 @@
   import { useTopicsStore } from '../../features/Topics/store/topics';
   import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
-  import Quize from '@/features/Play/Quize/Quize.vue';
+  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   // import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
 
   const route = useRoute();
@@ -35,12 +35,18 @@
     ...item,
     number: index + 1
   });
-  const selectedWords = ref(topic.value?.dictionary);
+  const selectedWords = ref([...topic.value?.dictionary]);
+  const alertConfigInsufficientQuantityWords = {
+    title: 'Attention!',
+    text: 'You must choose at least 4 words!',
+    color: Colors.Info,
+    variant: Variants.Tonal
+  };
+
+  const canPlayQuize = computed(() => selectedWords.value.length > 10);
 </script>
+
 <template>
-  <div class="pa-4">
-    <Quize :questions="topic.dictionary" />
-  </div>
   <VRow>
     <VCol>
       <VCard>
@@ -57,38 +63,53 @@
     <VCol>
       <VCard>
         <VCardText>
-          <BaseList
-            header-title="Dictionary"
-            v-model:selectedItems="selectedWords"
-            :data="topic.dictionary"
-            :keys="keys"
-            :mapItem="mapItem"
-            selectable
-            hide-footer
-          >
-            <template #header-actions>
-              <VBtn :color="Colors.Primary" :variant="Variants.Elevated">Play</VBtn>
-            </template>
-            <template #empty-text>
-              <div>
-                <p>
-                  Let’s add some words
-                  <VBtn
-                    @click="router.push({ name: 'TopicUpdate', params: { id: topicId } })"
-                    :color="Colors.Primary"
-                    :variant="Variants.Contained"
-                    class="px-1"
-                  >
-                    go to edit module
-                  </VBtn>
-                </p>
-              </div>
-            </template>
-          </BaseList>
+          <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem;">
+            <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
+          </AnimationFade>
+          <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize, 'no-alert': canPlayQuize }">
+            <BaseList
+              v-model:selected-items="selectedWords"
+              :data="topic.dictionary"
+              header-title="Dictionary"
+              hide-footer
+              :keys="keys"
+              :map-item="mapItem"
+              selectable
+            >
+              <template #header-actions>
+                <VBtn :color="Colors.Primary" :disabled="!canPlayQuize" :variant="Variants.Elevated" @click="goToQuize"
+                  >Play</VBtn
+                >
+              </template>
+              <template #empty-text>
+                <div>
+                  <p>
+                    Let’s add some words
+                    <VBtn
+                      class="px-1"
+                      :color="Colors.Primary"
+                      :variant="Variants.Contained"
+                      @click="router.push({ name: 'TopicUpdate', params: { id: topicId } })"
+                    >
+                      go to edit module
+                    </VBtn>
+                  </p>
+                </div>
+              </template>
+            </BaseList>
+          </div>
         </VCardText>
       </VCard>
     </VCol>
   </VRow>
 </template>
 
-<style></style>
+<style lang="scss">
+  .list-wrapper {
+    position: relative;
+    transition: all 0.3s ease-out;
+  }
+  .is-alert {
+    padding-top: 6rem;
+  }
+</style>

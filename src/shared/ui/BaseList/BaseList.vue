@@ -53,7 +53,6 @@
         :items="items"
         :show-select="selectable"
         :hide-default-header="hideHeader"
-        :hide-default-footer="hideFooter"
         @update:modelValue="onSelectItemOfList"
       >
         <template #top>
