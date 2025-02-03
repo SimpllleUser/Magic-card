@@ -6,6 +6,8 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { useQuizsStore } from '@/features/Play/store/quiz';
 
+  const MIN_WORDS_QUANTITY = 5;
+
   const keys = [
     {
       title: '#',
@@ -26,14 +28,14 @@
 
   const alertConfigInsufficientQuantityWords = {
     title: 'Attention!',
-    text: 'You must choose at least 4 words!',
+    text: `You must choose at least ${MIN_WORDS_QUANTITY} words!`,
     color: Colors.Info,
     variant: Variants.Tonal
   };
 
   const route = useRoute();
   const router = useRouter();
-  const topicId = computed(() => route.params.id!);
+  const topicId = computed(() => route.params?.id!);
 
   const topicsStore = useTopicsStore();
   const quizStore = useQuizsStore();
@@ -46,7 +48,7 @@
   });
   const selectedWords = ref([...topic.value?.dictionary]);
 
-  const canPlayQuize = computed(() => selectedWords.value.length > 4);
+  const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const goToQuize = () => {
     quizStore.setWords(selectedWords.value);
@@ -74,7 +76,7 @@
           <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
             <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
           </AnimationFade>
-          <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize, 'no-alert': canPlayQuize }">
+          <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
             <BaseList
               v-model:selected-items="selectedWords"
               :data="topic.dictionary"

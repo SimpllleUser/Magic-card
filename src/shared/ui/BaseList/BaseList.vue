@@ -35,7 +35,7 @@
   const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item.id));
   const items = computed(() => props.data.map(props.mapItem));
   const headers = computed(() => props.keys.map(props.mapKey));
-
+  const perPage = computed(() => props.hideFooter ? items.value.length : 10);
   const onSelectItemOfList = (itemIds: string[]) => {
     const items = props.data.filter((item) => itemIds.includes(item.id));
     emit('update:selectedItems', items);
@@ -53,6 +53,8 @@
         :items="items"
         :show-select="selectable"
         :hide-default-header="hideHeader"
+        :hide-default-footer="hideFooter"
+        :items-per-page="perPage"
         @update:modelValue="onSelectItemOfList"
       >
         <template #top>
