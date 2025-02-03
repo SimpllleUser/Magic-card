@@ -16,8 +16,8 @@
 
 <template>
   <div>
-    <v-carousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
-      <v-carousel-item v-for="(question, index) in questions" :key="index">
+    <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
+      <VCarouselItem v-for="(question, index) in questions" :key="index">
         <VCard class="question-card" :title="titleCard">
           <VCardText class="d-flex justify-center py-10">
             <div class="text-h3">{{ getQuestion(question.from) }}</div>
@@ -38,8 +38,8 @@
             </div>
           </VCardText>
         </VCard>
-      </v-carousel-item>
-    </v-carousel>
+      </VCarouselItem>
+    </VCarousel>
   </div>
 
   <div class="d-flex justify-center">
