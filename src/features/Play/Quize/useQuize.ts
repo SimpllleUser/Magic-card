@@ -39,13 +39,13 @@ export function useQuiz(dictionary: DictionaryItem[]) {
     actualQuestionIndex.value = value || 0;
   };
 
-  const nextQuestion = () => {
+  const next = () => {
     const index = actualQuestionIndex.value === questions.value.length - 1 ? 0 : actualQuestionIndex.value + 1;
 
     setActualQuestionIndex(index);
   };
 
-  const prevQuestion = () => {
+  const prev = () => {
     const index = actualQuestionIndex.value === 0 ? questions.value.length - 1 : actualQuestionIndex.value - 1;
     setActualQuestionIndex(index);
   };
@@ -68,8 +68,8 @@ export function useQuiz(dictionary: DictionaryItem[]) {
   const getQuestion = (questionText: string): string => upperFirst(questionText.trimStart());
 
   return {
-    nextQuestion,
-    prevQuestion,
+    next,
+    prev,
     setAnswer,
     reset,
     getQuestion,
