@@ -1,18 +1,11 @@
 <script setup lang="ts">
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
+  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   import { useTopicsStore } from '../../features/Topics/store/topics';
   import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
-  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-  // import ParserTextToDictionary from '../../widget/ParserTextToDictionary/index.vue';
+  import { useQuizsStore } from '@/features/Play/store/quiz';
 
-  const route = useRoute();
-  const router = useRouter();
-  const topicId = computed(() => route.params.id!);
-
-  const topicsStore = useTopicsStore();
-
-  const topic = computed(() => topicsStore.getById(topicId.value));
   const keys = [
     {
       title: '#',
@@ -31,11 +24,6 @@
     }
   ];
 
-  const mapItem = (item: DictionaryItem, index: number) => ({
-    ...item,
-    number: index + 1
-  });
-  const selectedWords = ref([...topic.value?.dictionary]);
   const alertConfigInsufficientQuantityWords = {
     title: 'Attention!',
     text: 'You must choose at least 4 words!',
@@ -43,7 +31,27 @@
     variant: Variants.Tonal
   };
 
-  const canPlayQuize = computed(() => selectedWords.value.length > 10);
+  const route = useRoute();
+  const router = useRouter();
+  const topicId = computed(() => route.params.id!);
+
+  const topicsStore = useTopicsStore();
+  const quizStore = useQuizsStore();
+
+  const topic = computed(() => topicsStore.getById(topicId.value));
+
+  const mapItem = (item: DictionaryItem, index: number) => ({
+    ...item,
+    number: index + 1
+  });
+  const selectedWords = ref([...topic.value?.dictionary]);
+
+  const canPlayQuize = computed(() => selectedWords.value.length > 4);
+
+  const goToQuize = () => {
+    quizStore.setWords(selectedWords.value);
+    router.push({ name: 'Quize' });
+  };
 </script>
 
 <template>
@@ -63,7 +71,7 @@
     <VCol>
       <VCard>
         <VCardText>
-          <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem;">
+          <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
             <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
           </AnimationFade>
           <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize, 'no-alert': canPlayQuize }">

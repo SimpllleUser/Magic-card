@@ -5,6 +5,8 @@
   const quizeStore = useQuizsStore();
 </script>
 <template>
-  <Quize :questions="quizeStore.words" />
+  <div class="py-4">
+    <Quize :questions="quizeStore.words" />
+  </div>
 </template>
 <style></style>
