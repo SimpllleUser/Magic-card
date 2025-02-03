@@ -1,17 +1,27 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { useQuiz } from './useQuize';
+  import { QuestionItem, useQuiz } from './useQuize';
   import { Colors, Variants } from '@/core/models/enums';
+
+  interface Emits {
+    (event: 'finished', payload: QuestionItem[]): void;
+  }
 
   const props = withDefaults(defineProps<{ questions: DictionaryItem[] }>(), {
     questions: []
   });
 
-  const { actualQuestionIndex, setAnswer, reset, getQuestion, actualQuestion, actualVariants, questions } = useQuiz([
+  const emit = defineEmits<Emits>();
+
+  const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, actualVariants, questions } = useQuiz([
     ...props?.questions
   ]);
 
   const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
+
+  const toFinishQuiz = () => {
+    emit('finished', questions.value);
+  };
 </script>
 
 <template>
@@ -44,7 +54,7 @@
 
   <div class="d-flex justify-center">
     <VBtn class="mr-4" @click="reset">Try again</VBtn>
-    <VBtn>Finish</VBtn>
+    <VBtn @click="toFinishQuiz">Finish</VBtn>
   </div>
 </template>
 

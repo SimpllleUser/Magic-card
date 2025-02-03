@@ -3,7 +3,7 @@ import { Nullable } from 'base-form/src/core/types/common';
 import { shuffle, upperFirst } from 'lodash';
 import { computed, ref } from 'vue';
 
-interface QuestionItem extends DictionaryItem {
+export interface QuestionItem extends DictionaryItem {
   isCorrect: boolean;
   answerId: Nullable<string>;
   answer: Nullable<string>;

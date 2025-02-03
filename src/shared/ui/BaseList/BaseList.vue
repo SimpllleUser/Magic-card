@@ -20,6 +20,7 @@
       hideFooter?: boolean;
       selectable?: boolean;
       emptyText?: string;
+      colConfig?: { sortable: boolean };
     }>(),
     {
       mapKey: (value?: BaseListKey): BaseListKey => value,
@@ -33,9 +34,9 @@
   }>();
 
   const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item.id));
-  const items = computed(() => props.data.map(props.mapItem));
-  const headers = computed(() => props.keys.map(props.mapKey));
-  const perPage = computed(() => props.hideFooter ? items.value.length : 10);
+  const items = computed(() => props.data?.map(props.mapItem));
+  const headers = computed(() => props.keys?.map(props.mapKey));
+  const perPage = computed(() => (props.hideFooter ? items.value.length : 10));
   const onSelectItemOfList = (itemIds: string[]) => {
     const items = props.data.filter((item) => itemIds.includes(item.id));
     emit('update:selectedItems', items);
@@ -56,9 +57,10 @@
         :hide-default-footer="hideFooter"
         :items-per-page="perPage"
         @update:modelValue="onSelectItemOfList"
+        v-bind="$slots"
       >
         <template #top>
-          <VToolbar flat>
+          <VToolbar flat v-if="headerTitle && !hideHeader">
             <VToolbarTitle>
               <slot name="header-title">{{ headerTitle }}</slot>
             </VToolbarTitle>
@@ -67,6 +69,9 @@
         </template>
         <template #no-data>
           <slot name="empty-text">{{ emptyText }}</slot>
+        </template>
+        <template v-for="slotName in Object.keys($slots)" #[slotName]="props" :key="slotName">
+          <slot :name="slotName" v-bind="props"></slot>
         </template>
       </VDataTable>
     </div>
