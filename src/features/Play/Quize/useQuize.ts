@@ -1,5 +1,6 @@
 import { DictionaryItem } from '@/core/models/Topic';
 import { Nullable } from 'base-form/src/core/types/common';
+import { shuffle, upperFirst } from 'lodash';
 import { computed, ref } from 'vue';
 
 interface QuestionItem extends DictionaryItem {
@@ -64,19 +65,18 @@ export function useQuiz(dictionary: DictionaryItem[]) {
     actualQuestionIndex.value = 0;
   };
 
+  const getQuestion = (questionText: string): string => upperFirst(questionText.trimStart());
+
   return {
     nextQuestion,
     prevQuestion,
     setAnswer,
     reset,
+    getQuestion,
     actualQuestionIndex,
     actualQuestion,
     variantsOfQuestions,
     actualVariants,
     questions
   };
-}
-
-function shuffle<T>(array: T[]): T[] {
-  return array.sort(() => Math.random() - 0.5);
 }

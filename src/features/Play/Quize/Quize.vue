@@ -3,20 +3,24 @@
   import { useQuiz } from './useQuize';
   import { Colors, Variants } from '@/core/models/enums';
 
-  const props = withDefaults(defineProps<{ questions: DictionaryItem }>(), { questions: [] });
+  const props = withDefaults(defineProps<{ questions: DictionaryItem[] }>(), {
+    questions: []
+  });
 
-  const { actualQuestionIndex, setAnswer, reset, actualQuestion, actualVariants, questions } = useQuiz([
+  const { actualQuestionIndex, setAnswer, reset, getQuestion, actualQuestion, actualVariants, questions } = useQuiz([
     ...props?.questions
   ]);
+
+  const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
 </script>
 
 <template>
   <div>
     <v-carousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
       <v-carousel-item v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card" :title="`${actualQuestionIndex + 1}/${questions.length}`">
+        <VCard class="question-card" :title="titleCard">
           <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3">{{ question.from }}</div>
+            <div class="text-h3">{{ getQuestion(question.from) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
             <div>
@@ -38,8 +42,8 @@
     </v-carousel>
   </div>
 
-  <div>
-    <VBtn @click="reset">Try again</VBtn>
+  <div class="d-flex justify-center">
+    <VBtn class="mr-4" @click="reset">Try again</VBtn>
     <VBtn>Finish</VBtn>
   </div>
 </template>
