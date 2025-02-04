@@ -17,12 +17,16 @@
       mapKey?: (value?: string) => string;
       mapItem?: (value?: string) => Nullable<string>;
       // hideHeader?: boolean;
+      height?: string;
       hideFooter?: boolean;
       selectable?: boolean;
+      headerSticky?: boolean;
       emptyText?: string;
       colConfig?: { sortable: boolean };
     }>(),
     {
+      height: '',
+      headerSticky: false,
       mapKey: (value?: BaseListKey): BaseListKey => value,
       mapItem: (value?: string) => value,
       emptyText: 'The list is empty.'
@@ -51,16 +55,18 @@
       <VDataTable
         v-model="selectedIds"
         :headers="headers"
-        :items="items"
-        :show-select="selectable"
-        :hide-default-header="hideHeader"
+        :height="height"
         :hide-default-footer="hideFooter"
+        :hide-default-header="hideHeader"
+        :items="items"
         :items-per-page="perPage"
-        @update:modelValue="onSelectItemOfList"
+        :show-select="selectable"
+        :sticky="headerSticky"
         v-bind="$slots"
+        @update:model-value="onSelectItemOfList"
       >
         <template #top>
-          <VToolbar flat v-if="headerTitle && !hideHeader">
+          <VToolbar v-if="headerTitle && !hideHeader" flat>
             <VToolbarTitle>
               <slot name="header-title">{{ headerTitle }}</slot>
             </VToolbarTitle>
@@ -70,7 +76,7 @@
         <template #no-data>
           <slot name="empty-text">{{ emptyText }}</slot>
         </template>
-        <template v-for="slotName in Object.keys($slots)" #[slotName]="props" :key="slotName">
+        <template v-for="slotName in Object.keys($slots)" :key="slotName" #[slotName]="props">
           <slot :name="slotName" v-bind="props"></slot>
         </template>
       </VDataTable>

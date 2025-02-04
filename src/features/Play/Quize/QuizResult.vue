@@ -8,7 +8,7 @@
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
-  const props = withDefaults(defineProps<{ questions: DictionaryItem[] }>(), {
+  const props = withDefaults(defineProps<{ questions: QuestionItem[] }>(), {
     questions: []
   });
 
@@ -53,17 +53,42 @@
           color: Colors.Error
         };
   };
+
+  const correctQuestionsQuantity = computed(() => props.questions.filter((item) => item.isCorrect).length);
+  const qualityOfQuizeColor = computed(() => {
+    const { length } = props.questions;
+    const correct = correctQuestionsQuantity.value;
+
+    if (correct === length) return Colors.Accent; /// All correct
+    if (correct >= length / 2) return Colors.Success; /// More then half correct
+    if (correct < length / 2) return Colors.Warning; /// Less then half corect
+
+    return Colors.Primary;
+  });
 </script>
 
 <template>
   <div>
-    <BaseList :data="props.questions" hide-footer :keys="keys" :map-item="mapItem">
+    <BaseList :data="props.questions" header-sticky height="20rem" hide-footer :keys="keys" :map-item="mapItem">
       <template #item.isCorrect="{ value }">
         <div class="ml-4">
           <VIcon v-bind="getIconConfig(value)" />
         </div>
       </template>
     </BaseList>
+    <VDivider class="border-opacity-25 my-2" />
+    <div class="total d-flex justify-center">
+      <div>
+        <span> Correct </span>
+        <VChip class="ma-2" :color="qualityOfQuizeColor" label>
+          <b>{{ correctQuestionsQuantity }}</b>
+        </VChip>
+        <span> From </span>
+        <VChip class="ma-2" :color="Colors.Primary" label>
+          <b>{{ questions.length }}</b>
+        </VChip>
+      </div>
+    </div>
   </div>
 </template>
 
