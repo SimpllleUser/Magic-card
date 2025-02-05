@@ -1,16 +1,24 @@
 <script setup lang="ts">
-  import { DictionaryItem } from '@/core/models/Topic';
+  import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
   import { QuestionItem, useQuiz } from './useQuize';
   import { Colors, Variants } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { omit } from 'lodash';
   import { Icons } from '@/core/models/icons';
+  import { Modals } from '@/core/models/modals';
+  import { useRouter } from 'vue-router';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
-  const props = withDefaults(defineProps<{ questions: QuestionItem[] }>(), {
-    questions: []
+  const props = withDefaults(defineProps<{ moduleId: string; questions: QuestionItem[] }>(), {
+    questions: () => []
   });
+
+  const router = useRouter();
+
+  const emit = defineEmits<{
+    (event: 'retry'): void;
+  }>();
 
   const mapItem = (item: QuestionItem, index: number): ItemResult => {
     const mappedItem = omit(item, 'answerId');
@@ -65,31 +73,51 @@
 
     return Colors.Primary;
   });
+
+  const onRetry = (action?: CallableFunction) => {
+    emit('retry');
+    action && action();
+  };
 </script>
 
 <template>
-  <div>
-    <BaseList :data="props.questions" header-sticky height="20rem" hide-footer :keys="keys" :map-item="mapItem">
-      <template #item.isCorrect="{ value }">
-        <div class="ml-4">
-          <VIcon v-bind="getIconConfig(value)" />
-        </div>
-      </template>
-    </BaseList>
-    <VDivider class="border-opacity-25 my-2" />
-    <div class="total d-flex justify-center">
+  <BaseModal :id="Modals.FinishQuiz" title="Result of quiz!">
+    <template #default="{ hide }">
       <div>
-        <span> Correct </span>
-        <VChip class="ma-2" :color="qualityOfQuizeColor" label>
-          <b>{{ correctQuestionsQuantity }}</b>
-        </VChip>
-        <span> From </span>
-        <VChip class="ma-2" :color="Colors.Primary" label>
-          <b>{{ questions.length }}</b>
-        </VChip>
+        <BaseList :data="props.questions" header-sticky height="20rem" hide-footer :keys="keys" :map-item="mapItem">
+          <template #item.isCorrect="{ value }">
+            <div class="ml-4">
+              <VIcon v-bind="getIconConfig(value)" />
+            </div>
+          </template>
+        </BaseList>
+        <VDivider class="border-opacity-25 my-2" />
+        <div class="total d-flex justify-center">
+          <div>
+            <span> Correct </span>
+            <VChip class="ma-2" :color="qualityOfQuizeColor" label>
+              <b>{{ correctQuestionsQuantity }}</b>
+            </VChip>
+            <span> From </span>
+            <VChip class="ma-2" :color="Colors.Primary" label>
+              <b>{{ questions.length }}</b>
+            </VChip>
+          </div>
+        </div>
+        <div class="total d-flex justify-center pt-4">
+          <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="onRetry(hide)">Try again</VBtn>
+          <VBtn
+            class="ml-4"
+            :color="Colors.Primary"
+            :variant="Variants.Text"
+            @click="router.push({ name: 'TopicDetail', params: { id: moduleId } })"
+          >
+            Go to the module
+          </VBtn>
+        </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </BaseModal>
 </template>
 
 <style lang="scss" scoped></style>

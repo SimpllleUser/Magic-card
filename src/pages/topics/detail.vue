@@ -51,6 +51,7 @@
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const goToQuize = () => {
+    quizStore.setActiveModule(topicId.value);
     quizStore.setWords(selectedWords.value);
     router.push({ name: 'Quize' });
   };

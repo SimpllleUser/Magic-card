@@ -1,10 +1,10 @@
 <script setup lang="ts">
+  import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
   import Quize from '@/features/Play/Quize/Quize.vue';
   import { QuestionItem } from '@/features/Play/Quize/useQuize';
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
   import QuizResult from '@/features/Play/Quize/QuizResult.vue';
 
   const quizeStore = useQuizsStore();
@@ -15,13 +15,17 @@
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
   };
+
+  const quizeKey = ref(uuid.v4());
+
+  const onRetry = () => {
+    quizeKey.value = uuid.v4();
+  };
 </script>
 <template>
   <div class="py-4">
-    <BaseModal :id="Modals.FinishQuiz" title="Result of quiz!">
-      <QuizResult :questions="finishedQuestions" />
-    </BaseModal>
-    <Quize :questions="quizeStore.words" @finished="onFisnishedQuiz" />
+    <QuizResult :module-id="quizeStore.activeModuleId" :questions="finishedQuestions" @retry="onRetry" />
+    <Quize :key="quizeKey" :questions="quizeStore.words" @finished="onFisnishedQuiz" />
   </div>
 </template>
 <style></style>
