@@ -105,11 +105,10 @@
           </div>
         </div>
         <div class="total d-flex justify-center pt-4">
-          <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="onRetry(hide)">Try again</VBtn>
+          <VBtn :color="Colors.Primary" @click="onRetry(hide)">Try again</VBtn>
           <VBtn
             class="ml-4"
-            :color="Colors.Primary"
-            :variant="Variants.Text"
+            :color="Colors.Secondary"
             @click="router.push({ name: 'TopicDetail', params: { id: moduleId } })"
           >
             Go to the module

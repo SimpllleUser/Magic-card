@@ -53,8 +53,8 @@
   </div>
 
   <div class="d-flex justify-center">
-    <VBtn class="mr-4" @click="reset">Try again</VBtn>
-    <VBtn @click="toFinishQuiz">Finish</VBtn>
+    <VBtn class="mr-4" :color="Colors.Primary" @click="reset">Restart</VBtn>
+    <VBtn :color="Colors.Secondary" @click="toFinishQuiz">Finish</VBtn>
   </div>
 </template>
 
