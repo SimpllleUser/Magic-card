@@ -29,6 +29,12 @@ const routes = [
         name: 'TopicCreate',
         component: () => import('../pages/topics/create.vue'),
         meta: { title: 'Topic Create' }
+      },
+      {
+        path: '/quize',
+        name: 'Quize',
+        component: () => import('../pages/quize/index.vue'),
+        meta: { title: 'Quize' }
       }
     ]
   }
