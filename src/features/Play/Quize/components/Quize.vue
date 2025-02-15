@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem } from './useQuize';
+  import { QuestionItem } from '../composables/useQuize';
   import { Colors } from '@/core/models/enums';
-  import { useMissingLettersQuiz } from './useMissingLettersQuiz';
+  import { useMissingLettersQuiz } from '../composables/useMissingLettersQuiz';
   import { VOtpInput } from 'vuetify/components';
 
   interface Emits {

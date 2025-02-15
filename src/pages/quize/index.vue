@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
-  import Quize from '@/features/Play/Quize/Quize.vue';
-  import { QuestionItem } from '@/features/Play/Quize/useQuize';
+  import Quize from '@/features/Play/Quize/components/Quize.vue';
+  import { QuestionItem } from '@/features/Play/Quize/composables/useQuize';
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import QuizResult from '@/features/Play/Quize/QuizResult.vue';
+  import QuizResult from '@/features/Play/Quize/components/QuizResult.vue';
 
   const quizeStore = useQuizsStore();
   const modal = useModalStore();
