@@ -1,19 +1,21 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem, useQuiz } from './useQuize';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { QuestionItem } from './useQuize';
+  import { Colors } from '@/core/models/enums';
+  import { useMissingLettersQuiz } from './useMissingLettersQuiz';
+  import { VOtpInput } from 'vuetify/components';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
   }
 
   const props = withDefaults(defineProps<{ questions: DictionaryItem[] }>(), {
-    questions: []
+    questions: () => []
   });
 
   const emit = defineEmits<Emits>();
 
-  const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, actualVariants, questions } = useQuiz([
+  const { setAnswer, reset, getQuestion, actualQuestionIndex, questions } = useMissingLettersQuiz([
     ...props?.questions
   ]);
 
@@ -30,21 +32,17 @@
       <VCarouselItem v-for="(question, index) in questions" :key="index">
         <VCard class="question-card" :title="titleCard">
           <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3">{{ getQuestion(question.from) }}</div>
+            <div class="text-h3">{{ getQuestion(question.to) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
             <div>
-              <VBtn
-                v-for="(variant, indexVariant) in actualVariants"
-                :key="indexVariant"
-                :active="actualQuestion.answerId === variant.id"
-                class="mx-1"
-                :color="Colors.Primary"
-                :variant="Variants.Outlined"
-                @click="setAnswer(actualQuestion, variant)"
-              >
-                {{ variant.to }}
-              </VBtn>
+              <VOtpInput
+                v-model="question.answer"
+                :length="question.from.length"
+                :min-width="question.from.length * 50"
+                type="text"
+                @update:model-value="setAnswer(question, $event)"
+              />
             </div>
           </VCardText>
         </VCard>
