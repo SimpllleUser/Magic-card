@@ -2,11 +2,11 @@
   import { QuestionItem } from '../composables/useQuize';
 
   const props = defineProps<{
-    question: QuestionItem;
+    actualQuestion: QuestionItem;
     actualVariants: Array<QuestionItem>;
   }>();
 
-  const answer = ref<string>(props.question?.answer || '');
+  const answer = ref<string>(props.actualQuestion?.answer || '');
 
   defineEmits<{
     (event: 'setAnswer', payload: { question: QuestionItem; value: string }): void;
@@ -16,10 +16,10 @@
   <div>
     <VOtpInput
       v-model="answer"
-      :length="question?.from.length"
-      :min-width="question?.from.length * 50"
+      :length="actualQuestion?.from.length"
+      :min-width="actualQuestion?.from.length * 50"
       type="text"
-      @update:model-value="$emit('setAnswer', { question, value: $event })"
+      @update:model-value="$emit('setAnswer', { question: actualQuestion, value: $event })"
     />
   </div>
 </template>
