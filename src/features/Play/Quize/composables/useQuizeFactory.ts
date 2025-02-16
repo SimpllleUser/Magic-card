@@ -1,6 +1,6 @@
-import QuizeWords from '../components/QuizeWords.vue';
+import QuizeWordVariants from '../components/QuizeWordVariants.vue';
 import QuizeMissLetters from '../components/QuizeMissLetters.vue';
-import { useQuiz } from './useQuize';
+import { useWordVariants } from './useWordVariants';
 import { useMissingLettersQuiz } from './useMissingLettersQuiz';
 
 export enum QuizeType {
@@ -10,12 +10,12 @@ export enum QuizeType {
 
 export function useQuizeFactory(quizeType: QuizeType) {
   const componentsByType = {
-    [QuizeType.Words]: QuizeWords,
+    [QuizeType.Words]: QuizeWordVariants,
     [QuizeType.MissLetters]: QuizeMissLetters
   };
 
   const logicsByType = {
-    [QuizeType.Words]: useQuiz,
+    [QuizeType.Words]: useWordVariants,
     [QuizeType.MissLetters]: useMissingLettersQuiz
   };
 

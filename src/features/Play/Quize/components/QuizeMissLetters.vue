@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { QuestionItem } from '../composables/useQuize';
+  import { QuestionItem } from '../composables/useWordVariants';
 
   const props = defineProps<{
     actualQuestion: QuestionItem;

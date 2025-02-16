@@ -9,7 +9,7 @@ export interface QuestionItem extends DictionaryItem {
   answer: Nullable<string>;
 }
 
-export function useQuiz(dictionary: DictionaryItem[], mode) {
+export function useWordVariants(dictionary: DictionaryItem[], mode) {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
   const getVariantsOfQuestions = (questionsOfQuize: QuestionItem[]) =>
