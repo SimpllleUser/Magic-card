@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
-  import { QuestionItem, useQuiz } from './useQuize';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { QuestionItem } from '../composables/useWordVariants';
+  import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { omit } from 'lodash';
   import { Icons } from '@/core/models/icons';

@@ -1,26 +1,32 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem, useQuiz } from './useQuize';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { QuestionItem } from '../composables/useQuize';
+  import { Colors } from '@/core/models/enums';
+
+  import { computed } from 'vue';
+  import { QuizeType, useQuizeFactory } from '../composables/useQuizeFactory';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
   }
 
-  const props = withDefaults(defineProps<{ questions: DictionaryItem[] }>(), {
-    questions: []
+  const props = withDefaults(defineProps<{ questions: DictionaryItem[]; quizType: QuizeType }>(), {
+    questions: () => [],
+    quizType: QuizeType.Words
   });
 
   const emit = defineEmits<Emits>();
 
-  const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, actualVariants, questions } = useQuiz([
-    ...props?.questions
-  ]);
+  const { quizComponent, quizLogic } = useQuizeFactory(props.quizType);
+
+  const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, questions, actualVariants } =
+    quizLogic.value([...props.questions]);
 
   const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
 
   const toFinishQuiz = () => {
     emit('finished', questions.value);
+    reset();
   };
 </script>
 
@@ -30,21 +36,16 @@
       <VCarouselItem v-for="(question, index) in questions" :key="index">
         <VCard class="question-card" :title="titleCard">
           <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3">{{ getQuestion(question.from) }}</div>
+            <div class="text-h3">{{ getQuestion(question) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
             <div>
-              <VBtn
-                v-for="(variant, indexVariant) in actualVariants"
-                :key="indexVariant"
-                :active="actualQuestion.answerId === variant.id"
-                class="mx-1"
-                :color="Colors.Primary"
-                :variant="Variants.Outlined"
-                @click="setAnswer(actualQuestion, variant)"
-              >
-                {{ variant.to }}
-              </VBtn>
+              <component
+                :is="quizComponent"
+                :actual-question="actualQuestion"
+                v-bind="{ actualVariants: actualVariants || [] }"
+                @set-answer="setAnswer"
+              />
             </div>
           </VCardText>
         </VCard>

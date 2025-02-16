@@ -5,35 +5,48 @@ import { computed, ref } from 'vue';
 
 export interface QuestionItem extends DictionaryItem {
   isCorrect: boolean;
-  answerId: Nullable<string>;
   answer: Nullable<string>;
 }
 
-export function useQuiz(dictionary: DictionaryItem[]) {
+const makeWordWithGaps = (word: string): string => {
+  if (word.length < 4) return word; // Короткі слова не змінюємо
+
+  const gapFrequency = word.length <= 7 ? 2 : word.length <= 10 ? 3 : 2;
+  const startIndex = word.length > 10 ? 1 : 0; // Довші слова починають з пропуску
+  return word
+    .split('')
+    .map((char, index) => ((index + startIndex) % gapFrequency === 0 ? ' ' : char))
+    .join('');
+};
+
+export interface UseMissingLettersQuiz {
+  next: () => void;
+  prev: () => void;
+  setAnswer: (payload: { question: QuestionItem; value: string }) => void;
+  reset: () => void;
+  getQuestion: (question: QuestionItem) => string;
+  actualQuestionIndex: Ref<number>;
+  actualQuestion: ComputedRef<QuestionItem | undefined>;
+  questions: Ref<Array<QuestionItem>>;
+}
+
+export function useMissingLettersQuiz(dictionary: DictionaryItem[]): UseMissingLettersQuiz {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
-  const getVariantsOfQuestions = (questionsOfQuize: QuestionItem[]) =>
-    questionsOfQuize.map((item) => {
-      const otherVariants = shuffle(questions.value.filter(({ id }) => id !== item.id)).slice(0, 3);
-
-      return shuffle([item, ...otherVariants]);
-    });
 
   const getQuestions = () =>
-    getWordsinRandomOrder().map(
-      (item: DictionaryItem): QuestionItem => ({
+    getWordsinRandomOrder().map((item: DictionaryItem): QuestionItem => {
+      return {
         ...item,
         isCorrect: false,
-        answerId: null,
-        answer: null
-      })
-    );
+        from: item.from.trimStart().trimEnd(),
+        answer: makeWordWithGaps(item.from.trimStart().trimEnd())
+      };
+    });
 
   const questions = ref(getQuestions());
-  const variantsOfQuestions = ref(getVariantsOfQuestions(questions.value));
   const actualQuestionIndex = ref(0);
   const actualQuestion = computed(() => questions.value[actualQuestionIndex.value]);
-  const actualVariants = computed(() => variantsOfQuestions.value[actualQuestionIndex.value]);
 
   const setActualQuestionIndex = (value: number) => {
     actualQuestionIndex.value = value || 0;
@@ -50,22 +63,20 @@ export function useQuiz(dictionary: DictionaryItem[]) {
     setActualQuestionIndex(index);
   };
 
-  const setAnswer = (question: QuestionItem, answer: QuestionItem) => {
+  const setAnswer = ({ question, value }: { question: QuestionItem; value: string }): void => {
     questions.value[actualQuestionIndex.value] = {
       ...question,
-      isCorrect: question.to === answer.to,
-      answerId: answer.id,
-      answer: answer.to
+      isCorrect: question.from?.trim() === value,
+      answer: value
     };
   };
 
   const reset = () => {
     questions.value = getQuestions();
-    variantsOfQuestions.value = getVariantsOfQuestions(questions.value);
     actualQuestionIndex.value = 0;
   };
 
-  const getQuestion = (questionText: string): string => upperFirst(questionText.trimStart());
+  const getQuestion = (question: QuestionItem): string => upperFirst(question.to);
 
   return {
     next,
@@ -75,8 +86,6 @@ export function useQuiz(dictionary: DictionaryItem[]) {
     getQuestion,
     actualQuestionIndex,
     actualQuestion,
-    variantsOfQuestions,
-    actualVariants,
     questions
   };
 }
