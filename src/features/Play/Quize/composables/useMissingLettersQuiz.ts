@@ -22,9 +22,9 @@ const makeWordWithGaps = (word: string): string => {
 export interface UseMissingLettersQuiz {
   next: () => void;
   prev: () => void;
-  setAnswer: (question: QuestionItem, value: string) => void;
+  setAnswer: (payload: { question: QuestionItem; value: string }) => void;
   reset: () => void;
-  getQuestion: (questionText: string) => string;
+  getQuestion: (question: QuestionItem) => string;
   actualQuestionIndex: Ref<number>;
   actualQuestion: ComputedRef<QuestionItem | undefined>;
   questions: Ref<Array<QuestionItem>>;
@@ -63,7 +63,7 @@ export function useMissingLettersQuiz(dictionary: DictionaryItem[]): UseMissingL
     setActualQuestionIndex(index);
   };
 
-  const setAnswer = (question: QuestionItem, value: string): void => {
+  const setAnswer = ({ question, value }: { question: QuestionItem; value: string }): void => {
     questions.value[actualQuestionIndex.value] = {
       ...question,
       isCorrect: question.from?.trim() === value,
@@ -76,7 +76,7 @@ export function useMissingLettersQuiz(dictionary: DictionaryItem[]): UseMissingL
     actualQuestionIndex.value = 0;
   };
 
-  const getQuestion = (questionText: string): string => upperFirst(questionText.trimStart());
+  const getQuestion = (question: QuestionItem): string => upperFirst(question.to);
 
   return {
     next,

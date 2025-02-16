@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem } from '../composables/useQuize';
-  import { Colors } from '@/core/models/enums';
+  import { QuestionItem, useQuiz } from '../composables/useQuize';
+  import { Colors, Variants } from '@/core/models/enums';
+  import QuizeWords from './QuizeWords.vue';
+  import QuizeMissLetters from './QuizeMissLetters.vue';
   import { useMissingLettersQuiz } from '../composables/useMissingLettersQuiz';
   import { VOtpInput } from 'vuetify/components';
 
@@ -15,10 +17,13 @@
 
   const emit = defineEmits<Emits>();
 
-  const { setAnswer, reset, getQuestion, actualQuestionIndex, questions } = useMissingLettersQuiz([
+  const { setAnswer, reset, getQuestion, actualQuestionIndex, questions, actualQuestion } = useMissingLettersQuiz([
     ...props?.questions
   ]);
 
+  // const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, actualVariants, questions } = useQuiz([
+  //   ...props?.questions
+  // ]);
   const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
 
   const toFinishQuiz = () => {
@@ -32,17 +37,17 @@
       <VCarouselItem v-for="(question, index) in questions" :key="index">
         <VCard class="question-card" :title="titleCard">
           <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3">{{ getQuestion(question.to) }}</div>
+            <div class="text-h3">{{ getQuestion(question) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
             <div>
-              <VOtpInput
-                v-model="question.answer"
-                :length="question.from.length"
-                :min-width="question.from.length * 50"
-                type="text"
-                @update:model-value="setAnswer(question, $event)"
+              <QuizeWords
+                v-if="false"
+                :actual-question="actualQuestion"
+                :actual-variants="actualVariants"
+                @set-answer="setAnswer"
               />
+              <QuizeMissLetters :question="actualQuestion" @set-answer="setAnswer" />
             </div>
           </VCardText>
         </VCard>

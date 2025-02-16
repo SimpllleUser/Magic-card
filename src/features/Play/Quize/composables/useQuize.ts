@@ -50,7 +50,7 @@ export function useQuiz(dictionary: DictionaryItem[], mode) {
     setActualQuestionIndex(index);
   };
 
-  const setAnswer = (question: QuestionItem, answer: QuestionItem) => {
+  const setAnswer = ({ question, answer }: { question: QuestionItem; answer: QuestionItem }) => {
     questions.value[actualQuestionIndex.value] = {
       ...question,
       isCorrect: question.to === answer.to,
@@ -65,7 +65,7 @@ export function useQuiz(dictionary: DictionaryItem[], mode) {
     actualQuestionIndex.value = 0;
   };
 
-  const getQuestion = (questionText: string): string => upperFirst(questionText.trimStart());
+  const getQuestion = (question: QuestionItem) => upperFirst(question.from.trimStart());
 
   return {
     next,
