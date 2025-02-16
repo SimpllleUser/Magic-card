@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem } from '../composables/useWordVariants';
+  import { QuestionItem } from '../composables/useQuize';
   import { Colors } from '@/core/models/enums';
 
   import { computed } from 'vue';

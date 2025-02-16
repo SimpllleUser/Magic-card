@@ -25,7 +25,12 @@
 <template>
   <div class="py-4">
     <QuizResult :module-id="quizeStore.activeModuleId" :questions="finishedQuestions" @retry="onRetry" />
-    <Quize :key="quizeKey" :questions="quizeStore.words" @finished="onFisnishedQuiz" />
+    <Quize
+      :key="quizeKey"
+      :questions="quizeStore.words"
+      :quiz-type="quizeStore.currentType"
+      @finished="onFisnishedQuiz"
+    />
   </div>
 </template>
 <style></style>
