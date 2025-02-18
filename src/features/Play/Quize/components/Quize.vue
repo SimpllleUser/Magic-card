@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { QuestionItem } from '../composables/useQuize';
   import { Colors } from '@/core/models/enums';
-
   import { computed } from 'vue';
-  import { QuizeType, useQuizeFactory } from '../composables/useQuizeFactory';
+  import { useQuizeFactory } from '../composables/useQuizeFactory';
+  import { QuizeType } from '../types';
+  import { QuestionItem } from '../composables/useSelectWord';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
@@ -12,7 +12,7 @@
 
   const props = withDefaults(defineProps<{ questions: DictionaryItem[]; quizType: QuizeType }>(), {
     questions: () => [],
-    quizType: QuizeType.Words
+    quizType: QuizeType.SelectWord
   });
 
   const emit = defineEmits<Emits>();

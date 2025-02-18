@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { QuestionItem } from '../composables/useWordVariants';
+  import { QuestionItem } from '../composables/useSelectWord';
   import { Colors, Variants } from '@/core/models/enums';
 
   defineProps<{

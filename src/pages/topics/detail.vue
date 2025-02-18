@@ -6,7 +6,7 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { Icons } from '@/core/models/icons';
-  import { QuizeType } from '@/features/Play/Quize/composables/useQuizeFactory';
+  import { QUIZE_TYPES_OPTIONS } from '../../features/Play/Quize/constants';
 
   const MIN_WORDS_QUANTITY = 5;
 
@@ -58,17 +58,6 @@
     quizStore.setCurrentType(type);
     router.push({ name: 'Quize' });
   };
-
-  const typeOfQuize = [
-    {
-      title: 'Words',
-      value: QuizeType.Words
-    },
-    {
-      title: 'Missed letters',
-      value: QuizeType.MissLetters
-    }
-  ];
 </script>
 
 <template>
@@ -114,7 +103,7 @@
                     >
                   </template>
                   <VList>
-                    <VListItem v-for="(item, index) in typeOfQuize" :key="index" :value="index">
+                    <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
                       <VListItemTitle @click="goToQuize(item.value)">{{ item.title }}</VListItemTitle>
                     </VListItem>
                   </VList>

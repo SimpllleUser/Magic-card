@@ -2,7 +2,7 @@
   import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
   import Quize from '@/features/Play/Quize/components/Quize.vue';
-  import { QuestionItem } from '@/features/Play/Quize/composables/useWordVariants';
+  import { QuestionItem } from '@/features/Play/Quize/composables/useSelectWord';
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import QuizResult from '@/features/Play/Quize/components/QuizResult.vue';

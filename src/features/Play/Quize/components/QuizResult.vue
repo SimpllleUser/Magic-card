@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
-  import { QuestionItem } from '../composables/useWordVariants';
+  import { QuestionItem } from '../composables/useSelectWord';
   import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { omit } from 'lodash';

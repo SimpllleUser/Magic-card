@@ -1,26 +1,22 @@
-import QuizeWordVariants from '../components/QuizeWordVariants.vue';
-import QuizeMissLetters from '../components/QuizeMissLetters.vue';
-import { useWordVariants } from './useWordVariants';
-import { useMissingLettersQuiz } from './useMissingLettersQuiz';
-
-export enum QuizeType {
-  Words = 'Words',
-  MissLetters = 'MissLetters'
-}
+import InputLetters from '../components/InputLetters.vue';
+import SelectWords from '../components/SelectWords.vue';
+import { QuizeType } from '../types';
+import { useInputLetter } from './useInputLetter';
+import { useSelectWord } from './useSelectWord';
 
 export function useQuizeFactory(quizeType: QuizeType) {
-  const componentsByType = {
-    [QuizeType.Words]: QuizeWordVariants,
-    [QuizeType.MissLetters]: QuizeMissLetters
+  const COMPONENT_BY_TYPE = {
+    [QuizeType.SelectWord]: SelectWords,
+    [QuizeType.InputLetters]: InputLetters
   };
 
-  const logicsByType = {
-    [QuizeType.Words]: useWordVariants,
-    [QuizeType.MissLetters]: useMissingLettersQuiz
+  const COMPOSBLE_BY_TYPE = {
+    [QuizeType.SelectWord]: useSelectWord,
+    [QuizeType.InputLetters]: useInputLetter
   };
 
-  const quizComponent = computed(() => componentsByType[quizeType]);
-  const quizLogic = computed(() => logicsByType[quizeType]);
+  const quizComponent = computed(() => COMPONENT_BY_TYPE[quizeType]);
+  const quizLogic = computed(() => COMPOSBLE_BY_TYPE[quizeType]);
 
   return {
     quizComponent,

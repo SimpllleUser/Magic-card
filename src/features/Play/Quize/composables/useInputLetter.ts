@@ -30,7 +30,7 @@ export interface UseMissingLettersQuiz {
   questions: Ref<Array<QuestionItem>>;
 }
 
-export function useMissingLettersQuiz(dictionary: DictionaryItem[]): UseMissingLettersQuiz {
+export function useInputLetter(dictionary: DictionaryItem[]): UseMissingLettersQuiz {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
 
