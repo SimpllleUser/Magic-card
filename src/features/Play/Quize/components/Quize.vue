@@ -24,6 +24,8 @@
 
   const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
 
+  const actualKey = computed(() => questions.value[actualQuestionIndex.value].id);
+
   const toFinishQuiz = () => {
     emit('finished', questions.value);
     reset();
@@ -39,14 +41,13 @@
             <div class="text-h3">{{ getQuestion(question) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
-            <div>
-              <component
-                :is="quizComponent"
-                :actual-question="actualQuestion"
-                v-bind="{ actualVariants: actualVariants || [] }"
-                @set-answer="setAnswer"
-              />
-            </div>
+            <component
+              :is="quizComponent"
+              :key="actualKey"
+              :actual-question="actualQuestion"
+              v-bind="{ actualVariants: actualVariants || [] }"
+              @set-answer="setAnswer"
+            />
           </VCardText>
         </VCard>
       </VCarouselItem>
