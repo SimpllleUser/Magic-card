@@ -37,6 +37,12 @@ const routes = [
         meta: { title: 'Quize' }
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../pages/NotFound.vue')
+    // meta: { title: 'Quize' }
   }
 ];
 
