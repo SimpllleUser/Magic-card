@@ -31,6 +31,13 @@ const routes = [
         meta: { title: 'Topic Create' }
       },
       {
+        /// Add view mode of cards
+        path: '/topic/:id/view',
+        name: 'ViewModeWords',
+        meta: { title: 'View cards' },
+        component: () => import('../pages/quize/ViewMode.vue')
+      },
+      {
         path: '/quize',
         name: 'Quize',
         component: () => import('../pages/quize/index.vue'),

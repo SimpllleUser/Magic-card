@@ -7,6 +7,8 @@
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { Icons } from '@/core/models/icons';
   import { QUIZE_TYPES_OPTIONS } from '../../features/Play/Quize/constants';
+  import { log } from 'node:console';
+  import { QuizeType } from '@/features/Play/Quize/types';
 
   const MIN_WORDS_QUANTITY = 5;
 
@@ -58,6 +60,12 @@
     quizStore.setCurrentType(type);
     router.push({ name: 'Quize' });
   };
+
+  const goToViewMode = () => {
+    quizStore.setActiveModule(topicId.value);
+    quizStore.setWords(selectedWords.value);
+    router.push({ name: 'ViewModeWords' });
+  };
 </script>
 
 <template>
@@ -91,6 +99,15 @@
               selectable
             >
               <template #header-actions>
+                <VBtn
+                  :append-icon="Icons.File"
+                  class="mr-4"
+                  :color="Colors.Primary"
+                  :disabled="!selectedWords.length"
+                  :variant="Variants.Elevated"
+                  @click="goToViewMode"
+                  >View cards</VBtn
+                >
                 <VMenu>
                   <template #activator="{ props }">
                     <VBtn
@@ -116,8 +133,8 @@
                     <VBtn
                       class="px-1"
                       :color="Colors.Primary"
+                      :to="{ name: 'TopicUpdate', params: { id: topicId } }"
                       :variant="Variants.Contained"
-                      @click="router.push({ name: 'TopicUpdate', params: { id: topicId } })"
                     >
                       go to edit module
                     </VBtn>
