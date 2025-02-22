@@ -151,4 +151,5 @@ export enum Icons {
   Gift = 'mdi-gift',
   Fire = 'mdi-fire',
   Water = 'mdi-water',
+  Shuffle = 'mdi-shuffle'
 }

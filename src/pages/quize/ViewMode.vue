@@ -1,40 +1,58 @@
 <script lang="ts" setup>
-  import { useQuizsStore } from '@/features/Play/store/quiz';
   import { ref } from 'vue';
+  import { shuffle } from 'lodash';
+  import { Colors } from '@/core/models/enums';
+  import { Icons } from '@/core/models/icons';
+  import { DictionaryItem } from '@/core/models/Topic';
+  import WordCard from '@/features/Play/Quize/components/WordCard.vue';
+  import { useQuizsStore } from '@/features/Play/store/quiz';
 
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);
 
-  const toggleFlip = () => {
-    isFlipped.value = !isFlipped.value;
+  const setFliped = (state: boolean) => {
+    isFlipped.value = state;
   };
 
   const currentWordIndex = ref(0);
 
-  const getWord = (word: string): string => word.trimStart().trimEnd();
+  const words = ref<DictionaryItem>([]);
+
+  const title = computed(() => {
+    return `${currentWordIndex.value + 1}/${words.value.length}`;
+  });
+
+  const shuffleWords = () => {
+    words.value = shuffle(words.value);
+  };
+
+  onMounted(() => {
+    words.value = quizStore.words;
+  });
 </script>
 
 <template>
   <div>
-    <VCard title="ViewMode">
+    <VCard>
+      <VCardTitle>
+        <div class="d-flex justify-space-between align-center">
+          <span>
+            {{ title }}
+          </span>
+          <span class="ml-4">
+            <VBtn :color="Colors.Secondary" :icon="Icons.Shuffle" @click="shuffleWords"></VBtn>
+          </span>
+        </div>
+      </VCardTitle>
       <VCardText>
-        <VCarousel v-model="currentWordIndex" hide-delimiters style="width: 50%; margin: 0 auto">
-          <VCarouselItem v-for="(word, index) in quizStore.words" :key="index">
-            <div class="flip-container" :class="{ flipped: isFlipped }" @click="toggleFlip">
-              <div class="flipper">
-                <VCard class="flip-card front bg-grey-light">
-                  <VCardText class="d-flex flex-column align-center justify-center">
-                    <h3 class="text-h3 mt-2 text-white">{{ getWord(word.from) }}</h3>
-                  </VCardText>
-                </VCard>
-
-                <VCard class="flip-card back bg-primary">
-                  <VCardText class="d-flex flex-column align-center justify-center">
-                    <h3 class="text-h3 mt-2">{{ getWord(word.to) }}</h3>
-                  </VCardText>
-                </VCard>
-              </div>
-            </div>
+        <VCarousel
+          v-model="currentWordIndex"
+          hide-delimiters
+          style="width: 50%; margin: 0 auto"
+          @update:model-value="setFliped(false)"
+        >
+          <VCarouselItem v-for="(word, index) in words" :key="index">
+            <WordCard :flipped="isFlipped" :word="word" @flipp="setFliped" />
           </VCarouselItem>
         </VCarousel>
       </VCardText>
@@ -42,38 +60,4 @@
   </div>
 </template>
 
-<style scoped>
-  .flip-container {
-    margin: 0 auto;
-    width: 100%;
-    height: calc(100% - 0px);
-    perspective: 1000px;
-    cursor: pointer;
-  }
-
-  .flipper {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.3s;
-    transform-style: preserve-3d;
-  }
-
-  .flip-container.flipped .flipper {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .back {
-    transform: rotateY(180deg);
-    background-color: #f5f5f5;
-  }
-</style>
+<style scoped></style>
