@@ -32,11 +32,11 @@
 </script>
 
 <template>
-  <div>
+  <div class="position-relative view-mode-wrapper">
     <VCard>
       <VCardTitle>
         <div class="d-flex justify-space-between align-center">
-          <span>
+          <span class="text-grey100">
             {{ title }}
           </span>
           <span class="ml-4">
@@ -60,4 +60,13 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.test{
+ height: calc(90% - 2rem);
+ background-color: red;
+}
+  .view-mode-wrapper {
+    height: 100%;
+    width: 100%;
+  }
+</style>

@@ -32,7 +32,10 @@
 </script>
 
 <template>
-  <VCard :text="topic.description" :title="topic.title">
+  <VCard elevation="2" :title="topic.title" link>
+    <VCardSubtitle>
+      {{ topic.description }}
+    </VCardSubtitle>
     <VCardActions>
       <VBtn :color="Colors.Primary" @click="goToDetailTopic(topic.id)">Detail</VBtn>
       <VBtn :color="Colors.Primary" @click="onUpdateTopic(topic)">Edit</VBtn>

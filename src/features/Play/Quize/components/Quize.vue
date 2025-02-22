@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { Colors } from '@/core/models/enums';
+  import { Colors, Variants } from '@/core/models/enums';
   import { computed } from 'vue';
   import { useQuizeFactory } from '../composables/useQuizeFactory';
   import { QuizeType } from '../types';
@@ -45,7 +45,7 @@
   <div class="mx-auto" :class="classes">
     <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
       <VCarouselItem v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card rounded-xl">
+        <VCard class="question-card rounded-xl ma-4" :color="Colors.Primary" :variant="Variants.Outlined">
           <VCardTitle>
             <div class="text-grey100">{{ titleCard }}</div>
           </VCardTitle>
@@ -66,7 +66,7 @@
     </VCarousel>
   </div>
 
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center pt-4">
     <VBtn class="mr-4" :color="Colors.Primary" @click="reset">Restart</VBtn>
     <VBtn :color="Colors.Primary" @click="toFinishQuiz">Finish</VBtn>
   </div>

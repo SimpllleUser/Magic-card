@@ -40,7 +40,7 @@
       <TopicCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
     </VCol>
     <VCol>
-      <VBtn class="big-square-button" :color="Colors.Secondary" :variant="Variants.Outlined" @click="createTopic">
+      <VBtn class="big-square-button" :color="Colors.Secondary" :variant="Variants.Tonal" @click="createTopic">
         <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
       </VBtn>
     </VCol>
@@ -48,8 +48,8 @@
 </template>
 <style lang="scss" scoped>
   .big-square-button {
-    width: 140px;
-    height: 140px;
+    width: 125px;
+    height: 125px;
     border-radius: 8px;
     display: flex;
     align-items: center;

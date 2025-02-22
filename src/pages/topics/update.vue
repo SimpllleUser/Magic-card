@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="pa-4">
     <TopicForm :form-data="topic" />
   </div>
 </template>

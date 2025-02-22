@@ -6,19 +6,30 @@
 <template>
   <v-app>
     <DefaultHeader />
-    <v-main class="px-4 mt-4">
-      <div class="transition-wrapper">
-        <AnimationFade>
-          <div :key="$route.fullPath" class="content">
-            <router-view />
-          </div>
-        </AnimationFade>
-      </div>
+    <v-main class="px-4 mt-4 mx-auto main-content">
+      <VCard class="main-card px-2">
+        <div class="transition-wrapper">
+          <AnimationFade>
+            <div :key="$route.fullPath" class="content">
+              <router-view />
+            </div>
+          </AnimationFade>
+        </div>
+      </VCard>
     </v-main>
     <AppFooter />
   </v-app>
 </template>
 <style lang="scss" scoped>
+  .main-card {
+    height: calc(100% - 2rem);
+  }
+  .main-content {
+    max-width: calc(1200px + 2rem);
+    width: 100%;
+    height: calc(90% - 2rem);
+  }
+
   .transition-wrapper {
     overflow: hidden;
     transition: height 0.3s ease;

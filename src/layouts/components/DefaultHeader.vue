@@ -31,7 +31,7 @@
 </script>
 
 <template>
-  <v-app-bar :color="Colors.Primary" :elevation="1">
+  <VToolbar :color="Colors.Primary" :elevation="1">
     <v-app-bar-title>
       <div class="title-wrapper">
         <AnimationFade>
@@ -46,7 +46,7 @@
     <template #append>
       <VBtn :icon="themeIcon" @click="toggleTheme" />
     </template>
-  </v-app-bar>
+  </VToolbar>
 </template>
 <style lang="scss" scoped>
   .title-wrapper {
