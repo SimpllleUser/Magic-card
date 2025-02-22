@@ -21,13 +21,13 @@
     <div class="flipper">
       <VCard class="flip-card front bg-primary">
         <VCardText class="d-flex flex-column align-center justify-center">
-          <h3 class="text-h3 mt-2 text-white">{{ getWord(word.from) }}</h3>
+          <h3 class="text-h3 mt-2 text-white font-weight-bold">{{ getWord(word.from) }}</h3>
         </VCardText>
       </VCard>
 
       <VCard class="flip-card back bg-primary">
         <VCardText class="d-flex flex-column align-center justify-center">
-          <h3 class="text-h3 mt-2">{{ getWord(word.to) }}</h3>
+          <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.to) }}</h3>
         </VCardText>
       </VCard>
     </div>

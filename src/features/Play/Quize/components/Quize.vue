@@ -45,12 +45,12 @@
   <div class="mx-auto" :class="classes">
     <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
       <VCarouselItem v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card">
+        <VCard class="question-card rounded-xl">
           <VCardTitle>
             <div class="text-grey100">{{ titleCard }}</div>
           </VCardTitle>
           <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3">{{ getQuestion(question) }}</div>
+            <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
           </VCardText>
           <VCardText class="d-flex justify-center py-10">
             <component
@@ -72,4 +72,8 @@
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .question-card {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
