@@ -1,7 +1,7 @@
 /**
  * plugins/vuetify.ts
  *
- * Framework documentation: https://vuetifyjs.com`
+ * Framework documentation: https://vuetifyjs.com
  */
 
 // Styles
@@ -15,27 +15,37 @@ const myCustomThemes = {
   light: {
     dark: false,
     colors: {
-      background: '#F8FAFC',
-      surface: '#FFFFFF',
-      'surface-bright': '#F1F5F9',
-      'surface-light': '#E2E8F0',
-      'surface-variant': '#CBD5E1',
-      'on-surface-variant': '#475569',
-      primary: '#0EA5E9',
-      'primary-darken-1': '#0284C7',
-      secondary: '#10B981',
-      'secondary-darken-1': '#059669',
-      accent: '#A855F7',
-      error: '#EF4444',
-      info: '#3B82F6',
-      success: '#22C55E',
-      warning: '#F59E0B',
-      grey: '#64748B',
-      'grey-light': '#4B5563',
-      'grey-dark': '#1E293B'
+      background: '#FFFFFF',
+      surface: '#F2EFFE',
+      'surface-bright': '#E4DEFE',
+      'surface-light': '#CABDFC',
+      'surface-variant': '#9E9E9E',
+      'on-surface-variant': '#464646',
+      primary: '#7A5AF8',
+      'primary-darken-1': '#4D37A5',
+      secondary: '#2E90FA',
+      'secondary-darken-1': '#1C5696',
+      accent: '#EE46BC',
+      error: '#E54545',
+      info: '#58A6FB',
+      success: '#0F9918',
+      warning: '#FF8800',
+      grey: '#636363',
+      'grey-light': '#818181',
+      'grey-dark': '#282828',
+      grey900: '#080808',
+      grey800: '#101010',
+      grey700: '#181818',
+      grey600: '#202020',
+      grey500: '#282828',
+      grey400: '#464646',
+      grey300: '#636363',
+      grey200: '#818181',
+      grey100: '#9E9E9E',
+      grey50: '#ADADAD'
     },
     variables: {
-      'border-color': '#94A3B8',
+      'border-color': '#ADADAD', // Gray 50
       'border-opacity': 0.15,
       'high-emphasis-opacity': 0.92,
       'medium-emphasis-opacity': 0.65,
@@ -47,36 +57,46 @@ const myCustomThemes = {
       'activated-opacity': 0.16,
       'pressed-opacity': 0.22,
       'dragged-opacity': 0.12,
-      'theme-kbd': '#1E293B',
+      'theme-kbd': '#282828', // Gray 500
       'theme-on-kbd': '#FFFFFF',
-      'theme-code': '#F1F5F9',
-      'theme-on-code': '#1E293B'
+      'theme-code': '#E4DEFE', // Primary 100
+      'theme-on-code': '#201452' // Primary 900
     }
   },
   dark: {
     dark: true,
     colors: {
-      background: '#1E293B',
-      surface: '#273447',
-      'surface-bright': '#334155',
-      'surface-light': '#4B5563',
-      'surface-variant': '#6B7280',
-      'on-surface-variant': '#D1D5DB',
-      primary: '#38BDF8',
-      'primary-darken-1': '#0284C7',
-      secondary: '#34D399',
-      'secondary-darken-1': '#10B981',
-      accent: '#A855F7',
-      error: '#F87171',
-      info: '#60A5FA',
-      success: '#4ADE80',
-      warning: '#FACC15',
-      grey: '#808080',
-      'grey-light': '#A0A0A0',
-      'grey-dark': '#606060'
+      background: '#080808',
+      surface: '#181818',
+      'surface-bright': '#202020',
+      'surface-light': '#282828',
+      'surface-variant': '#636363',
+      'on-surface-variant': '#9E9E9E',
+      primary: '#4D37A5',
+      'primary-darken-1': '#201452',
+      secondary: '#1C5696',
+      'secondary-darken-1': '#091D32',
+      accent: '#932A74',
+      error: '#892929',
+      info: '#2573C8',
+      success: '#0C7A13',
+      warning: '#CC6D00',
+      grey: '#464646',
+      'grey-light': '#636363',
+      'grey-dark': '#101010', //
+      grey900: '#080808',
+      grey800: '#101010',
+      grey700: '#181818',
+      grey600: '#202020',
+      grey500: '#282828',
+      grey400: '#464646',
+      grey300: '#636363',
+      grey200: '#818181',
+      grey100: '#9E9E9E',
+      grey50: '#ADADAD'
     },
     variables: {
-      'border-color': '#334155',
+      'border-color': '#464646',
       'border-opacity': 0.2,
       'high-emphasis-opacity': 0.9,
       'medium-emphasis-opacity': 0.7,
@@ -88,10 +108,10 @@ const myCustomThemes = {
       'activated-opacity': 0.22,
       'pressed-opacity': 0.26,
       'dragged-opacity': 0.15,
-      'theme-kbd': '#E5E7EB',
-      'theme-on-kbd': '#1E293B',
-      'theme-code': '#1E293B',
-      'theme-on-code': '#F8FAFC'
+      'theme-kbd': '#9E9E9E',
+      'theme-on-kbd': '#080808',
+      'theme-code': '#181818',
+      'theme-on-code': '#F2EFFE'
     }
   }
 };

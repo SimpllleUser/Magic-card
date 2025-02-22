@@ -5,6 +5,7 @@
   import { useQuizeFactory } from '../composables/useQuizeFactory';
   import { QuizeType } from '../types';
   import { QuestionItem } from '../composables/useSelectWord';
+  import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
@@ -30,13 +31,24 @@
     emit('finished', questions.value);
     reset();
   };
+
+  const classes = computed(() => {
+    return {
+      'w-50': literalBreakpoint.value === Breakpoints.Xl,
+      'w-75': literalBreakpoint.value === Breakpoints.Lg,
+      'w-100': [Breakpoints.Md, Breakpoints.Sm].includes(literalBreakpoint.value)
+    };
+  });
 </script>
 
 <template>
-  <div>
+  <div class="mx-auto" :class="classes">
     <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
       <VCarouselItem v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card" :title="titleCard">
+        <VCard class="question-card">
+          <VCardTitle>
+            <div class="text-grey100">{{ titleCard }}</div>
+          </VCardTitle>
           <VCardText class="d-flex justify-center py-10">
             <div class="text-h3">{{ getQuestion(question) }}</div>
           </VCardText>
@@ -56,7 +68,7 @@
 
   <div class="d-flex justify-center">
     <VBtn class="mr-4" :color="Colors.Primary" @click="reset">Restart</VBtn>
-    <VBtn :color="Colors.Secondary" @click="toFinishQuiz">Finish</VBtn>
+    <VBtn :color="Colors.Primary" @click="toFinishQuiz">Finish</VBtn>
   </div>
 </template>
 
