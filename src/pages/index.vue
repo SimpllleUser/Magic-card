@@ -24,7 +24,7 @@
   const onRemoveTopic = (id: string) => {
     modal.show(Modals.TopicConfirmRemove, {
       title: 'Remove topic',
-      description: 'Are you sure remove topic ?',
+      description: 'Are you sure you want to delete this topic?',
       type: Colors.Error,
       onConfirm: () => {
         topicsStore.remove(id);
