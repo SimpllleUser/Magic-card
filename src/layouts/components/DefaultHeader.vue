@@ -31,7 +31,7 @@
 </script>
 
 <template>
-  <VToolbar :color="Colors.Primary" :elevation="1">
+  <VToolbar color="'surface-light'" :elevation="1">
     <v-app-bar-title>
       <div class="title-wrapper">
         <AnimationFade>

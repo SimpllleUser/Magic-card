@@ -112,7 +112,7 @@
                     <template #activator="{ props }">
                       <VBtn
                         :append-icon="Icons.ChevronDown"
-                        :color="Colors.Primary"
+                        :color="Colors.Secondary"
                         :disabled="!canPlayQuize"
                         :variant="Variants.Elevated"
                         v-bind="props"
@@ -121,7 +121,9 @@
                     </template>
                     <VList>
                       <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
-                        <VListItemTitle @click="goToQuize(item.value)">{{ item.title }}</VListItemTitle>
+                        <VListItemTitle :class="`text-${Colors.Secondary}`" @click="goToQuize(item.value)">{{
+                          item.title
+                        }}</VListItemTitle>
                       </VListItem>
                     </VList>
                   </VMenu>

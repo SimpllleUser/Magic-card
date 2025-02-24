@@ -38,7 +38,7 @@
     </VCardSubtitle>
     <VCardActions>
       <VBtn :color="Colors.Primary" @click="goToDetailTopic(topic.id)">Detail</VBtn>
-      <VBtn :color="Colors.Primary" @click="onUpdateTopic(topic)">Edit</VBtn>
+      <VBtn :color="Colors.Secondary" @click="onUpdateTopic(topic)">Edit</VBtn>
       <VBtn :color="Colors.Error" @click="$emit('remove', topic.id)">Remove</VBtn>
     </VCardActions>
   </VCard>

@@ -40,7 +40,7 @@
       <TopicCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
     </VCol>
     <VCol>
-      <VBtn class="big-square-button" :color="Colors.Secondary" :variant="Variants.Tonal" @click="createTopic">
+      <VBtn class="big-square-button" :color="Colors.Primary" :variant="Variants.Tonal" @click="createTopic">
         <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
       </VBtn>
     </VCol>

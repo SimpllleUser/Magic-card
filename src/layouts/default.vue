@@ -7,15 +7,13 @@
   <v-app>
     <DefaultHeader />
     <v-main class="px-4 mt-4 mx-auto main-content">
-      <VCard class="main-card px-2">
-        <div class="transition-wrapper">
-          <AnimationFade>
-            <div :key="$route.fullPath" class="content">
-              <router-view />
-            </div>
-          </AnimationFade>
-        </div>
-      </VCard>
+      <div class="transition-wrapper">
+        <AnimationFade>
+          <div :key="$route.fullPath" class="content">
+            <router-view />
+          </div>
+        </AnimationFade>
+      </div>
     </v-main>
     <AppFooter />
   </v-app>
