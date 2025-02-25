@@ -1,12 +1,12 @@
 <script setup lang="ts">
   import { DictionaryItem } from '@/core/models/Topic';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { Colors } from '@/core/models/enums';
   import { computed } from 'vue';
   import { useQuizeFactory } from '../composables/useQuizeFactory';
   import { QuizeType } from '../types';
   import { QuestionItem } from '../composables/useSelectWord';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
-  import { Icons } from '@/core/models/icons';
+  import WordSlider from './WordSlider.vue';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
@@ -21,16 +21,16 @@
 
   const { quizComponent, quizLogic } = useQuizeFactory(props.quizType);
 
-  const { setAnswer, reset, getQuestion, actualQuestionIndex, actualQuestion, questions, actualVariants } =
+  const { actualQuestionIndex, setAnswer, reset, getQuestion, actualQuestion, questions, actualVariants } =
     quizLogic.value([...props.questions]);
-
-  const titleCard = computed(() => `${actualQuestionIndex.value + 1}/${questions.value.length}`);
-
-  const actualKey = computed(() => questions.value[actualQuestionIndex.value].id);
 
   const toFinishQuiz = () => {
     emit('finished', questions.value);
     reset();
+  };
+
+  const onChangeSlide = (index: number) => {
+    actualQuestionIndex.value = index;
   };
 
   const classes = computed(() => {
@@ -44,38 +44,22 @@
 
 <template>
   <div class="mx-auto" :class="classes">
-    <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters show-arrows="hover">
-      <template #prev="{ props }">
-        <VBtn :color="Colors.Secondary" :icon="Icons.ChevronLeft" :variant="Variants.Outlined" @click="props.onClick" />
+    <WordSlider :words="questions" @change-slide="onChangeSlide">
+      <template #default="{ word: question, index }">
+        <VCardText class="d-flex justify-center py-10">
+          <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
+        </VCardText>
+        <VCardText class="d-flex justify-center py-10">
+          <component
+            :is="quizComponent"
+            :key="index"
+            :actual-question="actualQuestion"
+            v-bind="{ actualVariants: actualVariants || [] }"
+            @set-answer="setAnswer"
+          />
+        </VCardText>
       </template>
-      <template #next="{ props }">
-        <VBtn
-          :color="Colors.Secondary"
-          :icon="Icons.ChevronRight"
-          :variant="Variants.Outlined"
-          @click="props.onClick"
-        />
-      </template>
-      <VCarouselItem v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card rounded-xl ma-4 bg-surface" :color="Colors.GreyLight">
-          <VCardTitle>
-            <div class="title-card text-surface-variant-text">{{ titleCard }}</div>
-          </VCardTitle>
-          <VCardText class="d-flex justify-center py-10">
-            <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
-          </VCardText>
-          <VCardText class="d-flex justify-center py-10">
-            <component
-              :is="quizComponent"
-              :key="actualKey"
-              :actual-question="actualQuestion"
-              v-bind="{ actualVariants: actualVariants || [] }"
-              @set-answer="setAnswer"
-            />
-          </VCardText>
-        </VCard>
-      </VCarouselItem>
-    </VCarousel>
+    </WordSlider>
   </div>
 
   <div class="d-flex justify-center pt-4">
@@ -83,13 +67,3 @@
     <VBtn :color="Colors.Primary" @click="toFinishQuiz">Finish</VBtn>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .question-card {
-    border: 1px solid rgb(var(--v-theme-surface-variant));
-    .title-card {
-      // color: rgb(var(--v-theme-on-surface-variant));
-    }
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-</style>

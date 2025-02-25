@@ -17,7 +17,8 @@ export enum Colors {
   Dark = 'dark',
   Accent = 'accent',
   Grey = 'grey',
-  SurfaceVariantText = 'surface-variant-text'
+  SurfaceVariantText = 'surface-variant-text',
+  GreyLight = 'GreyLight'
 }
 
 export enum Variants {
