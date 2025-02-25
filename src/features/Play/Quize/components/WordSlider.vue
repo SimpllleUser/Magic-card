@@ -27,7 +27,7 @@
 
 <template>
   <div>
-    <VCarousel v-model="internalIndex" height="20rem" hide-delimiters show-arrows="hover">
+    <VCarousel v-model="internalIndex" height="25rem" hide-delimiters show-arrows="hover">
       <template #prev="{ props }">
         <VBtn :color="Colors.Secondary" :icon="Icons.ChevronLeft" :variant="Variants.Outlined" @click="props.onClick" />
       </template>
