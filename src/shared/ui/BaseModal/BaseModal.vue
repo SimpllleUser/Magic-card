@@ -21,7 +21,7 @@
 <template>
   <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
-      <VCardTitle class="d-flex hide-center justify-space-between bg-primary text-white">
+      <VCardTitle class="d-flex hide-center justify-space-between bg-surface-variant-text text-white">
         <slot :close="modalHide" name="header" :title="title">
           <span>{{ title }}</span>
           <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />

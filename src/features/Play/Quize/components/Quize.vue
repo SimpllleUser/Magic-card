@@ -6,6 +6,7 @@
   import { QuizeType } from '../types';
   import { QuestionItem } from '../composables/useSelectWord';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
+  import { Icons } from '@/core/models/icons';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
@@ -43,11 +44,22 @@
 
 <template>
   <div class="mx-auto" :class="classes">
-    <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters>
+    <VCarousel v-model="actualQuestionIndex" height="20rem" hide-delimiters show-arrows="hover">
+      <template #prev="{ props }">
+        <VBtn :color="Colors.Secondary" :icon="Icons.ChevronLeft" :variant="Variants.Outlined" @click="props.onClick" />
+      </template>
+      <template #next="{ props }">
+        <VBtn
+          :color="Colors.Secondary"
+          :icon="Icons.ChevronRight"
+          :variant="Variants.Outlined"
+          @click="props.onClick"
+        />
+      </template>
       <VCarouselItem v-for="(question, index) in questions" :key="index">
-        <VCard class="question-card rounded-xl ma-4" :color="Colors.Primary" :variant="Variants.Outlined">
+        <VCard class="question-card rounded-xl ma-4 bg-surface" :color="Colors.GreyLight">
           <VCardTitle>
-            <div class="text-grey100">{{ titleCard }}</div>
+            <div class="title-card text-surface-variant-text">{{ titleCard }}</div>
           </VCardTitle>
           <VCardText class="d-flex justify-center py-10">
             <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
@@ -74,6 +86,10 @@
 
 <style lang="scss" scoped>
   .question-card {
+    border: 1px solid rgb(var(--v-theme-surface-variant));
+    .title-card {
+      // color: rgb(var(--v-theme-on-surface-variant));
+    }
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
 </style>

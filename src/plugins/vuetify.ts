@@ -21,6 +21,7 @@ const myCustomThemes = {
       'surface-light': '#E2E8F0',
       'surface-variant': '#CBD5E1',
       'on-surface-variant': '#475569',
+      'surface-variant-text': '#475569',
       primary: '#0EA5E9',
       'primary-darken-1': '#0284C7',
       secondary: '#10B981',
