@@ -51,22 +51,29 @@
 <template>
   <BaseForm :config="useTopicForm(formData)" :params="{ action }" @on-submit="onSubmit">
     <template #default="{ form }: { form: TopicFormModel }">
-      <div class="mb-4">
-        <InputForm v-model="form.title" />
+      <div class="pt-4 px-4 bg-surface mb-4 elevation-1 rounded">
+        <div class="mb-4">
+          <InputForm v-model="form.title" />
+        </div>
+        <div>
+          <InputForm v-model="form.description" />
+        </div>
       </div>
-      <div class="mb-4">
-        <InputForm v-model="form.description" />
-      </div>
-      <div class="mb-4">
+      <div class="mb-4 bg-surface pa-4 elevation-1 rounded">
         <BaseModal :id="Modals.ImportWords" title="Import words">
           <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
         </BaseModal>
-        <InputList v-model="form.dictionary" label="Dictionary">
+        <InputList v-model="form.dictionary" header-class="border-b-md" label="Dictionary">
+          <template #label="{label}">
+            <div class="text-h6 text-on-surface-variant">{{ label }}</div>
+          </template>
           <template #btn-add="{ addItem }">
-            <VBtn :color="Colors.Primary" :variant="Variants.Outlined" @click="modal.show(Modals.ImportWords)">
-              Import
-            </VBtn>
-            <VBtn class="ml-4" :color="Colors.Primary" @click="addItem">Add</VBtn>
+            <div>
+              <VBtn :color="Colors.Primary" :variant="Variants.Text" @click="modal.show(Modals.ImportWords)">
+                Import
+              </VBtn>
+              <VBtn class="ml-4" :color="Colors.Secondary" :variant="Variants.Text" @click="addItem">Add</VBtn>
+            </div>
           </template>
           <template #empty>
             <div class="text-h6 text-center">You can add words for dictionary</div>

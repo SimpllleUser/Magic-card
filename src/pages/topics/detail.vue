@@ -7,7 +7,6 @@
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import { Icons } from '@/core/models/icons';
   import { QUIZE_TYPES_OPTIONS } from '../../features/Play/Quize/constants';
-  import { log } from 'node:console';
   import { QuizeType } from '@/features/Play/Quize/types';
 
   const MIN_WORDS_QUANTITY = 5;
@@ -32,7 +31,7 @@
 
   const alertConfigInsufficientQuantityWords = {
     title: 'Attention!',
-    text: `You must choose at least ${MIN_WORDS_QUANTITY} words!`,
+    text: `You must choose at least ${MIN_WORDS_QUANTITY} words for play!`,
     color: Colors.Info,
     variant: Variants.Tonal
   };
@@ -69,84 +68,88 @@
 </script>
 
 <template>
-  <VRow>
-    <VCol>
-      <VCard>
-        <VCardTitle>
-          <h3 class="text-h3">{{ topic?.title }}</h3>
-        </VCardTitle>
-        <VCardText>
-          <p>{{ topic?.description }}</p>
-        </VCardText>
-      </VCard>
-    </VCol>
-  </VRow>
-  <VRow>
-    <VCol>
-      <VCard>
-        <VCardText>
-          <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
-            <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
-          </AnimationFade>
-          <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
-            <BaseList
-              v-model:selected-items="selectedWords"
-              :data="topic.dictionary"
-              header-title="Dictionary"
-              hide-footer
-              :keys="keys"
-              :map-item="mapItem"
-              selectable
-            >
-              <template #header-actions>
-                <VBtn
-                  :append-icon="Icons.File"
-                  class="mr-4"
-                  :color="Colors.Primary"
-                  :disabled="!selectedWords.length"
-                  :variant="Variants.Elevated"
-                  @click="goToViewMode"
-                  >View cards</VBtn
-                >
-                <VMenu>
-                  <template #activator="{ props }">
-                    <VBtn
-                      :append-icon="Icons.ChevronDown"
-                      :color="Colors.Primary"
-                      :disabled="!canPlayQuize"
-                      :variant="Variants.Elevated"
-                      v-bind="props"
-                      >Play</VBtn
-                    >
-                  </template>
-                  <VList>
-                    <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
-                      <VListItemTitle @click="goToQuize(item.value)">{{ item.title }}</VListItemTitle>
-                    </VListItem>
-                  </VList>
-                </VMenu>
-              </template>
-              <template #empty-text>
-                <div>
-                  <p>
-                    Let’s add some words
-                    <VBtn
-                      class="px-1"
-                      :color="Colors.Primary"
-                      :to="{ name: 'TopicUpdate', params: { id: topicId } }"
-                      :variant="Variants.Contained"
-                    >
-                      go to edit module
-                    </VBtn>
-                  </p>
-                </div>
-              </template>
-            </BaseList>
-          </div>
-        </VCardText>
-      </VCard>
-    </VCol>
-  </VRow>
+  <div class="content-wrapper mx-auto">
+    <VRow>
+      <VCol>
+        <VCard class="py-4" elevation="2">
+          <VCardTitle>
+            <h3 class="text-h3">{{ topic?.title }}</h3>
+          </VCardTitle>
+          <VCardSubtitle>
+            <p>{{ topic?.description }}</p>
+          </VCardSubtitle>
+        </VCard>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol>
+        <VCard elevation="2">
+          <VCardText>
+            <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
+              <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
+            </AnimationFade>
+            <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
+              <BaseList
+                v-model:selected-items="selectedWords"
+                :data="topic.dictionary"
+                header-title="Dictionary"
+                hide-footer
+                :keys="keys"
+                :map-item="mapItem"
+                selectable
+              >
+                <template #header-actions>
+                  <VBtn
+                    :append-icon="Icons.File"
+                    class="mr-4"
+                    :color="Colors.Primary"
+                    :disabled="!selectedWords.length"
+                    :variant="Variants.Elevated"
+                    @click="goToViewMode"
+                    >View cards</VBtn
+                  >
+                  <VMenu>
+                    <template #activator="{ props }">
+                      <VBtn
+                        :append-icon="Icons.ChevronDown"
+                        :color="Colors.Secondary"
+                        :disabled="!canPlayQuize"
+                        :variant="Variants.Elevated"
+                        v-bind="props"
+                        >Play</VBtn
+                      >
+                    </template>
+                    <VList>
+                      <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
+                        <VListItemTitle :class="`text-${Colors.Secondary}`" @click="goToQuize(item.value)">{{
+                          item.title
+                        }}</VListItemTitle>
+                      </VListItem>
+                    </VList>
+                  </VMenu>
+                </template>
+                <template #empty-text>
+                  <div>
+                    <p>
+                      Let’s add some words
+                      <VBtn
+                        class="px-1"
+                        :color="Colors.Primary"
+                        :to="{ name: 'TopicUpdate', params: { id: topicId } }"
+                        :variant="Variants.Contained"
+                      >
+                        go to edit module
+                      </VBtn>
+                    </p>
+                  </div>
+                </template>
+              </BaseList>
+            </div>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
+  </div>
 </template>
 
 <style lang="scss">

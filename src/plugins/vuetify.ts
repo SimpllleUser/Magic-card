@@ -21,6 +21,7 @@ const myCustomThemes = {
       'surface-light': '#E2E8F0',
       'surface-variant': '#CBD5E1',
       'on-surface-variant': '#475569',
+      'surface-variant-text': '#475569',
       primary: '#0EA5E9',
       'primary-darken-1': '#0284C7',
       secondary: '#10B981',
@@ -30,9 +31,7 @@ const myCustomThemes = {
       info: '#3B82F6',
       success: '#22C55E',
       warning: '#F59E0B',
-      grey: '#64748B',
-      'grey-light': '#4B5563',
-      'grey-dark': '#1E293B'
+      grey: '#64748B'
     },
     variables: {
       'border-color': '#94A3B8',
@@ -71,9 +70,7 @@ const myCustomThemes = {
       info: '#60A5FA',
       success: '#4ADE80',
       warning: '#FACC15',
-      grey: '#808080',
-      'grey-light': '#A0A0A0',
-      'grey-dark': '#606060'
+      grey: '#808080'
     },
     variables: {
       'border-color': '#334155',

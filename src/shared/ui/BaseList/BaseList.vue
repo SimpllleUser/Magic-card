@@ -54,6 +54,8 @@
     <div>
       <VDataTable
         v-model="selectedIds"
+        v-bind="$slots"
+        class="base-list"
         :headers="headers"
         :height="height"
         :hide-default-footer="hideFooter"
@@ -62,7 +64,6 @@
         :items-per-page="perPage"
         :show-select="selectable"
         :sticky="headerSticky"
-        v-bind="$slots"
         @update:model-value="onSelectItemOfList"
       >
         <template #top>
@@ -83,3 +84,11 @@
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+  .base-list {
+    :deep(.v-selection-control--dirty, .v-selection-control--density-default) {
+      color: rgb(var(--v-theme-accent));
+    }
+  }
+</style>

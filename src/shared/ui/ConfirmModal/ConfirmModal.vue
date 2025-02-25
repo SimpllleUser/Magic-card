@@ -4,6 +4,7 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { ConfirmModalContent, ModalParams, Props } from './types';
   import { useModalState } from '../BaseModal/composable';
+  import { getIconByColor } from './utils';
 
   interface Emits {
     (event: 'show'): void;
@@ -29,10 +30,11 @@
 
   const modalContent = computed(
     (): ConfirmModalContent => ({
+      icon: getIconByColor(props.type || additionalParams.value.type || Colors.Primary),
       title: props.title || additionalParams.value.title || '',
       description: props.description || additionalParams.value.description || '',
-      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Text, color: Colors.GreyLight },
       confirmBtn: additionalParams.value.confirmBtn || { variant: Variants.Flat, color: Colors.Primary },
+      cancelBtn: additionalParams.value.cancelBtn || { variant: Variants.Tonal, color: Colors.Primary },
       type: additionalParams.value.type || Colors.Primary
     })
   );
@@ -60,21 +62,26 @@
 <template>
   <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
-      <VCardTitle class="d-flex hide-center align-center justify-space-between" :class="`bg-${modalContent.type}`">
+      <VCardTitle class="d-flex hide-center align-center justify-space-between">
         <slot :close="modalHide" name="header" :title="modalContent.title">
-          <span>{{ modalContent.title }}</span>
+          <div>
+            <VIcon :color="modalContent.type" :icon="modalContent.icon" />
+            <span class="ml-4">{{ modalContent.title }}</span>
+          </div>
           <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />
         </slot>
       </VCardTitle>
-      <VCardText>
+      <VCardSubtitle>
         <slot name="description">
-          {{ modalContent.description }}
+          <div class="py-4">
+            {{ modalContent.description }}
+          </div>
         </slot>
-      </VCardText>
+      </VCardSubtitle>
       <VCardActions>
-        <div class="d-flex justify-end">
+        <div class="d-flex justify-end ga-4">
+          <VBtn v-bind="modalContent.confirmBtn" @click="onConfirm">Confirm</VBtn>
           <VBtn v-bind="modalContent.cancelBtn" @click="onCancel">Cancel</VBtn>
-          <VBtn class="ml-4" v-bind="modalContent.confirmBtn" @click="onConfirm">Confirm</VBtn>
         </div>
       </VCardActions>
     </VCard>

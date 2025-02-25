@@ -17,9 +17,11 @@ export enum Icons {
   Unlock = 'mdi-lock-open',
   Check = 'mdi-check',
   Close = 'mdi-close',
+  CloseOutline = 'mdi-close-circle-outline',
   Help = 'mdi-help-circle',
   Info = 'mdi-information',
   Warning = 'mdi-alert',
+  WarningOutline = 'mdi-alert-outline',
   Error = 'mdi-alert-circle',
   Undo = 'mdi-undo',
   Redo = 'mdi-redo',
@@ -139,6 +141,7 @@ export enum Icons {
   StarHalf = 'mdi-star-half',
   Shield = 'mdi-shield',
   ShieldCheck = 'mdi-shield-check',
+  CircleCheck = 'mdi-check-circle',
   ShieldOff = 'mdi-shield-off',
   Key = 'mdi-key',
   LockOpen = 'mdi-lock-open',
@@ -151,5 +154,7 @@ export enum Icons {
   Gift = 'mdi-gift',
   Fire = 'mdi-fire',
   Water = 'mdi-water',
-  Shuffle = 'mdi-shuffle'
+  Shuffle = 'mdi-shuffle',
+  InformationOutline = 'mdi-information-outline',
+  MultipleMarkedOutline = 'mdi-checkbox-multiple-marked-outline',
 }

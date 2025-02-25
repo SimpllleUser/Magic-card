@@ -1,12 +1,11 @@
 <script setup lang="ts">
+  import { omit } from 'lodash';
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
   import { QuestionItem } from '../composables/useSelectWord';
   import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
-  import { omit } from 'lodash';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
-  import { useRouter } from 'vue-router';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
@@ -14,7 +13,6 @@
     questions: () => []
   });
 
-  const router = useRouter();
 
   const emit = defineEmits<{
     (event: 'retry'): void;
@@ -106,11 +104,7 @@
         </div>
         <div class="total d-flex justify-center pt-4">
           <VBtn :color="Colors.Primary" @click="onRetry(hide)">Try again</VBtn>
-          <VBtn
-            class="ml-4"
-            :color="Colors.Secondary"
-            @click="router.push({ name: 'TopicDetail', params: { id: moduleId } })"
-          >
+          <VBtn class="ml-4" :color="Colors.Secondary" :to="{ name: 'TopicDetail', params: { id: moduleId } }">
             Go to the module
           </VBtn>
         </div>
