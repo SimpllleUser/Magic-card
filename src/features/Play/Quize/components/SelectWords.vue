@@ -21,7 +21,7 @@
       v-for="(variant, indexVariant) in actualVariants"
       :key="indexVariant"
       class="mx-1 bg-surface-variant:"
-      :color="isAactive(variant.id) ? Colors.Accent : 'surface-variant-text'"
+      :color="isAactive(variant.id) ? Colors.Accent : Colors.SurfaceVariantText"
       :variant="isAactive(variant.id) ? Variants.Flat : Variants.Outlined"
       @click="emit('set-answer', { question: actualQuestion, answer: variant })"
     >

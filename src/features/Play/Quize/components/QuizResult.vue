@@ -1,12 +1,11 @@
 <script setup lang="ts">
+  import { omit } from 'lodash';
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
   import { QuestionItem } from '../composables/useSelectWord';
   import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
-  import { omit } from 'lodash';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
-  import { useRouter } from 'vue-router';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
@@ -14,7 +13,6 @@
     questions: () => []
   });
 
-  const router = useRouter();
 
   const emit = defineEmits<{
     (event: 'retry'): void;
