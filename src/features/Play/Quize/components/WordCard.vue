@@ -19,13 +19,13 @@
 <template>
   <div class="flip-container" :class="{ flipped }" @click="toggleFlip">
     <div class="flipper">
-      <VCard class="flip-card front bg-primary">
+      <VCard class="flip-card front">
         <VCardText class="d-flex flex-column align-center justify-center">
-          <h3 class="text-h3 mt-2 text-white font-weight-bold">{{ getWord(word.from) }}</h3>
+          <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.from) }}</h3>
         </VCardText>
       </VCard>
 
-      <VCard class="flip-card back bg-primary">
+      <VCard class="flip-card back">
         <VCardText class="d-flex flex-column align-center justify-center">
           <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.to) }}</h3>
         </VCardText>
@@ -66,6 +66,5 @@
 
   .back {
     transform: rotateY(180deg);
-    background-color: #f5f5f5;
   }
 </style>

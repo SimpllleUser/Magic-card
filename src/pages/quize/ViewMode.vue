@@ -1,11 +1,12 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { shuffle } from 'lodash';
-  import { Colors } from '@/core/models/enums';
+  import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { DictionaryItem } from '@/core/models/Topic';
   import WordCard from '@/features/Play/Quize/components/WordCard.vue';
   import { useQuizsStore } from '@/features/Play/store/quiz';
+  import WordSlider from '@/features/Play/Quize/components/WordSlider.vue';
 
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);
@@ -18,10 +19,6 @@
 
   const words = ref<DictionaryItem>([]);
 
-  const title = computed(() => {
-    return `${currentWordIndex.value + 1}/${words.value.length}`;
-  });
-
   const shuffleWords = () => {
     words.value = shuffle(words.value);
   };
@@ -29,42 +26,34 @@
   onMounted(() => {
     words.value = quizStore.words;
   });
+
+  const onChangeSlide = (index: number) => {
+    currentWordIndex.value = index;
+    setFliped(false);
+  };
 </script>
 
 <template>
   <div class="position-relative view-mode-wrapper">
-    <VCard>
-      <VCardTitle>
+    <WordSlider :words="words" @change-slide="onChangeSlide">
+      <template #header="{ titleSlide }" name="header">
         <div class="d-flex justify-space-between align-center">
-          <span class="text-grey100">
-            {{ title }}
-          </span>
-          <span class="ml-4">
-            <VBtn :color="Colors.Secondary" :icon="Icons.Shuffle" @click="shuffleWords"></VBtn>
-          </span>
+          <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
+          <div>
+            <VBtn :color="Colors.Primary" :icon="Icons.Shuffle" :variant="Variants.Plain" @click="shuffleWords"></VBtn>
+          </div>
         </div>
-      </VCardTitle>
-      <VCardText>
-        <VCarousel
-          v-model="currentWordIndex"
-          hide-delimiters
-          style="width: 50%; margin: 0 auto"
-          @update:model-value="setFliped(false)"
-        >
-          <VCarouselItem v-for="(word, index) in words" :key="index">
-            <WordCard :flipped="isFlipped" :word="word" @flipp="setFliped" />
-          </VCarouselItem>
-        </VCarousel>
-      </VCardText>
-    </VCard>
+      </template>
+      <template #default="{ word }">
+        <div style="height: 19rem">
+          <WordCard :flipped="isFlipped" :word="word" @flipp="setFliped" />
+        </div>
+      </template>
+    </WordSlider>
   </div>
 </template>
 
 <style scoped>
-.test{
- height: calc(90% - 2rem);
- background-color: red;
-}
   .view-mode-wrapper {
     height: 100%;
     width: 100%;

@@ -15,7 +15,7 @@
 
   const internalIndex = ref(0);
 
-  const titleCard = computed(() => `${internalIndex.value + 1}/${props.words?.length}`);
+  const titleSlide = computed(() => `${internalIndex.value + 1}/${props.words?.length}`);
 
   watch(
     () => internalIndex.value,
@@ -42,7 +42,9 @@
       <VCarouselItem v-for="(word, index) in words" :key="index">
         <VCard class="word-card rounded-xl ma-4 bg-surface" :color="Colors.GreyLight">
           <VCardTitle>
-            <div class="title-card text-surface-variant-text">{{ titleCard }}</div>
+            <slot name="header" :title-slide="titleSlide">
+              <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
+            </slot>
           </VCardTitle>
           <slot :index="index" :word="word"></slot>
         </VCard>
