@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
-  import Quize from '@/features/Play/Quize/components/Quize.vue';
-  import { QuestionItem } from '@/features/Play/Quize/composables/useSelectWord';
-  import { useQuizsStore } from '@/features/Play/store/quiz';
+  import { QuestionItem } from '@/features/quiz/model/composables/useSelectWord';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import QuizResult from '@/features/Play/Quize/components/QuizResult.vue';
+  import QuizResult from '@/features/quiz/ui/QuizResult.vue';
+  import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
+  import { useQuizsStore } from '@/stores/quiz';
 
   const quizeStore = useQuizsStore();
   const modal = useModalStore();
@@ -25,7 +25,7 @@
 <template>
   <div class="py-4">
     <QuizResult :module-id="quizeStore.activeModuleId" :questions="finishedQuestions" @retry="onRetry" />
-    <Quize
+    <DynamicQuiz
       :key="quizeKey"
       :questions="quizeStore.words"
       :quiz-type="quizeStore.currentType"

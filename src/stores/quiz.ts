@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
-import { QuizeType } from '../Quize/types';
 import { DictionaryItem } from '@/features/dictionary/model/types';
+import { QuizeType } from '@/features/quiz/model/types';
 
 export const useQuizsStore = defineStore('quize', () => {
   const activeModuleId = useLocalStorage<DictionaryItem[]>('quize-module-id', '');

@@ -1,12 +1,12 @@
 <script setup lang="ts">
   import { Colors } from '@/core/models/enums';
   import { computed } from 'vue';
-  import { useQuizeFactory } from '../composables/useQuizeFactory';
-  import { QuizeType } from '../types';
-  import { QuestionItem } from '../composables/useSelectWord';
+  import { useQuizeFactory } from '../model/composables/useQuizeFactory';
+  import { QuizeType } from '../model/types';
+  import { QuestionItem } from '../model/composables/useSelectWord';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
-  import WordSlider from './WordSlider.vue';
   import { DictionaryItem } from '@/features/dictionary/model/types';
+  import WordSlider from '@/shared/ui/WordSlider.vue';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;

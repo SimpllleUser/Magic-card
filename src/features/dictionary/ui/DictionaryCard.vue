@@ -4,6 +4,7 @@
   import { defineEmits } from 'vue';
   import { Colors } from '@/core/models/enums';
   import { Dictionary } from '../model/types';
+  import { PageNames } from '@/router/types';
 
   interface Props {
     dictionary: Dictionary;
@@ -31,7 +32,7 @@
       {{ dictionary.description }}
     </VCardSubtitle>
     <VCardActions>
-      <VBtn :color="Colors.Primary" :to="{ name: 'DictionaryDetail', params: { id: dictionary.id } }">Detail</VBtn>
+      <VBtn :color="Colors.Primary" :to="{ name: PageNames.DictionaryDetail, params: { id: dictionary.id } }">Detail</VBtn>
       <VBtn :color="Colors.Secondary" @click="onUpdateDictionary(dictionary)">Edit</VBtn>
       <VBtn :color="Colors.Error" @click="$emit('remove', dictionary.id)">Remove</VBtn>
     </VCardActions>

@@ -1,5 +1,5 @@
 import { Colors, Variants } from '@/core/models/enums';
-import { QuizeType } from '@/features/Play/Quize/types';
+import { QuizeType } from '@/features/quiz/model/types';
 
 export const MIN_WORDS_QUANTITY = 5;
 
@@ -24,3 +24,29 @@ export const QUIZE_TYPES_OPTIONS = [
     value: QuizeType.InputWord
   }
 ];
+
+export const QUIZ_RESULT_HEADER_KEYS = [
+  {
+    title: '#',
+    key: 'number'
+  },
+  {
+    title: 'From',
+    key: 'from'
+  },
+  {
+    title: 'To',
+    key: 'to'
+  },
+  {
+    title: 'Correct',
+    key: 'isCorrect'
+  },
+  {
+    title: 'Answer',
+    key: 'answer'
+  }
+].map((item) => ({
+  ...item,
+  sortable: false
+}));

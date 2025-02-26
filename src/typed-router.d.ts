@@ -23,7 +23,7 @@ declare module 'vue-router/auto-routes' {
     '/DictionaryUpdate': RouteRecordInfo<'/DictionaryUpdate', '/DictionaryUpdate', Record<never, never>, Record<never, never>>,
     '/HomePage': RouteRecordInfo<'/HomePage', '/HomePage', Record<never, never>, Record<never, never>>,
     '/NotFound': RouteRecordInfo<'/NotFound', '/NotFound', Record<never, never>, Record<never, never>>,
-    '/quize/': RouteRecordInfo<'/quize/', '/quize', Record<never, never>, Record<never, never>>,
-    '/quize/ViewMode': RouteRecordInfo<'/quize/ViewMode', '/quize/ViewMode', Record<never, never>, Record<never, never>>,
+    '/QuizePage': RouteRecordInfo<'/QuizePage', '/QuizePage', Record<never, never>, Record<never, never>>,
+    '/WordViewerPage': RouteRecordInfo<'/WordViewerPage', '/WordViewerPage', Record<never, never>, Record<never, never>>,
   }
 }

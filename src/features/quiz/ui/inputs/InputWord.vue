@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { QuestionItem } from '../composables/useSelectWord';
+  import { QuestionItem } from '../../model/composables/useSelectWord';
 
   const props = defineProps<{
     actualQuestion: QuestionItem;

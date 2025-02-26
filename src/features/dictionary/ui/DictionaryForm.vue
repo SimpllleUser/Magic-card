@@ -9,6 +9,7 @@
   import { useDictionaryStore } from '../../../stores/dictionary';
   import { Dictionary, DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
   import { DictionaryFormModel, useDictionaryForm } from '../model/useDictionaryForm';
+  import { PageNames } from '@/router/types';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -26,7 +27,7 @@
 
     const action = params.action === ActionForm.Create ? dictionaryStore.create : dictionaryStore.update;
     action(params.value);
-    router.push({ name: 'HomePage' });
+    router.push({ name: PageNames.Home });
   };
 
   const onSetWords = (words: Array<Array<string>>, dicationary: unknown) => {

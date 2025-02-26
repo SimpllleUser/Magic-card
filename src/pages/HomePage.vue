@@ -7,6 +7,7 @@
   import { Modals } from '@/core/models/modals';
   import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
   import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
+  import { PageNames } from '@/router/types';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -14,11 +15,11 @@
   const dictionaryStore = useDictionaryStore();
 
   const updateDictionary = (dictionary: Dictionary | Record<string, unknown>) => {
-    router.push({ name: 'DictionaryUpdate', params: { id: dictionary.id } });
+    router.push({ name: PageNames.DictionaryUpdate, params: { id: dictionary.id } });
   };
 
   const createDictionary = () => {
-    router.push({ name: 'DictionaryCreate' });
+    router.push({ name: PageNames.DictionaryCreate });
   };
 
   const onRemoveDictionary = (id: string) => {

@@ -11,6 +11,7 @@
   } from '@/features/quiz/model/constants';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { DictionaryItem } from '@/features/dictionary/model/types';
+  import { PageNames } from '@/router/types';
 
   const keys = [
     {
@@ -128,7 +129,7 @@
                       <VBtn
                         class="px-1"
                         :color="Colors.Primary"
-                        :to="{ name: 'DictionaryUpdate', params: { id: dictionaryId } }"
+                        :to="{ name: PageNames.DictionaryUpdate, params: { id: dictionaryId } }"
                         :variant="Variants.Contained"
                       >
                         go to edit module
