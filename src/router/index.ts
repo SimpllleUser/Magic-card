@@ -13,26 +13,26 @@ const routes = [
         meta: { title: 'Home' }
       },
       {
-        path: '/topic/:id',
-        name: 'TopicDetail',
+        path: '/dictionary/:id',
+        name: 'DictionaryDetail',
         component: () => import('../pages/DictionaryDetail.vue'),
         meta: { title: 'Dictionary detail' }
       },
       {
-        path: '/topic/update/:id',
-        name: 'TopicUpdate',
-        component: () => import('../pages/topics/update.vue'),
-        meta: { title: 'Topic update' }
+        path: '/dictionary/update/:id',
+        name: 'DictionaryUpdate',
+        component: () => import('../pages/DictionaryUpdate.vue'),
+        meta: { title: 'Dictionary update' }
       },
       {
-        path: '/topic/create',
-        name: 'TopicCreate',
-        component: () => import('../pages/topics/create.vue'),
-        meta: { title: 'Topic Create' }
+        path: '/dictionary/create',
+        name: 'DictionaryCreate',
+        component: () => import('../pages/DictionaryCreate.vue'),
+        meta: { title: 'Dictionary Create' }
       },
       {
         /// Add view mode of cards
-        path: '/topic/:id/view',
+        path: '/dictionary/:id/view',
         name: 'ViewModeWords',
         meta: { title: 'View cards' },
         component: () => import('../pages/quize/ViewMode.vue')

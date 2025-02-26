@@ -1,43 +1,33 @@
 <script setup lang="ts">
   import { ActionForm, BaseForm, OnSubmitPayload } from 'base-form/src/shared/ui/form/BaseForm';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { TopicFormModel, useTopicForm } from '@/features/Topics/TopicForm/config';
+  import { TopicFormModel, useTopicForm } from '@/features/dictionary/model/useTopicForm';
   import { BaseModal, useModalStore } from '@/shared/ui/BaseModal';
   import ParserTextToDictionary from '../../../widget/ParserTextToDictionary/index.vue';
   import { Topic } from '@/core/models/Topic';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
   import { Colors, Variants } from '@/core/models/enums';
   import { Modals } from '@/core/models/modals';
-  import { useTopicsStore } from '../store/topics';
-
-  interface Props {
-    formData?: Topic;
-    modalId: Modals.TopicUpdate | Modals.TopicCreate;
-  }
-
-  interface Emits {
-    (event: 'submit', payload: Topic): void;
-  }
+  import { useDictionaryStore } from '../../../stores/dictionary';
+  import { DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
 
   const router = useRouter();
   const modal = useModalStore();
-  const emit = defineEmits<Emits>();
-
-  const topicsStore = useTopicsStore();
-
-  const props = withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<DictionaryFormProps>(), {
     formData: {}
   });
+  defineEmits<DictionaryFormEmits>();
+
+  const topicsStore = useDictionaryStore();
 
   const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
 
   const onSubmit = (params: OnSubmitPayload<Ref<Topic | Omit<Topic, 'id'>>>) => {
     if (!params.isValid) return;
-    console.log(params.value);
 
     const action = params.action === ActionForm.Create ? topicsStore.create : topicsStore.update;
     action(params.value);
-    router.push({ name: 'Home' });
+    router.push({ name: 'HomePage' });
   };
 
   const onSetWords = (words: Array<Array<string>>, dicationary: unknown) => {
@@ -64,7 +54,7 @@
           <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
         </BaseModal>
         <InputList v-model="form.dictionary" header-class="border-b-md" label="Dictionary">
-          <template #label="{label}">
+          <template #label="{ label }">
             <div class="text-h6 text-on-surface-variant">{{ label }}</div>
           </template>
           <template #btn-add="{ addItem }">

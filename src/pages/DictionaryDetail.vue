@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-  import { useTopicsStore } from '../features/Topics/store/topics';
+  import { useDictionaryStore } from '../stores/dictionary';
   import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
@@ -35,7 +35,7 @@
   const topicId = computed(() => route.params?.id!);
   const { goToQuize, goToViewMode } = useNavigation();
 
-  const topicsStore = useTopicsStore();
+  const topicsStore = useDictionaryStore();
 
   const topic = computed(() => topicsStore.getById(topicId.value));
 

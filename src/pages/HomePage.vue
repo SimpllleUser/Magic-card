@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import { useTopicsStore } from '@/features/Topics/store/topics';
-  import { Topic } from '@/core/models/Topic';
+  import { useDictionaryStore } from '@/stores/dictionary';
+  import { Dictionary } from '@/features/dictionary/model/types';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { useModalStore } from '@/shared/ui/BaseModal';
@@ -11,23 +11,23 @@
   const router = useRouter();
   const modal = useModalStore();
 
-  const topicsStore = useTopicsStore();
+  const dictionaryStore = useDictionaryStore();
 
-  const updateTopic = (topic: Topic | Record<string, unknown>) => {
-    router.push({ name: 'TopicUpdate', params: { id: topic.id } });
+  const updateDictionary = (dictionary: Dictionary | Record<string, unknown>) => {
+    router.push({ name: 'DictionaryUpdate', params: { id: dictionary.id } });
   };
 
-  const createTopic = () => {
-    router.push({ name: 'TopicCreate' });
+  const createDictionary = () => {
+    router.push({ name: 'DictionaryCreate' });
   };
 
-  const onRemoveTopic = (id: string) => {
-    modal.show(Modals.TopicConfirmRemove, {
-      title: 'Remove topic',
-      description: 'Are you sure you want to delete this topic?',
+  const onRemoveDictionary = (id: string) => {
+    modal.show(Modals.DictionaryConfirmRemove, {
+      title: 'Remove dictionary',
+      description: 'Are you sure you want to delete this dictionary?',
       type: Colors.Error,
       onConfirm: () => {
-        topicsStore.remove(id);
+        dictionaryStore.remove(id);
       }
     });
   };
@@ -35,12 +35,12 @@
 
 <template>
   <VRow class="pa-4">
-    <ConfirmModal :id="Modals.TopicConfirmRemove" />
-    <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
-      <DictionaryCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
+    <ConfirmModal :id="Modals.DictionaryConfirmRemove" />
+    <VCol v-for="dictionary in dictionaryStore.items" :key="dictionary.id" cols="4">
+      <DictionaryCard :dictionary="dictionary" @remove="onRemoveDictionary" @update="updateDictionary" />
     </VCol>
     <VCol>
-      <VBtn class="big-square-button" :color="Colors.Primary" :variant="Variants.Tonal" @click="createTopic">
+      <VBtn class="big-square-button" :color="Colors.Primary" :variant="Variants.Tonal" @click="createDictionary">
         <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
       </VBtn>
     </VCol>

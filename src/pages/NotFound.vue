@@ -6,7 +6,7 @@
 
   const goToHome = () => {
     router.push({
-      name: 'Home'
+      name: 'HomePage'
     });
   };
 </script>

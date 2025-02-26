@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import TopicForm from '@/features/Topics/TopicForm/index.vue';
+  import TopicForm from '@/features/dictionary/ui/DictionaryForm.vue';
 </script>
 
 <template>

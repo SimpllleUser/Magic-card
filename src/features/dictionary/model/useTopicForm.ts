@@ -1,9 +1,15 @@
 import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
-import input from 'base-form/src/shared/ui/inputs/config';
-import { DictionaryItem, Topic } from '@/core/models/Topic';
+import { DictionaryItem, Topic } from './types';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
+import input from 'base-form/src/shared/ui/inputs/config';
 
-const templateListDictionary = (data?: DictionaryItem = {}) => ({
+const templateListDictionary = (
+  data?: DictionaryItem = {
+    id: '',
+    from: '',
+    to: ''
+  }
+) => ({
   id: data?.id || '',
   from: input.text({
     value: data?.from || '',

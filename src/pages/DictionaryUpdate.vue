@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useTopicsStore } from '@/features/Topics/store/topics';
+  import { useDictionaryStore } from '@/stores/dictionary';
   import { useRoute } from 'vue-router';
-  import TopicForm from '@/features/Topics/TopicForm/index.vue';
+  import TopicForm from '@/features/dictionary/ui/DictionaryForm.vue';
 
   const route = useRoute();
 
-  const topicsStore = useTopicsStore();
+  const topicsStore = useDictionaryStore();
 
   const topic = computed(() => topicsStore.getById(route.params?.id));
 </script>

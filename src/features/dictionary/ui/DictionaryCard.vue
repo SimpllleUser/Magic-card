@@ -1,45 +1,39 @@
 <script setup lang="ts">
-  import { Topic } from '@/core/models/Topic';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import { defineEmits } from 'vue';
   import { Colors } from '@/core/models/enums';
+  import { Dictionary } from '../model/types';
 
   interface Props {
-    topic: Topic;
+    dictionary: Dictionary;
   }
 
   interface Emits {
     (event: 'remove', id: string): void;
-    (event: 'update', topic: Topic): void;
+    (event: 'update', dictionary: Dictionary): void;
   }
 
   defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const router = useRouter();
-
   const modal = useModalStore();
 
-  const onUpdateTopic = (topic: Topic) => {
-    modal.show(Modals.TopicUpdate);
-    emit('update', topic);
-  };
-
-  const goToDetailTopic = (id: string) => {
-    router.push({ name: 'TopicDetail', params: { id } });
+  const onUpdateTopic = (dictionary: Dictionary) => {
+    modal.show(Modals.DictionaryUpdate);
+    emit('update', dictionary);
   };
 </script>
 
 <template>
-  <VCard elevation="2" :title="topic.title" link>
+  <VCard elevation="2" link :title="dictionary.title">
     <VCardSubtitle>
-      {{ topic.description }}
+      {{ dictionary.description }}
     </VCardSubtitle>
     <VCardActions>
-      <VBtn :color="Colors.Primary" @click="goToDetailTopic(topic.id)">Detail</VBtn>
-      <VBtn :color="Colors.Secondary" @click="onUpdateTopic(topic)">Edit</VBtn>
-      <VBtn :color="Colors.Error" @click="$emit('remove', topic.id)">Remove</VBtn>
+      <VBtn :color="Colors.Primary" :to="{ name: 'DictionaryDetail', params: { id: dictionary.id } }">Detail</VBtn>
+      <VBtn :color="Colors.Secondary" @click="onUpdateTopic(dictionary)">Edit</VBtn>
+      <VBtn :color="Colors.Error" @click="$emit('remove', dictionary.id)">Remove</VBtn>
     </VCardActions>
   </VCard>
 </template>
