@@ -1,12 +1,13 @@
 <script lang="ts" setup>
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
+import { PageNames } from '@/router/types';
 
   const router = useRouter();
 
   const goToHome = () => {
     router.push({
-      name: 'Home'
+      name: PageNames.Home
     });
   };
 </script>

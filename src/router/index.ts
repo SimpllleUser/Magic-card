@@ -1,56 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DefaultLayout from '../layouts/default.vue';
-
-const routes = [
-  {
-    path: '/',
-    component: DefaultLayout,
-    children: [
-      {
-        path: '/',
-        name: 'Home',
-        component: () => import('../pages/index.vue'),
-        meta: { title: 'Home' }
-      },
-      {
-        path: '/topic/:id',
-        name: 'TopicDetail',
-        component: () => import('../pages/topics/detail.vue'),
-        meta: { title: 'Topic detail' }
-      },
-      {
-        path: '/topic/update/:id',
-        name: 'TopicUpdate',
-        component: () => import('../pages/topics/update.vue'),
-        meta: { title: 'Topic update' }
-      },
-      {
-        path: '/topic/create',
-        name: 'TopicCreate',
-        component: () => import('../pages/topics/create.vue'),
-        meta: { title: 'Topic Create' }
-      },
-      {
-        /// Add view mode of cards
-        path: '/topic/:id/view',
-        name: 'ViewModeWords',
-        meta: { title: 'View cards' },
-        component: () => import('../pages/quize/ViewMode.vue')
-      },
-      {
-        path: '/quize',
-        name: 'Quize',
-        component: () => import('../pages/quize/index.vue'),
-        meta: { title: 'Quize' }
-      }
-    ]
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: () => import('../pages/NotFound.vue')
-  }
-];
+import { routes } from './routes';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
