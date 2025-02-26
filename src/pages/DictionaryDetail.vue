@@ -1,15 +1,17 @@
 <script setup lang="ts">
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-  import { useTopicsStore } from '../../features/Topics/store/topics';
+  import { useTopicsStore } from '../features/Topics/store/topics';
   import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
-  import { useQuizsStore } from '@/features/Play/store/quiz';
   import { Icons } from '@/core/models/icons';
-  import { QUIZE_TYPES_OPTIONS } from '../../features/Play/Quize/constants';
-  import { QuizeType } from '@/features/Play/Quize/types';
 
-  const MIN_WORDS_QUANTITY = 5;
+  import {
+    ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS,
+    MIN_WORDS_QUANTITY,
+    QUIZE_TYPES_OPTIONS
+  } from '@/features/quiz/model/constants';
+  import { useNavigation } from '@/features/quiz/model/naigation';
 
   const keys = [
     {
@@ -29,19 +31,11 @@
     }
   ];
 
-  const alertConfigInsufficientQuantityWords = {
-    title: 'Attention!',
-    text: `You must choose at least ${MIN_WORDS_QUANTITY} words for play!`,
-    color: Colors.Info,
-    variant: Variants.Tonal
-  };
-
   const route = useRoute();
-  const router = useRouter();
   const topicId = computed(() => route.params?.id!);
+  const { goToQuize, goToViewMode } = useNavigation();
 
   const topicsStore = useTopicsStore();
-  const quizStore = useQuizsStore();
 
   const topic = computed(() => topicsStore.getById(topicId.value));
 
@@ -52,19 +46,6 @@
   const selectedWords = ref([...topic.value?.dictionary]);
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
-
-  const goToQuize = (type: QuizeType) => {
-    quizStore.setActiveModule(topicId.value);
-    quizStore.setWords(selectedWords.value);
-    quizStore.setCurrentType(type);
-    router.push({ name: 'Quize' });
-  };
-
-  const goToViewMode = () => {
-    quizStore.setActiveModule(topicId.value);
-    quizStore.setWords(selectedWords.value);
-    router.push({ name: 'ViewModeWords' });
-  };
 </script>
 
 <template>
@@ -86,7 +67,7 @@
         <VCard elevation="2">
           <VCardText>
             <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
-              <VAlert v-if="!canPlayQuize" v-bind="alertConfigInsufficientQuantityWords" class="mb-4" />
+              <VAlert v-if="!canPlayQuize" v-bind="ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS" class="mb-4" />
             </AnimationFade>
             <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
               <BaseList
@@ -105,7 +86,12 @@
                     :color="Colors.Primary"
                     :disabled="!selectedWords.length"
                     :variant="Variants.Elevated"
-                    @click="goToViewMode"
+                    @click="
+                      goToViewMode({
+                        topicId: topicId,
+                        words: selectedWords
+                      })
+                    "
                     >View cards</VBtn
                   >
                   <VMenu>
@@ -121,9 +107,17 @@
                     </template>
                     <VList>
                       <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
-                        <VListItemTitle :class="`text-${Colors.Secondary}`" @click="goToQuize(item.value)">{{
-                          item.title
-                        }}</VListItemTitle>
+                        <VListItemTitle
+                          :class="`text-${Colors.Secondary}`"
+                          @click="
+                            goToQuize({
+                              topicId: topicId,
+                              words: selectedWords,
+                              type: item.value
+                            })
+                          "
+                          >{{ item.title }}</VListItemTitle
+                        >
                       </VListItem>
                     </VList>
                   </VMenu>

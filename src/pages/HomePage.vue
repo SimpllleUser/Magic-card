@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import TopicCard from '@/features/Topics/TopicCard/index.vue';
   import { useTopicsStore } from '@/features/Topics/store/topics';
   import { Topic } from '@/core/models/Topic';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
@@ -7,6 +6,7 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
+  import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -37,7 +37,7 @@
   <VRow class="pa-4">
     <ConfirmModal :id="Modals.TopicConfirmRemove" />
     <VCol v-for="topic in topicsStore.items" :key="topic.id" cols="4">
-      <TopicCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
+      <DictionaryCard :topic="topic" @remove="onRemoveTopic" @update="updateTopic" />
     </VCol>
     <VCol>
       <VBtn class="big-square-button" :color="Colors.Primary" :variant="Variants.Tonal" @click="createTopic">

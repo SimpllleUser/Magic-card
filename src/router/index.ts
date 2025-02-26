@@ -8,15 +8,15 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'Home',
-        component: () => import('../pages/index.vue'),
+        name: 'HomePage',
+        component: () => import('../pages/HomePage.vue'),
         meta: { title: 'Home' }
       },
       {
         path: '/topic/:id',
         name: 'TopicDetail',
-        component: () => import('../pages/topics/detail.vue'),
-        meta: { title: 'Topic detail' }
+        component: () => import('../pages/DictionaryDetail.vue'),
+        meta: { title: 'Dictionary detail' }
       },
       {
         path: '/topic/update/:id',
