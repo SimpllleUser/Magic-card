@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { Dictionary, } from '@/features/dictionary/model/types';
 import { useCRUD } from '@/shared/use/useCRUD';
-import { mappedDictionaryOfTopic } from '@/features/dictionary/model/utils';
+import { mappedDictionaryOfDictionary } from '@/features/dictionary/model/utils';
 
 const MOCK = [
   {
@@ -32,14 +32,14 @@ const MOCK = [
 ];
 
 export const useDictionaryStore = defineStore('dictionary', () => {
-  const topicCrud = useCRUD<Dictionary>(MOCK, { key: 'topics', returnAsObject: true });
+  const dictionaryCrud = useCRUD<Dictionary>(MOCK, { key: 'dictionarys', returnAsObject: true });
 
-  const items = computed(() => topicCrud.data);
+  const items = computed(() => dictionaryCrud.data);
 
   return {
-    ...topicCrud,
-    update: (dictionary: Dictionary) => topicCrud.update(mappedDictionaryOfTopic(dictionary)),
-    create: (dictionary: Dictionary) => topicCrud.create(mappedDictionaryOfTopic(dictionary)),
+    ...dictionaryCrud,
+    update: (dictionary: Dictionary) => dictionaryCrud.update(mappedDictionaryItems(dictionary)),
+    create: (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary)),
     items: items.value
   };
 });

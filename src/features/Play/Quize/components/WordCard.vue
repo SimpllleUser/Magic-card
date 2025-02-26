@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import { DictionaryItem } from '@/core/models/Topic';
-  import { getWord } from '../utils';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
+import { getWord } from '../utils';
 
   const emits = defineEmits<{
     (event: 'flipp', payload: boolean): void;

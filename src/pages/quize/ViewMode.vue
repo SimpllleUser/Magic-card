@@ -3,10 +3,10 @@
   import { shuffle } from 'lodash';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import { DictionaryItem } from '@/core/models/Topic';
   import WordCard from '@/features/Play/Quize/components/WordCard.vue';
   import { useQuizsStore } from '@/features/Play/store/quiz';
   import WordSlider from '@/features/Play/Quize/components/WordSlider.vue';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
 
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { DictionaryItem } from '@/core/models/Topic';
   import { Colors } from '@/core/models/enums';
   import { computed } from 'vue';
   import { useQuizeFactory } from '../composables/useQuizeFactory';
@@ -7,6 +6,7 @@
   import { QuestionItem } from '../composables/useSelectWord';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
   import WordSlider from './WordSlider.vue';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;

@@ -1,4 +1,4 @@
-import { DictionaryItem } from '@/core/models/Topic';
+import { DictionaryItem } from '@/features/dictionary/model/types';
 import { Nullable } from 'base-form/src/core/types/common';
 import { shuffle, upperFirst } from 'lodash';
 import { computed, ref } from 'vue';

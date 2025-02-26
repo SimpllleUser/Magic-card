@@ -15,7 +15,7 @@ export type Dictionary = Entity<{
 
 export interface DictionaryFormProps {
   formData?: Dictionary;
-  modalId: Modals.TopicUpdate | Modals.TopicCreate;
+  modalId: Modals.DictionaryUpdate | Modals.DictionaryCreate;
 }
 
 export interface DictionaryFormEmits {

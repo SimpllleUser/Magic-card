@@ -2,16 +2,15 @@
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   import { useDictionaryStore } from '../stores/dictionary';
-  import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-
   import {
     ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS,
     MIN_WORDS_QUANTITY,
     QUIZE_TYPES_OPTIONS
   } from '@/features/quiz/model/constants';
   import { useNavigation } from '@/features/quiz/model/naigation';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
 
   const keys = [
     {
@@ -32,18 +31,18 @@
   ];
 
   const route = useRoute();
-  const topicId = computed(() => route.params?.id!);
+  const dictionaryId = computed(() => route.params?.id!);
   const { goToQuize, goToViewMode } = useNavigation();
 
-  const topicsStore = useDictionaryStore();
+  const dictionaryStore = useDictionaryStore();
 
-  const topic = computed(() => topicsStore.getById(topicId.value));
+  const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value));
 
   const mapItem = (item: DictionaryItem, index: number) => ({
     ...item,
     number: index + 1
   });
-  const selectedWords = ref([...topic.value?.dictionary]);
+  const selectedWords = ref([...dictionary.value?.dictionary]);
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 </script>
@@ -54,10 +53,10 @@
       <VCol>
         <VCard class="py-4" elevation="2">
           <VCardTitle>
-            <h3 class="text-h3">{{ topic?.title }}</h3>
+            <h3 class="text-h3">{{ dictionary?.title }}</h3>
           </VCardTitle>
           <VCardSubtitle>
-            <p>{{ topic?.description }}</p>
+            <p>{{ dictionary?.description }}</p>
           </VCardSubtitle>
         </VCard>
       </VCol>
@@ -72,7 +71,7 @@
             <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
               <BaseList
                 v-model:selected-items="selectedWords"
-                :data="topic.dictionary"
+                :data="dictionary.dictionary"
                 header-title="Dictionary"
                 hide-footer
                 :keys="keys"
@@ -88,7 +87,7 @@
                     :variant="Variants.Elevated"
                     @click="
                       goToViewMode({
-                        topicId: topicId,
+                        dictionaryId: dictionaryId,
                         words: selectedWords
                       })
                     "
@@ -111,7 +110,7 @@
                           :class="`text-${Colors.Secondary}`"
                           @click="
                             goToQuize({
-                              topicId: topicId,
+                              dictionaryId: dictionaryId,
                               words: selectedWords,
                               type: item.value
                             })
@@ -129,7 +128,7 @@
                       <VBtn
                         class="px-1"
                         :color="Colors.Primary"
-                        :to="{ name: 'TopicUpdate', params: { id: topicId } }"
+                        :to="{ name: 'DictionaryUpdate', params: { id: dictionaryId } }"
                         :variant="Variants.Contained"
                       >
                         go to edit module

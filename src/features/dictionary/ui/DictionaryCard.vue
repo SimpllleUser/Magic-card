@@ -19,7 +19,7 @@
 
   const modal = useModalStore();
 
-  const onUpdateTopic = (dictionary: Dictionary) => {
+  const onUpdateDictionary = (dictionary: Dictionary) => {
     modal.show(Modals.DictionaryUpdate);
     emit('update', dictionary);
   };
@@ -32,7 +32,7 @@
     </VCardSubtitle>
     <VCardActions>
       <VBtn :color="Colors.Primary" :to="{ name: 'DictionaryDetail', params: { id: dictionary.id } }">Detail</VBtn>
-      <VBtn :color="Colors.Secondary" @click="onUpdateTopic(dictionary)">Edit</VBtn>
+      <VBtn :color="Colors.Secondary" @click="onUpdateDictionary(dictionary)">Edit</VBtn>
       <VBtn :color="Colors.Error" @click="$emit('remove', dictionary.id)">Remove</VBtn>
     </VCardActions>
   </VCard>

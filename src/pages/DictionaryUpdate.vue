@@ -1,18 +1,18 @@
 <script setup lang="ts">
   import { useDictionaryStore } from '@/stores/dictionary';
   import { useRoute } from 'vue-router';
-  import TopicForm from '@/features/dictionary/ui/DictionaryForm.vue';
+  import DictionaryForm from '@/features/dictionary/ui/DictionaryForm.vue';
 
   const route = useRoute();
 
-  const topicsStore = useDictionaryStore();
+  const dictionaryStore = useDictionaryStore();
 
-  const topic = computed(() => topicsStore.getById(route.params?.id));
+  const dictionary = computed(() => dictionaryStore.getById(route.params?.id));
 </script>
 
 <template>
   <div class="pa-4">
-    <TopicForm :form-data="topic" />
+    <DictionaryForm :form-data="dictionary" />
   </div>
 </template>
 

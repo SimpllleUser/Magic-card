@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { defineProps, ref, withDefaults } from 'vue';
-  import { DictionaryItem } from '@/core/models/Topic';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { QuestionItem } from '../composables/useSelectWord';
+import { DictionaryItem } from '@/features/dictionary/model/types';
 
   const props = withDefaults(defineProps<{ words: DictionaryItem[] | QuestionItem[] }>(), {
     words: () => []

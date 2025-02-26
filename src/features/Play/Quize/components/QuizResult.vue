@@ -104,7 +104,7 @@
         </div>
         <div class="total d-flex justify-center pt-4">
           <VBtn :color="Colors.Primary" @click="onRetry(hide)">Try again</VBtn>
-          <VBtn class="ml-4" :color="Colors.Secondary" :to="{ name: 'TopicDetail', params: { id: moduleId } }">
+          <VBtn class="ml-4" :color="Colors.Secondary" :to="{ name: 'DictionaryDetail', params: { id: moduleId } }">
             Go to the module
           </VBtn>
         </div>

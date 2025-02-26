@@ -1,15 +1,14 @@
 <script setup lang="ts">
   import { ActionForm, BaseForm, OnSubmitPayload } from 'base-form/src/shared/ui/form/BaseForm';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { TopicFormModel, useTopicForm } from '@/features/dictionary/model/useTopicForm';
   import { BaseModal, useModalStore } from '@/shared/ui/BaseModal';
   import ParserTextToDictionary from '../../../widget/ParserTextToDictionary/index.vue';
-  import { Topic } from '@/core/models/Topic';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
   import { Colors, Variants } from '@/core/models/enums';
   import { Modals } from '@/core/models/modals';
   import { useDictionaryStore } from '../../../stores/dictionary';
-  import { DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
+  import { Dictionary, DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
+  import { DictionaryFormModel, useDictionaryForm } from '../model/useDictionaryForm';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -18,14 +17,14 @@
   });
   defineEmits<DictionaryFormEmits>();
 
-  const topicsStore = useDictionaryStore();
+  const dictionaryStore = useDictionaryStore();
 
   const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
 
-  const onSubmit = (params: OnSubmitPayload<Ref<Topic | Omit<Topic, 'id'>>>) => {
+  const onSubmit = (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, 'id'>>>) => {
     if (!params.isValid) return;
 
-    const action = params.action === ActionForm.Create ? topicsStore.create : topicsStore.update;
+    const action = params.action === ActionForm.Create ? dictionaryStore.create : dictionaryStore.update;
     action(params.value);
     router.push({ name: 'HomePage' });
   };
@@ -39,8 +38,8 @@
 </script>
 
 <template>
-  <BaseForm :config="useTopicForm(formData)" :params="{ action }" @on-submit="onSubmit">
-    <template #default="{ form }: { form: TopicFormModel }">
+  <BaseForm :config="useDictionaryForm(formData)" :params="{ action }" @on-submit="onSubmit">
+    <template #default="{ form }: { form: DictionaryFormModel }">
       <div class="pt-4 px-4 bg-surface mb-4 elevation-1 rounded">
         <div class="mb-4">
           <InputForm v-model="form.title" />

@@ -1,8 +1,8 @@
 import { shuffle } from 'lodash';
 import { ref } from 'vue';
 import { Nullable } from 'base-form/src/core/types/common';
-import { DictionaryItem, QuestionItem } from '@/core/models/Topic';
 import { useInputLetter } from './useInputLetter';
+import { DictionaryItem } from '@/features/dictionary/model/types';
 
 export interface QuestionItem extends DictionaryItem {
   isCorrect: boolean;
