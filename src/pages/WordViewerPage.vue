@@ -35,18 +35,34 @@
 
 <template>
   <div class="position-relative view-mode-wrapper">
-    <WordSlider :words="words" @change-slide="onChangeSlide">
-      <template #header="{ titleSlide }" name="header">
+    <WordSlider
+      :words="words"
+      @change-slide="onChangeSlide"
+    >
+      <template
+        #header="{ titleSlide }"
+        name="header"
+      >
         <div class="d-flex justify-space-between align-center">
           <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
           <div>
-            <VBtn :color="Colors.Primary" :icon="Icons.Shuffle" :variant="Variants.Plain" @click="shuffleWords"></VBtn>
+            <VBtn
+              :color="Colors.Primary"
+              :icon="Icons.Shuffle"
+              :variant="Variants.Plain"
+              @click="shuffleWords"
+            ></VBtn>
           </div>
         </div>
       </template>
       <template #default="{ word }">
-        <div style="height: 19rem">
-          <WordCard :flipped="isFlipped" :word="word" @flipp="setFliped" />
+        <div class="word-card--wrapper">
+          <WordCard
+            :flipped="isFlipped"
+            :word="word"
+            @flipp="setFliped"
+            class="pb-4"
+          />
         </div>
       </template>
     </WordSlider>
@@ -54,6 +70,9 @@
 </template>
 
 <style scoped>
+  .word-card--wrapper {
+    height: 10rem;
+  }
   .view-mode-wrapper {
     height: 100%;
     width: 100%;

@@ -46,10 +46,10 @@
   <div class="mx-auto" :class="classes">
     <WordSlider :words="questions" @change-slide="onChangeSlide">
       <template #default="{ word: question, index }">
-        <VCardText class="d-flex justify-center py-10">
+        <VCardText class="d-flex justify-center">
           <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
         </VCardText>
-        <VCardText class="d-flex justify-center py-10">
+        <VCardText class="d-flex justify-center" style="margin-top: 6rem;">
           <component
             :is="quizComponent"
             :key="index"
@@ -62,7 +62,7 @@
     </WordSlider>
   </div>
 
-  <div class="d-flex justify-center pt-4">
+  <div class="d-flex justify-center pt-12">
     <VBtn class="mr-4" :color="Colors.Primary" @click="reset">Restart</VBtn>
     <VBtn :color="Colors.Primary" @click="toFinishQuiz">Finish</VBtn>
   </div>
