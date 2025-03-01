@@ -45,7 +45,7 @@
     @on-submit="onSubmit"
   >
     <template #default="{ form }: { form: DictionaryFormModel }">
-      <div class="py-4 px-4 bg-surface mb-4 elevation-1 rounded">
+      <div class="py-4 px-4 bg-surface mb-4 elevation-1 rounded animated-container">
         <div class="mb-4">
           <InputForm v-model="form.title" />
         </div>
@@ -63,6 +63,7 @@
         <InputList
           v-model="form.dictionary"
           label="Dictionary"
+          with-animation
         >
           <template #label="{ label }">
             <div class="text-h6 text-on-surface-variant">{{ label }}</div>
