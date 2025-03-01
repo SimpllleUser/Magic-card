@@ -17,19 +17,23 @@
 </script>
 
 <template>
-  <div class="flip-container" :class="{ flipped }" @click="toggleFlip">
+  <div
+    class="flip-container"
+    :class="{ flipped }"
+    @click="toggleFlip"
+  >
     <div class="flipper">
-      <VCard class="flip-card front">
-        <VCardText class="d-flex flex-column align-center justify-center">
+      <div class="flip-card front">
+        <div class="d-flex flex-column align-center justify-center">
           <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.from) }}</h3>
-        </VCardText>
-      </VCard>
+        </div>
+      </div>
 
-      <VCard class="flip-card back">
-        <VCardText class="d-flex flex-column align-center justify-center">
+      <div class="flip-card back">
+        <div class="d-flex flex-column align-center justify-center">
           <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.to) }}</h3>
-        </VCardText>
-      </VCard>
+        </div>
+      </div>
     </div>
   </div>
 </template>
