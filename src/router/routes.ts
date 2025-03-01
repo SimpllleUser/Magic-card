@@ -36,6 +36,12 @@ export const routes = [
         ]
       },
       {
+        path: 'create',
+        name: PageNames.DictionaryCreate,
+        component: () => import('../pages/DictionaryCreate.vue'),
+        meta: { breadcrumb: 'Create'}
+      },
+      {
         path: 'update/:id',
         name: PageNames.DictionaryUpdate,
         component: () => import('../pages/DictionaryUpdate.vue'),

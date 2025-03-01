@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { Dictionary, } from '@/features/dictionary/model/types';
 import { useCRUD } from '@/shared/use/useCRUD';
-import { mappedDictionaryOfDictionary } from '@/features/dictionary/model/utils';
+import { mappedDictionaryItems, mappedDictionaryOfDictionary } from '@/features/dictionary/model/utils';
 
 const MOCK = [
   {

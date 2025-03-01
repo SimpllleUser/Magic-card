@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { useDictionaryStore } from '@/stores/dictionary';
-  import { Dictionary } from '@/features/dictionary/model/types';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { useModalStore } from '@/shared/ui/BaseModal';
@@ -8,6 +7,7 @@
   import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
   import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
   import { PageNames } from '@/router/types';
+import { Dictionary } from '@/features/dictionary/model/types';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -37,14 +37,34 @@
 <template>
   <VRow class="pa-4">
     <ConfirmModal :id="Modals.DictionaryConfirmRemove" />
-    <VCol v-for="dictionary in dictionaryStore.items" :key="dictionary.id" cols="4">
-      <DictionaryCard :dictionary="dictionary" @remove="onRemoveDictionary" @update="updateDictionary" />
-    </VCol>
-    <VCol>
-      <VBtn class="big-square-button" :color="Colors.Primary" :variant="Variants.Tonal" @click="createDictionary">
-        <VIcon :icon="Icons.Add" :size="Sizes.XLarge" />
-      </VBtn>
-    </VCol>
+    <VRow>
+      <TransitionGroup name="list">
+        <VCol
+          v-for="dictionary in dictionaryStore.items"
+          :key="dictionary.id"
+          cols="4"
+        >
+          <DictionaryCard
+            :dictionary="dictionary"
+            @remove="onRemoveDictionary"
+            @update="updateDictionary"
+          />
+        </VCol>
+        <VCol key="add-button">
+          <VBtn
+            class="big-square-button"
+            :color="Colors.Primary"
+            :variant="Variants.Tonal"
+            @click="createDictionary"
+          >
+            <VIcon
+              :icon="Icons.Add"
+              :size="Sizes.XLarge"
+            />
+          </VBtn>
+        </VCol>
+      </TransitionGroup>
+    </VRow>
   </VRow>
 </template>
 <style lang="scss" scoped>
@@ -55,5 +75,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .list-enter-active {
+    transition: all 0.5s ease;
+  }
+
+  .list-leave-active {
+    transition: all 0.5s ease;
+    position: absolute;
+    width: 33.333%;
+  }
+
+  .list-enter-from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .list-move {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+
+  .v-row {
+    position: relative;
+  }
+
+  :deep(.v-col) {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   }
 </style>
