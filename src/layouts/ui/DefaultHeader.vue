@@ -23,6 +23,7 @@
   <VToolbar
     color="surface-light"
     :elevation="1"
+    class="header"
   >
     <v-app-bar-title>
       <div class="title-wrapper">
@@ -34,11 +35,18 @@
       <VBtn
         :icon="themeIcon"
         @click="toggleTheme"
+        class="mr-4"
       />
     </template>
   </VToolbar>
 </template>
 <style lang="scss" scoped>
+.header {
+  :deep(.v-toolbar__content) {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+}
   .title-wrapper {
     display: flex;
     align-items: center;
