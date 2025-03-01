@@ -27,7 +27,7 @@
 
 <template>
   <div>
-    <VCarousel v-model="internalIndex" height="25rem" hide-delimiters show-arrows="hover">
+    <VCarousel v-model="internalIndex" height="22rem" hide-delimiters show-arrows="hover">
       <template #prev="{ props }">
         <VBtn :color="Colors.Secondary" :icon="Icons.ChevronLeft" :variant="Variants.Outlined" @click="props.onClick" />
       </template>
@@ -40,7 +40,7 @@
         />
       </template>
       <VCarouselItem v-for="(word, index) in words" :key="index">
-        <VCard class="word-card rounded-xl ma-4 bg-surface" :color="Colors.GreyLight">
+        <VCard class="word-card rounded-xl ma-4 bg-surface" :color="Colors.GreyLight" style="height:20rem">
           <VCardTitle>
             <slot name="header" :title-slide="titleSlide">
               <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
