@@ -26,7 +26,10 @@ export function useBreadcrumbs() {
         }, {} as Record<string, string>);
 
         const paramRegex = new RegExp(Object.keys(paramReplacements).join('|'), 'g');
-        path = path.replace(paramRegex, (match) => paramReplacements[match]);
+
+        if (path.includes('/:')) {
+          path = path.replace(paramRegex, (match) => paramReplacements[match]);
+        }
 
         const breadcrumbText = isFunction(item.meta?.breadcrumb)
           ? item.meta.breadcrumb(route)
