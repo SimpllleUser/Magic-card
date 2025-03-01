@@ -21,9 +21,10 @@ export const useNavigation = () => {
     router.push({ name: PageNames.Quize });
   };
 
-  const goToViewMode = ({ dictionaryId, words }: NavigationParams) => {
+  const goToViewMode = async ({ dictionaryId, words }: NavigationParams) => {
     quizStore.setActiveModule(dictionaryId);
     quizStore.setWords(words);
+
     router.push({ name: PageNames.WordViewer });
   };
 

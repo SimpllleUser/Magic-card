@@ -5,42 +5,41 @@ export const routes = [
   {
     path: '/',
     component: DefaultLayout,
+    meta: { breadcrumb: 'Home' },
     children: [
       {
-        path: '/',
+        path: '',
         name: PageNames.Home,
-        component: () => import('../pages/HomePage.vue'),
-        meta: { title: 'Home' }
+        component: () => import('../pages/HomePage.vue')
       },
       {
         path: '/dictionary/:id',
-        name: PageNames.DictionaryDetail,
-        component: () => import('../pages/DictionaryDetail.vue'),
-        meta: { title: 'Dictionary detail' }
+        meta: { breadcrumb: 'Detail' },
+        children: [
+          {
+            path: '',
+            name: PageNames.DictionaryDetail,
+            component: () => import('../pages/DictionaryDetail.vue')
+          },
+          {
+            path: 'view',
+            name: PageNames.WordViewer,
+            component: () => import('../pages/WordViewerPage.vue'),
+            meta: { breadcrumb: 'Word viewer' }
+          },
+          {
+            path: 'quize',
+            name: PageNames.Quize,
+            component: () => import('../pages/QuizePage.vue'),
+            meta: { breadcrumb: 'Quize' }
+          }
+        ]
       },
       {
-        path: '/dictionary/update/:id',
+        path: 'update/:id',
         name: PageNames.DictionaryUpdate,
         component: () => import('../pages/DictionaryUpdate.vue'),
-        meta: { title: 'Dictionary update' }
-      },
-      {
-        path: '/dictionary/create',
-        name: PageNames.DictionaryCreate,
-        component: () => import('../pages/DictionaryCreate.vue'),
-        meta: { title: 'Dictionary Create' }
-      },
-      {
-        path: '/dictionary/:id/view',
-        name: PageNames.WordViewer,
-        meta: { title: 'Word cards' },
-        component: () => import('../pages/WordViewerPage.vue')
-      },
-      {
-        path: '/quize',
-        name: PageNames.Quize,
-        component: () => import('../pages/QuizePage.vue'),
-        meta: { title: 'Quize' }
+        meta: { breadcrumb: (route) => `Update (ID: ${route.params.id})` }
       }
     ]
   },

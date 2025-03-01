@@ -157,4 +157,5 @@ export enum Icons {
   Shuffle = 'mdi-shuffle',
   InformationOutline = 'mdi-information-outline',
   MultipleMarkedOutline = 'mdi-checkbox-multiple-marked-outline',
+  ViewCarouselIcon = 'mdi-view-carousel',
 }

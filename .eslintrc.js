@@ -1,9 +1,3 @@
-/**
- * .eslint.js
- *
- * ESLint configuration file.
- */
-
 module.exports = {
   root: true,
   env: {
@@ -13,8 +7,8 @@ module.exports = {
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
     ecmaVersion: 12,
-    sourceType: "module",
-    extraFileExtensions: [ '.vue' ]
+    sourceType: 'module',
+    extraFileExtensions: ['.vue'],
   },
 
   extends: [
@@ -27,15 +21,17 @@ module.exports = {
     './.eslintrc-auto-import.json',
   ],
 
-
-  plugins: [
-    '@typescript-eslint',
-    'vue'
-
-  ],
+  plugins: ['@typescript-eslint', 'vue'],
 
   rules: {
-    'vue/multi-word-component-names': 'off',
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignore: [], // Отключаем игнорирование, чтобы требовать PascalCase
+        requireComponentCreator: false,
+      },
+    ],
+    'vue/component-definition-name-casing': ['error', 'PascalCase'], // Требуем PascalCase для имён компонентов
     'prefer-promise-reject-errors': 'off',
 
     quotes: ['warn', 'single', { avoidEscape: true }],
@@ -43,18 +39,18 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'no-unused-vars': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    "no-param-reassign": [
-      "error",
+    'no-param-reassign': [
+      'error',
       {
         props: true,
-        ignorePropertyModificationsFor: ["state", "config"]
-      }
+        ignorePropertyModificationsFor: ['state', 'config'],
+      },
     ],
-    "no-shadow": "off",
-    "prefer-destructuring": "off",
-    "import/no-unresolved": "off",
-    "import/extensions": "off",
-    "import/no-absolute-path": "off",
-    "import/no-extraneous-dependencies": "off",
-  }
-}
+    'no-shadow': 'off',
+    'prefer-destructuring': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'import/no-absolute-path': 'off',
+    'import/no-extraneous-dependencies': 'off',
+  },
+};
