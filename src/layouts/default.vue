@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-  import DefaultHeader from './components/DefaultHeader.vue';
+  import DefaultHeader from './ui/DefaultHeader.vue';
 </script>
 
 <template>
@@ -9,8 +9,11 @@
     <v-main class="px-4 mt-4 mx-auto main-content">
       <div class="transition-wrapper">
         <AnimationFade>
-          <div :key="$route.fullPath" class="content">
-            <router-view />
+          <div
+            :key="$route.fullPath"
+            class="content"
+          >
+            <router-view :key="$route.fullPath" />
           </div>
         </AnimationFade>
       </div>
@@ -19,9 +22,6 @@
   </v-app>
 </template>
 <style lang="scss" scoped>
-  .main-card {
-    height: calc(100% - 2rem);
-  }
   .main-content {
     max-width: calc(1200px + 2rem);
     width: 100%;

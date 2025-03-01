@@ -6,5 +6,9 @@
   "printWidth": 120,
   "trailingComma": "none",
   "bracketSpacing": true,
-  "vueIndentScriptAndStyle": true
+  "vueIndentScriptAndStyle": true,
+  "arrowParens": "always",
+  "proseWrap": "never",
+  "htmlWhitespaceSensitivity": "css",
+  "singleAttributePerLine": true
 }

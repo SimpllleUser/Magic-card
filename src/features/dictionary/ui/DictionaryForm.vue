@@ -39,9 +39,13 @@
 </script>
 
 <template>
-  <BaseForm :config="useDictionaryForm(formData)" :params="{ action }" @on-submit="onSubmit">
+  <BaseForm
+    :config="useDictionaryForm(formData)"
+    :params="{ action }"
+    @on-submit="onSubmit"
+  >
     <template #default="{ form }: { form: DictionaryFormModel }">
-      <div class="pt-4 px-4 bg-surface mb-4 elevation-1 rounded">
+      <div class="py-4 px-4 bg-surface mb-4 elevation-1 rounded">
         <div class="mb-4">
           <InputForm v-model="form.title" />
         </div>
@@ -50,19 +54,35 @@
         </div>
       </div>
       <div class="mb-4 bg-surface pa-4 elevation-1 rounded">
-        <BaseModal :id="Modals.ImportWords" title="Import words">
+        <BaseModal
+          :id="Modals.ImportWords"
+          title="Import words"
+        >
           <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
         </BaseModal>
-        <InputList v-model="form.dictionary" header-class="border-b-md" label="Dictionary">
+        <InputList
+          v-model="form.dictionary"
+          label="Dictionary"
+        >
           <template #label="{ label }">
             <div class="text-h6 text-on-surface-variant">{{ label }}</div>
           </template>
           <template #btn-add="{ addItem }">
             <div>
-              <VBtn :color="Colors.Primary" :variant="Variants.Text" @click="modal.show(Modals.ImportWords)">
+              <VBtn
+                :color="Colors.Primary"
+                :variant="Variants.Text"
+                @click="modal.show(Modals.ImportWords)"
+              >
                 Import
               </VBtn>
-              <VBtn class="ml-4" :color="Colors.Secondary" :variant="Variants.Text" @click="addItem">Add</VBtn>
+              <VBtn
+                class="ml-4"
+                :color="Colors.Secondary"
+                :variant="Variants.Text"
+                @click="addItem"
+                >Add</VBtn
+              >
             </div>
           </template>
           <template #empty>
@@ -73,5 +93,3 @@
     </template>
   </BaseForm>
 </template>
-
-<style scoped lang="sass"></style>

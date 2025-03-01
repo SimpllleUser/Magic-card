@@ -1,15 +1,10 @@
 <script setup lang="ts">
-  import { Colors, Themes } from '@/core/models/enums';
+  import { Themes } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { useStorage } from '@vueuse/core';
   import { useTheme } from 'vuetify';
   import { computed } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-
-  const route = useRoute();
-  const router = useRouter();
-
+  import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
   const themeConfig = useTheme();
   const theme = useStorage('theme', themeConfig.global.name.value);
 
@@ -22,29 +17,24 @@
   };
 
   const themeIcon = computed(() => (theme.value === Themes.Light ? Icons.Moon : Icons.Sun));
-
-  const goToBack = () => {
-    router.go(-1);
-  };
-
-  const canGoToBack = computed(() => route.name !== 'Home');
 </script>
 
 <template>
-  <VToolbar color="surface-light" :elevation="1">
+  <VToolbar
+    color="surface-light"
+    :elevation="1"
+  >
     <v-app-bar-title>
       <div class="title-wrapper">
-        <AnimationFade>
-          <VBtn v-if="canGoToBack" :icon="Icons.Back" @click="goToBack" />
-        </AnimationFade>
-        <div class="title" :class="{ 'with-btn-back': canGoToBack }">
-          {{ route.meta?.title }}
-        </div>
+        <Breadcrumbs />
       </div>
     </v-app-bar-title>
 
     <template #append>
-      <VBtn :icon="themeIcon" @click="toggleTheme" />
+      <VBtn
+        :icon="themeIcon"
+        @click="toggleTheme"
+      />
     </template>
   </VToolbar>
 </template>
