@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 describe('Sum function', () => {
   it('should add two numbers', () => {
     const sum = (a: number, b: number) => a + b;

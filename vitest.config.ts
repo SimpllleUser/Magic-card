@@ -1,16 +1,27 @@
 import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue'
+import path from 'path';
 
 export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   test: {
     globals: true,
+    css: false,
+    setupFiles: './vitest.setup.ts',
+    deps: {
+      inline: ['vuetify'],
+    },
     environment: 'jsdom', /// 'node' | 'jsdom'
     include: ['**/*.{test,spec}.{ts,js}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules', 'dist', '**/*.config.{ts,js}'],
     },
-    exclude: ['node_modules', 'dist', '**/*.config.{ts,js}'],
-    // threads: true, // multithreading
-    // maxThreads: 4, // quantity of threads количество потоков
   },
 });

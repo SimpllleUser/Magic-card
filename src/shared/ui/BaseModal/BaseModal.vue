@@ -19,7 +19,8 @@
 </script>
 
 <template>
-  <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
+<div class="dialog">
+  <VDialog :attach="true" v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
     <VCard>
       <VCardTitle class="d-flex hide-center justify-space-between bg-surface-light">
         <slot :close="modalHide" name="header" :title="title">
@@ -32,4 +33,5 @@
       </VCardText>
     </VCard>
   </VDialog>
+</div>
 </template>

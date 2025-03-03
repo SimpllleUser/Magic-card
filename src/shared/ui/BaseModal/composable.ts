@@ -1,3 +1,4 @@
+import { onMounted, ref, Ref } from 'vue';
 import { ModalParams } from '../ConfirmModal/types';
 import { useModalStore } from './store';
 
