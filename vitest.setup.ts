@@ -23,3 +23,13 @@ global.ResizeObserver = class {
 }
 
 config.global.plugins = [vuetify]
+
+
+  /// Example of mocking store
+
+  // vi.mock('@/stores/someStore', () => ({
+  //   useSomeStore: () => ({
+  //     someProperty: 'mocked-value', // Mock value
+  //     someMethod: vi.fn(), // Mock method
+  //   }),
+  // }));
