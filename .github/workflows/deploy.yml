@@ -42,3 +42,4 @@ jobs:
           publish_dir: ./dist
           publish_branch: gh-pages
           force_orphan: true
+          commit_message: "Deploy to gh-pages from ${{ github.sha }}"
