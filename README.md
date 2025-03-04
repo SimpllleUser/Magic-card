@@ -1,5 +1,5 @@
 # Magic card
-## 💡 Usage2
+## 💡 Usage
 
 This section covers how to start the development server and build your project for production.
 
