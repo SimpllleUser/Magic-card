@@ -21,8 +21,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Install Yarn
+        run: npm install -g yarn
+
       - name: Install dependencies
-        run: yarn add
+        run: yarn install
 
       - name: Build Vite project
         run: yarn build
