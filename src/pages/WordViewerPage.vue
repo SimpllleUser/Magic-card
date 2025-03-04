@@ -32,6 +32,11 @@
     currentWordIndex.value = index;
     setFliped(false);
   };
+
+  const actualCopyWord = computed(() => {
+    const keys = ['from', 'to'];
+    return words.value[currentWordIndex.value][isFlipped.value ? keys[1] : keys[0]];
+  });
 </script>
 
 <template>
@@ -47,7 +52,7 @@
         <div class="d-flex justify-space-between align-center">
           <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
           <div>
-            <ButtonCopy :value="words[currentWordIndex].from" />
+            <ButtonCopy :value="actualCopyWord" />
 
             <VBtn
               :color="Colors.Primary"
