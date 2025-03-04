@@ -27,6 +27,7 @@ export enum Icons {
   Redo = 'mdi-redo',
   Favorite = 'mdi-heart',
   Bookmark = 'mdi-bookmark',
+  Copy = 'mdi-content-copy',
 
   // Navigation
   Home = 'mdi-home',
