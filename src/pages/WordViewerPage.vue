@@ -8,6 +8,7 @@
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { useQuizsStore } from '@/stores/quiz';
   import ButtonCopy from '@/shared/ui/WordButtonActions/ButtonCopy.vue';
+import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
 
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);
@@ -52,6 +53,7 @@
         <div class="d-flex justify-space-between align-center">
           <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
           <div>
+            <ButtonVoice :value="actualCopyWord" />
             <ButtonCopy :value="actualCopyWord" />
 
             <VBtn

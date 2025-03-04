@@ -58,6 +58,7 @@ export enum Icons {
   SkipNext = 'mdi-skip-next',
   SkipPrevious = 'mdi-skip-previous',
   VolumeUp = 'mdi-volume-high',
+  VolumeSource = 'mdi-volume-source',
   VolumeDown = 'mdi-volume-low',
   VolumeMute = 'mdi-volume-off',
   Microphone = 'mdi-microphone',
