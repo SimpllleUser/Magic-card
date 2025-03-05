@@ -7,7 +7,8 @@
   import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
   import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
   import { PageNames } from '@/router/types';
-import { Dictionary } from '@/features/dictionary/model/types';
+  import { Dictionary } from '@/features/dictionary/model/types';
+  import { VueDraggableNext } from 'vue-draggable-next';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -32,13 +33,19 @@ import { Dictionary } from '@/features/dictionary/model/types';
       }
     });
   };
+
+  const allowMove = (evt) => Boolean(evt.draggedContext.element);
 </script>
 
 <template>
   <VRow class="pa-4">
     <ConfirmModal :id="Modals.DictionaryConfirmRemove" />
-    <VRow>
-      <TransitionGroup name="list">
+    <TransitionGroup name="list">
+      <VueDraggableNext
+        v-model="dictionaryStore.items"
+        class="v-row"
+        :move="allowMove"
+      >
         <VCol
           v-for="dictionary in dictionaryStore.items"
           :key="dictionary.id"
@@ -63,8 +70,8 @@ import { Dictionary } from '@/features/dictionary/model/types';
             />
           </VBtn>
         </VCol>
-      </TransitionGroup>
-    </VRow>
+      </VueDraggableNext>
+    </TransitionGroup>
   </VRow>
 </template>
 <style lang="scss" scoped>

@@ -20,6 +20,7 @@
     "roboto-fontface": "*",
     "uuid": "^9.0.1",
     "vue": "^3.4.31",
+    "vue-draggable-next": "^2.2.1",
     "vuetify": "^3.6.11"
   },
   "devDependencies": {
