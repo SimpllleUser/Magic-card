@@ -40,6 +40,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages-test
+          publish_branch: deploy-pages
           force_orphan: true
-          commit_message: "Deploy to gh-pages from ${{ github.sha }}"
+          commit_message: "Deploy to deploy-pages from ${{ github.sha }}"
