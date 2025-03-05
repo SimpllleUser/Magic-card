@@ -3,16 +3,14 @@ on:
   pull_request:
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
   pull-request: write
 
 env:
   NODE_VERSION: '20'
 
 jobs:
-  test-coverage:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -45,6 +43,19 @@ jobs:
 
       - name: 'Test coverage'
         run: yarn test:coverage
+
+      - name: Comment Test Results
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'Unit tests completed successfully!'
+            });
+        if: github.event_name == 'pull_request'
+
       - name: 'Report Coverage'
         if: always()
         uses:  davelosert/vitest-coverage-report-action@v2
