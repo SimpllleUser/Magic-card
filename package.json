@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build-tsc": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
+    "deploy": "vite build && git subtree push --prefix dist origin gh-pages",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
     "test": "vitest",
@@ -21,6 +23,7 @@
     "roboto-fontface": "*",
     "uuid": "^9.0.1",
     "vue": "^3.4.31",
+    "vue-draggable-next": "^2.2.1",
     "vuetify": "^3.6.11"
   },
   "devDependencies": {

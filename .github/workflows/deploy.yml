@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.yarn
+            ~/.npm
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Vite project
+        run: yarn build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: deploy-pages
+          force_orphan: true

@@ -37,7 +37,7 @@ export class DictionaryFormModel {
       rules: { required: true }
     });
     this.description = input.textarea({
-      value: data?.description,
+      value: data?.description || '-',
       label: 'Description',
       rules: { required: true }
     });

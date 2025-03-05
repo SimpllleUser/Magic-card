@@ -7,6 +7,8 @@
   import WordSlider from '@/shared/ui/WordSlider.vue';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { useQuizsStore } from '@/stores/quiz';
+  import ButtonCopy from '@/shared/ui/WordButtonActions/ButtonCopy.vue';
+import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
 
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);
@@ -31,6 +33,11 @@
     currentWordIndex.value = index;
     setFliped(false);
   };
+
+  const actualCopyWord = computed(() => {
+    const keys = ['from', 'to'];
+    return words.value[currentWordIndex.value][isFlipped.value ? keys[1] : keys[0]];
+  });
 </script>
 
 <template>
@@ -46,6 +53,9 @@
         <div class="d-flex justify-space-between align-center">
           <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
           <div>
+            <ButtonVoice :value="actualCopyWord" />
+            <ButtonCopy :value="actualCopyWord" />
+
             <VBtn
               :color="Colors.Primary"
               :icon="Icons.Shuffle"
