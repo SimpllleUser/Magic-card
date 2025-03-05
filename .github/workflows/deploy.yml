@@ -1,4 +1,4 @@
-name: Main deploy
+name: Deploy
 on:
   push:
     branches:
@@ -8,7 +8,6 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  deployments: write  # Добавляем права для работы с deployments
 
 env:
   NODE_VERSION: '20'
@@ -35,50 +34,11 @@ jobs:
       - name: Build Vite project
         run: yarn build
 
-      - name: Check dist contents (debug)
-        run: ls -la dist
-
-      # Шаг 1: Создаём запись о деплое
-      - name: Create Deployment
-        id: create-deployment
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const deployment = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha,
-              environment: 'github-pages',
-              description: 'Deploying to GitHub Pages',
-              required_contexts: []
-            });
-            return deployment.data.id;
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Шаг 2: Деплоим на gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages
+          publish_branch: main
           force_orphan: true
-          commit_message: "Deploy to gh-pages from ${{ github.sha }}"
-
-      # Шаг 3: Обновляем статус деплоя
-      - name: Update Deployment Status
-        if: always()  # Выполняется даже при ошибке предыдущих шагов
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: ${{ steps.create-deployment.outputs.result }},
-              state: '${{ job.status }}' === 'success' ? 'success' : 'failure',
-              target_url: 'https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/',
-              description: '${{ job.status }}' === 'success' ? 'Deployment succeeded' : 'Deployment failed'
-            });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Deploy to main from ${{ github.sha }}"
