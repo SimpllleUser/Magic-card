@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to GitHub Pages
 on:
   push:
     branches:
@@ -25,6 +25,16 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.yarn
+            ~/.npm
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install Yarn
         run: npm install -g yarn
 
@@ -41,4 +51,3 @@ jobs:
           publish_dir: ./dist
           publish_branch: deploy-pages
           force_orphan: true
-          commit_message: "Deploy to deploy-pages from ${{ github.sha }}"
