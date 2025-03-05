@@ -4,7 +4,7 @@ on:
 
 permissions:
   contents: read
-  pull-request: write
+  pull-requests: write
 
 env:
   NODE_VERSION: '20'
