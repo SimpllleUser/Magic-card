@@ -13,7 +13,7 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  build-and-deploy:
+  test-coverage:
     runs-on: ubuntu-latest
 
     steps:
