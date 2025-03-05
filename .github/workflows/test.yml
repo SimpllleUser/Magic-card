@@ -1,13 +1,12 @@
-name: Test covrage
+name: Test
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
   contents: write
   pages: write
   id-token: write
+  pull-request: write
 
 env:
   NODE_VERSION: '20'
@@ -41,7 +40,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: 'Test'
+      - name: 'Run Tests'
+        run: yarn test
+
+      - name: 'Test coverage'
         run: yarn test:coverage
       - name: 'Report Coverage'
         if: always()
