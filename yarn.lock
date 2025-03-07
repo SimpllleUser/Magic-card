@@ -1277,6 +1277,11 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+appwrite@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-17.0.0.tgz#228603775931ceb52f9c3f9ddc39104300b54b77"
+  integrity sha512-R5+jMh6dVsKC5BdcO9G3wQPxqlU048zxj/Hahq2SU86XIxb0jWThQqS7MtyLUg7tz27SrwO2JvpwUrT9SOStDA==
+
 argparse@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz"

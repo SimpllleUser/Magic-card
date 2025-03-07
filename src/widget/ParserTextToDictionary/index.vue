@@ -5,6 +5,7 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { separateByString } from './helpers/separates';
 
+
   interface Emits {
     (event: 'set-words', payload: Array<Array<string>>): void;
   }

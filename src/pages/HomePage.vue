@@ -10,6 +10,8 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
 
+  import '../features/dictionary/api';
+
   const router = useRouter();
   const modal = useModalStore();
 
