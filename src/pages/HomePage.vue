@@ -39,12 +39,13 @@ import { useDictionaryApi } from '../features/dictionary/api';
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
-  const dictionaryApi = useDictionaryApi();
+  // const dictionaryApi = useDictionaryApi();
 
-  onMounted(async () => {
-    console.log(dictionaryStore.items[0]);
-    await dictionaryApi.save(dictionaryStore.items[0])
-  });
+  // onMounted(async () => {
+  //   console.log(dictionaryStore.items[0]);
+
+  //   await dictionaryApi.save(dictionaryStore.items[0])
+  // });
 </script>
 
 <template>

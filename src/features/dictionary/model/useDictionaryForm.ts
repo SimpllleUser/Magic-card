@@ -27,7 +27,7 @@ export class DictionaryFormModel {
   id: string;
   title: TextInput;
   description: TextareaInput;
-  dictionary: InputList<{ from: TextInput; to: TextInput }>;
+  items: InputList<{ from: TextInput; to: TextInput }>;
 
   constructor(data?: DictionaryItem) {
     this.id = data?.id || '';
@@ -41,7 +41,7 @@ export class DictionaryFormModel {
       label: 'Description',
       rules: { required: true }
     });
-    this.dictionary = input.list(data?.dictionary?.map(getDefaultDictionaryItem) || [], getDefaultDictionaryItem());
+    this.items = input.list(data?.items?.map(getDefaultDictionaryItem) || [], getDefaultDictionaryItem());
   }
 }
 

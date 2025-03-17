@@ -10,7 +10,7 @@ export interface DictionaryItem {
 export type Dictionary = Entity<{
   title: string;
   description: string;
-  dictionary: Array<DictionaryItem>; /// TODO replace into items
+  items: Array<DictionaryItem>;
 }>;
 
 export interface DictionaryFormProps {

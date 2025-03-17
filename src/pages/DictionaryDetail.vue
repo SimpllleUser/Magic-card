@@ -43,7 +43,9 @@
     ...item,
     number: index + 1
   });
-  const selectedWords = ref([...dictionary.value?.dictionary]);
+
+  console.log(dictionary.value)
+  const selectedWords = ref([...dictionary.value?.items]);
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 </script>
@@ -72,7 +74,7 @@
             <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
               <BaseList
                 v-model:selected-items="selectedWords"
-                :data="dictionary.dictionary"
+                :data="dictionary?.items"
                 header-title="Dictionary"
                 hide-footer
                 :keys="keys"
