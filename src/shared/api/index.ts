@@ -6,4 +6,4 @@ client.setEndpoint(import.meta.env.VITE_CLOUD_SERVICE_URL).setProject(import.met
 
 const database = new Databases(client);
 
-export { database, client };
+export { database, client, ID };

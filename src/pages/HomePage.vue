@@ -11,6 +11,7 @@
   import { VueDraggableNext } from 'vue-draggable-next';
 
   import '../features/dictionary/api';
+import { useDictionaryApi } from '../features/dictionary/api';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -37,6 +38,13 @@
   };
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
+
+  const dictionaryApi = useDictionaryApi();
+
+  onMounted(async () => {
+    console.log(dictionaryStore.items[0]);
+    await dictionaryApi.save(dictionaryStore.items[0])
+  });
 </script>
 
 <template>
