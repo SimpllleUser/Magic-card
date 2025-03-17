@@ -1,21 +1,13 @@
-import { Client, Databases, ID } from 'appwrite';
+import { database } from "@/shared/api";
 
-const client = new Client();
+const promise = database.listDocuments(import.meta.env.VITE_DB_ID, import.meta.env.VITE_DICTIONARY_COLLECTION_ID);
 
-client.setEndpoint('https://cloud.appwrite.io/v1').setProject(import.meta.env.VITE_PROJECT_ID);
-
-const databases = new Databases(client);
-
-const promise = databases.createDocument(import.meta.env.VITE_DB_ID, import.meta.env.VITE_COLLECTION_ID, ID.unique(), {
-  title: 'Some title',
-  description: 'Some description'
-});
-
-promise.then(
-  function (response) {
-    console.log(response);
-  },
-  function (error) {
-    console.log(error);
-  }
-);
+// promise.then(
+//   function (response) {
+//     console.log(response);
+//     console.log(JSON.parse(JSON.stringify(response.words)));
+//   },
+//   function (error) {
+//     console.log(JSON.parse(JSON.stringify(error)));
+//   }
+// );
