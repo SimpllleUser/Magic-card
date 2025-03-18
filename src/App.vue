@@ -9,7 +9,7 @@ import { useDictionaryStore } from './stores/dictionary';
       await dictionaryStore.saveDictionaryOnCloudFromStorage();
     }
     if (!dictionaryStore.items.length) {
-      await dictionaryStore.saveDictionaryInStorageFromCloud();
+      await dictionaryStore.saveDictionaryOnStorageFromCloud();
     }
   });
 </script>
