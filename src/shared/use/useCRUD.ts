@@ -42,18 +42,21 @@ export function useCRUD<T extends CrudItem>(
 export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig): any {
   const data: Ref<Array<T>> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
 
-  const create = (item: Required<WithoutId<T>>): void => {
-    data.value.push({ ...item, id: generateId() });
+  const create = (item: Required<WithoutId<T>>): T => {
+    const newItem = { ...item, id: generateId() };
+    data.value.push(newItem);
+    return newItem;
   };
 
   const read = (): T[] => {
     return _.cloneDeep(data.value);
   };
 
-  const update = (updatedItem: Partial<T> & { id: string }) => {
+  const update = (updatedItem: Partial<T> & { id: string }): T | undefined => {
     const index = _.findIndex(data.value, { id: updatedItem.id });
     if (index !== -1) {
       data.value[index] = _.merge({}, data.value[index], updatedItem);
+      return data.value[index]
     }
   };
 

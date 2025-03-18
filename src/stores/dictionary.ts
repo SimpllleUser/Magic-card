@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { Dictionary } from '@/features/dictionary/model/types';
 import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
-import { has } from 'lodash';
+import { has, update } from 'lodash';
 import { useDictionaryApi } from '@/features/dictionary/api';
 
 const dictionaryApi = useDictionaryApi();
@@ -31,10 +31,24 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     });
   }
 
+  const updateWithCloud = async (dictionary: Dictionary) => {
+    const updatedItem = update(dictionary)
+    const res = await dictionaryApi.update(updatedItem)
+    return res
+  }
+
+  const createWithCloud = async (dictionary: Dictionary) => {
+    const createdItem = create(dictionary)
+    const res = await dictionaryApi.save(createdItem)
+    return res
+  }
+
   return {
     ...dictionaryCrud,
     update,
     create,
+    updateWithCloud,
+    createWithCloud,
     items: items.value,
     saveDictionaryOnCloudFromStorage,
     saveDictionaryOnStorageFromCloud,
