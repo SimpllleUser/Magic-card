@@ -1,31 +1,34 @@
 import { database, ID } from '@/shared/api';
 import { Dictionary } from '../model/types';
+import { EnitityAPI } from '@/shared/index/types';
 
-// const promise = database.listDocuments(import.meta.env.VITE_DB_ID, import.meta.env.VITE_DICTIONARY_COLLECTION_ID);
 
-export function useDictionaryApi(): { save: (dictionary: Dictionary) => Promise<void> } {
+type DictionaryWithItemsString = Dictionary & { items: string };
+type DictionaryAPIWithStringItems = EnitityAPI<DictionaryWithItemsString>;
+type DictionaryApiData = EnitityAPI<Dictionary>;
+
+const serialize = (dictionary: Dictionary): Dictionary & { items: string } => ({
+  ...dictionary,
+  items: JSON.stringify(dictionary.items)
+})
+
+const deserialize = (dictionary: DictionaryAPIWithStringItems): DictionaryApiData => ({
+  ...dictionary,
+  items: JSON.parse(dictionary.items)
+})
+
+export function useDictionaryApi(): { save: (dictionary: Dictionary) => Promise<DictionaryApiData> } {
   const save = async (dictionary: Dictionary) => {
     const res = await database.createDocument(
       import.meta.env.VITE_DB_ID,
       import.meta.env.VITE_DICTIONARY_COLLECTION_ID,
       ID.unique(),
-      dictionary
+      serialize(dictionary)
     );
-
-    console.log(res);
+    return deserialize(res)
   };
 
   return {
     save
   };
 }
-
-// promise.then(
-//   function (response) {
-//     console.log(response);
-//     console.log(JSON.parse(JSON.stringify(response.words)));
-//   },
-//   function (error) {
-//     console.log(JSON.parse(JSON.stringify(error)));
-//   }
-// );
