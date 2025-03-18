@@ -27,6 +27,7 @@ export function useDictionaryApi(): {
 } {
   const save = async (dictionary: Dictionary) => {
     const res = await database.createDocument(
+      /// SET this params in main service api using Class
       import.meta.env.VITE_DB_ID,
       import.meta.env.VITE_DICTIONARY_COLLECTION_ID,
       ID.unique(),
