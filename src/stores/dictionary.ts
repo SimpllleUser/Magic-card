@@ -15,7 +15,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
   const items = computed(() => dictionaryCrud.data);
 
-  const baseSyncLocalDictionaryWithClold = async () => {
+  const saveDictionaryOnCloudFromStorage = async () => {
     for (const dictionary of dictionaryCrud.data.value) {
       if (!has(dictionary, ['$id'])) {
         const savedDictionary = await dictionaryApi.save(dictionary);
@@ -24,11 +24,19 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     }
   }
 
+  const saveDictionaryOnStorageFromCloud = async () => {
+    const dictionaries = await dictionaryApi.getAll();
+    dictionaries.forEach((dictionary) => {
+      dictionaryCrud.create(dictionary);
+    });
+  }
+
   return {
     ...dictionaryCrud,
     update,
     create,
     items: items.value,
-    baseSyncLocalDictionaryWithClold,
+    saveDictionaryOnCloudFromStorage,
+    saveDictionaryOnStorageFromCloud,
   };
 });

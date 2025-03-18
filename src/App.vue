@@ -5,7 +5,12 @@ import { useDictionaryStore } from './stores/dictionary';
   const dictionaryStore = useDictionaryStore();
 
   onMounted( async () => {
-    await dictionaryStore.baseSyncLocalDictionaryWithClold();
+    if (dictionaryStore.items.length) {
+      await dictionaryStore.saveDictionaryOnCloudFromStorage();
+    }
+    if (!dictionaryStore.items.length) {
+      await dictionaryStore.saveDictionaryInStorageFromCloud();
+    }
   });
 </script>
 

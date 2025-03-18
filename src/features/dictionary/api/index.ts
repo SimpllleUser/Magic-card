@@ -28,7 +28,17 @@ export function useDictionaryApi(): { save: (dictionary: Dictionary) => Promise<
     return deserialize(res)
   };
 
+  const getAll = async (): Promise<DictionaryApiData[]> => {
+    const res = await database.listDocuments(
+      import.meta.env.VITE_DB_ID,
+      import.meta.env.VITE_DICTIONARY_COLLECTION_ID
+    );
+
+    return res.documents.map(deserialize)
+  };
+
   return {
-    save
+    save,
+    getAll,
   };
 }
