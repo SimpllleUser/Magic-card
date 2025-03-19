@@ -44,7 +44,6 @@
     number: index + 1
   });
 
-  console.log(dictionary.value)
   const selectedWords = ref([...dictionary.value?.items]);
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);

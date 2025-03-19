@@ -1,61 +1,57 @@
-import { database, ID } from '@/shared/api';
+import { ApiService } from '@/shared/api';
 import { Dictionary } from '../model/types';
 import { EnitityAPI } from '@/shared/index/types';
-import { omit } from 'lodash';
 
 type DictionaryWithItemsString = Dictionary & { items: string };
 type DictionaryAPIWithStringItems = EnitityAPI<DictionaryWithItemsString>;
 type DictionaryApiData = EnitityAPI<Dictionary>;
 
-const serialize = (dictionary: Dictionary): Dictionary & { items: string } => {
-  return {
-    /// TODO make this logic in main service api
-    ...omit(dictionary, ['$databaseId', '$collectionId']),
-    items: JSON.stringify(dictionary.items)
-  };
-};
-
+const serialize = (dictionary: Dictionary): Dictionary & { items: string } => ({
+  ...dictionary,
+  items: JSON.stringify(dictionary.items)
+})
 const deserialize = (dictionary: DictionaryAPIWithStringItems): DictionaryApiData => ({
   ...dictionary,
   items: JSON.parse(dictionary.items)
 });
 
+const apiService = new ApiService({
+  dbId: import.meta.env.VITE_DB_ID,
+  collectionId: import.meta.env.VITE_DICTIONARY_COLLECTION_ID
+})
+
 export function useDictionaryApi(): {
-  save: (dictionary: Dictionary) => Promise<DictionaryApiData>;
+  create: (dictionary: Dictionary) => Promise<DictionaryApiData>;
   update: (dictionary: Dictionary) => Promise<DictionaryApiData>;
   getAll: () => Promise<DictionaryApiData[]>;
+  remove: () => Promise<unknown>;
 } {
-  const save = async (dictionary: Dictionary) => {
-    const res = await database.createDocument(
-      /// SET this params in main service api using Class
-      import.meta.env.VITE_DB_ID,
-      import.meta.env.VITE_DICTIONARY_COLLECTION_ID,
-      ID.unique(),
-      serialize(dictionary)
-    );
-    return deserialize(res);
+  const create = async (dictionary: Dictionary) => {
+    const result = await apiService.create<DictionaryWithItemsString>(serialize(dictionary));
+    return deserialize(result);
   };
 
   const update = async (dictionary: DictionaryApiData): Promise<DictionaryApiData> => {
-    console.log(dictionary, dictionary.$id);
-    const res = await database.updateDocument(
-      import.meta.env.VITE_DB_ID,
-      import.meta.env.VITE_DICTIONARY_COLLECTION_ID,
-      dictionary.$id,
-      serialize(dictionary)
-    );
+    const res = await apiService.update<DictionaryWithItemsString>(serialize(dictionary))
     return deserialize(res);
   };
 
   const getAll = async (): Promise<DictionaryApiData[]> => {
-    const res = await database.listDocuments(import.meta.env.VITE_DB_ID, import.meta.env.VITE_DICTIONARY_COLLECTION_ID);
+    const res = await apiService.getAll<DictionaryWithItemsString>();
 
     return res.documents.map(deserialize);
   };
 
+  const remove = async (id: string): Promise<unknown> => {
+    const res = await apiService.remove(id);
+      console.log(res)
+    return res
+  };
+
   return {
-    save,
+    create,
     update,
+    remove,
     getAll
   };
 }

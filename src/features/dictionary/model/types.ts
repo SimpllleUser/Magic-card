@@ -1,11 +1,14 @@
 import Modals from '@/core/models/modals';
 import { Entity } from '@/core/models';
+import { EntityApiFields } from '@/shared/index/types';
 
-export interface DictionaryItem {
+export type DictionaryItem {
   id: string;
   from: string;
   to: string;
-}
+} & Partial<EntityApiFields>
+
+
 
 export type Dictionary = Entity<{
   title: string;

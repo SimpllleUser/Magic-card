@@ -2,8 +2,9 @@ import { defineStore } from 'pinia';
 import { Dictionary } from '@/features/dictionary/model/types';
 import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
-import { has, update } from 'lodash';
+import { has } from 'lodash';
 import { useDictionaryApi } from '@/features/dictionary/api';
+import { EnitityAPI } from '@/shared/index/types';
 
 const dictionaryApi = useDictionaryApi();
 
@@ -18,7 +19,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   const saveDictionaryOnCloudFromStorage = async () => {
     for (const dictionary of dictionaryCrud.data.value) {
       if (!has(dictionary, ['$id'])) {
-        const savedDictionary = await dictionaryApi.save(dictionary);
+        const savedDictionary = await dictionaryApi.create(dictionary);
         dictionaryCrud.update(savedDictionary);
       }
     }
@@ -39,8 +40,14 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
   const createWithCloud = async (dictionary: Dictionary) => {
     const createdItem = create(dictionary)
-    const res = await dictionaryApi.save(createdItem)
+    const res = await dictionaryApi.create(createdItem)
     return res
+  }
+
+  const removeWithCloud = async (dictionary: Dictionary) => {
+    dictionaryCrud.remove(dictionary.id)
+    if (dictionary?.$id)
+      await dictionaryApi.remove(dictionary?.$id)
   }
 
   return {
@@ -49,6 +56,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     create,
     updateWithCloud,
     createWithCloud,
+    removeWithCloud,
     items: items.value,
     saveDictionaryOnCloudFromStorage,
     saveDictionaryOnStorageFromCloud,

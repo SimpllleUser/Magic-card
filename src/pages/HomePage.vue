@@ -31,7 +31,7 @@
       description: 'Are you sure you want to delete this dictionary?',
       type: Colors.Error,
       onConfirm: () => {
-        dictionaryStore.remove(id);
+        dictionaryStore.removeWithCloud(dictionaryStore.getById(id));
       }
     });
   };
