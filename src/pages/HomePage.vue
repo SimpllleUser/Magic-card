@@ -10,6 +10,8 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
 
+  import '../features/dictionary/api';
+
   const router = useRouter();
   const modal = useModalStore();
 
@@ -29,12 +31,13 @@
       description: 'Are you sure you want to delete this dictionary?',
       type: Colors.Error,
       onConfirm: () => {
-        dictionaryStore.remove(id);
+        dictionaryStore.removeWithCloud(dictionaryStore.getById(id));
       }
     });
   };
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
+
 </script>
 
 <template>

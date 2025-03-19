@@ -22,11 +22,11 @@
 
   const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
 
-  const onSubmit = (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, 'id'>>>) => {
+  const onSubmit = async (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, 'id'>>>) => {
     if (!params.isValid) return;
 
-    const action = params.action === ActionForm.Create ? dictionaryStore.create : dictionaryStore.update;
-    action(params.value);
+    const action = params.action === ActionForm.Create ? dictionaryStore.createWithCloud : dictionaryStore.updateWithCloud;
+    await action(params.value);
     router.push({ name: PageNames.Home });
   };
 
@@ -58,10 +58,10 @@
           :id="Modals.ImportWords"
           title="Import words"
         >
-          <ParserTextToDictionary @set-words="onSetWords($event, form.dictionary)" />
+          <ParserTextToDictionary @set-words="onSetWords($event, form.items)" />
         </BaseModal>
         <InputList
-          v-model="form.dictionary"
+          v-model="form.items"
           label="Dictionary"
           with-animation
         >
