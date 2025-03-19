@@ -41,9 +41,9 @@ export class ApiService {
     return res.documents as EnitityAPI<T>[];
   }
 
-  async remove<T extends object>(id: string): Promise<EnitityAPI<T>> {
-    const res = await database.deleteDocument(this.dbId, this.collectionId, id);
-    return res;
+  async remove(id: string): Promise<{ success: boolean, id: string }> {
+    await database.deleteDocument(this.dbId, this.collectionId, id);
+    return { success: true, id };
   }
 
   private deserialize<T extends object>(data: EnitityAPI<T>): T {

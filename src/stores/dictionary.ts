@@ -4,7 +4,6 @@ import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { has } from 'lodash';
 import { useDictionaryApi } from '@/features/dictionary/api';
-import { EnitityAPI } from '@/shared/index/types';
 
 const dictionaryApi = useDictionaryApi();
 
@@ -33,15 +32,13 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   }
 
   const updateWithCloud = async (dictionary: Dictionary) => {
-    const updatedItem = update(dictionary)
-    const res = await dictionaryApi.update(updatedItem)
-    return res
+    const cloudItem = await dictionaryApi.update(dictionary)
+    update(cloudItem)
   }
 
   const createWithCloud = async (dictionary: Dictionary) => {
-    const createdItem = create(dictionary)
-    const res = await dictionaryApi.create(createdItem)
-    return res
+    const cloudItem = await dictionaryApi.create(dictionary)
+    create(cloudItem)
   }
 
   const removeWithCloud = async (dictionary: Dictionary) => {

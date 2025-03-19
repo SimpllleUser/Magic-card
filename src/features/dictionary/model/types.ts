@@ -2,7 +2,7 @@ import Modals from '@/core/models/modals';
 import { Entity } from '@/core/models';
 import { EntityApiFields } from '@/shared/index/types';
 
-export type DictionaryItem {
+export type DictionaryItem = {
   id: string;
   from: string;
   to: string;
