@@ -4,6 +4,8 @@ import { omit } from 'lodash';
 
 const client = new Client();
 
+console.log(import.meta.env.VITE_CLOUD_SERVICE_URL)
+console.log(import.meta.env)
 client.setEndpoint(import.meta.env.VITE_CLOUD_SERVICE_URL).setProject(import.meta.env.VITE_PROJECT_ID);
 
 const database = new Databases(client);
