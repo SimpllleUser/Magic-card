@@ -44,7 +44,6 @@ export function useDictionaryApi(): {
 
   const remove = async (id: string): Promise<unknown> => {
     const res = await apiService.remove(id);
-      console.log(res)
     return res
   };
 

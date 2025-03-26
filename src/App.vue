@@ -12,7 +12,6 @@
       await dictionaryStore.saveDictionaryOnStorageFromCloud();
     }
   });
-  console.log(import.meta.env.VITE_DB_ID);
 </script>
 
 <template>
