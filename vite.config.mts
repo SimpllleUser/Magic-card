@@ -13,7 +13,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'MagicCard/',
+  base: '/MagicCard/',
   plugins: [
     VueRouter({
       dts: 'src/typed-router.d.ts',
