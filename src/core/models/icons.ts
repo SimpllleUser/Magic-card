@@ -29,6 +29,7 @@ export enum Icons {
   Bookmark = 'mdi-bookmark',
   Copy = 'mdi-content-copy',
   Google = 'mdi-google',
+  Logout = 'mdi-logout',
 
   // Navigation
   Home = 'mdi-home',
