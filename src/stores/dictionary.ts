@@ -4,21 +4,25 @@ import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { has } from 'lodash';
 import { useDictionaryApi } from '@/features/dictionary/api';
+import { useAuthStore } from './auth';
 
 const dictionaryApi = useDictionaryApi();
 
-
 export const useDictionaryStore = defineStore('dictionary', () => {
+  const authStore = useAuthStore();
+
   const dictionaryCrud = useCRUD<Dictionary>([], { key: 'dictionarys', returnAsObject: true });
   const create = (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary))
   const update = (dictionary: Dictionary) => dictionaryCrud.update(mappedDictionaryItems(dictionary))
 
-  const items = computed(() => dictionaryCrud.data);
 
   const saveDictionaryOnCloudFromStorage = async () => {
     for (const dictionary of dictionaryCrud.data.value) {
       if (!has(dictionary, ['$id'])) {
-        const savedDictionary = await dictionaryApi.create(dictionary);
+        const savedDictionary = await dictionaryApi.create({
+          ...dictionary,
+          userId: authStore.user?.$id,
+        });
         dictionaryCrud.update(savedDictionary);
       }
     }
@@ -47,6 +51,13 @@ export const useDictionaryStore = defineStore('dictionary', () => {
       await dictionaryApi.remove(dictionary?.$id)
   }
 
+  const items = computed(() => {
+    const localItems = dictionaryCrud.data.value.filter((item) => !item?.$id)
+    if (!authStore.user?.$id) return localItems
+
+    return dictionaryCrud.data.value.filter((item) => item?.userId === authStore.user?.$id)
+  });
+
   return {
     ...dictionaryCrud,
     update,
@@ -54,7 +65,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     updateWithCloud,
     createWithCloud,
     removeWithCloud,
-    items: items.value,
+    items,
     saveDictionaryOnCloudFromStorage,
     saveDictionaryOnStorageFromCloud,
   };

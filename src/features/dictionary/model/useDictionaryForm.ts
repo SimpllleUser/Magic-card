@@ -2,6 +2,7 @@ import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
 import { Dictionary, DictionaryItem } from './types';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
 import input from 'base-form/src/shared/ui/inputs/config';
+import { useAuthStore } from '@/stores/auth';
 
 const getDefaultDictionaryItem = (
   data?: DictionaryItem = {
@@ -23,14 +24,18 @@ const getDefaultDictionaryItem = (
   })
 });
 
+const authStore = useAuthStore();
+
 export class DictionaryFormModel {
   id: string;
+  userId: string = '';
   title: TextInput;
   description: TextareaInput;
   items: InputList<{ from: TextInput; to: TextInput }>;
 
   constructor(data?: DictionaryItem) {
     this.id = data?.id || '';
+    this.userId = authStore.user?.$id || '';
     this.title = input.text({
       value: data?.title,
       label: 'Title',

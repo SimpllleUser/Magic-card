@@ -14,6 +14,7 @@ export type Dictionary = Entity<{
   title: string;
   description: string;
   items: Array<DictionaryItem>;
+  userId?: string;
 }>;
 
 export interface DictionaryFormProps {

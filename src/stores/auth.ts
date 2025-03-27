@@ -23,10 +23,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const isAuthenticated = computed(() => !!user.value?.$id)
-  const userName = computed(() => user.value?.name)
+  const userName = computed(() => user.value?.name || '')
 
 
   return {
+    user,
     initUserData,
     singOut,
     signIn,
