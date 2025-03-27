@@ -28,6 +28,7 @@ export enum Icons {
   Favorite = 'mdi-heart',
   Bookmark = 'mdi-bookmark',
   Copy = 'mdi-content-copy',
+  Google = 'mdi-google',
 
   // Navigation
   Home = 'mdi-home',

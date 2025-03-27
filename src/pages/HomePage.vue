@@ -10,7 +10,7 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
 
-  import '../features/dictionary/api';
+  import {loginWithGoogle, getUser} from '@/shared/api/auth'
 
   const router = useRouter();
   const modal = useModalStore();
@@ -38,9 +38,20 @@
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
+onMounted(async () => {
+  const res = await getUser();
+  console.log(res)
+});
+
+const onSignIn = async () => {
+  const res = await loginWithGoogle()
+  console.log(res)
+}
 </script>
 
 <template>
+      <VBtn @click="onSignIn">Sign in by <VIcon :icon="Icons.Google" class="ml-2" /></VBtn>
+
   <VRow class="pa-4">
     <ConfirmModal :id="Modals.DictionaryConfirmRemove" />
     <TransitionGroup name="list">
