@@ -9,9 +9,6 @@
   import { PageNames } from '@/router/types';
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
-  import { useAuthStore } from '@/stores/auth';
-
-  const authStore = useAuthStore();
 
   const router = useRouter();
   const modal = useModalStore();
@@ -38,12 +35,6 @@
   };
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
-
-  watch(() => authStore.isAuthenticated, async (value) => {
-    if(value) {
-      await dictionaryStore.syncDataBetweenStoragesData();
-    }
-  })
 </script>
 
 <template>

@@ -7,7 +7,6 @@ import { useAuthStore } from './auth';
 
 const dictionaryApi = useDictionaryApi();
 
-
 const getDictionaryIds = (items: Dictionary[]) => items.map((item) => item.id);
 const findDictionaryById = (items: Dictionary[], id: string) => items.find((item) => item.id === id);
 
@@ -24,7 +23,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     const dictionariesFromStorage = dictionaryCrud.data.value;
 
     const storageDictionaryIds = getDictionaryIds(dictionariesFromStorage);
-    const cloudDictionaryIds = getDictionaryIds(dictionariesFromCloud)
+    const cloudDictionaryIds = getDictionaryIds(dictionariesFromCloud);
 
     const allDictionaryIds = [...storageDictionaryIds, ...cloudDictionaryIds];
 
@@ -35,7 +34,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
       if (existInCloud && existInStorage) continue;
 
       if (existInCloud && !existInStorage) {
-        const cloudDictionary = findDictionaryById(dictionariesFromCloud, id)
+        const cloudDictionary = findDictionaryById(dictionariesFromCloud, id);
         if (!cloudDictionary) continue;
         dictionaryCrud.add(cloudDictionary);
       }
@@ -81,6 +80,6 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     createWithCloud,
     removeWithCloud,
     items,
-    syncDataBetweenStoragesData,
+    syncDataBetweenStoragesData
   };
 });
