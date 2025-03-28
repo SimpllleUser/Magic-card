@@ -1,17 +1,18 @@
 <script lang="ts" setup>
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
+  import { useAuthStore } from './stores/auth';
   import { useDictionaryStore } from './stores/dictionary';
-
+  const authStore = useAuthStore();
   const dictionaryStore = useDictionaryStore();
 
-  onMounted(async () => {
-    if (dictionaryStore.items.length) {
-      await dictionaryStore.saveDictionaryOnCloudFromStorage();
+  watch(
+    () => authStore.isAuthenticated,
+    async (value) => {
+      if (value) {
+        await dictionaryStore.syncDataBetweenStoragesData();
+      }
     }
-    if (!dictionaryStore.items.length) {
-      await dictionaryStore.saveDictionaryOnStorageFromCloud();
-    }
-  });
+  );
 </script>
 
 <template>

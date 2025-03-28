@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icons } from '@/core/models/icons';
 import { useBreadcrumbs } from '../model/useBreadcrumbs';
-import { Variants } from '@/core/models/enums';
+import { Colors, Variants } from '@/core/models/enums';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -24,7 +24,7 @@ const isLast = (index: number) => {
       <VIcon v-show="!index" :icon="Icons.ViewCarouselIcon" />
       <VBtn
         :variant="Variants.Text"
-        :disabled="isOnlyOne || isLast(index)"
+        :color="!isOnlyOne && isLast(index) ? Colors.Primary : Colors.Grey"
         @click="router.push(item.to)"
       >
         {{ item.title }}

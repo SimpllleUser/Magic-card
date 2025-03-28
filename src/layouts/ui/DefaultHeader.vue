@@ -5,6 +5,7 @@
   import { useTheme } from 'vuetify';
   import { computed } from 'vue';
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
+  import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
   const themeConfig = useTheme();
   const theme = useStorage('theme', themeConfig.global.name.value);
 
@@ -32,21 +33,21 @@
     </v-app-bar-title>
 
     <template #append>
-      <VBtn
-        :icon="themeIcon"
-        @click="toggleTheme"
-        class="mr-4"
-      />
+        <VBtn
+          :icon="themeIcon"
+          @click="toggleTheme"
+        />
+        <AuthBlock class="ml-4" />
     </template>
   </VToolbar>
 </template>
 <style lang="scss" scoped>
-.header {
-  :deep(.v-toolbar__content) {
-    max-width: 1280px;
-    margin: 0 auto;
+  .header {
+    :deep(.v-toolbar__content) {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
   }
-}
   .title-wrapper {
     display: flex;
     align-items: center;
