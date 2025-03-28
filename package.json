@@ -1,6 +1,7 @@
 {
   "name": "temp",
   "version": "0.0.0",
+  "packageManager": "yarn@4.5.0",
   "scripts": {
     "dev": "vite",
     "build-tsc": "vue-tsc --noEmit && vite build",
