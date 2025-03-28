@@ -40,12 +40,9 @@
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
   watch(() => authStore.isAuthenticated, async (value) => {
-    if(value)
-      await dictionaryStore.saveDictionaryOnCloudFromStorage();
-
-    /// Only for authenticated users
-    /// TODO fetch dictionaries
-    /// TODO add merge dictionaries
+    if(value) {
+      await dictionaryStore.syncDataBetweenStoragesData();
+    }
   })
 </script>
 

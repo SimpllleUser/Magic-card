@@ -19,7 +19,8 @@ export function useCRUD<T extends CrudItem>(
   config: IUseCrudConfig & { returnAsObject: true }
 ): {
   data: Ref<Entity<T>[]>;
-  create: (item: Required<WithoutId<T>>) => void;
+  create: (item: Required<WithoutId<T>>) => T;
+  add: (item: Required<WithoutId<T>>) => T;
   read: () => T[];
   update: (updatedItem: Partial<T>) => void;
   remove: (id: string) => void;
@@ -42,9 +43,13 @@ export function useCRUD<T extends CrudItem>(
 export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?: IUseCrudConfig): any {
   const data: Ref<Array<T>> = config?.key ? useLocalStorage(config.key, initialValue) : ref(initialValue);
 
+  const add = (item: T) => {
+    data.value.push(item);
+  }
+
   const create = (item: Required<WithoutId<T>>): T => {
     const newItem = { ...item, id: generateId() };
-    data.value.push(newItem);
+    add(newItem);
     return newItem;
   };
 
@@ -67,8 +72,8 @@ export function useCRUD<T extends CrudItem>(initialValue: Array<T> = [], config?
   const getById = (id: string): T | undefined => _.find(data.value, { id });
 
   if (config?.returnAsObject) {
-    return { data, create, read, update, remove, getById };
+    return { data, create, add, read, update, remove, getById };
   }
 
-  return [data, create, read, update, remove, getById];
+  return [data, create, add,  read, update, remove, getById];
 }

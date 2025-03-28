@@ -12,7 +12,7 @@ const serialize = (dictionary: Dictionary): Dictionary & { items: string } => ({
 })
 const deserialize = (dictionary: DictionaryAPIWithStringItems): DictionaryApiData => ({
   ...dictionary,
-  items: JSON.parse(dictionary.items)
+  items: dictionary?.items ? JSON.parse(dictionary?.items) : []
 });
 
 const apiService = new ApiService({
@@ -37,9 +37,8 @@ export function useDictionaryApi(): {
   };
 
   const getAll = async (): Promise<DictionaryApiData[]> => {
-    const res = await apiService.getAll<DictionaryWithItemsString>();
-
-    return res.documents.map(deserialize);
+    const res = await apiService.getAll<DictionaryWithItemsString>()
+    return res.map(deserialize);
   };
 
   const remove = async (id: string): Promise<unknown> => {
