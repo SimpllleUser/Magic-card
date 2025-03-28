@@ -40,4 +40,4 @@ import { User } from '../model/types';
   }
 }
 
-export const authServiceApi = new AuthServiceApi('http://localhost:3000/')
+export const authServiceApi = new AuthServiceApi(import.meta.env.PROD ? 'https://simpllleuser.github.io/MagicCard/' : 'http://localhost:3000/')
