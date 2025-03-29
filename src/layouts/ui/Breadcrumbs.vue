@@ -21,8 +21,9 @@ const isLast = (index: number) => {
       :key="item.to"
       class="breadcrumb-item d-flex align-center"
     >
-      <VIcon v-show="!index" :icon="Icons.ViewCarouselIcon" />
+      <img v-show="!index"  src="../../assets/logo-main.svg" alt="MagicCardLogo" width="25px" />
       <VBtn
+      class="ml-2"
         :variant="Variants.Text"
         :color="!isOnlyOne && isLast(index) ? Colors.Primary : Colors.Grey"
         @click="router.push(item.to)"

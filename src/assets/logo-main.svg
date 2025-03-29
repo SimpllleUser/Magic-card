@@ -1,0 +1,20 @@
+<svg width="48" height="62" viewBox="0 0 48 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="16.6727" y="0.812461" width="32" height="47" rx="6" transform="rotate(12.1102 16.6727 0.812461)" fill="#0EA5E9" stroke="black" stroke-width="2"/>
+<rect x="4" y="8" width="32" height="47" rx="6" fill="white" stroke="black" stroke-width="2"/>
+<g filter="url(#filter0_f_1_8)">
+<rect x="5" y="8" width="33" height="49" rx="6" stroke="black" stroke-opacity="0.45" stroke-width="2"/>
+</g>
+<path d="M19.0767 19.2199C19.4183 18.3986 20.5817 18.3986 20.9233 19.2199L23.733 25.9752C23.877 26.3214 24.2026 26.558 24.5764 26.5879L31.8692 27.1726C32.7559 27.2437 33.1154 28.3502 32.4399 28.9289L26.8835 33.6885C26.5987 33.9325 26.4743 34.3152 26.5614 34.68L28.2589 41.7966C28.4653 42.6618 27.5241 43.3457 26.765 42.882L20.5213 39.0684C20.2012 38.8729 19.7988 38.8729 19.4787 39.0684L13.235 42.882C12.4759 43.3457 11.5347 42.6618 11.7411 41.7966L13.4386 34.68C13.5257 34.3152 13.4013 33.9325 13.1165 33.6885L7.56011 28.9289C6.88457 28.3502 7.2441 27.2437 8.13075 27.1726L15.4236 26.5879C15.7974 26.558 16.123 26.3214 16.267 25.9752L19.0767 19.2199Z" fill="url(#paint0_linear_1_8)"/>
+<defs>
+<filter id="filter0_f_1_8" x="0" y="3" width="43" height="59" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_1_8"/>
+</filter>
+<linearGradient id="paint0_linear_1_8" x1="24" y1="35" x2="20" y2="47" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0EA5E9"/>
+<stop offset="0.467903" stop-color="#22B0F0"/>
+<stop offset="1" stop-color="#38BDF8"/>
+</linearGradient>
+</defs>
+</svg>

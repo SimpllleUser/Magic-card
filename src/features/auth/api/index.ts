@@ -7,7 +7,6 @@ import { User } from '../model/types';
   private redirectUrl: string = '/'
 
   constructor(redirectUrl: string) {
-    console.log(redirectUrl)
     this.redirectUrl = redirectUrl
   }
 
