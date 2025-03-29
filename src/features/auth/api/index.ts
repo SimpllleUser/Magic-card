@@ -7,6 +7,7 @@ import { User } from '../model/types';
   private redirectUrl: string = '/'
 
   constructor(redirectUrl: string) {
+    console.log(redirectUrl)
     this.redirectUrl = redirectUrl
   }
 
@@ -40,4 +41,4 @@ import { User } from '../model/types';
   }
 }
 
-export const authServiceApi = new AuthServiceApi('http://localhost:3000/')
+export const authServiceApi = new AuthServiceApi(window.location.origin)
