@@ -94,7 +94,8 @@ const myCustomThemes = {
 };
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-export default createVuetify({
+
+const vuetify = createVuetify({
   theme: {
     defaultTheme: 'light',
     themes: {
@@ -103,3 +104,5 @@ export default createVuetify({
     }
   }
 });
+export default  vuetify
+
