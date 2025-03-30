@@ -68,7 +68,6 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
   $collectionId: string;
 
   constructor(data: EnitityAPI<DictionaryItem>) {
-    console.log(data, '!!!')
     super(data);
     this.$id = data.$id;
     this.$permissions = data.$permissions;

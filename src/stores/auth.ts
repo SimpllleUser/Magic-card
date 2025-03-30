@@ -1,21 +1,23 @@
 import { authServiceApi } from '@/features/auth/api';
 import { User } from '@/features/auth/model/types';
-import { Nullable } from 'base-form/src/core/types/common';
 import { defineStore } from 'pinia';
-
+import { useStorage } from '@vueuse/core'
 
 
 export const useAuthStore = defineStore('auth', () => {
 
-  const user = ref<Nullable<User>>(null)
+  const user = useStorage<User | Object>('user', {})
+
 
   const initUserData = async () => {
-    user.value = await authServiceApi.getUser()
+    user.value = await authServiceApi.getUser(() => {
+      user.value = {}
+    })
   }
 
   const singOut = async () => {
     await authServiceApi.logoutUser()
-    user.value = null
+    user.value = {}
   }
 
   const signIn = async () => {
