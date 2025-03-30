@@ -51,18 +51,28 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   };
 
   const updateWithCloud = async (dictionary: Dictionary) => {
+
+    if (!authStore.isAuthenticated) {
+       update(dictionary);
+       return
+    }
     const cloudItem = await dictionaryApi.update(dictionary);
     update(cloudItem);
   };
 
   const createWithCloud = async (dictionary: Dictionary) => {
+
+    if (!authStore.isAuthenticated) {
+      create(dictionary);
+      return
+   }
     const cloudItem = await dictionaryApi.create(dictionary);
     create(cloudItem);
   };
 
   const removeWithCloud = async (dictionary: Dictionary) => {
     dictionaryCrud.remove(dictionary.id);
-    if (dictionary?.$id) await dictionaryApi.remove(dictionary?.$id);
+    if (dictionary?.$id && authStore.isAuthenticated) await dictionaryApi.remove(dictionary?.$id);
   };
 
   const items = computed(() => {
