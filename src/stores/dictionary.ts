@@ -4,6 +4,8 @@ import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { useDictionaryApi } from '@/features/dictionary/api';
 import { useAuthStore } from './auth';
+import { EnitityAPI } from '@/shared/index/types';
+import { setActionsStrategy } from '@/features/dictionary/model/ActionDictionaryStrategy';
 
 const dictionaryApi = useDictionaryApi();
 
@@ -12,6 +14,8 @@ const findDictionaryById = (items: Dictionary[], id: string) => items.find((item
 
 export const useDictionaryStore = defineStore('dictionary', () => {
   const authStore = useAuthStore();
+
+  const actionsStategy = setActionsStrategy(authStore.isAuthenticated);
 
   const dictionaryCrud = useCRUD<Dictionary>([], { key: 'dictionarys', returnAsObject: true });
   const create = (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary));
@@ -50,19 +54,15 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     }
   };
 
-  const updateWithCloud = async (dictionary: Dictionary) => {
-    const cloudItem = await dictionaryApi.update(dictionary);
-    update(cloudItem);
-  };
+  const updateWithCloud = async (dictionary: EnitityAPI<Dictionary> | Dictionary) =>
+    await actionsStategy({ dictionary, localAction: update, cloudAction: dictionaryApi.update });
 
-  const createWithCloud = async (dictionary: Dictionary) => {
-    const cloudItem = await dictionaryApi.create(dictionary);
-    create(cloudItem);
-  };
+  const createWithCloud = async (dictionary: EnitityAPI<Dictionary> | Dictionary) =>
+    await actionsStategy({ dictionary, localAction: create, cloudAction: dictionaryApi.create });
 
   const removeWithCloud = async (dictionary: Dictionary) => {
     dictionaryCrud.remove(dictionary.id);
-    if (dictionary?.$id) await dictionaryApi.remove(dictionary?.$id);
+    if (dictionary?.$id && authStore.isAuthenticated) await dictionaryApi.remove(dictionary?.$id);
   };
 
   const items = computed(() => {

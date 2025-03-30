@@ -40,7 +40,7 @@
 
 <template>
   <BaseForm
-    :config="useDictionaryForm(formData)"
+    :config="useDictionaryForm(formData, action)"
     :params="{ action }"
     @on-submit="onSubmit"
   >

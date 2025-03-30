@@ -26,10 +26,11 @@ import { User } from '../model/types';
     }
   }
 
-  public async getUser(): Promise<User | null> {
+  public async getUser(onError?: CallableFunction): Promise<User | null> {
     try {
       return await account.get() as User
     } catch (error) {
+      onError && onError(error)
       this.handleError(error)
       return null
     }

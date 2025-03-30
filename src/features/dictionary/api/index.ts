@@ -24,7 +24,7 @@ export function useDictionaryApi(): {
   create: (dictionary: Dictionary) => Promise<DictionaryApiData>;
   update: (dictionary: Dictionary) => Promise<DictionaryApiData>;
   getAll: () => Promise<DictionaryApiData[]>;
-  remove: () => Promise<unknown>;
+  remove: (id: string) => Promise<unknown>;
 } {
   const create = async (dictionary: Dictionary) => {
     const result = await apiService.create<DictionaryWithItemsString>(serialize(dictionary));
