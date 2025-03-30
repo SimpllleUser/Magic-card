@@ -3,6 +3,8 @@ import { Dictionary, DictionaryItem } from './types';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
 import input from 'base-form/src/shared/ui/inputs/config';
 import { useAuthStore } from '@/stores/auth';
+import { EnitityAPI } from '@/shared/index/types';
+import { ActionForm } from 'base-form/src/shared/ui/form';
 
 const getDefaultDictionaryItem = (
   data?: DictionaryItem = {
@@ -28,14 +30,12 @@ const authStore = useAuthStore();
 
 export class DictionaryFormModel {
   id: string;
-  userId: string = '';
   title: TextInput;
   description: TextareaInput;
   items: InputList<{ from: TextInput; to: TextInput }>;
 
   constructor(data?: DictionaryItem) {
     this.id = data?.id || '';
-    this.userId = authStore.user?.$id || '';
     this.title = input.text({
       value: data?.title,
       label: 'Title',
@@ -50,4 +50,40 @@ export class DictionaryFormModel {
   }
 }
 
-export const useDictionaryForm = (data?: Dictionary) => new DictionaryFormModel(data);
+export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
+  userId: string;
+
+  constructor(data?: DictionaryItem) {
+    super(data);
+    this.userId = authStore.user?.$id || '';
+  }
+}
+
+export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAutheduUser {
+  $id: string;
+  $permissions: string[];
+  $createdAt: string;
+  $updatedAt: string;
+  $databaseId: string;
+  $collectionId: string;
+
+  constructor(data: EnitityAPI<DictionaryItem>) {
+    super(data);
+    this.$id = data.$id;
+    this.$permissions = data.$permissions;
+    this.$createdAt = data.$createdAt;
+    this.$updatedAt = data.$updatedAt;
+    this.$databaseId = data.$databaseId;
+    this.$collectionId = data.$collectionId;
+  }
+}
+
+export const useDictionaryForm = (data?: Dictionary | EnitityAPI<DictionaryItem>, type?: ActionForm) =>  {
+  if (authStore.isAuthenticated && type === ActionForm.Save) {
+    return new DictionaryFormUpdateModelAuthedUser(data);
+  }
+  if (authStore.isAuthenticated && type === ActionForm.Create) {
+    return new DictionaryFormCreateModelAutheduUser(data);
+  }
+  return new DictionaryFormModel(data);
+}
