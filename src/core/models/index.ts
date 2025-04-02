@@ -1,2 +1,2 @@
-export type Entity<T> = { id: string } & T;
-export type WithoutId<T> = Pick<T, 'id'>;
+export type EntityWithId<T> = { id: string } & T;
+export type OptionalId<T> = T & { id?: string };
