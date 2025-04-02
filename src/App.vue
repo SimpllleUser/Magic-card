@@ -7,11 +7,12 @@
 
   watch(
     () => authStore.isAuthenticated,
-    async (value) => {
+    async (value: boolean) => {
       if (value) {
         await dictionaryStore.syncDataBetweenStoragesData();
       }
-    }
+    },
+    { immediate: true }
   );
 </script>
 
