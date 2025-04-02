@@ -1,5 +1,5 @@
 import Modals from '@/core/models/modals';
-import { Entity, WithoutId } from '@/core/models';
+import { EntityWithId, OptionalId } from '@/core/models';
 import { EnitityAPI, EntityApiFields } from '@/shared/index/types';
 
 export type DictionaryItem = {
@@ -8,7 +8,7 @@ export type DictionaryItem = {
   to: string;
 } & Partial<EntityApiFields>;
 
-export type Dictionary = Entity<{
+export type Dictionary = EntityWithId<{
   title: string;
   description: string;
   items: Array<DictionaryItem>;
@@ -25,9 +25,9 @@ export interface DictionaryFormEmits {
 }
 
 export type DictionaryCRUD = {
-  data: Ref<Entity<Dictionary>[]>;
-  create: (item: Required<WithoutId<DictionaryItem>>) => void;
-  add: (item: Required<WithoutId<Dictionary>>) => Dictionary;
+  data: Ref<EntityWithId<Dictionary>[]>;
+  create: (item: Required<OptionalId<DictionaryItem>>) => void;
+  add: (item: Required<OptionalId<Dictionary>>) => Dictionary;
   read: () => Dictionary[];
   update: (updatedItem: Partial<DictionaryItem>) => void;
   remove: (id: string) => void;
