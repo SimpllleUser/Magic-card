@@ -12,8 +12,8 @@ export interface QuestionItem extends DictionaryItem {
 export function useSelectWord(dictionary: DictionaryItem[]) {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
-  const getVariantsOfQuestions = (questionsOfQuize: QuestionItem[]) =>
-    questionsOfQuize.map((item) => {
+  const getVariantsOfQuestions = (questionsOfQuiz: QuestionItem[]) =>
+    questionsOfQuiz.map((item) => {
       const otherVariants = shuffle(questions.value.filter(({ id }) => id !== item.id)).slice(0, 3);
 
       return shuffle([item, ...otherVariants]);

@@ -7,7 +7,7 @@
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
   import { useQuizsStore } from '@/stores/quiz';
 
-  const quizeStore = useQuizsStore();
+  const quizStore = useQuizsStore();
   const modal = useModalStore();
   const finishedQuestions = ref<QuestionItem[]>([]);
 
@@ -16,25 +16,25 @@
     modal.show(Modals.FinishQuiz);
   };
 
-  const quizeKey = ref(uuid.v4());
+  const quizKey = ref(uuid.v4());
 
   const onRetry = () => {
-    quizeKey.value = uuid.v4();
+    quizKey.value = uuid.v4();
   };
 </script>
 
 <template>
   <div class="py-4">
     <QuizResult
-      :module-id="quizeStore.activeModuleId"
+      :module-id="quizStore.activeModuleId"
       :questions="finishedQuestions"
-      :quiz-type="quizeStore.currentType"
+      :quiz-type="quizStore.currentType"
       @retry="onRetry"
     />
     <DynamicQuiz
-      :key="quizeKey"
-      :questions="quizeStore.words"
-      :quiz-type="quizeStore.currentType"
+      :key="quizKey"
+      :questions="quizStore.words"
+      :quiz-type="quizStore.currentType"
       @finished="onFisnishedQuiz"
     />
   </div>

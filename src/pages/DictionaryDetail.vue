@@ -6,7 +6,7 @@
   import {
     ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS,
     MIN_WORDS_QUANTITY,
-    QUIZE_TYPES_OPTIONS
+    QUIZ_TYPES_OPTIONS
   } from '@/features/quiz/model/constants';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { DictionaryItem } from '@/features/dictionary/model/types';
@@ -34,7 +34,7 @@
 
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
-  const { goToQuize, goToViewMode } = useNavigation();
+  const { goToQuiz, goToViewMode } = useNavigation();
 
   const dictionaryStore = useDictionaryStore();
 
@@ -110,7 +110,7 @@
                   <QuizeModeMenu
                     label="Play"
                     @select="
-                      goToQuize({
+                      goToQuiz({
                         dictionaryId: dictionaryId,
                         words: selectedWords,
                         type: $event

@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { Colors } from '@/core/models/enums';
   import { computed } from 'vue';
-  import { useQuizeFactory } from '../model/composables/useQuizeFactory';
-  import { QuizeType } from '../model/types';
+  import { useQuizFactory } from '../model/composables/useQuizFactory';
+  import { QuizType } from '../model/types';
   import { QuestionItem } from '../model/composables/useSelectWord';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
   import { DictionaryItem } from '@/features/dictionary/model/types';
@@ -12,14 +12,14 @@
     (event: 'finished', payload: QuestionItem[]): void;
   }
 
-  const props = withDefaults(defineProps<{ questions: DictionaryItem[]; quizType: QuizeType }>(), {
+  const props = withDefaults(defineProps<{ questions: DictionaryItem[]; quizType: QuizType }>(), {
     questions: () => [],
-    quizType: QuizeType.SelectWord
+    quizType: QuizType.SelectWord
   });
 
   const emit = defineEmits<Emits>();
 
-  const { quizComponent, quizLogic } = useQuizeFactory(props.quizType);
+  const { quizComponent, quizLogic } = useQuizFactory(props.quizType);
 
   const { actualQuestionIndex, setAnswer, reset, getQuestion, actualQuestion, questions, actualVariants } =
     quizLogic.value([...props.questions]);

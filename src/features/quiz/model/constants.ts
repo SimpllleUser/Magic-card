@@ -1,5 +1,5 @@
 import { Colors, Variants } from '@/core/models/enums';
-import { QuizeType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz/model/types';
 
 export const MIN_WORDS_QUANTITY = 5;
 
@@ -10,18 +10,18 @@ export const ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS = {
   variant: Variants.Tonal
 };
 
-export const QUIZE_TYPES_OPTIONS = [
+export const QUIZ_TYPES_OPTIONS = [
   {
     title: 'Select right word',
-    value: QuizeType.SelectWord
+    value: QuizType.SelectWord
   },
   {
     title: 'Input missed letters',
-    value: QuizeType.InputLetters
+    value: QuizType.InputLetters
   },
   {
     title: 'Input word',
-    value: QuizeType.InputWord
+    value: QuizType.InputWord
   }
 ];
 

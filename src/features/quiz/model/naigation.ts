@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router';
-import { QuizeType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz/model/types';
 import { DictionaryItem } from '@/features/dictionary/model/types';
 import { useQuizsStore } from '@/stores/quiz';
 import { PageNames } from '@/router/types';
@@ -7,18 +7,18 @@ import { PageNames } from '@/router/types';
 interface NavigationParams {
   dictionaryId: string;
   words: DictionaryItem[];
-  type?: QuizeType;
+  type?: QuizType;
 }
 
 export const useNavigation = () => {
   const router = useRouter();
   const quizStore = useQuizsStore();
 
-  const goToQuize = ({ dictionaryId, words, type }: NavigationParams) => {
+  const goToQuiz = ({ dictionaryId, words, type }: NavigationParams) => {
     quizStore.setActiveModule(dictionaryId);
     quizStore.setWords(words);
     quizStore.setCurrentType(type);
-    router.push({ name: PageNames.Quize });
+    router.push({ name: PageNames.Quiz });
   };
 
   const goToViewMode = async ({ dictionaryId, words }: NavigationParams) => {
@@ -29,7 +29,7 @@ export const useNavigation = () => {
   };
 
   return {
-    goToQuize,
+    goToQuiz,
     goToViewMode
   };
 };

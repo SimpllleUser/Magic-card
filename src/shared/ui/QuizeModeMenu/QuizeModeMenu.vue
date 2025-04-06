@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { Colors, Variants } from '@/core/models/enums';
-  import { QUIZE_TYPES_OPTIONS } from '@/features/quiz/model/constants';
-  import { QuizeType } from '@/features/quiz/model/types';
+  import { QUIZ_TYPES_OPTIONS } from '@/features/quiz/model/constants';
+  import { QuizType } from '@/features/quiz/model/types';
   import { Icons } from '@/core/models/icons';
   import { Nullable } from 'base-form/src/core/types/common';
 
@@ -20,7 +20,7 @@
   );
 
   defineEmits<{
-    (event: 'select', payload: QuizeType): void;
+    (event: 'select', payload: QuizType): void;
   }>();
 
   const getStyleOnHover = (isHovering: Nullable<boolean>): Object => isHovering ? ({
@@ -46,7 +46,7 @@
     </template>
     <VList>
       <VHover
-        v-for="(item, index) in QUIZE_TYPES_OPTIONS"
+        v-for="(item, index) in QUIZ_TYPES_OPTIONS"
         :key="index"
         :value="index"
       >
