@@ -22,9 +22,15 @@
     quizeKey.value = uuid.v4();
   };
 </script>
+
 <template>
   <div class="py-4">
-    <QuizResult :module-id="quizeStore.activeModuleId" :questions="finishedQuestions" @retry="onRetry" />
+    <QuizResult
+      :module-id="quizeStore.activeModuleId"
+      :questions="finishedQuestions"
+      :quiz-type="quizeStore.currentType"
+      @retry="onRetry"
+    />
     <DynamicQuiz
       :key="quizeKey"
       :questions="quizeStore.words"
@@ -33,4 +39,3 @@
     />
   </div>
 </template>
-<style></style>
