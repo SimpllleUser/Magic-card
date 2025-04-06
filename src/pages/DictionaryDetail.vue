@@ -2,7 +2,6 @@
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   import { useDictionaryStore } from '../stores/dictionary';
-  import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import {
     ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS,
@@ -12,6 +11,8 @@
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { PageNames } from '@/router/types';
+  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
+  import { Colors, Variants } from '@/core/models/enums';
 
   const keys = [
     {
@@ -53,7 +54,10 @@
   <div class="content-wrapper mx-auto">
     <VRow>
       <VCol>
-        <VCard class="py-4" elevation="2">
+        <VCard
+          class="py-4"
+          elevation="2"
+        >
           <VCardTitle>
             <h3 class="text-h3">{{ dictionary?.title }}</h3>
           </VCardTitle>
@@ -68,9 +72,16 @@
         <VCard elevation="2">
           <VCardText>
             <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
-              <VAlert v-if="!canPlayQuize" v-bind="ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS" class="mb-4" />
+              <VAlert
+                v-if="!canPlayQuize"
+                v-bind="ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS"
+                class="mb-4"
+              />
             </AnimationFade>
-            <div class="list-wrapper" :class="{ 'is-alert': !canPlayQuize }">
+            <div
+              class="list-wrapper"
+              :class="{ 'is-alert': !canPlayQuize }"
+            >
               <BaseList
                 v-model:selected-items="selectedWords"
                 :data="dictionary?.items"
@@ -93,35 +104,19 @@
                         words: selectedWords
                       })
                     "
-                    >View cards</VBtn
                   >
-                  <VMenu>
-                    <template #activator="{ props }">
-                      <VBtn
-                        :append-icon="Icons.ChevronDown"
-                        :color="Colors.Secondary"
-                        :disabled="!canPlayQuize"
-                        :variant="Variants.Elevated"
-                        v-bind="props"
-                        >Play</VBtn
-                      >
-                    </template>
-                    <VList>
-                      <VListItem v-for="(item, index) in QUIZE_TYPES_OPTIONS" :key="index" :value="index">
-                        <VListItemTitle
-                          :class="`text-${Colors.Secondary}`"
-                          @click="
-                            goToQuize({
-                              dictionaryId: dictionaryId,
-                              words: selectedWords,
-                              type: item.value
-                            })
-                          "
-                          >{{ item.title }}</VListItemTitle
-                        >
-                      </VListItem>
-                    </VList>
-                  </VMenu>
+                    View cards
+                  </VBtn>
+                  <QuizeModeMenu
+                    label="Play"
+                    @select="
+                      goToQuize({
+                        dictionaryId: dictionaryId,
+                        words: selectedWords,
+                        type: $event
+                      })
+                    "
+                  />
                 </template>
                 <template #empty-text>
                   <div>

@@ -8,16 +8,31 @@
   import { Modals } from '@/core/models/modals';
   import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
   import { PageNames } from '@/router/types';
+  import { QuizeType } from '../model/types';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
-  const props = withDefaults(defineProps<{ moduleId: string; questions: QuestionItem[] }>(), {
-    questions: () => []
-  });
+  const props = withDefaults(
+    defineProps<{
+      moduleId: string;
+      questions: QuestionItem[];
+      type: QuizeType;
+    }>(),
+    {
+      questions: () => []
+    }
+  );
 
   const emit = defineEmits<{
     (event: 'retry'): void;
   }>();
+
+  import { useQuizsStore } from '@/stores/quiz';
+  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
+  import { useNavigation } from '@/features/quiz/model/naigation';
+  const { goToQuize } = useNavigation();
+
+  const quizStore = useQuizsStore();
 
   const mapItem = (item: QuestionItem, index: number): ItemResult => {
     const mappedItem = omit(item, 'answerId');
@@ -43,10 +58,24 @@
     emit('retry');
     action && action();
   };
+
+  const retryWithWrongAnswers = (type: QuizeType, action: CallableFunction) => {
+    goToQuize({
+      dictionaryId: quizStore.activeModuleId,
+      words: props.questions.filter((item: QuestionItem) => !item.isCorrect),
+      type
+    });
+    emit('retry');
+    action && action();
+  };
+
 </script>
 
 <template>
-  <BaseModal :id="Modals.FinishQuiz" title="Result of quiz!">
+  <BaseModal
+    :id="Modals.FinishQuiz"
+    title="Result of quiz!"
+  >
     <template #default="{ hide }">
       <div>
         <BaseList
@@ -66,15 +95,30 @@
         <VDivider class="border-opacity-25 my-2" />
         <div class="total d-flex justify-center">
           <div>
-            <VChip class="ma-2" :color="Colors.Primary" label>
+            <VChip
+              class="ma-2"
+              :color="Colors.Primary"
+              label
+            >
               <b>{{ total }}</b>
             </VChip>
           </div>
         </div>
         <div class="total d-flex justify-center pt-4">
-          <VBtn :color="Colors.Primary" @click="onRetry(hide)">Try again</VBtn>
           <VBtn
-            class="ml-4"
+            :color="Colors.Primary"
+            @click="onRetry(hide)"
+            >Try again</VBtn
+          >
+         <div class="mx-4">
+           <QuizeModeMenu
+             class="mx-4"
+             :color="Colors.Primary"
+             label="Try again with wrong answers"
+             @select="retryWithWrongAnswers($event, hide)"
+           />
+         </div>
+          <VBtn
             :color="Colors.Secondary"
             :to="{ name: PageNames.DictionaryDetail, params: { id: moduleId } }"
           >
