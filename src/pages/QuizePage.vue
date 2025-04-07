@@ -11,7 +11,7 @@
   const modal = useModalStore();
   const finishedQuestions = ref<QuestionItem[]>([]);
 
-  const onFisnishedQuiz = (questions: QuestionItem[]) => {
+  const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
   };
@@ -35,7 +35,7 @@
       :key="quizKey"
       :questions="quizStore.words"
       :quiz-type="quizStore.currentType"
-      @finished="onFisnishedQuiz"
+      @finished="onFinishedQuiz"
     />
   </div>
 </template>
