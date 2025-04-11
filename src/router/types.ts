@@ -5,5 +5,6 @@ export enum PageNames {
   DictionaryCreate = 'DictionaryCreate',
   WordViewer = 'WordViewerPage',
   Quiz = 'QuizPage',
+  QuizFlow = 'QuizFlow',
   NotFound = 'NotFound'
 }

@@ -1,14 +1,14 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
 
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
     ecmaVersion: 12,
     sourceType: 'module',
-    extraFileExtensions: ['.vue'],
+    extraFileExtensions: ['.vue']
   },
 
   extends: [
@@ -18,7 +18,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'prettier',
     '@vue/eslint-config-typescript',
-    './.eslintrc-auto-import.json',
+    './.eslintrc-auto-import.json'
   ],
 
   plugins: ['@typescript-eslint', 'vue'],
@@ -27,9 +27,8 @@ module.exports = {
     'vue/multi-word-component-names': [
       'error',
       {
-        ignore: [], // Отключаем игнорирование, чтобы требовать PascalCase
-        requireComponentCreator: false,
-      },
+        ignores: []
+      }
     ],
     'vue/component-definition-name-casing': ['error', 'PascalCase'], // Требуем PascalCase для имён компонентов
     'prefer-promise-reject-errors': 'off',
@@ -43,14 +42,14 @@ module.exports = {
       'error',
       {
         props: true,
-        ignorePropertyModificationsFor: ['state', 'config'],
-      },
+        ignorePropertyModificationsFor: ['state', 'config']
+      }
     ],
     'no-shadow': 'off',
     'prefer-destructuring': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/no-absolute-path': 'off',
-    'import/no-extraneous-dependencies': 'off',
-  },
+    'import/no-extraneous-dependencies': 'off'
+  }
 };

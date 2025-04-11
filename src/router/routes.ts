@@ -32,6 +32,12 @@ export const routes = [
             name: PageNames.Quiz,
             component: () => import('../pages/QuizePage.vue'),
             meta: { breadcrumb: 'Quiz' }
+          },
+          {
+            path: 'quiz-flow',
+            name: PageNames.QuizFlow,
+            component: () => import('../pages/QuizFlow.vue'),
+            meta: { breadcrumb: 'Quiz flow' }
           }
         ]
       },

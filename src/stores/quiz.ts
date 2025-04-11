@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
+import { chunk } from 'lodash';
 import { DictionaryItem } from '@/features/dictionary/model/types';
 import { QuizType } from '@/features/quiz/model/types';
 
@@ -7,6 +8,19 @@ export const useQuizsStore = defineStore('quize', () => {
   const activeModuleId = useLocalStorage<DictionaryItem[]>('quiz-module-id', '');
   const words = useLocalStorage<DictionaryItem[]>('current-words', []);
   const currentType = useLocalStorage<QuizType>('current-type', QuizType.SelectWord);
+  const quizFlowSession = useLocalStorage<{
+    step: number;
+    chunks: Array<DictionaryItem[]>;
+  }>('quiz-flow-session', {
+    step: 0,
+    chunks: []
+  });
+
+  const initQuizFlowSession = (words: DictionaryItem[]): void => {
+    if (!quizFlowSession.value.chunks.length) {
+      quizFlowSession.value.chunks = chunk<DictionaryItem>(words, 8);
+    }
+  };
 
   const setWords = (currentWords: DictionaryItem[]): void => {
     words.value = currentWords;
@@ -23,6 +37,8 @@ export const useQuizsStore = defineStore('quize', () => {
     currentType.value = mode;
   };
 
+  const getChunkOfWordsByStep = (step: number): DictionaryItem[] => quizFlowSession.value.chunks[step - 1] || [];
+
   return {
     words,
     setWords,
@@ -31,6 +47,9 @@ export const useQuizsStore = defineStore('quize', () => {
     resetActiveModule,
     setCurrentType,
     currentType,
-    activeModuleId
+    activeModuleId,
+    quizFlowSession,
+    initQuizFlowSession,
+    getChunkOfWordsByStep
   };
 });
