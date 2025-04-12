@@ -6,6 +6,7 @@
   import QuizResult from '@/features/quiz/ui/QuizResult.vue';
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
   import { useQuizsStore } from '@/stores/quiz';
+  import QuizControls from '@/features/quiz/ui/QuizControls.vue';
 
   const quizStore = useQuizsStore();
   const modal = useModalStore();
@@ -36,6 +37,13 @@
       :questions="quizStore.words"
       :quiz-type="quizStore.currentType"
       @finished="onFinishedQuiz"
-    />
+    >
+      <template #controls="{ finish, reset }">
+        <QuizControls
+          @finish="finish"
+          @restart="reset"
+        />
+      </template>
+    </DynamicQuiz>
   </div>
 </template>

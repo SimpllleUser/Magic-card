@@ -11,23 +11,23 @@
   });
 
   const stepperItems = computed(() => QUIZ_TYPES_OPTIONS.map((item) => item.title));
-  const quizTypeByStep  = computed(() => Object.values(QuizType)[quizStore.quizFlowSession.step - 1])
+  const quizTypeByStep = computed(() => Object.values(QuizType)[quizStore.quizFlowSession.step - 1]);
 </script>
 
 <template>
   <div class="quiz-flow-page">
     <div>
       <VStepper
-        alt-labels
         v-model="quizStore.quizFlowSession.step"
+        alt-labels
         :items="stepperItems"
       >
         <template #item>
           <VCard>
-            {{data}}
             <DynamicQuiz
               :questions="quizStore.getChunkOfWordsByStep(quizStore.quizFlowSession.step)"
               :quiz-type="quizTypeByStep"
+              :slider-config="{ infinitySlide: false }"
             />
           </VCard>
         </template>

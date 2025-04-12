@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { Colors } from '@/core/models/enums';
   import { computed } from 'vue';
   import { useQuizFactory } from '../model/composables/useQuizFactory';
   import { QuizType } from '../model/types';
@@ -12,10 +11,22 @@
     (event: 'finished', payload: QuestionItem[]): void;
   }
 
-  const props = withDefaults(defineProps<{ questions: DictionaryItem[]; quizType: QuizType }>(), {
-    questions: () => [],
-    quizType: QuizType.SelectWord
-  });
+  const props = withDefaults(
+    defineProps<{
+      questions: DictionaryItem[];
+      quizType: QuizType;
+      sliderConfig?: {
+        infinitySlide?: boolean;
+      };
+    }>(),
+    {
+      questions: () => [],
+      quizType: QuizType.SelectWord,
+      sliderConfig: () => ({
+        infinitySlide: true
+      })
+    }
+  );
 
   const emit = defineEmits<Emits>();
 
@@ -43,13 +54,23 @@
 </script>
 
 <template>
-  <div class="mx-auto" :class="classes">
-    <WordSlider :words="questions" @change-slide="onChangeSlide">
+  <div
+    class="mx-auto"
+    :class="classes"
+  >
+    <WordSlider
+      :infinity-slide="sliderConfig.infinitySlide"
+      :words="questions"
+      @change-slide="onChangeSlide"
+    >
       <template #default="{ word: question, index }">
         <VCardText class="d-flex justify-center">
           <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
         </VCardText>
-        <VCardText class="d-flex justify-center" style="margin-top: 6rem;">
+        <VCardText
+          class="d-flex justify-center"
+          style="margin-top: 6rem"
+        >
           <component
             :is="quizComponent"
             :key="index"
@@ -61,9 +82,9 @@
       </template>
     </WordSlider>
   </div>
-
-  <div class="d-flex justify-center pt-12">
-    <VBtn class="mr-4" :color="Colors.Primary" @click="reset">Restart</VBtn>
-    <VBtn :color="Colors.Primary" @click="toFinishQuiz">Finish</VBtn>
-  </div>
+  <slot
+    :finish="toFinishQuiz"
+    name="controls"
+    :reset="reset"
+  />
 </template>
