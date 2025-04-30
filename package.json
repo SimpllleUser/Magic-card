@@ -7,6 +7,7 @@
     "build-tsc": "vue-tsc --noEmit && vite build",
     "build": "vite build",
     "deploy": "vite build && git subtree push --prefix dist origin gh-pages",
+    "cloudfare-deploy": "vite build && npx wrangler deploy",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
     "test": "vitest",

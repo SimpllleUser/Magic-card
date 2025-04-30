@@ -1,16 +1,14 @@
 import Modals from '@/core/models/modals';
-import { Entity } from '@/core/models';
-import { EntityApiFields } from '@/shared/index/types';
+import { EntityWithId, OptionalId } from '@/core/models';
+import { EnitityAPI, EntityApiFields } from '@/shared/index/types';
 
 export type DictionaryItem = {
   id: string;
   from: string;
   to: string;
-} & Partial<EntityApiFields>
+} & Partial<EntityApiFields>;
 
-
-
-export type Dictionary = Entity<{
+export type Dictionary = EntityWithId<{
   title: string;
   description: string;
   items: Array<DictionaryItem>;
@@ -25,3 +23,23 @@ export interface DictionaryFormProps {
 export interface DictionaryFormEmits {
   (event: 'submit', payload: Dictionary): void;
 }
+
+export type DictionaryCRUD = {
+  data: Ref<EntityWithId<Dictionary>[]>;
+  create: (item: Required<OptionalId<DictionaryItem>>) => void;
+  add: (item: Required<OptionalId<Dictionary>>) => Dictionary;
+  read: () => Dictionary[];
+  update: (updatedItem: Partial<DictionaryItem>) => void;
+  remove: (id: string) => void;
+  getById: (id: string) => Dictionary | undefined;
+};
+export type DictionaryWithItemsString = Dictionary & { items: string };
+export type DictionaryAPIWithStringItems = EnitityAPI<DictionaryWithItemsString>;
+export type DictionaryApiData = EnitityAPI<Dictionary>;
+
+export type useDictionaryAPI = {
+  create: (dictionary: Dictionary) => Promise<DictionaryApiData>;
+  update: (dictionary: Dictionary) => Promise<DictionaryApiData>;
+  getAll: () => Promise<DictionaryApiData[]>;
+  remove: (id: string) => Promise<unknown>;
+};

@@ -1,30 +1,28 @@
 import { authServiceApi } from '@/features/auth/api';
-import { User } from '@/features/auth/model/types';
-import { Nullable } from 'base-form/src/core/types/common';
+import { AuthUser } from '@/features/auth/model/types';
 import { defineStore } from 'pinia';
-
-
+import { useStorage } from '@vueuse/core';
 
 export const useAuthStore = defineStore('auth', () => {
-
-  const user = ref<Nullable<User>>(null)
+  const user = useStorage<AuthUser | Object>('user', {});
 
   const initUserData = async () => {
-    user.value = await authServiceApi.getUser()
-  }
+    user.value = await authServiceApi.getUser(() => {
+      user.value = {};
+    });
+  };
 
   const singOut = async () => {
-    await authServiceApi.logoutUser()
-    user.value = null
-  }
+    await authServiceApi.logoutUser();
+    user.value = {};
+  };
 
   const signIn = async () => {
-    authServiceApi.loginWithGoogle()
-  }
+    authServiceApi.loginWithGoogle();
+  };
 
-  const isAuthenticated = computed(() => !!user.value?.$id)
-  const userName = computed(() => user.value?.name || '')
-
+  const isAuthenticated = computed(() => !!user.value?.$id);
+  const userName = computed(() => user.value?.name || '');
 
   return {
     user,
@@ -32,6 +30,8 @@ export const useAuthStore = defineStore('auth', () => {
     singOut,
     signIn,
     isAuthenticated,
-    userName,
+    userName
   };
 });
+
+export type AuthStore = ReturnType<typeof useAuthStore>;

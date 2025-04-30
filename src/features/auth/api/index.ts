@@ -26,10 +26,11 @@ import { User } from '../model/types';
     }
   }
 
-  public async getUser(): Promise<User | null> {
+  public async getUser(onError?: CallableFunction): Promise<User | null> {
     try {
       return await account.get() as User
     } catch (error) {
+      onError && onError(error)
       this.handleError(error)
       return null
     }
@@ -40,4 +41,4 @@ import { User } from '../model/types';
   }
 }
 
-export const authServiceApi = new AuthServiceApi(import.meta.env.PROD ? 'https://simpllleuser.github.io/MagicCard/' : 'http://localhost:3000/')
+export const authServiceApi = new AuthServiceApi(window.location.origin)

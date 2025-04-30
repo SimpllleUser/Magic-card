@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
-
 </script>
 
 <template>
