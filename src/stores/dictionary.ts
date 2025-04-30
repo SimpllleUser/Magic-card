@@ -4,11 +4,10 @@ import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { useDictionaryApi } from '@/features/dictionary/api';
 import { useAuthStore } from './auth';
+import { generateId } from '@/shared/utils/id-generate';
 
 const dictionaryApi = useDictionaryApi();
 
-const getDictionaryIds = (items: Dictionary[]) => items.map((item) => item.id);
-const findDictionaryById = (items: Dictionary[], id: string) => items.find((item) => item.id === id);
 
 export const useDictionaryStore = defineStore('dictionary', () => {
   const authStore = useAuthStore();
@@ -17,38 +16,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   const create = (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary));
   const update = (dictionary: Dictionary) => dictionaryCrud.update(mappedDictionaryItems(dictionary));
 
-  /// TODO refactor this function after write tests
-  const syncDataBetweenStoragesData = async () => {
-    const dictionariesFromCloud = await dictionaryApi.getAll();
-    const dictionariesFromStorage = dictionaryCrud.data.value;
 
-    const storageDictionaryIds = getDictionaryIds(dictionariesFromStorage);
-    const cloudDictionaryIds = getDictionaryIds(dictionariesFromCloud);
-
-    const allDictionaryIds = [...storageDictionaryIds, ...cloudDictionaryIds];
-
-    for (const id of allDictionaryIds) {
-      const existInStorage = storageDictionaryIds.includes(id);
-      const existInCloud = cloudDictionaryIds.includes(id);
-
-      if (existInCloud && existInStorage) continue;
-
-      if (existInCloud && !existInStorage) {
-        const cloudDictionary = findDictionaryById(dictionariesFromCloud, id);
-        if (!cloudDictionary) continue;
-        dictionaryCrud.add(cloudDictionary);
-      }
-
-      if (!existInCloud && existInStorage) {
-        const storageDictionary = findDictionaryById(dictionariesFromStorage, id);
-        if (!storageDictionary) continue;
-        await dictionaryApi.create({
-          ...storageDictionary,
-          userId: authStore.user?.$id
-        });
-      }
-    }
-  };
 
   const updateWithCloud = async (dictionary: Dictionary) => {
     const cloudItem = await dictionaryApi.update(dictionary);
@@ -56,7 +24,10 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   };
 
   const createWithCloud = async (dictionary: Dictionary) => {
-    const cloudItem = await dictionaryApi.create(dictionary);
+    const cloudItem = await dictionaryApi.create({
+      ...dictionary,
+      id: generateId()
+    });
     create(cloudItem);
   };
 
@@ -80,6 +51,6 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     createWithCloud,
     removeWithCloud,
     items,
-    syncDataBetweenStoragesData
+
   };
 });

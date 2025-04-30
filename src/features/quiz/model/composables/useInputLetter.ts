@@ -66,7 +66,7 @@ export function useInputLetter(dictionary: DictionaryItem[]): UseMissingLettersQ
   const setAnswer = ({ question, value }: { question: QuestionItem; value: string }): void => {
     questions.value[actualQuestionIndex.value] = {
       ...question,
-      isCorrect: question.from?.trim() === value,
+      isCorrect: question.from?.trim().toLocaleLowerCase() === value.trim().toLocaleLowerCase(),
       answer: value
     };
   };
