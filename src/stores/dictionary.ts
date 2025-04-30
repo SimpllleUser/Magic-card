@@ -40,7 +40,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     const localItems = dictionaryCrud.data.value.filter((item) => !item?.$id);
     if (!authStore.user?.$id) return localItems;
 
-    return dictionaryCrud.data.value.filter((item) => item?.userId === authStore.user?.$id);
+    return dictionaryCrud.data.value;
   });
 
   return {
