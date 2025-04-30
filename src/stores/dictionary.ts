@@ -1,27 +1,56 @@
 import { defineStore } from 'pinia';
-import { useAuthStore } from '@/stores/auth';
+import { Dictionary } from '@/features/dictionary/model/types';
+import { useCRUD } from '@/shared/use/useCRUD';
+import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { useDictionaryApi } from '@/features/dictionary/api';
-import { useDictionaryCRUD } from '@/features/dictionary/store/crud';
-import { useDictionaryCloud } from '@/features/dictionary/store/cloud';
-import { useDictionaryComputed } from '@/features/dictionary/store/computed';
-import { syncDataBetweenStorages } from '@/features/dictionary/store/sync';
+import { useAuthStore } from './auth';
+import { generateId } from '@/shared/utils/id-generate';
+
+const dictionaryApi = useDictionaryApi();
+
 
 export const useDictionaryStore = defineStore('dictionary', () => {
   const authStore = useAuthStore();
-  const dictionaryApi = useDictionaryApi();
 
-  const crud = useDictionaryCRUD();
-  const cloud = useDictionaryCloud(authStore, crud);
-  const items = computed(() => useDictionaryComputed(crud.data, authStore.user?.$id));
+  const dictionaryCrud = useCRUD<Dictionary>([], { key: 'dictionarys', returnAsObject: true });
+  const create = (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary));
+  const update = (dictionary: Dictionary) => dictionaryCrud.update(mappedDictionaryItems(dictionary));
 
-  const syncDataBetweenStoragesData = async () => {
-    await syncDataBetweenStorages(authStore, dictionaryApi, crud.data, crud.add);
+
+
+  const updateWithCloud = async (dictionary: Dictionary) => {
+    const cloudItem = await dictionaryApi.update(dictionary);
+    update(cloudItem);
   };
 
+  const createWithCloud = async (dictionary: Dictionary) => {
+    const cloudItem = await dictionaryApi.create({
+      ...dictionary,
+      id: generateId()
+    });
+    create(cloudItem);
+  };
+
+  const removeWithCloud = async (dictionary: Dictionary) => {
+    dictionaryCrud.remove(dictionary.id);
+    if (dictionary?.$id) await dictionaryApi.remove(dictionary?.$id);
+  };
+
+  const items = computed(() => {
+    const localItems = dictionaryCrud.data.value.filter((item) => !item?.$id);
+    if (!authStore.user?.$id) return localItems;
+
+    return dictionaryCrud.data.value.filter((item) => item?.userId === authStore.user?.$id);
+  });
+
   return {
-    ...crud,
-    ...cloud,
+    ...dictionaryCrud,
+    update,
+    create,
+    updateWithCloud,
+    createWithCloud,
+    removeWithCloud,
     items,
-    syncDataBetweenStoragesData
+
   };
 });
