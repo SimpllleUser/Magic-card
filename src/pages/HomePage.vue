@@ -57,6 +57,7 @@
             :dictionary="dictionary"
             @remove="onRemoveDictionary"
             @update="updateDictionary"
+            @sync="dictionaryStore.saveToCloud"
           />
         </VCol>
         <VCol key="add-button">
