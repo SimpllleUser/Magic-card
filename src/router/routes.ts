@@ -28,10 +28,16 @@ export const routes = [
             meta: { breadcrumb: 'Word viewer' }
           },
           {
-            path: 'quize',
-            name: PageNames.Quize,
+            path: 'quiz',
+            name: PageNames.Quiz,
             component: () => import('../pages/QuizePage.vue'),
-            meta: { breadcrumb: 'Quize' }
+            meta: { breadcrumb: 'Quiz' }
+          },
+          {
+            path: 'quiz-flow',
+            name: PageNames.QuizFlow,
+            component: () => import('../pages/QuizFlow.vue'),
+            meta: { breadcrumb: 'Quiz flow' }
           }
         ]
       },
