@@ -25,7 +25,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   };
 
   const createWithCloud = async (dictionary: Dictionary) => {
-    let dictionaryData = { ...dictionary, id: generateId() };
+    let dictionaryData = mappedDictionaryItems({ ...dictionary, id: generateId() });
     if (authStore.user?.$id) {
       dictionaryData = await dictionaryApi.create(dictionaryData);
     }

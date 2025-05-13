@@ -16,11 +16,15 @@
   };
 </script>
 <template>
-  <div>
+  <div class="">
+    {{ actualQuestion }}
     <VBtn
       v-for="(variant, indexVariant) in actualVariants"
       :key="indexVariant"
-      class="mx-1 bg-surface-variant:"
+      class="mx-1 bg-surface-variant: w-100"
+      :class="{
+        'mt-4': indexVariant
+      }"
       :color="isAactive(variant.id) ? Colors.Accent : Colors.SurfaceVariantText"
       :variant="isAactive(variant.id) ? Variants.Flat : Variants.Outlined"
       @click="emit('set-answer', { question: actualQuestion, answer: variant })"

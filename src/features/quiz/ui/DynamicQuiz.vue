@@ -63,24 +63,24 @@
       :words="questions"
       @change-slide="onChangeSlide"
     >
-      <template #default="{ word: question, index }">
-        <VCardText class="d-flex justify-center">
-          <div class="text-h3 font-weight-bold">{{ getQuestion(question) }}</div>
-        </VCardText>
-        <VCardText
-          class="d-flex justify-center"
-          style="margin-top: 6rem"
+      <template #default="{ word: question }">
+        <div
+          class="d-flex justify-center align-center"
+          style="height: calc(100% - 6rem)"
         >
-          <component
-            :is="quizComponent"
-            :key="index"
-            :actual-question="actualQuestion"
-            v-bind="{ actualVariants: actualVariants || [] }"
-            @set-answer="setAnswer"
-          />
-        </VCardText>
+          <span class="text-h3 font-weight-bold">{{ getQuestion(question) }}</span>
+        </div>
       </template>
     </WordSlider>
+    <VCardText>
+      <component
+        :is="quizComponent"
+        :key="actualQuestionIndex"
+        :actual-question="actualQuestion"
+        v-bind="{ actualVariants: actualVariants || [] }"
+        @set-answer="setAnswer"
+      />
+    </VCardText>
   </div>
   <slot
     :finish="toFinishQuiz"
