@@ -84,7 +84,7 @@ export function useCRUD<T extends EntityId>(initialValue: T[] = [], config?: IUs
 
   const set = (values: T[]): void => {
     items.value = values;
-  }
+  };
 
   const getById = (id: string): T | undefined => findById(items.value, id);
 

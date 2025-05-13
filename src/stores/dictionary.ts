@@ -39,12 +39,12 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   };
 
   const saveToCloud = async (dictionary: Dictionary) => {
-    const dictionaryForCloud = {...dictionary, userId: authStore.user?.$id};
+    const dictionaryForCloud = { ...dictionary, userId: authStore.user?.$id };
     const dictionaryFromCloud = await dictionaryApi.create(dictionaryForCloud);
     dictionaryCrud.update(dictionaryFromCloud);
-  }
+  };
 
-  const localDictionarys = computed(() => dictionaryCrud.data.value.filter((item) => !item?.$id))
+  const localDictionarys = computed(() => dictionaryCrud.data.value.filter((item) => !item?.$id));
 
   const items = computed(() => {
     if (!authStore.user?.$id) return localDictionarys.value;
@@ -56,11 +56,8 @@ export const useDictionaryStore = defineStore('dictionary', () => {
     const dictionarysFromCloud = await dictionaryApi.getAll();
     const dictionarysFromStorage = localDictionarys.value;
 
-    dictionaryCrud.set([
-      ...dictionarysFromCloud,
-      ...dictionarysFromStorage
-    ]);
-  }
+    dictionaryCrud.set([...dictionarysFromCloud, ...dictionarysFromStorage]);
+  };
 
   return {
     ...dictionaryCrud,
