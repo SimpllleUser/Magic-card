@@ -30,6 +30,8 @@ export enum Icons {
   Copy = 'mdi-content-copy',
   Google = 'mdi-google',
   Logout = 'mdi-logout',
+  CloudSync = 'mdi-cloud-sync',
+  CloudSyncOutline = 'mdi-cloud-sync-outline',
 
   // Navigation
   Home = 'mdi-home',

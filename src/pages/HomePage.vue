@@ -9,7 +9,6 @@
   import { PageNames } from '@/router/types';
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
-  import { useToast } from '@/shared/ui/BaseToast';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -36,7 +35,10 @@
   };
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
-  const { toast } = useToast()
+
+  onMounted(async () => {
+    await dictionaryStore.fetchDictionarys();
+  });
 </script>
 
 <template>
@@ -57,6 +59,7 @@
             :dictionary="dictionary"
             @remove="onRemoveDictionary"
             @update="updateDictionary"
+            @sync="dictionaryStore.saveToCloud"
           />
         </VCol>
         <VCol key="add-button">
