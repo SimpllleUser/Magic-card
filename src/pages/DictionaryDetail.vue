@@ -3,11 +3,7 @@
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   import { useDictionaryStore } from '../stores/dictionary';
   import { Icons } from '@/core/models/icons';
-  import {
-    ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS,
-    MIN_WORDS_QUANTITY,
-    QUIZE_TYPES_OPTIONS
-  } from '@/features/quiz/model/constants';
+  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { PageNames } from '@/router/types';
@@ -34,7 +30,7 @@
 
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
-  const { goToQuize, goToViewMode } = useNavigation();
+  const { goToQuiz, goToViewMode, goToQuizFlow } = useNavigation();
 
   const dictionaryStore = useDictionaryStore();
 
@@ -110,13 +106,30 @@
                   <QuizeModeMenu
                     label="Play"
                     @select="
-                      goToQuize({
+                      goToQuiz({
                         dictionaryId: dictionaryId,
                         words: selectedWords,
                         type: $event
                       })
                     "
                   />
+                  <VBtn
+                    class="ml-4"
+                    :color="Colors.Accent"
+                    :variant="Variants.Elevated"
+                    @click="
+                      goToQuizFlow({
+                        dictionaryId: dictionaryId,
+                        words: selectedWords
+                      })
+                    "
+                  >
+                    <span>Quiz flow</span>
+                    <VIcon
+                      class="ml-2"
+                      :icon="Icons.TimeLineCheckOutline"
+                    />
+                  </VBtn>
                 </template>
                 <template #empty-text>
                   <div>

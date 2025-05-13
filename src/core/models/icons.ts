@@ -162,4 +162,5 @@ export enum Icons {
   InformationOutline = 'mdi-information-outline',
   MultipleMarkedOutline = 'mdi-checkbox-multiple-marked-outline',
   ViewCarouselIcon = 'mdi-view-carousel',
+  TimeLineCheckOutline = 'mdi-timeline-check-outline',
 }

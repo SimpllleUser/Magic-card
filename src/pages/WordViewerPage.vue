@@ -13,7 +13,7 @@ import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
   const quizStore = useQuizsStore();
   const isFlipped = ref(false);
 
-  const setFliped = (state: boolean) => {
+  const setFlipped = (state: boolean) => {
     isFlipped.value = state;
   };
 
@@ -31,7 +31,7 @@ import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
 
   const onChangeSlide = (index: number) => {
     currentWordIndex.value = index;
-    setFliped(false);
+    setFlipped(false);
   };
 
   const actualCopyWord = computed(() => {
@@ -70,7 +70,7 @@ import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
           <WordCard
             :flipped="isFlipped"
             :word="word"
-            @flipp="setFliped"
+            @flipp="setFlipped"
             class="pb-4"
           />
         </div>

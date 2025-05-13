@@ -5,8 +5,9 @@
   import { QuestionItem } from '../../features/quiz/model/composables/useSelectWord';
   import { DictionaryItem } from '@/features/dictionary/model/types';
 
-  const props = withDefaults(defineProps<{ words: DictionaryItem[] | QuestionItem[] }>(), {
-    words: () => []
+  const props = withDefaults(defineProps<{ words: DictionaryItem[] | QuestionItem[]; infinitySlide?: boolean }>(), {
+    words: () => [],
+    infinitySlide: true
   });
 
   const emit = defineEmits<{
@@ -23,6 +24,15 @@
       emit('changeSlide', value);
     }
   );
+
+  const disableNext = computed(() => {
+    return props.infinitySlide ? false : internalIndex.value === props.words?.length - 1;
+  });
+
+const disablePrev = computed(() => {
+    return props.infinitySlide ? false : internalIndex.value === 0;
+  });
+
 </script>
 
 <template>
@@ -36,6 +46,7 @@
       <template #prev="{ props }">
         <VBtn
           :color="Colors.Secondary"
+          :disabled="disablePrev"
           :icon="Icons.ChevronLeft"
           :variant="Variants.Outlined"
           @click="props.onClick"
@@ -44,6 +55,7 @@
       <template #next="{ props }">
         <VBtn
           :color="Colors.Secondary"
+          :disabled="disableNext"
           :icon="Icons.ChevronRight"
           :variant="Variants.Outlined"
           @click="props.onClick"
@@ -69,7 +81,7 @@
           <slot
             :index="index"
             :word="word"
-          ></slot>
+          />
         </VCard>
       </VCarouselItem>
     </VCarousel>

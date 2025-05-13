@@ -8,7 +8,7 @@
   import { Modals } from '@/core/models/modals';
   import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
   import { PageNames } from '@/router/types';
-  import { QuizeType } from '../model/types';
+  import { QuizType } from '../model/types';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
@@ -16,7 +16,7 @@
     defineProps<{
       moduleId: string;
       questions: QuestionItem[];
-      type: QuizeType;
+      type: QuizType;
     }>(),
     {
       questions: () => []
@@ -30,7 +30,7 @@
   import { useQuizsStore } from '@/stores/quiz';
   import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
-  const { goToQuize } = useNavigation();
+  const { goToQuiz } = useNavigation();
 
   const quizStore = useQuizsStore();
 
@@ -59,8 +59,8 @@
     action && action();
   };
 
-  const retryWithWrongAnswers = (type: QuizeType, action: CallableFunction) => {
-    goToQuize({
+  const retryWithWrongAnswers = (type: QuizType, action: CallableFunction) => {
+    goToQuiz({
       dictionaryId: quizStore.activeModuleId,
       words: props.questions.filter((item: QuestionItem) => !item.isCorrect),
       type
