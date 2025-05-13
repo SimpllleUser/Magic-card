@@ -82,11 +82,15 @@ export function useCRUD<T extends EntityId>(initialValue: T[] = [], config?: IUs
     items.value = removeById(items.value, id);
   };
 
+  const set = (values: T[]): void => {
+    items.value = values;
+  }
+
   const getById = (id: string): T | undefined => findById(items.value, id);
 
   if (Boolean(config?.returnAsObject)) {
-    return { data: items, create, add, read, update, remove, getById };
+    return { data: items, create, add, read, update, remove, getById, set };
   }
 
-  return [items, create, add, read, update, remove, getById];
+  return [items, create, add, read, update, remove, getById, set];
 }
