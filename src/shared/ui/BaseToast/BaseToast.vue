@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { VSnackbar, VCard, VCardTitle, VCardText } from 'vuetify/components';
-  import { ToastOptions } from './index';
+  import { ref, computed } from 'vue';
+  import { VCard, VCardTitle, VCardText } from 'vuetify/components';
+  import type { ToastOptions } from './index';
 
   const props = defineProps<{ location: string }>();
 
@@ -9,9 +9,7 @@
 
   defineExpose({ toasts });
 
-  const locationClass = computed(() => {
-    return props.location.replace(' ', '-');
-  });
+  const locationClass = computed(() => props.location.replace(' ', '-'));
 </script>
 
 <template>
@@ -21,17 +19,15 @@
       tag="div"
     >
       <div
-        v-for="(toast, index) in toasts"
+        v-for="toast in toasts"
         :key="toast.id"
-        :color="toast.color"
-        :location="toast.location"
-        class="mb-2"
+        class="mb-2 custom-toast"
       >
         <VCard
           :color="toast.color"
           :variant="toast.variant"
         >
-          <VCardTitle v-if="toast.title">{{ toast.title }} </VCardTitle>
+          <VCardTitle v-if="toast.title">{{ toast.title }}</VCardTitle>
           <VCardText>{{ toast.message }}</VCardText>
         </VCard>
       </div>
@@ -45,7 +41,7 @@
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    gap: 12px; /* отступ между тостами */
+    gap: 12px;
     pointer-events: none;
   }
 
@@ -74,7 +70,7 @@
   }
 
   .custom-toast {
-    position: static !important; /* 🔥 убираем fixed */
+    position: static !important;
     width: auto;
     max-width: 400px;
     pointer-events: auto;
