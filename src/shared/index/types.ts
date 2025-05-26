@@ -7,7 +7,7 @@ export interface EntityApiFields {
   $updatedAt: string;
 }
 
-export type EnitityAPI<T> = T & EntityApiFields
+export type EntityAPI<T> = T & EntityApiFields;
 
 interface ErrorResponse {
   message: string;
