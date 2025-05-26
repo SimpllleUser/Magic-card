@@ -12,7 +12,7 @@
   }>();
 </script>
 <template>
-  <div class="w-50">
+  <div>
     <VTextField
       v-model="answer"
       maxlength="120"

@@ -42,9 +42,8 @@ export class DictionaryFormModel {
       rules: { required: true }
     });
     this.description = input.textarea({
-      value: data?.description || '-',
-      label: 'Description',
-      rules: { required: true }
+      value: data?.description,
+      label: 'Description'
     });
     this.items = input.list(data?.items?.map(getDefaultDictionaryItem) || [], getDefaultDictionaryItem());
   }
@@ -78,7 +77,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
   }
 }
 
-export const useDictionaryForm = (data?: Dictionary | EnitityAPI<DictionaryItem>, type?: ActionForm) =>  {
+export const useDictionaryForm = (data?: Dictionary | EnitityAPI<DictionaryItem>, type?: ActionForm) => {
   if (authStore.isAuthenticated && type === ActionForm.Save) {
     return new DictionaryFormUpdateModelAuthedUser(data);
   }
@@ -86,4 +85,4 @@ export const useDictionaryForm = (data?: Dictionary | EnitityAPI<DictionaryItem>
     return new DictionaryFormCreateModelAutheduUser(data);
   }
   return new DictionaryFormModel(data);
-}
+};

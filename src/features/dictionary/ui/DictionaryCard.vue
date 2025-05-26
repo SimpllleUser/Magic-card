@@ -1,31 +1,32 @@
 <script setup lang="ts">
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
-  import { defineEmits } from 'vue';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
 
-  interface Props {
-    dictionary: Dictionary;
-  }
-
-  interface Emits {
+  const props = defineProps<{ dictionary: Dictionary }>();
+  const emit = defineEmits<{
     (event: 'remove', id: string): void;
     (event: 'sync', dictionary: Dictionary): void;
     (event: 'update', dictionary: Dictionary): void;
-  }
-
-  defineProps<Props>();
-  const emit = defineEmits<Emits>();
+  }>();
 
   const modal = useModalStore();
 
-  const onUpdateDictionary = (dictionary: Dictionary) => {
+  function onEdit() {
     modal.show(Modals.DictionaryUpdate);
-    emit('update', dictionary);
-  };
+    emit('update', props.dictionary);
+  }
+
+  function onSync() {
+    emit('sync', props.dictionary);
+  }
+
+  function onRemove() {
+    emit('remove', props.dictionary.id);
+  }
 </script>
 
 <template>
@@ -36,12 +37,12 @@
     <VCardTitle>
       <div class="d-flex justify-space-between align-center">
         <div class="w-0 flex-grow-1">
-          <div class="text-h6 text-truncate">{{ dictionary.title }}</div>
+          <div class="text-h6 text-truncate">{{ props.dictionary.title }}</div>
         </div>
         <div>
           <VBtn
-            v-if="!dictionary?.userId"
-            @click.stop="emit('sync', dictionary)"
+            v-if="!props.dictionary.userId"
+            @click.stop="onSync"
             :size="Sizes.Small"
             :variant="Variants.Text"
           >
@@ -49,31 +50,44 @@
               :color="Colors.Primary"
               :icon="Icons.CloudSyncOutline"
               size="24"
-          /></VBtn>
+            />
+          </VBtn>
         </div>
       </div>
     </VCardTitle>
     <VCardSubtitle>
-      {{ dictionary.description }}
+      <div
+        class="text-truncate"
+        :class="{ 'empty-description': !props?.dictionary?.description.length }"
+      >
+        {{ props.dictionary.description }}
+      </div>
     </VCardSubtitle>
     <VCardActions>
       <VBtn
         :color="Colors.Primary"
-        :to="{ name: PageNames.DictionaryDetail, params: { id: dictionary.id } }"
-        >Detail</VBtn
+        :to="{ name: PageNames.DictionaryDetail, params: { id: props.dictionary.id } }"
       >
+        Detail
+      </VBtn>
       <VBtn
         :color="Colors.Secondary"
-        @click="onUpdateDictionary(dictionary)"
-        >Edit</VBtn
+        @click="onEdit"
       >
+        Edit
+      </VBtn>
       <VBtn
         :color="Colors.Error"
-        @click="$emit('remove', dictionary.id)"
-        >Remove</VBtn
+        @click="onRemove"
       >
+        Remove
+      </VBtn>
     </VCardActions>
   </VCard>
 </template>
 
-<style scoped lang="sass"></style>
+<style scoped lang="scss">
+  .empty-description {
+    height: 1.2rem;
+  }
+</style>

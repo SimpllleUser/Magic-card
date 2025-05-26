@@ -1,5 +1,5 @@
 import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
-import { EnitityAPI } from '../index/types';
+import { EntityAPI } from '../index/types';
 import { omit } from 'lodash';
 
 const client = new Client();
@@ -21,34 +21,64 @@ export class ApiService {
   }
 
   async create<T extends object>(data: T): Promise<T> {
-    const res = await database.createDocument(this.dbId, this.collectionId, ID.unique(), data);
-    return res as T;
+    try {
+      const res = await database.createDocument(this.dbId, this.collectionId, ID.unique(), data);
+      return res as T;
+    } catch (error) {
+      this.handleError(error, `create document in collection ${this.collectionId}`);
+    }
   }
 
-  async update<T extends object>(data: EnitityAPI<T>): Promise<T> {
-    const res = await database.updateDocument(this.dbId, this.collectionId, data.$id, this.deserialize(data));
-    return res as T;
+  async update<T extends object>(data: EntityAPI<T>): Promise<T> {
+    try {
+      const res = await database.updateDocument(this.dbId, this.collectionId, data.$id, this.deserialize(data));
+      return res as T;
+    } catch (error) {
+      this.handleError(error, `update document ${data.$id} in collection ${this.collectionId}`);
+    }
   }
 
-  async getOne<T extends object>(id: string): Promise<EnitityAPI<T>> {
-    const res = await database.getDocument(this.dbId, this.collectionId, id);
-    return res as EnitityAPI<T>;
+  async getOne<T extends object>(id: string): Promise<EntityAPI<T>> {
+    try {
+      const res = await database.getDocument(this.dbId, this.collectionId, id);
+      return res as EntityAPI<T>;
+    } catch (error) {
+      this.handleError(error, `get document ${id} from collection ${this.collectionId}`);
+    }
   }
 
-  async getAll<T extends object>(): Promise<EnitityAPI<T>[]> {
-    const res = await database.listDocuments(this.dbId, this.collectionId);
-    return res.documents as EnitityAPI<T>[];
+  async getAll<T extends object>(): Promise<EntityAPI<T>[]> {
+    try {
+      const res = await database.listDocuments(this.dbId, this.collectionId);
+      return res.documents as EntityAPI<T>[];
+    } catch (error) {
+      this.handleError(error, `list documents in collection ${this.collectionId}`);
+    }
   }
 
   async remove(id: string): Promise<{ success: boolean; id: string }> {
-    await database.deleteDocument(this.dbId, this.collectionId, id);
-    return { success: true, id };
+    try {
+      await database.deleteDocument(this.dbId, this.collectionId, id);
+      return { success: true, id };
+    } catch (error) {
+      this.handleError(error, `delete document ${id} from collection ${this.collectionId}`);
+    }
   }
 
-  private deserialize<T extends object>(data: EnitityAPI<T>): T {
+  private deserialize<T extends object>(data: EntityAPI<T>): T {
     return omit(data, ['$id', '$databaseId', '$collectionId']) as T;
   }
-}
 
+  private handleError(error: unknown, context: string): never {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    const errorDetails = {
+      context,
+      error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
+      timestamp: new Date().toISOString()
+    };
+    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    throw new Error(`Failed in ${context}: ${errorMessage}`);
+  }
+}
 
 export { account, OAuthProvider };
