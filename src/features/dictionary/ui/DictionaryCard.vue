@@ -56,7 +56,12 @@
       </div>
     </VCardTitle>
     <VCardSubtitle>
-      {{ props.dictionary.description }}
+      <div
+        class="text-truncate"
+        :class="{ 'empty-description': !props?.dictionary?.description.length }"
+      >
+        {{ props.dictionary.description }}
+      </div>
     </VCardSubtitle>
     <VCardActions>
       <VBtn
@@ -81,4 +86,8 @@
   </VCard>
 </template>
 
-<style scoped lang="sass"></style>
+<style scoped lang="scss">
+  .empty-description {
+    height: 1.2rem;
+  }
+</style>
