@@ -50,7 +50,8 @@ export const useQuizStore = defineStore('quiz', () => {
     currentType.value = mode;
   };
 
-  const getChunkOfWordsByStep = (step: number): DictionaryItem[] => quizFlowSession.value.chunks[step - 1] || [];
+  const getChunkOfWordsByStep = (step: number): DictionaryItem[] =>
+    quizFlowSession.value.chunks[step - 1] || [];
 
   return {
     words,
