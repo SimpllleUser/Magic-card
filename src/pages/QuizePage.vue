@@ -25,25 +25,29 @@
 </script>
 
 <template>
-  <div class="py-4">
+  <VCard rounded="small">
     <QuizResult
       :module-id="quizStore.activeModuleId"
       :questions="finishedQuestions"
       :quiz-type="quizStore.currentType"
       @retry="onRetry"
     />
-    <DynamicQuiz
-      :key="quizKey"
-      :questions="quizStore.words"
-      :quiz-type="quizStore.currentType"
-      @finished="onFinishedQuiz"
-    >
-      <template #controls="{ finish, reset }">
-        <QuizControls
-          @finish="finish"
-          @restart="reset"
-        />
-      </template>
-    </DynamicQuiz>
-  </div>
+    <template #text>
+      <div class="pb-4">
+        <DynamicQuiz
+          :key="quizKey"
+          :questions="quizStore.words"
+          :quiz-type="quizStore.currentType"
+          @finished="onFinishedQuiz"
+        >
+          <template #controls="{ finish, reset }">
+            <QuizControls
+              @finish="finish"
+              @restart="reset"
+            />
+          </template>
+        </DynamicQuiz>
+      </div>
+    </template>
+  </VCard>
 </template>

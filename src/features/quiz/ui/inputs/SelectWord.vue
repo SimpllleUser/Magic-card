@@ -16,8 +16,7 @@
   };
 </script>
 <template>
-  <div class="">
-    {{ actualQuestion }}
+  <div>
     <VBtn
       v-for="(variant, indexVariant) in actualVariants"
       :key="indexVariant"

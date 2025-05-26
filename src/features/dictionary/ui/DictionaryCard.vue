@@ -2,7 +2,7 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import { defineEmits } from 'vue';
-  import { Colors, Sizes } from '@/core/models/enums';
+  import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
@@ -34,17 +34,16 @@
     link
   >
     <VCardTitle>
-      <div class="d-flex justify-space-between">
-        <div>
-          <span class="text-h6">{{ dictionary.title }}</span>
+      <div class="d-flex justify-space-between align-center">
+        <div class="w-0 flex-grow-1">
+          <div class="text-h6 text-truncate">{{ dictionary.title }}</div>
         </div>
         <div>
           <VBtn
             v-if="!dictionary?.userId"
             @click.stop="emit('sync', dictionary)"
             :size="Sizes.Small"
-            :variant="'text'"
-            icon
+            :variant="Variants.Text"
           >
             <VIcon
               :color="Colors.Primary"
