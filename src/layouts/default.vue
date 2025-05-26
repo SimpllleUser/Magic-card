@@ -6,7 +6,7 @@
 <template>
   <v-app>
     <DefaultHeader />
-    <v-main class="px-4 mt-4 mx-auto main-content">
+    <v-main class="px-4 mt-4 mb-8 mx-auto main-content">
       <div class="transition-wrapper">
         <AnimationFade>
           <div
