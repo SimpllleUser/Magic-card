@@ -4,7 +4,7 @@ import { chunk } from 'lodash';
 import { DictionaryItem } from '@/features/dictionary/model/types';
 import { QuizType } from '@/features/quiz/model/types';
 
-export const useQuizsStore = defineStore('quize', () => {
+export const useQuizStore = defineStore('quiz', () => {
   const activeModuleId = useLocalStorage<DictionaryItem[]>('quiz-module-id', '');
   const words = useLocalStorage<DictionaryItem[]>('current-words', []);
   const currentType = useLocalStorage<QuizType>('current-type', QuizType.SelectWord);
