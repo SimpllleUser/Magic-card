@@ -13,10 +13,8 @@ export function useSelectWord(dictionary: DictionaryItem[]) {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
   const getVariantsOfQuestions = (questionsOfQuiz: QuestionItem[]) =>
-    questionsOfQuiz.map((item) => {
-      const otherVariants = shuffle(questions.value.filter(({ id }) => id !== item.id)).slice(0, 3);
-
-      return shuffle([item, ...otherVariants]);
+    questionsOfQuiz.map((itemAnswer) => {
+      return shuffle([...shuffle(questionsOfQuiz).slice(0, 3), itemAnswer]);
     });
 
   const getQuestions = () =>
@@ -51,6 +49,7 @@ export function useSelectWord(dictionary: DictionaryItem[]) {
   };
 
   const setAnswer = ({ question, answer }: { question: QuestionItem; answer: QuestionItem }) => {
+    console.log(answer)
     questions.value[actualQuestionIndex.value] = {
       ...question,
       isCorrect: question.to === answer.to,
