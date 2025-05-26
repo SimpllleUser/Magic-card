@@ -5,7 +5,7 @@ import { DictionaryItem } from '@/features/dictionary/model/types';
 import { QuizType } from '@/features/quiz/model/types';
 
 export const useQuizStore = defineStore('quiz', () => {
-  const activeModuleId = useLocalStorage<DictionaryItem[]>('quiz-module-id', '');
+  const activeModuleId = useLocalStorage<string>('quiz-module-id', '');
   const words = useLocalStorage<DictionaryItem[]>('current-words', []);
   const currentType = useLocalStorage<QuizType>('current-type', QuizType.SelectWord);
   const quizFlowSession = useLocalStorage<{
@@ -16,10 +16,23 @@ export const useQuizStore = defineStore('quiz', () => {
     chunks: []
   });
 
-  const initQuizFlowSession = (words: DictionaryItem[]): void => {
-    if (!quizFlowSession.value.chunks.length) {
-      quizFlowSession.value.chunks = chunk<DictionaryItem>(words, 8);
+  // Новая логика: если для каждого типа < 5 слов, то в каждом типе использовать все слова
+  const initQuizFlowSession = (wordList: DictionaryItem[]): void => {
+    const quizTypes = Object.values(QuizType);
+    const minWordsPerType = Math.ceil(wordList.length / quizTypes.length);
+
+    if (minWordsPerType < 5) {
+      // Для каждого типа используем все слова
+      quizFlowSession.value.chunks = quizTypes.map(() => [...wordList]);
+    } else {
+      // Иначе делим слова равномерно между типами
+      const chunkSize = Math.ceil(wordList.length / quizTypes.length);
+      quizFlowSession.value.chunks = [];
+      for (let i = 0; i < quizTypes.length; i++) {
+        quizFlowSession.value.chunks.push(wordList.slice(i * chunkSize, (i + 1) * chunkSize));
+      }
     }
+    quizFlowSession.value.step = 1;
   };
 
   const setWords = (currentWords: DictionaryItem[]): void => {
