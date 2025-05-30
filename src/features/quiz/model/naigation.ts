@@ -1,7 +1,7 @@
 import { useRouter } from 'vue-router';
 import { QuizType } from '@/features/quiz/model/types';
 import { DictionaryItem } from '@/features/dictionary/model/types';
-import { useQuizsStore } from '@/stores/quiz';
+import { useQuizStore } from '@/stores/quiz';
 import { PageNames } from '@/router/types';
 
 interface NavigationParams {
@@ -12,7 +12,7 @@ interface NavigationParams {
 
 export const useNavigation = () => {
   const router = useRouter();
-  const quizStore = useQuizsStore();
+  const quizStore = useQuizStore();
 
   const goToQuiz = ({ dictionaryId, words, type }: NavigationParams) => {
     quizStore.setActiveModule(dictionaryId);
@@ -28,15 +28,8 @@ export const useNavigation = () => {
     router.push({ name: PageNames.WordViewer });
   };
 
-  const goToQuizFlow = async ({ dictionaryId, words }: NavigationParams) => {
-    quizStore.setActiveModule(dictionaryId);
-    quizStore.setWords(words);
-    router.push({ name: PageNames.QuizFlow });
-  };
-
   return {
     goToQuiz,
-    goToViewMode,
-    goToQuizFlow
+    goToViewMode
   };
 };

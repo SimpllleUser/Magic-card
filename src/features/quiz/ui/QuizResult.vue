@@ -9,7 +9,9 @@
   import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
   import { PageNames } from '@/router/types';
   import { QuizType } from '../model/types';
-
+  import { useQuizStore } from '@/stores/quiz';
+  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
+  import { useNavigation } from '@/features/quiz/model/naigation';
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
   const props = withDefaults(
@@ -27,12 +29,9 @@
     (event: 'retry'): void;
   }>();
 
-  import { useQuizsStore } from '@/stores/quiz';
-  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
-  import { useNavigation } from '@/features/quiz/model/naigation';
   const { goToQuiz } = useNavigation();
 
-  const quizStore = useQuizsStore();
+  const quizStore = useQuizStore();
 
   const mapItem = (item: QuestionItem, index: number): ItemResult => {
     const mappedItem = omit(item, 'answerId');
@@ -68,7 +67,6 @@
     emit('retry');
     action && action();
   };
-
 </script>
 
 <template>
@@ -110,14 +108,14 @@
             @click="onRetry(hide)"
             >Try again</VBtn
           >
-         <div class="mx-4">
-           <QuizeModeMenu
-             class="mx-4"
-             :color="Colors.Primary"
-             label="Try again with wrong answers"
-             @select="retryWithWrongAnswers($event, hide)"
-           />
-         </div>
+          <div class="mx-4">
+            <QuizeModeMenu
+              class="mx-4"
+              :color="Colors.Primary"
+              label="Try again with wrong answers"
+              @select="retryWithWrongAnswers($event, hide)"
+            />
+          </div>
           <VBtn
             :color="Colors.Secondary"
             :to="{ name: PageNames.DictionaryDetail, params: { id: moduleId } }"

@@ -51,6 +51,11 @@
       'w-100': [Breakpoints.Md, Breakpoints.Sm].includes(literalBreakpoint.value)
     };
   });
+
+  defineExpose({
+    reset,
+    toFinishQuiz
+  });
 </script>
 
 <template>
@@ -86,5 +91,5 @@
     :finish="toFinishQuiz"
     name="controls"
     :reset="reset"
-  />
+  ></slot>
 </template>

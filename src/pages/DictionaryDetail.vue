@@ -113,23 +113,6 @@
                       })
                     "
                   />
-                  <VBtn
-                    class="ml-4"
-                    :color="Colors.Accent"
-                    :variant="Variants.Elevated"
-                    @click="
-                      goToQuizFlow({
-                        dictionaryId: dictionaryId,
-                        words: selectedWords
-                      })
-                    "
-                  >
-                    <span>Quiz flow</span>
-                    <VIcon
-                      class="ml-2"
-                      :icon="Icons.TimeLineCheckOutline"
-                    />
-                  </VBtn>
                 </template>
                 <template #empty-text>
                   <div>

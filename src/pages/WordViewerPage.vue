@@ -6,11 +6,11 @@
   import WordCard from '@/shared/ui/WordCard.vue';
   import WordSlider from '@/shared/ui/WordSlider.vue';
   import { DictionaryItem } from '@/features/dictionary/model/types';
-  import { useQuizsStore } from '@/stores/quiz';
+  import { useQuizStore } from '@/stores/quiz';
   import ButtonCopy from '@/shared/ui/WordButtonActions/ButtonCopy.vue';
-import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
+  import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
 
-  const quizStore = useQuizsStore();
+  const quizStore = useQuizStore();
   const isFlipped = ref(false);
 
   const setFlipped = (state: boolean) => {
