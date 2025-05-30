@@ -28,15 +28,8 @@ export const useNavigation = () => {
     router.push({ name: PageNames.WordViewer });
   };
 
-  const goToQuizFlow = async ({ dictionaryId, words }: NavigationParams) => {
-    quizStore.setActiveModule(dictionaryId);
-    quizStore.setWords(words);
-    router.push({ name: PageNames.QuizFlow });
-  };
-
   return {
     goToQuiz,
-    goToViewMode,
-    goToQuizFlow
+    goToViewMode
   };
 };

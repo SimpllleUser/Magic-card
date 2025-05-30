@@ -49,7 +49,6 @@ export function useSelectWord(dictionary: DictionaryItem[]) {
   };
 
   const setAnswer = ({ question, answer }: { question: QuestionItem; answer: QuestionItem }) => {
-    console.log(answer)
     questions.value[actualQuestionIndex.value] = {
       ...question,
       isCorrect: question.to === answer.to,

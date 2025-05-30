@@ -25,7 +25,8 @@
   const onSubmit = async (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, 'id'>>>) => {
     if (!params.isValid) return;
 
-    const action = params.action === ActionForm.Create ? dictionaryStore.createWithCloud : dictionaryStore.updateWithCloud;
+    const action =
+      params.action === ActionForm.Create ? dictionaryStore.createWithCloud : dictionaryStore.updateWithCloud;
     await action(params.value);
     router.push({ name: PageNames.Home });
   };

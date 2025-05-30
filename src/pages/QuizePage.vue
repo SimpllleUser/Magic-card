@@ -5,10 +5,10 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import QuizResult from '@/features/quiz/ui/QuizResult.vue';
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
-  import { useQuizsStore } from '@/stores/quiz';
+  import { useQuizStore } from '@/stores/quiz';
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
 
-  const quizStore = useQuizsStore();
+  const quizStore = useQuizStore();
   const modal = useModalStore();
   const finishedQuestions = ref<QuestionItem[]>([]);
 
