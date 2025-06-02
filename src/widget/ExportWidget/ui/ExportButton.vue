@@ -25,11 +25,10 @@
 <template>
   <VBtn
     activator="parent"
-    :color="Colors.Secondary"
-    :variant="Variants.Elevated"
+    :color="Colors.Primary"
+    :variant="Variants.Outlined"
   >
-    Export types
-
+    Export
     <VMenu activator="parent">
       <VList>
         <VListItem

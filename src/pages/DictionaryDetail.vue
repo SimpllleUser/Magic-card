@@ -32,11 +32,11 @@
 
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
-  const { goToQuiz, goToViewMode, goToQuizFlow } = useNavigation();
+  const { goToQuiz, goToViewMode } = useNavigation();
 
   const dictionaryStore = useDictionaryStore();
 
-  const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value));
+  const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
   const mapItem = (item: DictionaryItem, index: number) => ({
     ...item,
@@ -94,8 +94,8 @@
                 <template #header-actions>
                   <ExportButton
                     class="mr-4"
-                    :title="dictionary?.title"
                     :data="getDictionaryForExport()"
+                    :title="dictionary.title"
                   />
                   <VBtn
                     :append-icon="Icons.File"
