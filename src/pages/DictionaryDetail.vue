@@ -9,6 +9,8 @@
   import { PageNames } from '@/router/types';
   import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
   import { Colors, Variants } from '@/core/models/enums';
+  import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
+  import { omit } from 'lodash';
 
   const keys = [
     {
@@ -30,11 +32,11 @@
 
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
-  const { goToQuiz, goToViewMode, goToQuizFlow } = useNavigation();
+  const { goToQuiz, goToViewMode } = useNavigation();
 
   const dictionaryStore = useDictionaryStore();
 
-  const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value));
+  const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
   const mapItem = (item: DictionaryItem, index: number) => ({
     ...item,
@@ -44,6 +46,8 @@
   const selectedWords = ref([...dictionary.value?.items]);
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
+
+  const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
 </script>
 
 <template>
@@ -88,6 +92,11 @@
                 selectable
               >
                 <template #header-actions>
+                  <ExportButton
+                    class="mr-4"
+                    :data="getDictionaryForExport()"
+                    :title="dictionary.title"
+                  />
                   <VBtn
                     :append-icon="Icons.File"
                     class="mr-4"

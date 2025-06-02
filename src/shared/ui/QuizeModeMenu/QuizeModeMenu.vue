@@ -23,11 +23,14 @@
     (event: 'select', payload: QuizType): void;
   }>();
 
-  const getStyleOnHover = (isHovering: Nullable<boolean>): Object => isHovering ? ({
-    cursor: 'pointer',
-    color: `rgb(var(--v-theme-${props.color}))`,
-    backgroundColor: `rgba(var(--v-theme-${props.color}), 0.2)`,
-  }) : {};
+  const getStyleOnHover = (isHovering: Nullable<boolean>): Object =>
+    isHovering
+      ? {
+          cursor: 'pointer',
+          color: `rgb(var(--v-theme-${props.color}))`,
+          backgroundColor: `rgba(var(--v-theme-${props.color}), 0.2)`
+        }
+      : {};
 </script>
 
 <template>
@@ -38,9 +41,10 @@
         :color="color"
         :disabled="disabled"
         :variant="variant"
-        v-bind="props">
+        v-bind="props"
+      >
         <slot name="label">
-          {{label}}
+          {{ label }}
         </slot>
       </VBtn>
     </template>
@@ -58,7 +62,7 @@
             <VListItemTitle
               v-bind="props"
               @click="$emit('select', item.value)"
-              >
+            >
               {{ item.title }}
             </VListItemTitle>
           </VListItem>
