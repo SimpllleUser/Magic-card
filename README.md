@@ -22,3 +22,5 @@ To build your project for production, use:
 ```bash
 yarn build
 ```
+
+v.0.0.1
