@@ -46,25 +46,25 @@
         });
       },
       color: Colors.Primary,
-      icon: 'mdi-information-outline' as Icon
+      icon: Icons.InformationOutline
     },
     {
       title: 'Edit',
       action: onEdit,
       color: Colors.Primary,
-      icon: 'mdi-pencil-outline' as Icon
+      icon: Icons.PencilOutline
     },
     {
       title: 'Copy',
       action: onMakeCopy,
       color: Colors.Primary,
-      icon: 'mdi-content-copy' as Icon
+      icon: Icons.ContentCopy
     },
     {
       title: 'Remove',
       action: onRemove,
       color: Colors.Error,
-      icon: 'mdi-delete-outline' as Icon
+      icon: Icons.DelteOutline
     }
   ];
 </script>

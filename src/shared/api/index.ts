@@ -1,6 +1,7 @@
 import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
-import { EntityAPI } from '../index/types';
 import { omit } from 'lodash';
+import { EntityAPI } from '../index/types';
+import { ENTITY_API_KEYS } from './constants';
 
 const client = new Client();
 
@@ -66,7 +67,7 @@ export class ApiService {
   }
 
   private deserialize<T extends object>(data: EntityAPI<T>): T {
-    return omit(data, ['$id', '$databaseId', '$collectionId']) as T;
+    return omit(data, ENTITY_API_KEYS) as T;
   }
 
   private handleError(error: unknown, context: string): never {

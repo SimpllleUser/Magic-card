@@ -9,6 +9,9 @@
   import { PageNames } from '@/router/types';
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
+  import { useSessionStorage } from '@vueuse/core';
+  import { omit } from 'lodash';
+  import { makeCopyDictionary } from '@/features/dictionary/model/utils';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -34,6 +37,14 @@
     });
   };
 
+  const onCopy = (dictionary: Dictionary) => {
+    router.push({
+      name: PageNames.DictionaryCreate
+    });
+
+    useSessionStorage('dictionaryCopy', makeCopyDictionary(dictionary));
+  };
+
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
   onMounted(async () => {
@@ -57,9 +68,10 @@
         >
           <DictionaryCard
             :dictionary="dictionary"
+            @copy="onCopy"
             @remove="onRemoveDictionary"
-            @update="updateDictionary"
             @sync="dictionaryStore.saveToCloud"
+            @update="updateDictionary"
           />
         </VCol>
         <VCol key="add-button">
