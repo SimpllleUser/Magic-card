@@ -161,8 +161,12 @@ export enum Icons {
   Fire = 'mdi-fire',
   Water = 'mdi-water',
   Shuffle = 'mdi-shuffle',
-  InformationOutline = 'mdi-information-outline',
   MultipleMarkedOutline = 'mdi-checkbox-multiple-marked-outline',
   ViewCarouselIcon = 'mdi-view-carousel',
   TimeLineCheckOutline = 'mdi-timeline-check-outline',
+  DotsVertical = 'mdi-dots-vertical',
+  DelteOutline = 'mdi-delete-outline',
+  ContentCopy = 'mdi-content-copy',
+  PencilOutline = 'mdi-pencil-outline',
+  InformationOutline = 'mdi-information-outline'
 }
