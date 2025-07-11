@@ -5,7 +5,6 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { separateByString } from './helpers/separates';
 
-
   interface Emits {
     (event: 'set-words', payload: Array<Array<string>>): void;
   }
@@ -24,6 +23,7 @@
     () => [sourceText.value, separatorToRowSymbol.value, separatedToWordsOfRowsSymbol.value],
     () => {
       words.value = separateByString(sourceText.value, separatorToRowSymbol.value)
+        .filter((item) => item.trim())
         .map((item) => separateByString(item, separatedToWordsOfRowsSymbol.value))
         .map((item) => (item.length <= 2 ? item : [item[0], item.slice(1).join(separatedToWordsOfRowsSymbol.value)]));
     }
@@ -41,16 +41,27 @@
   <div class="full-width">
     <VRow>
       <VCol>
-        <InputSeparatedSymbol v-model="separatorToRowSymbol" label="Separated to rows" />
+        <InputSeparatedSymbol
+          v-model="separatorToRowSymbol"
+          label="Separated to rows"
+        />
       </VCol>
       <VCol>
-        <InputSeparatedSymbol v-model="separatedToWordsOfRowsSymbol" label="Separated to words of row" />
+        <InputSeparatedSymbol
+          v-model="separatedToWordsOfRowsSymbol"
+          label="Separated to words of row"
+        />
       </VCol>
     </VRow>
     <VRow>
       <VCol>
         {{ placeholderTextAreaInput }}
-        <VTextarea v-model="sourceText" :auto-grow="true" :placeholder="placeholderTextAreaInput" :rows="5" />
+        <VTextarea
+          v-model="sourceText"
+          :auto-grow="true"
+          :placeholder="placeholderTextAreaInput"
+          :rows="5"
+        />
       </VCol>
     </VRow>
     <div class="d-flex items-center justify-center">
