@@ -1,4 +1,5 @@
 export const separateByString = (text: string, separator: string): string[] => {
+  console.log(text.split(separator));
   return text.split(separator);
 };
 
