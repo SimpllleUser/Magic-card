@@ -73,7 +73,7 @@
           <VCardText>
             <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
               <VAlert
-                v-if="!canPlayQuize"
+                v-if="!canPlayQuize && dictionary?.items.length"
                 v-bind="ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS"
                 class="mb-4"
               />
