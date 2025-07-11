@@ -1,20 +1,17 @@
-import { DictionaryItem } from '@/features/dictionary/model/types';
-import { Nullable } from 'base-form/src/core/types/common';
 import { shuffle, upperFirst } from 'lodash';
-import { computed, ref } from 'vue';
-
-export interface QuestionItem extends DictionaryItem {
-  isCorrect: boolean;
-  answerId: Nullable<string>;
-  answer: Nullable<string>;
-}
+import { QuestionItem } from './useInputLetter';
+import { DictionaryItem } from '@/features/dictionary/model/types';
 
 export function useSelectWord(dictionary: DictionaryItem[]) {
   const setInRandomOrderWords = (words: DictionaryItem[]) => (): DictionaryItem[] => shuffle<DictionaryItem>(words);
   const getWordsinRandomOrder = setInRandomOrderWords(dictionary);
+
   const getVariantsOfQuestions = (questionsOfQuiz: QuestionItem[]) =>
     questionsOfQuiz.map((itemAnswer) => {
-      return shuffle([...shuffle(questionsOfQuiz).slice(0, 3), itemAnswer]);
+      const otherOptions = shuffle(questionsOfQuiz)
+        .filter((item) => item.id !== itemAnswer.id)
+        .slice(0, 3);
+      return shuffle([...otherOptions, itemAnswer]);
     });
 
   const getQuestions = () =>
@@ -39,7 +36,6 @@ export function useSelectWord(dictionary: DictionaryItem[]) {
 
   const next = () => {
     const index = actualQuestionIndex.value === questions.value.length - 1 ? 0 : actualQuestionIndex.value + 1;
-
     setActualQuestionIndex(index);
   };
 

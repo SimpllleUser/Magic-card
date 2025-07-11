@@ -17,6 +17,7 @@
 </script>
 <template>
   <div>
+    {{ actualVariants }}
     <VBtn
       v-for="(variant, indexVariant) in actualVariants"
       :key="indexVariant"

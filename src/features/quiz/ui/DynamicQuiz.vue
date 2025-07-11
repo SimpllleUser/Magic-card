@@ -78,6 +78,8 @@
       </template>
     </WordSlider>
     <VCardText>
+      {{ actualQuestion }}
+      <hr />
       <component
         :is="quizComponent"
         :key="actualQuestionIndex"
