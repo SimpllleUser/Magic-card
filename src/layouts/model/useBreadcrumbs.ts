@@ -1,3 +1,4 @@
+import { useDictionaryStore } from '@/stores/dictionary';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -7,7 +8,7 @@ const DEFAULT_BREADCRUMB = 'Home';
 
 export function useBreadcrumbs() {
   const route = useRoute();
-
+  const dictionaryStore = useDictionaryStore();
   const breadcrumbs = computed(() => {
     const seenPaths = new Set<string>();
     const params = route.params as Record<string, string>;
@@ -31,9 +32,13 @@ export function useBreadcrumbs() {
           path = path.replace(paramRegex, (match) => paramReplacements[match]);
         }
 
-        const breadcrumbText = isFunction(item.meta?.breadcrumb)
+        let breadcrumbText = isFunction(item.meta?.breadcrumb)
           ? item.meta.breadcrumb(route)
           : item.meta?.breadcrumb || path?.split('/')?.pop() || DEFAULT_BREADCRUMB;
+
+        if (item.path.includes('/:id') && item.meta.useName) {
+          breadcrumbText = dictionaryStore.getById(route.params.id)?.title;
+        }
 
         return {
           path,

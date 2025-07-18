@@ -14,11 +14,12 @@ export const routes = [
       },
       {
         path: '/dictionary/:id',
-        meta: { breadcrumb: 'Detail' },
+        meta: { breadcrumb: 'Detail', useName: true },
         children: [
           {
             path: '',
             name: PageNames.DictionaryDetail,
+            meta: { useName: true },
             component: () => import('../pages/DictionaryDetail.vue')
           },
           {
@@ -39,13 +40,13 @@ export const routes = [
         path: 'create',
         name: PageNames.DictionaryCreate,
         component: () => import('../pages/DictionaryCreate.vue'),
-        meta: { breadcrumb: 'Create'}
+        meta: { breadcrumb: 'Create dictionary' }
       },
       {
         path: 'update/:id',
         name: PageNames.DictionaryUpdate,
         component: () => import('../pages/DictionaryUpdate.vue'),
-        meta: { breadcrumb: (route) => `Update (ID: ${route.params.id})` }
+        meta: { breadcrumb: (route) => route.params.id, useName: true }
       }
     ]
   },

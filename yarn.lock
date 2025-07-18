@@ -1429,9 +1429,9 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-"base-form@git+https://github.com/SimpllleUser/base-form.git#v0.0.6":
+"base-form@git+https://github.com/SimpllleUser/base-form.git#v0.0.7":
   version "0.0.0"
-  resolved "git+https://github.com/SimpllleUser/base-form.git#78821d38c92d7eecfe475693bd17ad9d18eb0ada"
+  resolved "git+https://github.com/SimpllleUser/base-form.git#780f2ded6c7da25b2135101bf4e15e313847c1fc"
   dependencies:
     "@mdi/font" "7.4.47"
     core-js "^3.37.1"
