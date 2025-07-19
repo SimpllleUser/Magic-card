@@ -41,21 +41,21 @@ export function useDictionaryStatistics() {
     let complexity = 0;
 
     const length = word.to.length;
-    if (length <= 4) complexity += 1;
-    else if (length <= 7) complexity += 2;
-    else if (length <= 10) complexity += 3;
-    else complexity += 4;
+    if (length <= 4) complexity += 0.1;
+    else if (length <= 7) complexity += 0.2;
+    else if (length <= 10) complexity += 0.3;
+    else complexity += 0.4;
 
     const rareCombinations = ['gh', 'ph', 'th', 'ough', 'eigh'];
     rareCombinations.forEach((combo) => {
-      if (word.to.toLowerCase().includes(combo)) complexity += 1;
+      if (word.to.toLowerCase().includes(combo)) complexity += 0.1;
     });
 
-    if (/(.)\1/.test(word.to)) complexity += 1;
+    if (/(.)\1/.test(word.to)) complexity += 0.1;
 
-    if (isComplexLanguagePair(word.from, word.to)) complexity += 2;
+    if (isComplexLanguagePair(word.from, word.to)) complexity += 0.2;
 
-    return Math.min(complexity, 10);
+    return Math.min(complexity, 0.1);
   }
   return {
     calculateComplexityByWord
