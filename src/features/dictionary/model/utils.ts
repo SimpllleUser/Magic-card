@@ -6,7 +6,12 @@ import { ENTITY_API_KEYS } from '@/shared/api/constants';
 export const mappedDictionaryItems = (dictionaryParams: Dictionary): Dictionary => ({
   ...dictionaryParams,
   items: dictionaryParams.items.map(
-    (item: Omit<DictionaryItem, 'id'>): DictionaryItem => ({ ...item, id: generateId() })
+    (item: Omit<DictionaryItem, 'id'>): DictionaryItem => ({
+      ...item,
+      id: generateId(),
+      from: item.from.trim(),
+      to: item.to.trim()
+    })
   )
 });
 
