@@ -24,27 +24,40 @@
     quizKey.value = uuid.v4();
   };
 
-  const onStart = (value: number) => {
-    console.log('start with value: ', value);
-  };
-  const onFinish = (value: number) => {
-    console.log('finish with value: ', value);
+  /// Put this code on composable  START
+  const actualQuizId = ref('');
+  const secondsPerQuestion = new Map<string, number>([]);
+
+  const toFixTimePerQuestion = (value: number) => {
+    const prevValue = secondsPerQuestion.get(actualQuizId.value) || 0;
+    secondsPerQuestion.set(actualQuizId.value, prevValue + value);
   };
 
-  const trackingTime = useSecondsCounter(10, {
-    onStart,
-    onFinish
+  const trackingTime = useSecondsCounter(0, {
+    onStart: toFixTimePerQuestion,
+    onFinish: toFixTimePerQuestion
   });
+
+  const initQuiz = (question: QuestionItem) => {
+    actualQuizId.value = question.id;
+    trackingTime.start();
+  };
+
+  const onChangeQuestion = (question: QuestionItem) => {
+    trackingTime.finish();
+    actualQuizId.value = question.id;
+    trackingTime.start();
+  };
+
+  /// Research should app track time for question if question was checked
+
+  /// Put this code on composable END
 </script>
 
 <template>
-  <div>
-    <VBtn @click="trackingTime.start()"> Start </VBtn>
-    <VChip>
-      {{ trackingTime.value }}
-    </VChip>
-    <VBtn @click="trackingTime.finish()"> Finish </VBtn>
-  </div>
+  <VAlert>
+    {{ trackingTime }}
+  </VAlert>
   <VCard rounded="small">
     <QuizResult
       :module-id="quizStore.activeModuleId"
@@ -58,7 +71,9 @@
           :key="quizKey"
           :questions="quizStore.words"
           :quiz-type="quizStore.currentType"
+          @change-question="onChangeQuestion"
           @finished="onFinishedQuiz"
+          @init="initQuiz"
         >
           <template #controls="{ finish, reset }">
             <QuizControls
