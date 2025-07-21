@@ -6,6 +6,7 @@
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import WordSlider from '@/shared/ui/WordSlider.vue';
+  import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
@@ -33,6 +34,7 @@
   const emit = defineEmits<Emits>();
 
   const { quizComponent, quizLogic } = useQuizFactory(props.quizType);
+  const trackingTimeQuestion = useTrackingTime();
 
   const { actualQuestionIndex, setAnswer, reset, getQuestion, actualQuestion, questions, actualVariants } =
     quizLogic.value([...props.questions]);
@@ -58,6 +60,7 @@
     () => actualQuestionIndex.value,
     () => {
       emit('change-question', actualQuestion.value);
+      trackingTimeQuestion.changeRecordingItem(actualQuestion.value.id);
     }
   );
 
@@ -65,7 +68,10 @@
     emit('init', actualQuestion.value);
   };
 
-  onMounted(init);
+  onMounted(() => {
+    init();
+    trackingTimeQuestion.initTime(actualQuestion.value.id);
+  });
 
   defineExpose({
     reset,

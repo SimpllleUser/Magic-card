@@ -7,57 +7,35 @@
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
   import { useQuizStore } from '@/stores/quiz';
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
-  import { useSecondsCounter, useTrackingTime } from '@/shared/use/useSecondsCounter';
+  import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
 
   const quizStore = useQuizStore();
   const modal = useModalStore();
+  const trackingTimeQuiz = useTrackingTime();
+
   const finishedQuestions = ref<QuestionItem[]>([]);
 
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
+    console.log(trackingTimeQuiz.getResult());
+    trackingTimeQuiz.reset();
   };
 
   const quizKey = ref(uuid.v4());
 
   const onRetry = () => {
     quizKey.value = uuid.v4();
+    trackingTimeQuiz.reset();
+    trackingTimeQuiz.initTime(quizStore.activeModuleId);
   };
 
-  /// Put this code on composable  START
-  const actualQuizId = ref('');
-  const secondsPerQuestion = new Map<string, number>([]);
-
-  const toFixTimePerQuestion = (value: number) => {
-    const prevValue = secondsPerQuestion.get(actualQuizId.value) || 0;
-    secondsPerQuestion.set(actualQuizId.value, prevValue + value);
-  };
-
-  const trackingTime = useSecondsCounter(0, {
-    onStart: toFixTimePerQuestion,
-    onFinish: toFixTimePerQuestion
+  onMounted(() => {
+    trackingTimeQuiz.initTime(quizStore.activeModuleId);
   });
-
-  const initQuiz = (question: QuestionItem) => {
-    actualQuizId.value = question.id;
-    trackingTime.start();
-  };
-
-  const onChangeQuestion = (question: QuestionItem) => {
-    trackingTime.finish();
-    actualQuizId.value = question.id;
-    trackingTime.start();
-  };
-
-  /// Research should app track time for question if question was checked
-
-  /// Put this code on composable END
 </script>
 
 <template>
-  <VAlert>
-    {{ trackingTime }}
-  </VAlert>
   <VCard rounded="small">
     <QuizResult
       :module-id="quizStore.activeModuleId"
@@ -71,9 +49,7 @@
           :key="quizKey"
           :questions="quizStore.words"
           :quiz-type="quizStore.currentType"
-          @change-question="onChangeQuestion"
           @finished="onFinishedQuiz"
-          @init="initQuiz"
         >
           <template #controls="{ finish, reset }">
             <QuizControls
