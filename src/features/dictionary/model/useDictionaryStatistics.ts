@@ -1,98 +1,46 @@
-// function isComplexLanguagePair(fromWord: string, toWord: string): boolean {
-//   // Визначаємо мову на основі алфавіту/символів
-//   const sourceLanguage = detectLanguage(fromWord);
-//   const targetLanguage = detectLanguage(toWord);
+export type LevelOfKnowledge = 'learned' | 'wordNeedsAdditionalRepetition';
+/*
+  Записувати дані статистики для кожної сесії.
+  Потім можна буде сумувати всі показники та покувати як загальний результат
+  по кожному слову
+*/
 
-//   // Складні пари мов (різні алфавіти, граматичні системи)
-//   const complexPairs = [
-//     ['latin', 'cyrillic'], // англійська ↔ українська/російська
-//     ['latin', 'arabic'], // англійська ↔ арабська
-//     ['latin', 'chinese'], // англійська ↔ китайська
-//     ['latin', 'japanese'], // англійська ↔ японська
-//     ['cyrillic', 'arabic'],
-//     ['cyrillic', 'chinese']
-//   ];
+interface DictionaryStatistics {
+  correctAnswers: number;
+  incorrectAnswers: number;
+  totalQuestions: number;
+  timeTaken: number;
+}
+/*
+  TODO винести в store для зберігання даних
 
-//   return complexPairs.some(
-//     ([lang1, lang2]) =>
-//       (sourceLanguage === lang1 && targetLanguage === lang2) || (sourceLanguage === lang2 && targetLanguage === lang1)
-//   );
-// }
-
-// function detectLanguage(word: string): string {
-//   // Кирилиця (українська, російська, болгарська тощо)
-//   if (/[а-яёїєґі]/i.test(word)) return 'cyrillic';
-
-//   // Арабська
-//   if (/[\u0600-\u06FF]/.test(word)) return 'arabic';
-
-//   // Китайська (CJK символи)
-//   if (/[\u4e00-\u9fff]/.test(word)) return 'chinese';
-
-//   // Японська (хірагана, катакана)
-//   if (/[\u3040-\u309f\u30a0-\u30ff]/.test(word)) return 'japanese';
-
-//   // За замовчуванням - латиниця
-//   return 'latin';
-// }
-
-// function calculateComplexityByWord(word: { from: string; to: string }): number {
-//   let complexity = 0;
-
-//   const length = word.to.length;
-//   if (length <= 4) complexity += 0.1;
-//   else if (length <= 7) complexity += 0.2;
-//   else if (length <= 10) complexity += 0.3;
-//   else complexity += 0.4;
-
-//   const rareCombinations = ['gh', 'ph', 'th', 'ough', 'eigh'];
-//   rareCombinations.forEach((combo) => {
-//     if (word.to.toLowerCase().includes(combo)) complexity += 0.1;
-//   });
-
-//   if (/(.)\1/.test(word.to)) complexity += 0.1;
-
-//   if (isComplexLanguagePair(word.from, word.to)) complexity += 0.2;
-
-//   return Math.min(complexity, 0.1);
-// }
-
-// let levelOfKnovingWord: 'learned' | 'wordNeedsAdditionalRepetition' | null = null;
-
-export type LevelKnoving = 'learned' | 'wordNeedsAdditionalRepetition';
-
-export function useDictionaryStatistics(params: any) {
+  Самі обчислення треба винести в окремий файл helper
+  Всі дани зберігат в store, як ключ використовувати дату та час
+ */
+export function useDictionaryStatistics(params: DictionaryStatistics) {
   const totalNumberOFAttempts = 0;
-  // Total number of attempts for the word
 
-  /// Correct Answers,
-  const CA = 0; /// Скільки слів/питань користувач відповів правильно.
+  const CA = params.correctAnswers; /// Correct Answers, Скільки слів/питань користувач відповів правильно.
 
-  /// Incorrect Answers
-  const IA = 0; /// Скільки слів/питань користувач відповів неправильно.
+  const IA = params.incorrectAnswers; /// Incorrect Answers Скільки слів/питань користувач відповів неправильно.
 
-  /// Total Questions
-  const TQ = 0; ///  Скільки питань було у квізі
+  const TQ = params.totalQuestions; ///  Total Questions (TQ) Скільки питань було у квізі
 
-  /// Accuracy (ACC); Показник успішності у відсотках.
-  /// Time Taken
-  const TT = 0; ///  Скільки часу користувач витратив на квіз.
+  /// Accuracy (ACC); Показник успішності у відсотках
 
-  /// Average Time per Question (ATQ)
-  /// Середній час,витрачений на відповідь на одне питання.
+  const TT = params.timeTaken; /// Time Taken  Скільки часу користувач витратив на квіз.
 
-  /// Word Mastery (WM)
-  /// Оцінка, наскільки добре користувач засвоїв конкретні слова
+  /// Average Time per Question (ATQ) Середній час,витрачений на відповідь на одне питання.
 
-  /// Difficulty
-  // const DL = 0; /// Рівень складності
+  /// Word Mastery (WM) - Оцінка, наскільки добре користувач засвоїв конкретні слова
+
+  /// const DL = 0;  Difficulty (DL) - Рівень складності  Додати кеф в залежнеості від типу quiz
 
   const ACC = (CA / TQ) * 100;
   const ATQ = TT / TQ;
   const WM = (CA / totalNumberOFAttempts) * 100; /// if >= 80 learned; if <= 50 wordNeedsAdditionalRepetition;
 
-  /// Efficiency Score
-  /// Поєднує точність і швидкість
+  /// Efficiency Score (ES) Поєднує точність і швидкість
   const ES = ACC * (1 / ATQ); /// then higher then better
 
   return {};
