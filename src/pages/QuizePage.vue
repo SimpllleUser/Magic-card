@@ -10,16 +10,23 @@
   import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
 
   const quizStore = useQuizStore();
-  const modal = useModalStore();
   const trackingTimeQuiz = useTrackingTime();
+  const trackingTimeQuestion = useTrackingTime();
+  const modal = useModalStore();
 
   const finishedQuestions = ref<QuestionItem[]>([]);
 
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
-    console.log(trackingTimeQuiz.getResult());
+    const timeOfQuiz = trackingTimeQuiz.getResult();
+    const timeOfQuestions = trackingTimeQuestion.getResult();
+    console.log({
+      timeOfQuiz,
+      timeOfQuestions
+    });
     trackingTimeQuiz.reset();
+    trackingTimeQuestion.reset();
   };
 
   const quizKey = ref(uuid.v4());
@@ -27,7 +34,16 @@
   const onRetry = () => {
     quizKey.value = uuid.v4();
     trackingTimeQuiz.reset();
+    trackingTimeQuestion.reset();
     trackingTimeQuiz.initTime(quizStore.activeModuleId);
+  };
+
+  const onChangeQuestion = (question: QuestionItem) => {
+    trackingTimeQuestion.changeRecordingItem(question.id);
+  };
+
+  const iniDynamicQuiz = (actualQuestion: QuestionItem) => {
+    trackingTimeQuestion.initTime(actualQuestion.id);
   };
 
   onMounted(() => {
@@ -37,6 +53,9 @@
 
 <template>
   <VCard rounded="small">
+    {{ trackingTimeQuiz.value }}
+    {{ trackingTimeQuiz.getResult() }}
+    {{ trackingTimeQuestion.getResult() }}
     <QuizResult
       :module-id="quizStore.activeModuleId"
       :questions="finishedQuestions"
@@ -49,7 +68,9 @@
           :key="quizKey"
           :questions="quizStore.words"
           :quiz-type="quizStore.currentType"
+          @change-question="onChangeQuestion"
           @finished="onFinishedQuiz"
+          @init="iniDynamicQuiz"
         >
           <template #controls="{ finish, reset }">
             <QuizControls

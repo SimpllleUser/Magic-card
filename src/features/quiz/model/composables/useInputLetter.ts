@@ -3,10 +3,10 @@ import { Nullable } from 'base-form/src/core/types/common';
 import { shuffle, upperFirst } from 'lodash';
 import { computed, ref } from 'vue';
 
-export interface QuestionItem extends DictionaryItem {
+export type QuestionItem = DictionaryItem & {
   isCorrect: boolean;
   answer: Nullable<string>;
-}
+};
 
 const makeWordWithGaps = (word: string): string => {
   if (word.length < 4) return word; // Короткі слова не змінюємо
