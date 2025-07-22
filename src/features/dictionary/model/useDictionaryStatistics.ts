@@ -5,6 +5,11 @@ export type LevelOfKnowledge = 'learned' | 'wordNeedsAdditionalRepetition';
   по кожному слову
 */
 
+/*
+  Записувати дані статистики для кожного слова
+  Адаптувати формули знизу до слова
+*/
+
 interface DictionaryStatistics {
   correctAnswers: number;
   incorrectAnswers: number;
