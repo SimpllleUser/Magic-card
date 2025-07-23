@@ -43,3 +43,25 @@ export type useDictionaryAPI = {
   getAll: () => Promise<DictionaryApiData[]>;
   remove: (id: string) => Promise<unknown>;
 };
+
+export interface CalculatedStatistic {
+  ACC: number;
+  ATQ: number;
+  WM: number;
+  ES: number;
+}
+
+export type DictionaryStatistics = CalculatedStatistic & {
+  totalNumberOFAttempts: number;
+  id: string;
+  dictionaryId: string;
+  ts: number;
+};
+
+export interface DictionaryStatisticPrams {
+  dictionaryId: string;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  totalQuestions: number;
+  timeTaken: number;
+}

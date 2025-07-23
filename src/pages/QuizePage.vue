@@ -8,32 +8,29 @@
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
   import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
   import { QuestionItem } from '@/features/quiz/model/types';
+  import { DictionaryStatisticPrams } from '@/features/dictionary/model/types';
+  import { useDictionaryStatistics } from '@/features/dictionary/model/useDictionaryStatistics';
 
   const quizStore = useQuizStore();
+  const dictionaryStatistics = useDictionaryStatistics();
   const trackingTimeQuiz = useTrackingTime();
   const modal = useModalStore();
 
   const finishedQuestions = ref<QuestionItem[]>([]);
 
-  const getStatisticParamsFromQuestions = (
-    questions: QuestionItem[],
-    timeOfQuiz
-  ): {
-    correctAnswers: number;
-    incorrectAnswers: number;
-    totalQuestions: number;
-    timeOfQuiz: number;
-  } => ({
+  const getStatisticParamsFromQuestions = (questions: QuestionItem[], timeOfQuiz): DictionaryStatisticPrams => ({
+    dictionaryId: quizStore.activeModuleId,
     correctAnswers: questions.filter((item: QuestionItem) => item.isCorrect).length,
     incorrectAnswers: questions.filter((item) => !item.isCorrect).length,
     totalQuestions: questions.length,
-    timeOfQuiz
+    timeTaken: timeOfQuiz
   });
 
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
     console.log(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
+    dictionaryStatistics.saveStatistics(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
     trackingTimeQuiz.reset();
   };
 
