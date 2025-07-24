@@ -44,7 +44,18 @@ export type useDictionaryAPI = {
   remove: (id: string) => Promise<unknown>;
 };
 
+/**
+ * Interface representing calculated statistical data for a user.
+ * Contains the following metrics:
+ * - **IA**: Incorrect answers
+ * - **ACC**: Accuracy (%)
+ * - **ATQ**: Average Time per Question (seconds)
+ * - **WM**: Word Mastery (%)
+ * - **ES**: Efficiency Score
+ */
+
 export interface CalculatedStatistic {
+  IA: number;
   ACC: number;
   ATQ: number;
   WM: number;
