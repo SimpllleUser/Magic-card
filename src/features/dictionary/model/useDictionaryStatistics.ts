@@ -35,7 +35,11 @@ export function useDictionaryStatistics() {
     statisticsCrud.add(data);
   };
 
+  const getByDictionaryId = (dictionaryId: string): DictionaryStatistics[] =>
+    statisticsCrud.data.value.filter((item) => item.dictionaryId === dictionaryId);
+
   return {
-    saveStatistics
+    saveStatistics,
+    getByDictionaryId
   };
 }

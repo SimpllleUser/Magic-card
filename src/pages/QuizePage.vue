@@ -29,7 +29,6 @@
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
-    console.log(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
     dictionaryStatistics.saveStatistics(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
     trackingTimeQuiz.reset();
   };

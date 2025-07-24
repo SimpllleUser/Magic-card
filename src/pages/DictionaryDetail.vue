@@ -11,6 +11,13 @@
   import { Colors, Variants } from '@/core/models/enums';
   import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
   import { omit } from 'lodash';
+  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { Modals } from '@/core/models/modals';
+  import DictionaryStatisticModal from '@/features/dictionary/ui/DictionaryStatisticModal.vue';
+  import { useDictionaryStatistics } from '@/features/dictionary/model/useDictionaryStatistics';
+
+  const modalStore = useModalStore();
+  const dictionaryStatistics = useDictionaryStatistics()
 
   const keys = [
     {
@@ -48,9 +55,12 @@
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
+
+  const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value))
 </script>
 
 <template>
+  <DictionaryStatisticModal :statistics="statistics" /> />
   <div class="content-wrapper mx-auto">
     <VRow>
       <VCol>
@@ -92,6 +102,14 @@
                 selectable
               >
                 <template #header-actions>
+                  <VBtn
+                    class="mr-4"
+                    :color="Colors.Primary"
+                    :variant="Variants.Outlined"
+                    @click="modalStore.show(Modals.DictionaryStatistic)"
+                  >
+                    Statistics
+                  </VBtn>
                   <ExportButton
                     class="mr-4"
                     :data="getDictionaryForExport()"
