@@ -52,6 +52,7 @@ export type useDictionaryAPI = {
  * - **ATQ**: Average Time per Question (seconds)
  * - **WM**: Word Mastery (%)
  * - **ES**: Efficiency Score
+ * - **CA**: Correct answers
  */
 
 export interface CalculatedStatistic {
@@ -60,6 +61,8 @@ export interface CalculatedStatistic {
   ATQ: number;
   WM: number;
   ES: number;
+  CA: number;
+  totalNumberOFAttempts: number;
 }
 
 export type DictionaryStatistics = CalculatedStatistic & {

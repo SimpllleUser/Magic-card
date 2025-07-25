@@ -17,7 +17,7 @@
   import { useDictionaryStatistics } from '@/features/dictionary/model/useDictionaryStatistics';
 
   const modalStore = useModalStore();
-  const dictionaryStatistics = useDictionaryStatistics()
+  const dictionaryStatistics = useDictionaryStatistics();
 
   const keys = [
     {
@@ -56,11 +56,15 @@
 
   const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
 
-  const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value))
+  const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
 </script>
 
 <template>
-  <DictionaryStatisticModal :statistics="statistics" /> />
+  <DictionaryStatisticModal
+    :statistics="statistics"
+    :title="dictionary.title"
+  />
+  />
   <div class="content-wrapper mx-auto">
     <VRow>
       <VCol>
