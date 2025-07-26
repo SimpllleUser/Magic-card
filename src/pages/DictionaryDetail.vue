@@ -13,8 +13,8 @@
   import { omit } from 'lodash';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
-  import DictionaryStatisticModal from '@/features/dictionary/ui/DictionaryStatisticModal/DictionaryStatisticModal.vue';
-  import { useDictionaryStatistics } from '@/features/dictionary/model/useDictionaryStatistics';
+  import DictionaryStatisticModal from '@/features/dictionary-statistics/ui/DictionaryStatisticModal.vue';
+  import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
 
   const modalStore = useModalStore();
   const dictionaryStatistics = useDictionaryStatistics();

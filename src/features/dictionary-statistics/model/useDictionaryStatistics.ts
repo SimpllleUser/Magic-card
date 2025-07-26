@@ -1,6 +1,6 @@
 import { useCRUD } from '@/shared/use/useCRUD';
-import { DictionaryStatisticPrams, DictionaryStatistics } from '@/features/dictionary/model/types';
-import { getCalculationStatistics } from '@/features/dictionary/model/utils';
+import { DictionaryStatisticPrams, DictionaryStatistics } from './types';
+import { getCalculationStatistics } from './utils';
 
 // export type LevelOfKnowledge = 'learned' | 'wordNeedsAdditionalRepetition';
 /*

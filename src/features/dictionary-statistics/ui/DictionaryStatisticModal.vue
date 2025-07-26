@@ -1,11 +1,13 @@
 <script setup lang="ts">
   import { BaseModal } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
-  import { DictionaryStatistics } from '@/features/dictionary/model/types';
-  import { DICTIONARY_STATISTIC_LABELS } from '@/features/dictionary/model/constants';
+  import { DICTIONARY_STATISTIC_LABELS } from '../model/constants';
   import { BaseList } from '@/shared/ui/BaseList';
-  import { getStatusLearning } from '@/features/dictionary/model/utils';
-
+  import { Bar } from 'vue-chartjs';
+  import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+  import { Colors, Sizes, Variants } from '@/core/models/enums';
+  import { DictionaryStatistics } from '../model/types';
+  import { getStatusLearning } from '../model/utils';
   /// TODO separate list and graphic on components нижче схема
   /*  src/
 ├── entities/
@@ -29,10 +31,6 @@
     └── EntityDetailPage/        # 📄 Сторінка деталей
         └── ui/
             └── EntityDetailPage.vue */
-
-  import { Bar } from 'vue-chartjs';
-  import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
-  import { Colors, Sizes, Variants } from '@/core/models/enums';
 
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 

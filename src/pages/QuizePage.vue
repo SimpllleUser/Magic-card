@@ -9,7 +9,7 @@
   import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
   import { QuestionItem } from '@/features/quiz/model/types';
   import { DictionaryStatisticPrams } from '@/features/dictionary/model/types';
-  import { useDictionaryStatistics } from '@/features/dictionary/model/useDictionaryStatistics';
+  import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
 
   const quizStore = useQuizStore();
   const dictionaryStatistics = useDictionaryStatistics();
