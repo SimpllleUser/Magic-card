@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { Colors, Variants } from '@/core/models/enums';
   import { downloadFile, exportFormats, FileExtension, FileFormat } from './index';
+  import { Icons } from '@/core/models/icons';
   interface Props {
     title: string;
     data: any;
@@ -28,7 +29,7 @@
     :color="Colors.Primary"
     :variant="Variants.Outlined"
   >
-    Export
+    <span class="pr-4">Export</span> <VIcon :icon="Icons.ChevronDown" />
     <VMenu activator="parent">
       <VList>
         <VListItem
