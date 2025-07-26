@@ -36,7 +36,7 @@
     :title="modalTitle"
   >
     <div>
-      <div class="d-flex justify-center">
+      <div class="d-flex justify-center pb-4">
         <VBtn
           :color="Colors.Secondary"
           :size="Sizes.Small"

@@ -106,19 +106,19 @@
                 selectable
               >
                 <template #header-actions>
+                  <ExportButton
+                    class="mr-4"
+                    :data="getDictionaryForExport()"
+                    :title="dictionary.title"
+                  />
                   <VBtn
                     class="mr-4"
                     :color="Colors.Primary"
                     :variant="Variants.Outlined"
                     @click="modalStore.show(Modals.DictionaryStatistic)"
                   >
-                    Statistics
+                    <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
                   </VBtn>
-                  <ExportButton
-                    class="mr-4"
-                    :data="getDictionaryForExport()"
-                    :title="dictionary.title"
-                  />
                   <VBtn
                     :append-icon="Icons.File"
                     class="mr-4"
