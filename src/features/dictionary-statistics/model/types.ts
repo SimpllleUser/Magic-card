@@ -19,7 +19,7 @@ export interface CalculatedStatistic {
   totalNumberOFAttempts: number;
 }
 
-export type DictionaryStatistics = CalculatedStatistic & {
+export type IDictionaryStatistics = CalculatedStatistic & {
   totalNumberOFAttempts: number;
   id: string;
   dictionaryId: string;

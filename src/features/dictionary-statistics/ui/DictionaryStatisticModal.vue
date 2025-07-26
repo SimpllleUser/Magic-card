@@ -3,11 +3,10 @@
   import { Modals } from '@/core/models/modals';
   import { DICTIONARY_STATISTIC_LABELS } from '../model/constants';
   import { BaseList } from '@/shared/ui/BaseList';
-  import { Bar } from 'vue-chartjs';
-  import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
-  import { DictionaryStatistics } from '../model/types';
+  import { IDictionaryStatistics } from '../model/types';
   import { getStatusLearning } from '../model/utils';
+  import DictionaryStatistics from './DictionaryStatisticGraphic.vue';
   /// TODO separate list and graphic on components нижче схема
   /*  src/
 ├── entities/
@@ -32,25 +31,8 @@
         └── ui/
             └── EntityDetailPage.vue */
 
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-  const dataSetColors = ['#0bb4ff', '#50e991', '#e6d800', '#9b19f5', '#ff4d4d', '#00d4b4', '#ff66cc', '#33cc33'];
-  const chartData = computed(() => {
-    const labels = props.statistics.map((item) => new Date(item.ts).toLocaleString());
 
-    const datasets = Object.keys(DICTIONARY_STATISTIC_LABELS).map((key, index) => {
-      return {
-        label: DICTIONARY_STATISTIC_LABELS[key],
-        data: props.statistics.map((item) => item[key]),
-        backgroundColor: dataSetColors[index],
-        borderWidth: 1
-      };
-    });
-    return {
-      labels,
-      datasets
-    };
-  });
 
   const getClassByES = (value: number): string => {
     if (value < 50) {
@@ -64,7 +46,7 @@
 
   interface Props {
     title: string;
-    statistics: DictionaryStatistics[];
+    statistics: IDictionaryStatistics[];
   }
 
   const props = defineProps<Props>();
@@ -121,7 +103,7 @@
         <VExpansionPanel>
           <VExpansionPanelText>
             <div class="d-flex justify-center block">
-              <Bar :data="chartData" />
+             <DictionaryStatistics :statistics="statistics" />
             </div>
           </VExpansionPanelText>
         </VExpansionPanel>
