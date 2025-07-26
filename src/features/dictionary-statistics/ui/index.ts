@@ -1,3 +1,3 @@
-export * from './DictionaryStatisticModal.vue';
-export * from './DictionaryStatisticList.vue';
-export * from './DictionaryStatisticGraphic.vue';
+export { default as DictionaryStatisticModal } from './DictionaryStatisticModal.vue';
+export { default as DictionaryStatisticList } from './DictionaryStatisticList.vue';
+export { default as DictionaryStatisticGraphic } from './DictionaryStatisticGraphic.vue';

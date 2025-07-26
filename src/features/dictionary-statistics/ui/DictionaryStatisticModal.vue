@@ -4,7 +4,7 @@
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { IDictionaryStatistics } from '../model/types';
   import DictionaryStatistics from './DictionaryStatisticGraphic.vue';
-  import DictionaryStatisticList from '@/features/dictionary-statistics/ui/DictionaryStatisticList.vue';
+  import DictionaryStatisticList from './DictionaryStatisticList.vue';
 
   interface Props {
     title: string;

@@ -13,8 +13,7 @@
   import { omit } from 'lodash';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
-  import DictionaryStatisticModal from '@/features/dictionary-statistics/ui/DictionaryStatisticModal.vue';
-  import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
+  import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
 
   const modalStore = useModalStore();
   const dictionaryStatistics = useDictionaryStatistics();
@@ -63,7 +62,6 @@
   <DictionaryStatisticModal
     :statistics="statistics"
     :title="dictionary.title"
-  />
   />
   <div class="content-wrapper mx-auto">
     <VRow>
