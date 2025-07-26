@@ -13,8 +13,8 @@ const database = new Databases(client);
 export { database, client, ID };
 
 // Визначення типу пристрою
-const isIOS = (): boolean => {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+const isMobile = (): boolean => {
+  return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 
 export class AuthService {
@@ -28,7 +28,7 @@ export class AuthService {
 
   private saveCurrentLocation(): void {
     const currentPath = window.location.pathname + window.location.search + window.location.hash;
-    localStorage.setItem(this.REDIRECT_KEY, currentPath); // Змінено на localStorage
+    localStorage.setItem(this.REDIRECT_KEY, currentPath);
   }
 
   getRedirectUrl(): string {
@@ -37,7 +37,7 @@ export class AuthService {
     return savedUrl || '/';
   }
 
-  async waitForSession(maxAttempts = 15, delay = 1000): Promise<boolean> {
+  async waitForSession(maxAttempts = 20, delay = 1500): Promise<boolean> {
     for (let i = 0; i < maxAttempts; i++) {
       try {
         const session = await this.account.get();
@@ -57,18 +57,7 @@ export class AuthService {
   async loginWithGoogle(): Promise<void> {
     try {
       this.saveCurrentLocation();
-      localStorage.setItem(this.SESSION_CHECK_KEY, 'pending'); // Змінено на localStorage
-
-      const currentPath = encodeURIComponent(
-        window.location.pathname + window.location.search + window.location.hash
-      );
-      const baseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin; // Додано змінну для базового URL
-      const successUrl = isIOS()
-        ? `myapp://auth/success?redirect=${currentPath}` // Кастомна схема для iOS
-        : `${baseUrl}/auth/success?redirect=${currentPath}`; // Використовуємо базовий URL
-      const failureUrl = isIOS()
-        ? `myapp://auth/failure`
-        : `${baseUrl}/auth/failure`;
+      localStorage.setItem(this.SESSION_CHECK_KEY, 'pending');
 
       // Перевірка наявної сесії
       const currentSession = await this.account.get().catch(() => null);
@@ -79,32 +68,98 @@ export class AuthService {
         return;
       }
 
-      console.log('Attempting OAuth with successUrl:', successUrl, 'failureUrl:', failureUrl); // Дебагінг
-      await this.account.createOAuth2Session(
-        OAuthProvider.Google,
-        successUrl,
-        failureUrl
+      const currentPath = encodeURIComponent(
+        window.location.pathname + window.location.search + window.location.hash
       );
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
 
-      if (isIOS()) {
-        await this.waitForSession(15, 1000);
+      // Використовуємо однакові URL для всіх платформ
+      const successUrl = `${baseUrl}/auth/success?redirect=${currentPath}`;
+      const failureUrl = `${baseUrl}/auth/failure`;
+
+      console.log('Attempting OAuth with successUrl:', successUrl, 'failureUrl:', failureUrl);
+
+      // Для мобільних пристроїв використовуємо прямий редирект
+      if (isMobile()) {
+        console.log('🔀 Mobile device detected, using direct redirect');
+
+        // Зберігаємо стан перед редиректом
+        localStorage.setItem('oauth_in_progress', 'true');
+        localStorage.setItem('oauth_timestamp', Date.now().toString());
+
+        // Створюємо OAuth сесію та редиректимо
+        window.location.href = this.account.createOAuth2Session(
+          OAuthProvider.Google,
+          successUrl,
+          failureUrl
+        );
+      } else {
+        // Для десктопа використовуємо стандартний метод
+        console.log('🖥️ Desktop device detected, using standard OAuth');
+        await this.account.createOAuth2Session(
+          OAuthProvider.Google,
+          successUrl,
+          failureUrl
+        );
       }
+
     } catch (error) {
       console.error('Google OAuth login failed:', error);
       localStorage.removeItem(this.SESSION_CHECK_KEY);
+      localStorage.removeItem('oauth_in_progress');
+      localStorage.removeItem('oauth_timestamp');
       throw error;
     }
   }
 
   async handleOAuthRedirect(): Promise<boolean> {
-    if (this.isAuthInProgress()) {
-      const sessionFound = await this.waitForSession(15, 1000);
-      if (sessionFound) {
+    console.log('🔄 Handling OAuth redirect...');
+
+    // Перевіряємо чи є OAuth в процесі
+    const oauthInProgress = localStorage.getItem('oauth_in_progress');
+    const oauthTimestamp = localStorage.getItem('oauth_timestamp');
+
+    // Очищуємо OAuth флаги
+    localStorage.removeItem('oauth_in_progress');
+    localStorage.removeItem('oauth_timestamp');
+
+    // Перевіряємо чи OAuth не застарілий (максимум 10 хвилин)
+    if (oauthTimestamp) {
+      const timeDiff = Date.now() - parseInt(oauthTimestamp);
+      if (timeDiff > 10 * 60 * 1000) { // 10 хвилин
+        console.log('⚠️ OAuth session expired');
         this.completeAuth();
+        return false;
+      }
+    }
+
+    if (this.isAuthInProgress() || oauthInProgress) {
+      console.log('🔍 Auth in progress, waiting for session...');
+
+      // Збільшуємо час очікування для мобільних пристроїв
+      const maxAttempts = isMobile() ? 25 : 15;
+      const delay = isMobile() ? 2000 : 1000;
+
+      const sessionFound = await this.waitForSession(maxAttempts, delay);
+
+      if (sessionFound) {
+        console.log('✅ OAuth completed successfully');
+        this.completeAuth();
+
         const urlParams = new URLSearchParams(window.location.search);
         const redirectPath = urlParams.get('redirect') || this.getRedirectUrl();
+
         console.log('Redirecting to:', decodeURIComponent(redirectPath));
-        window.location.href = decodeURIComponent(redirectPath);
+
+        // Для мобільних додаємо невеликі затримку перед редиректом
+        if (isMobile()) {
+          setTimeout(() => {
+            window.location.href = decodeURIComponent(redirectPath);
+          }, 500);
+        } else {
+          window.location.href = decodeURIComponent(redirectPath);
+        }
+
         return true;
       } else {
         console.error('❌ Failed to complete OAuth session');
@@ -114,6 +169,8 @@ export class AuthService {
         return false;
       }
     }
+
+    console.log('ℹ️ No auth in progress');
     return false;
   }
 
@@ -123,6 +180,8 @@ export class AuthService {
 
   completeAuth(): void {
     localStorage.removeItem(this.SESSION_CHECK_KEY);
+    localStorage.removeItem('oauth_in_progress');
+    localStorage.removeItem('oauth_timestamp');
   }
 
   async getCurrentUser() {
@@ -137,6 +196,11 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await this.account.deleteSession('current');
+      // Очищуємо всі OAuth дані
+      localStorage.removeItem(this.SESSION_CHECK_KEY);
+      localStorage.removeItem('oauth_in_progress');
+      localStorage.removeItem('oauth_timestamp');
+      localStorage.removeItem(this.REDIRECT_KEY);
     } catch (error) {
       console.error('Logout failed:', error);
       throw error;
@@ -149,6 +213,18 @@ export class AuthService {
       return true;
     } catch {
       return false;
+    }
+  }
+
+  // Додатковий метод для очищення застарілих OAuth даних
+  cleanupExpiredAuth(): void {
+    const oauthTimestamp = localStorage.getItem('oauth_timestamp');
+    if (oauthTimestamp) {
+      const timeDiff = Date.now() - parseInt(oauthTimestamp);
+      if (timeDiff > 10 * 60 * 1000) { // 10 хвилин
+        console.log('🧹 Cleaning up expired OAuth data');
+        this.completeAuth();
+      }
     }
   }
 }
