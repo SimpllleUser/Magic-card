@@ -1,48 +1,10 @@
 <script setup lang="ts">
   import { BaseModal } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
-  import { DICTIONARY_STATISTIC_LABELS } from '../model/constants';
-  import { BaseList } from '@/shared/ui/BaseList';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { IDictionaryStatistics } from '../model/types';
-  import { getStatusLearning } from '../model/utils';
   import DictionaryStatistics from './DictionaryStatisticGraphic.vue';
-  /// TODO separate list and graphic on components нижче схема
-  /*  src/
-├── entities/
-│   └── [your-entity]/           # Назва вашої сутності
-│       ├── model/
-│       ├── api/
-│       └── ui/
-│           ├── EntityCard/
-│           ├── EntityStatistics/  # 📊 Компонент статистики
-│           └── index.ts
-├── features/
-│   └── entity-statistics/       # 🎯 Фіча показу статистики
-│       ├── model/
-│       │   └── statisticsStore.ts
-│       ├── ui/
-│       │   ├── StatisticsModal/
-│       │   ├── StatisticsChart/
-│       │   └── StatisticsList/
-│       └── index.ts
-└── pages/
-    └── EntityDetailPage/        # 📄 Сторінка деталей
-        └── ui/
-            └── EntityDetailPage.vue */
-
-
-
-
-  const getClassByES = (value: number): string => {
-    if (value < 50) {
-      return 'border-error';
-    } else if (value < 80) {
-      return 'border-warning';
-    } else {
-      return 'border-success';
-    }
-  };
+  import DictionaryStatisticList from '@/features/dictionary-statistics/ui/DictionaryStatisticList.vue';
 
   interface Props {
     title: string;
@@ -51,22 +13,7 @@
 
   const props = defineProps<Props>();
 
-  const statisticKeys = Object.keys(DICTIONARY_STATISTIC_LABELS).map((key) => ({
-    key,
-    title: DICTIONARY_STATISTIC_LABELS[key]
-  }));
-  const listKeys = computed(() => statisticKeys);
-
-  const modalTitle = computed(() => `Dictionary statistic of ${props.title}`);
-  const listData = computed(() => {
-    const listData = props.statistics;
-    listData.forEach((item) => {
-      statisticKeys.forEach(({ key }) => {
-        item[key] = item[key].toString().includes('.') ? Number(item[key]).toFixed(1) : item[key];
-      });
-    });
-    return listData;
-  });
+  const modalTitle = computed(() => `Dictionary statistic of "${props.title}"`);
 
   const openPanel = ref([]);
 
@@ -103,37 +50,14 @@
         <VExpansionPanel>
           <VExpansionPanelText>
             <div class="d-flex justify-center block">
-             <DictionaryStatistics :statistics="statistics" />
+              <DictionaryStatistics :statistics="statistics" />
             </div>
           </VExpansionPanelText>
         </VExpansionPanel>
       </VExpansionPanels>
     </div>
     <div>
-      <BaseList
-        :data="listData"
-        hide-footer
-        :keys="listKeys"
-      >
-        <template #item.WM="{ value }">
-          <span
-            class="text-no-wrap"
-            :class="`border-opacity-100 border-b-lg ${getClassByES(value)}`"
-          >
-            {{ value }}
-          </span>
-        </template>
-        <template #item.ES="{ value }">
-          <span
-            class="text-no-wrap"
-            :class="`border-opacity-100 border-b-lg ${getClassByES(value)}`"
-          >
-            {{ getStatusLearning(value) }}
-          </span>
-        </template>
-      </BaseList>
+      <DictionaryStatisticList :statistics="statistics" />
     </div>
   </BaseModal>
 </template>
-
-<style lang="scss" scoped></style>

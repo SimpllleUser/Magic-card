@@ -23,3 +23,14 @@ export const getStatusLearning = (ES: number): string => {
   if (ES <= 50) return 'Word needs additional repetition';
   return 'Need more practice';
 };
+
+
+export const getClassByES = (value: number): string => {
+  if (value < 50) {
+    return 'border-error';
+  } else if (value < 80) {
+    return 'border-warning';
+  } else {
+    return 'border-success';
+  }
+};
