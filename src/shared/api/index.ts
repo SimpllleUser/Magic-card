@@ -1,4 +1,4 @@
-import { Account, Client, Databases, ID, OAuthProvider } from 'appwrite';
+import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -41,12 +41,12 @@ export class AuthService {
     for (let i = 0; i < maxAttempts; i++) {
       try {
         const session = await this.account.get();
-        console.log('✅ Session found:', session);
+        console.log(`✅ Session found:`, session);
         return true;
       } catch (error) {
         console.error(`⏳ Waiting for session... attempt ${i + 1}/${maxAttempts}`, error);
         if (i < maxAttempts - 1) {
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
     }
@@ -59,12 +59,18 @@ export class AuthService {
       this.saveCurrentLocation();
       localStorage.setItem(this.SESSION_CHECK_KEY, 'pending'); // Змінено на localStorage
 
-      const currentPath = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      const currentPath = encodeURIComponent(
+        window.location.pathname + window.location.search + window.location.hash
+      );
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin; // Додано змінну для базового URL
       const successUrl = isIOS()
         ? `myapp://auth/success?redirect=${currentPath}` // Кастомна схема для iOS
-        : `${window.location.origin}/auth/success?redirect=${currentPath}`; // Використовуємо window.location.origin
-      const failureUrl = isIOS() ? 'myapp://auth/failure' : `${window.location.origin}/auth/failure`;
+        : `${baseUrl}/auth/success?redirect=${currentPath}`; // Використовуємо базовий URL
+      const failureUrl = isIOS()
+        ? `myapp://auth/failure`
+        : `${baseUrl}/auth/failure`;
 
+      // Перевірка наявної сесії
       const currentSession = await this.account.get().catch(() => null);
       if (currentSession) {
         console.log('✅ Session already exists');
@@ -73,7 +79,12 @@ export class AuthService {
         return;
       }
 
-      await this.account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
+      console.log('Attempting OAuth with successUrl:', successUrl, 'failureUrl:', failureUrl); // Дебагінг
+      await this.account.createOAuth2Session(
+        OAuthProvider.Google,
+        successUrl,
+        failureUrl
+      );
 
       if (isIOS()) {
         await this.waitForSession(15, 1000);
@@ -98,7 +109,8 @@ export class AuthService {
       } else {
         console.error('❌ Failed to complete OAuth session');
         this.completeAuth();
-        window.location.href = `${window.location.origin}/auth/failure`;
+        const baseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
+        window.location.href = `${baseUrl}/auth/failure`;
         return false;
       }
     }
@@ -206,7 +218,7 @@ export class ApiService {
       error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
       timestamp: new Date().toISOString()
     };
-    console.log('[ApiService Error]', JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
     throw new Error(`Failed in ${context}: ${errorMessage}`);
   }
 }
