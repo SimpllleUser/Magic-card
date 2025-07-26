@@ -36,7 +36,7 @@
     :title="modalTitle"
   >
     <div>
-      <div class="d-flex justify-center pb-4">
+      <div class="d-flex justify-center">
         <VBtn
           :color="Colors.Secondary"
           :size="Sizes.Small"
@@ -46,7 +46,10 @@
           {{ togglePanelButtonLabel }}
         </VBtn>
       </div>
-      <VExpansionPanels v-model="openPanel">
+      <VExpansionPanels
+        v-model="openPanel"
+        class="mb-8"
+      >
         <VExpansionPanel>
           <VExpansionPanelText>
             <div class="d-flex justify-center block">
@@ -56,8 +59,9 @@
         </VExpansionPanel>
       </VExpansionPanels>
     </div>
-    <div>
+
+    <VCard>
       <DictionaryStatisticList :statistics="statistics" />
-    </div>
+    </VCard>
   </BaseModal>
 </template>
