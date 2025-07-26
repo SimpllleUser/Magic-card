@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
+import { Account, Client, Databases, ID, OAuthProvider } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -11,6 +11,73 @@ const account = new Account(client);
 const database = new Databases(client);
 
 export { database, client, ID };
+
+// Визначення типу пристрою
+const isIOS = (): boolean => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+};
+
+// Auth service для OAuth
+export class AuthService {
+  private account: Account;
+  private readonly REDIRECT_KEY = 'auth_redirect_url';
+
+  constructor() {
+    this.account = account;
+  }
+
+  private saveCurrentLocation(): void {
+    const currentPath = window.location.pathname + window.location.search + window.location.hash;
+    sessionStorage.setItem(this.REDIRECT_KEY, currentPath);
+  }
+
+  getRedirectUrl(): string {
+    const savedUrl = sessionStorage.getItem(this.REDIRECT_KEY);
+    sessionStorage.removeItem(this.REDIRECT_KEY);
+    return savedUrl || '/';
+  }
+
+  async loginWithGoogle(): Promise<void> {
+    try {
+      this.saveCurrentLocation();
+
+      const successUrl = `${window.location.origin}/auth/success`;
+      const failureUrl = `${window.location.origin}/auth/failure`;
+
+      await this.account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
+    } catch (error) {
+      console.error('Google OAuth login failed:', error);
+      throw error;
+    }
+  }
+
+  async getCurrentUser() {
+    try {
+      return await this.account.get();
+    } catch (error) {
+      console.error('Failed to get current user:', error);
+      return null;
+    }
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await this.account.deleteSession('current');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      throw error;
+    }
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    try {
+      await this.account.get();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
 
 export class ApiService {
   dbId: string;
@@ -77,9 +144,10 @@ export class ApiService {
       error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
       timestamp: new Date().toISOString()
     };
-    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    console.log('[ApiService Error]', JSON.parse(JSON.stringify(errorDetails, null, 2)));
     throw new Error(`Failed in ${context}: ${errorMessage}`);
   }
 }
 
+export const authService = new AuthService();
 export { account, OAuthProvider };
