@@ -3,5 +3,6 @@ export const Modals = {
   DictionaryUpdate: 'dictionary-update-modal',
   ImportWords: 'import-words',
   DictionaryConfirmRemove: 'dictionary-confirm-remove',
-  FinishQuiz: 'finish-quiz'
+  FinishQuiz: 'finish-quiz',
+  DictionaryStatistic: 'dictionary-statistic'
 };

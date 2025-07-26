@@ -10,7 +10,7 @@
   const props = withDefaults(
     defineProps<{
       headerTitle?: string;
-      selectedItems: string[];
+      selectedItems?: string[];
       data: Array<unknown>;
       keys: Array<BaseListKey>;
       withNumeration?: boolean;

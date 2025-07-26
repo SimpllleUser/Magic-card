@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
+  /// TODO FIX convert into entry point
   import { useDictionaryStore } from '../stores/dictionary';
   import { Icons } from '@/core/models/icons';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
@@ -11,6 +12,12 @@
   import { Colors, Variants } from '@/core/models/enums';
   import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
   import { omit } from 'lodash';
+  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { Modals } from '@/core/models/modals';
+  import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
+
+  const modalStore = useModalStore();
+  const dictionaryStatistics = useDictionaryStatistics();
 
   const keys = [
     {
@@ -34,6 +41,7 @@
   const dictionaryId = computed(() => route.params?.id!);
   const { goToQuiz, goToViewMode } = useNavigation();
 
+  /// TODO separte into useComposable -- START
   const dictionaryStore = useDictionaryStore();
 
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
@@ -48,9 +56,16 @@
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
+  /// TODO separte into useComposable -- END
+
+  const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
 </script>
 
 <template>
+  <DictionaryStatisticModal
+    :statistics="statistics"
+    :title="dictionary.title"
+  />
   <div class="content-wrapper mx-auto">
     <VRow>
       <VCol>
@@ -97,6 +112,14 @@
                     :data="getDictionaryForExport()"
                     :title="dictionary.title"
                   />
+                  <VBtn
+                    class="mr-4"
+                    :color="Colors.Primary"
+                    :variant="Variants.Outlined"
+                    @click="modalStore.show(Modals.DictionaryStatistic)"
+                  >
+                    <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                  </VBtn>
                   <VBtn
                     :append-icon="Icons.File"
                     class="mr-4"

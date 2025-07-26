@@ -1,27 +1,57 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
-  import { QuestionItem } from '@/features/quiz/model/composables/useSelectWord';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import QuizResult from '@/features/quiz/ui/QuizResult.vue';
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
   import { useQuizStore } from '@/stores/quiz';
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
+  import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
+  import { QuestionItem } from '@/features/quiz/model/types';
+  import { DictionaryStatisticPrams } from '@/features/dictionary/model/types';
+  import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
 
   const quizStore = useQuizStore();
+  const dictionaryStatistics = useDictionaryStatistics();
+  const trackingTimeQuiz = useTrackingTime();
   const modal = useModalStore();
+
   const finishedQuestions = ref<QuestionItem[]>([]);
+
+  const getStatisticParamsFromQuestions = (questions: QuestionItem[], timeOfQuiz): DictionaryStatisticPrams => ({
+    dictionaryId: quizStore.activeModuleId,
+    correctAnswers: questions.filter((item: QuestionItem) => item.isCorrect).length,
+    incorrectAnswers: questions.filter((item) => !item.isCorrect).length,
+    totalQuestions: questions.length,
+    timeTaken: timeOfQuiz
+  });
 
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
+    dictionaryStatistics.saveStatistics(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
+    trackingTimeQuiz.reset();
   };
 
   const quizKey = ref(uuid.v4());
 
   const onRetry = () => {
     quizKey.value = uuid.v4();
+    trackingTimeQuiz.reset();
+    trackingTimeQuiz.initTime(quizStore.activeModuleId);
   };
+
+  // const onChangeQuestion = (question: QuestionItem) => {
+  //   trackingTimeQuestion.changeRecordingItem(question.id);
+  // };
+  //
+  // const iniDynamicQuiz = (actualQuestion: QuestionItem) => {
+  //   trackingTimeQuestion.initTime(actualQuestion.id);
+  // };
+
+  onMounted(() => {
+    trackingTimeQuiz.initTime(quizStore.activeModuleId);
+  });
 </script>
 
 <template>
@@ -40,6 +70,8 @@
           :quiz-type="quizStore.currentType"
           @finished="onFinishedQuiz"
         >
+          <!--          @change-question="onChangeQuestion"-->
+          <!--          @init="iniDynamicQuiz"-->
           <template #controls="{ finish, reset }">
             <QuizControls
               @finish="finish"

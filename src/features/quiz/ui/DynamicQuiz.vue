@@ -9,6 +9,8 @@
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;
+    (event: 'change-question', payload: QuestionItem): void;
+    (event: 'init', payload: QuestionItem): void;
   }
 
   const props = withDefaults(
@@ -50,6 +52,21 @@
       'w-75': literalBreakpoint.value === Breakpoints.Lg,
       'w-100': [Breakpoints.Md, Breakpoints.Sm].includes(literalBreakpoint.value)
     };
+  });
+
+  watch(
+    () => actualQuestionIndex.value,
+    () => {
+      emit('change-question', actualQuestion.value);
+    }
+  );
+
+  const init = () => {
+    emit('init', actualQuestion.value);
+  };
+
+  onMounted(() => {
+    init();
   });
 
   defineExpose({
