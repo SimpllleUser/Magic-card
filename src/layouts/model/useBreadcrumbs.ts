@@ -38,6 +38,11 @@ export function useBreadcrumbs() {
 
         if (item.path.includes('/:id') && item.meta.useName) {
           breadcrumbText = dictionaryStore.getById(route.params.id)?.title;
+
+          // TODO: Add condition to generalize this function if more base action sections are added
+          if (path.includes('update')) {
+            breadcrumbText = `Update ${breadcrumbText}`;
+          }
         }
 
         return {
