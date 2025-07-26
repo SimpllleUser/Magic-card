@@ -27,14 +27,15 @@
     v-if="state"
     v-model="state"
     :attach="true"
-    data-testId="base-modal-wrapper"
     v-bind="attrs"
+    :class="`base-modal ${id}`"
+    data-testId="base-modal-wrapper"
     max-width="700px"
     @hide="modalHide"
     @show="modalShow"
   >
     <VCard>
-      <VCardTitle class="d-flex hide-center justify-space-between bg-surface-light">
+      <VCardTitle class="base-modal__title d-flex hide-center justify-space-between bg-surface-light">
         <slot
           :close="modalHide"
           name="header"
@@ -48,9 +49,19 @@
           />
         </slot>
       </VCardTitle>
-      <VCardText>
+      <VCardText class="base-modal__body">
         <slot :hide="modalHide"></slot>
       </VCardText>
     </VCard>
   </VDialog>
 </template>
+
+<style lang="scss" scoped>
+  .base-modal {
+    &__title {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+  }
+</style>
