@@ -15,9 +15,9 @@
 
 <template>
   <TransitionGroup
+    class="d-flex align-center"
     name="list"
     tag="div"
-    class="d-flex align-center"
   >
     <div
       v-for="(item, index) in breadcrumbs"
@@ -26,14 +26,14 @@
     >
       <img
         v-show="!index"
-        src="../../assets/logo-main.svg"
         alt="MagicCardLogo"
+        src="../../assets/logo-main.svg"
         width="25px"
       />
       <VBtn
         class="ml-2"
-        :variant="Variants.Text"
         :color="!isOnlyOne && isLast(index) ? Colors.Primary : Colors.Grey"
+        :variant="Variants.Text"
         @click="router.push(item.to)"
       >
         {{ item.title }}

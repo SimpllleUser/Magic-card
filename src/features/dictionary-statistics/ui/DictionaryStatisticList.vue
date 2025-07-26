@@ -1,8 +1,12 @@
 <script setup lang="ts">
   import { BaseList } from '@/shared/ui/BaseList';
-  import { DICTIONARY_STATISTIC_LABELS } from '../model/constants';
-  import { IDictionaryStatistics } from '../model/types';
-  import { getClassByES, getStatusLearning } from '../model/utils';
+  import {
+    DICTIONARY_STATISTIC_LABELS,
+    EMPTY_STATISTICS_LIST_TEXT,
+    getClassByES,
+    getStatusLearning,
+    IDictionaryStatistics
+  } from '../model';
 
   defineOptions({
     name: 'DictionaryStatisticList'
@@ -38,6 +42,9 @@
     hide-footer
     :keys="listKeys"
   >
+    <template #empty-text>
+      <span> {{ EMPTY_STATISTICS_LIST_TEXT }} </span>
+    </template>
     <template #item.WM="{ value }">
       <span
         class="text-no-wrap"
