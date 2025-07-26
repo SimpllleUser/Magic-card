@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
+import { Account, Client, Databases, ID, OAuthProvider } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -28,25 +28,25 @@ export class AuthService {
 
   private saveCurrentLocation(): void {
     const currentPath = window.location.pathname + window.location.search + window.location.hash;
-    sessionStorage.setItem(this.REDIRECT_KEY, currentPath);
+    localStorage.setItem(this.REDIRECT_KEY, currentPath); // Змінено на localStorage
   }
 
   getRedirectUrl(): string {
-    const savedUrl = sessionStorage.getItem(this.REDIRECT_KEY);
-    sessionStorage.removeItem(this.REDIRECT_KEY);
+    const savedUrl = localStorage.getItem(this.REDIRECT_KEY);
+    localStorage.removeItem(this.REDIRECT_KEY);
     return savedUrl || '/';
   }
 
-  async waitForSession(maxAttempts = 10, delay = 1000): Promise<boolean> {
+  async waitForSession(maxAttempts = 15, delay = 1000): Promise<boolean> {
     for (let i = 0; i < maxAttempts; i++) {
       try {
-        await this.account.get();
-        console.log(`✅ Session found after ${i + 1} attempts`);
+        const session = await this.account.get();
+        console.log('✅ Session found:', session);
         return true;
       } catch (error) {
-        console.log(`⏳ Waiting for session... attempt ${i + 1}/${maxAttempts}`);
+        console.error(`⏳ Waiting for session... attempt ${i + 1}/${maxAttempts}`, error);
         if (i < maxAttempts - 1) {
-          await new Promise(resolve => setTimeout(resolve, delay));
+          await new Promise((resolve) => setTimeout(resolve, delay));
         }
       }
     }
@@ -57,31 +57,60 @@ export class AuthService {
   async loginWithGoogle(): Promise<void> {
     try {
       this.saveCurrentLocation();
+      localStorage.setItem(this.SESSION_CHECK_KEY, 'pending'); // Змінено на localStorage
 
-      // Додаємо мітку що почали авторизацію
-      sessionStorage.setItem(this.SESSION_CHECK_KEY, 'pending');
+      const currentPath = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      const successUrl = isIOS()
+        ? `myapp://auth/success?redirect=${currentPath}` // Кастомна схема для iOS
+        : `${window.location.origin}/auth/success?redirect=${currentPath}`; // Використовуємо window.location.origin
+      const failureUrl = isIOS() ? 'myapp://auth/failure' : `${window.location.origin}/auth/failure`;
 
-      const successUrl = `${window.location.origin}/auth/success`;
-      const failureUrl = `${window.location.origin}/auth/failure`;
+      const currentSession = await this.account.get().catch(() => null);
+      if (currentSession) {
+        console.log('✅ Session already exists');
+        this.completeAuth();
+        window.location.href = this.getRedirectUrl();
+        return;
+      }
 
-      await this.account.createOAuth2Session(
-        OAuthProvider.Google,
-        successUrl,
-        failureUrl
-      );
+      await this.account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
+
+      if (isIOS()) {
+        await this.waitForSession(15, 1000);
+      }
     } catch (error) {
       console.error('Google OAuth login failed:', error);
-      sessionStorage.removeItem(this.SESSION_CHECK_KEY);
+      localStorage.removeItem(this.SESSION_CHECK_KEY);
       throw error;
     }
   }
 
+  async handleOAuthRedirect(): Promise<boolean> {
+    if (this.isAuthInProgress()) {
+      const sessionFound = await this.waitForSession(15, 1000);
+      if (sessionFound) {
+        this.completeAuth();
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectPath = urlParams.get('redirect') || this.getRedirectUrl();
+        console.log('Redirecting to:', decodeURIComponent(redirectPath));
+        window.location.href = decodeURIComponent(redirectPath);
+        return true;
+      } else {
+        console.error('❌ Failed to complete OAuth session');
+        this.completeAuth();
+        window.location.href = `${window.location.origin}/auth/failure`;
+        return false;
+      }
+    }
+    return false;
+  }
+
   isAuthInProgress(): boolean {
-    return sessionStorage.getItem(this.SESSION_CHECK_KEY) === 'pending';
+    return localStorage.getItem(this.SESSION_CHECK_KEY) === 'pending';
   }
 
   completeAuth(): void {
-    sessionStorage.removeItem(this.SESSION_CHECK_KEY);
+    localStorage.removeItem(this.SESSION_CHECK_KEY);
   }
 
   async getCurrentUser() {
@@ -177,7 +206,7 @@ export class ApiService {
       error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
       timestamp: new Date().toISOString()
     };
-    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    console.log('[ApiService Error]', JSON.parse(JSON.stringify(errorDetails, null, 2)));
     throw new Error(`Failed in ${context}: ${errorMessage}`);
   }
 }
