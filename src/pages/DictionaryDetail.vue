@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
+  /// TODO FIX convert into entry point
   import { useDictionaryStore } from '../stores/dictionary';
   import { Icons } from '@/core/models/icons';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
@@ -40,6 +41,7 @@
   const dictionaryId = computed(() => route.params?.id!);
   const { goToQuiz, goToViewMode } = useNavigation();
 
+  /// TODO separte into useComposable -- START
   const dictionaryStore = useDictionaryStore();
 
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
@@ -54,6 +56,7 @@
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
+  /// TODO separte into useComposable -- END
 
   const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
 </script>

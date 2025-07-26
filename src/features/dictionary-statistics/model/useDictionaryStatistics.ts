@@ -1,5 +1,5 @@
 import { useCRUD } from '@/shared/use/useCRUD';
-import { DictionaryStatisticPrams, DictionaryStatistics } from './types';
+import { DictionaryStatisticPrams, IDictionaryStatistics } from './types';
 import { getCalculationStatistics } from './utils';
 
 // export type LevelOfKnowledge = 'learned' | 'wordNeedsAdditionalRepetition';
@@ -17,14 +17,14 @@ import { getCalculationStatistics } from './utils';
 export function useDictionaryStatistics() {
   /// const DL = 0;  Difficulty (DL) - Рівень складності  Додати кеф в залежнеості від типу quiz
 
-  const statisticsCrud = useCRUD<DictionaryStatistics>([], { key: 'Dictionary-statistics', returnAsObject: true });
+  const statisticsCrud = useCRUD<IDictionaryStatistics>([], { key: 'Dictionary-statistics', returnAsObject: true });
 
   const getTotalNumberOFAttempts = (id: string): number =>
     statisticsCrud.data.value.filter((item) => item.dictionaryId === id)?.length + 1;
 
   const saveStatistics = (params: Omit<DictionaryStatisticPrams, 'ts'>) => {
     const totalNumberOFAttempts = getTotalNumberOFAttempts(params.dictionaryId);
-    const data: DictionaryStatistics = {
+    const data: IDictionaryStatistics = {
       ...getCalculationStatistics(params, totalNumberOFAttempts),
       id: new Date().valueOf().toString(),
       ts: new Date().valueOf(),
@@ -35,7 +35,7 @@ export function useDictionaryStatistics() {
     statisticsCrud.add(data);
   };
 
-  const getByDictionaryId = (dictionaryId: string): DictionaryStatistics[] =>
+  const getByDictionaryId = (dictionaryId: string): IDictionaryStatistics[] =>
     statisticsCrud.data.value.filter((item) => item.dictionaryId === dictionaryId);
 
   return {
