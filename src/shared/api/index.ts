@@ -1,4 +1,4 @@
-import { Account, Client, Databases, ID, OAuthProvider } from 'appwrite';
+import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -17,10 +17,10 @@ const isIOS = (): boolean => {
   return /iPad|iPhone|iPod/.test(navigator.userAgent);
 };
 
-// Auth service для OAuth
 export class AuthService {
   private account: Account;
   private readonly REDIRECT_KEY = 'auth_redirect_url';
+  private readonly SESSION_CHECK_KEY = 'auth_session_check';
 
   constructor() {
     this.account = account;
@@ -37,18 +37,51 @@ export class AuthService {
     return savedUrl || '/';
   }
 
+  async waitForSession(maxAttempts = 10, delay = 1000): Promise<boolean> {
+    for (let i = 0; i < maxAttempts; i++) {
+      try {
+        await this.account.get();
+        console.log(`✅ Session found after ${i + 1} attempts`);
+        return true;
+      } catch (error) {
+        console.log(`⏳ Waiting for session... attempt ${i + 1}/${maxAttempts}`);
+        if (i < maxAttempts - 1) {
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+    console.error('❌ Session not found after maximum attempts');
+    return false;
+  }
+
   async loginWithGoogle(): Promise<void> {
     try {
       this.saveCurrentLocation();
 
+      // Додаємо мітку що почали авторизацію
+      sessionStorage.setItem(this.SESSION_CHECK_KEY, 'pending');
+
       const successUrl = `${window.location.origin}/auth/success`;
       const failureUrl = `${window.location.origin}/auth/failure`;
 
-      await this.account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
+      await this.account.createOAuth2Session(
+        OAuthProvider.Google,
+        successUrl,
+        failureUrl
+      );
     } catch (error) {
       console.error('Google OAuth login failed:', error);
+      sessionStorage.removeItem(this.SESSION_CHECK_KEY);
       throw error;
     }
+  }
+
+  isAuthInProgress(): boolean {
+    return sessionStorage.getItem(this.SESSION_CHECK_KEY) === 'pending';
+  }
+
+  completeAuth(): void {
+    sessionStorage.removeItem(this.SESSION_CHECK_KEY);
   }
 
   async getCurrentUser() {
@@ -144,7 +177,7 @@ export class ApiService {
       error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
       timestamp: new Date().toISOString()
     };
-    console.log('[ApiService Error]', JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
     throw new Error(`Failed in ${context}: ${errorMessage}`);
   }
 }
