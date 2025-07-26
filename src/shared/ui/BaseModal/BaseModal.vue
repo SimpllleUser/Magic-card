@@ -35,7 +35,9 @@
     @show="modalShow"
   >
     <VCard>
-      <VCardTitle class="base-modal__title d-flex hide-center justify-space-between bg-surface-light">
+      <VCardTitle
+        class="base-modal__title d-flex hide-center text-wrap justify-space-between align-center bg-surface-light"
+      >
         <slot
           :close="modalHide"
           name="header"
