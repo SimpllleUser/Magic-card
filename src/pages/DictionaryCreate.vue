@@ -11,7 +11,7 @@
 
 <template>
   <div class="pa-4">
-    <DictionaryForm :form-data="{...data}" />
+    <DictionaryForm :form-data="{ ...data }" />
   </div>
 </template>
 

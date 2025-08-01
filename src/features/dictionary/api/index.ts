@@ -32,14 +32,13 @@ export function useDictionaryApi(): useDictionaryAPI {
     return deserialize(res);
   };
 
-  const getAll = async (): Promise<DictionaryApiData[]> => {
-    const res = await apiService.getAll<DictionaryWithItemsString>();
+  const getAll = async (userId: string): Promise<DictionaryApiData[]> => {
+    const res = await apiService.getAll<DictionaryWithItemsString>(userId);
     return res.map(deserialize);
   };
 
   const remove = async (id: string): Promise<unknown> => {
-    const res = await apiService.remove(id);
-    return res;
+    return apiService.remove(id);
   };
 
   return {

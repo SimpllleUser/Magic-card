@@ -5,9 +5,10 @@
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
-  import { Icon } from 'base-form/src/core/types/icons';
+  import { useAuthStore } from '@/stores/auth';
 
   const props = defineProps<{ dictionary: Dictionary }>();
+  const authStore = useAuthStore();
   const emit = defineEmits<{
     (event: 'remove', id: string): void;
     (event: 'sync', dictionary: Dictionary): void;
@@ -93,7 +94,7 @@
                 v-for="(item, index) in items"
                 :key="index"
               >
-                <template v-slot:default="{ isHovering, props }">
+                <template #default="{ isHovering, props }">
                   <VListItem
                     :base-color="isHovering ? item.color : ''"
                     :value="index"
@@ -110,7 +111,7 @@
             </VList>
           </VMenu>
           <VBtn
-            v-if="!props.dictionary.userId"
+            v-if="!authStore.isAuthenticated"
             :size="Sizes.Small"
             :variant="Variants.Text"
             @click.stop="onSync"

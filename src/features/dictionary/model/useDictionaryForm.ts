@@ -54,7 +54,7 @@ export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
 
   constructor(data?: DictionaryItem) {
     super(data);
-    this.userId = authStore.user?.$id || '';
+    this.userId = authStore.user?.id || '';
   }
 }
 

@@ -6,6 +6,7 @@
   import { computed } from 'vue';
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
+
   const themeConfig = useTheme();
   const theme = useStorage('theme', themeConfig.global.name.value);
 
@@ -22,9 +23,9 @@
 
 <template>
   <VToolbar
+    class="header"
     color="surface-light"
     :elevation="1"
-    class="header"
   >
     <v-app-bar-title>
       <div class="title-wrapper">
@@ -33,11 +34,11 @@
     </v-app-bar-title>
 
     <template #append>
-        <VBtn
-          :icon="themeIcon"
-          @click="toggleTheme"
-        />
-        <AuthBlock class="ml-4" />
+      <VBtn
+        :icon="themeIcon"
+        @click="toggleTheme"
+      />
+      <AuthBlock class="ml-4" />
     </template>
   </VToolbar>
 </template>

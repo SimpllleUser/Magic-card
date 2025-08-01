@@ -10,7 +10,6 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
   import { useSessionStorage } from '@vueuse/core';
-  import { omit } from 'lodash';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
 
   const router = useRouter();
