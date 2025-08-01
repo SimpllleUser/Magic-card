@@ -10,7 +10,6 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { VueDraggableNext } from 'vue-draggable-next';
   import { useSessionStorage } from '@vueuse/core';
-  import { omit } from 'lodash';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
 
   const router = useRouter();
@@ -47,9 +46,9 @@
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
-  onMounted(async () => {
-    await dictionaryStore.fetchDictionarys();
-  });
+  // onMounted(async () => {
+  //   await dictionaryStore.fetchDictionarys();
+  // });
 </script>
 
 <template>
