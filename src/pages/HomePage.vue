@@ -46,9 +46,9 @@
 
   const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
-  // onMounted(async () => {
-  //   await dictionaryStore.fetchDictionarys();
-  // });
+  onMounted(async () => {
+    await dictionaryStore.fetchDictionarys();
+  });
 </script>
 
 <template>

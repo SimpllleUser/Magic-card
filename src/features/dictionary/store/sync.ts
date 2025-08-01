@@ -20,7 +20,7 @@ export const syncDataBetweenStorages = async (
     }
 
     if (!cloudItem && localItem) {
-      await dictionaryApi.create({ ...localItem, userId: authStore.user?.$id });
+      await dictionaryApi.create({ ...localItem, userId: authStore.user?.id });
     }
   }
 };

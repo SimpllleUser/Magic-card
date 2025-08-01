@@ -4,181 +4,63 @@
       "title": "Main 100 words for B2",
       "description": "",
       "items": "[{\"id\":\"KUg3Oh9kwMnJUrTfJtyTd\",\"from\":\"achieve \",\"to\":\" досягати\"},{\"id\":\"QKjtLvhdSjmBdLpZuJ4VL\",\"from\":\"\\nacknowledge \",\"to\":\" визнавати\"},{\"id\":\"0AJKBKCiDyE6rJRowLGVS\",\"from\":\"\\nadjust \",\"to\":\" налаштовувати\"},{\"id\":\"Tx8tkTXngZL49DjZfVSj5\",\"from\":\"\\naffect \",\"to\":\" впливати\"},{\"id\":\"CsNYIEkskcnlwbmF_FYLO\",\"from\":\"\\naffordable \",\"to\":\" доступний за ціною\"},{\"id\":\"OMUgB2rOg2U82300Ydkmi\",\"from\":\"\\naim \",\"to\":\" мета\"},{\"id\":\"ke0MIiG4hI80IQbKCpeuo\",\"from\":\"\\nallow \",\"to\":\" дозволяти\"},{\"id\":\"poR5_SnvxKZm7qLosoyES\",\"from\":\"\\namount \",\"to\":\" кількість\"},{\"id\":\"vxL_1_bIjH3swScqu8oKb\",\"from\":\"\\nanalyze \",\"to\":\" аналізувати\"},{\"id\":\"oEVGEqKprwbrZG6ZgR2kE\",\"from\":\"\\nannounce \",\"to\":\" оголошувати\"},{\"id\":\"gUETm-uY_LU1voODiGjEj\",\"from\":\"\\napproach \",\"to\":\" підхід\"},{\"id\":\"Z_ZC-Gtwg3joNY-9ZnQtX\",\"from\":\"\\nargue \",\"to\":\" сперечатися\"},{\"id\":\"-SKztmkucFaVwquHznD2z\",\"from\":\"\\narrange \",\"to\":\" організовувати\"},{\"id\":\"OoEGy8uoeB8JJHSKutrNy\",\"from\":\"\\nassume \",\"to\":\" припускати\"},{\"id\":\"vZFNn0QjEPs0uJCoCUcJc\",\"from\":\"\\nattempt \",\"to\":\" спроба\"},{\"id\":\"tAXqLfgjKoQGQ-GETwTxM\",\"from\":\"\\nattitude \",\"to\":\" ставлення\"},{\"id\":\"28TCeEgZDKo1_tmgHtF01\",\"from\":\"\\navailable \",\"to\":\" доступний\"},{\"id\":\"tG7t1o4aKRHBleLj4FN0G\",\"from\":\"\\naware \",\"to\":\" усвідомлений\"},{\"id\":\"AfYFg7IM87nvWfD0B5hXC\",\"from\":\"\\navoid \",\"to\":\" уникати\"},{\"id\":\"shpOXtXKzom96-D4iOcZo\",\"from\":\"\\nbenefit \",\"to\":\" вигода\"},{\"id\":\"TVrJrCDXKjNHU1mGs1-0j\",\"from\":\"\\nbehavior \",\"to\":\" поведінка\"},{\"id\":\"sh4gjT_2MvDhVh4XRnQf6\",\"from\":\"\\nbeyond \",\"to\":\" за межами\"},{\"id\":\"7lTI4VeysTxeqFZuMt2tZ\",\"from\":\"\\nchallenge \",\"to\":\" виклик\"},{\"id\":\"_BV_bLJ9nyqrKyv9wqo6g\",\"from\":\"\\nclaim \",\"to\":\" стверджувати\"},{\"id\":\"ethccZyaHoFWwnG4sgy9n\",\"from\":\"\\ncombine \",\"to\":\" поєднувати\"},{\"id\":\"lNVk65Gm4HRqSCFMO1BZz\",\"from\":\"\\ncompare \",\"to\":\" порівнювати\"},{\"id\":\"FeKZUT096aEsC-Z1h1WMd\",\"from\":\"\\ncomplex \",\"to\":\" складний\"},{\"id\":\"4_8v3T0BL3qeOh_QA34c8\",\"from\":\"\\nconcern \",\"to\":\" турбота\"},{\"id\":\"jRIf_gnEkf2U9jpvGc6QG\",\"from\":\"\\nconfirm \",\"to\":\" підтверджувати\"},{\"id\":\"Idrs90CM3US3vM28PmT50\",\"from\":\"\\nconsider \",\"to\":\" розглядати\"},{\"id\":\"YvA6lC3c2eLiQZ0b5oKU3\",\"from\":\"\\nconsist \",\"to\":\" складатися\"},{\"id\":\"tjJGBFdUIoi5ZbTqIb6Uz\",\"from\":\"\\ncontribute \",\"to\":\" робити внесок\"},{\"id\":\"H8ul4v9WJOsTt_Z_WPREh\",\"from\":\"\\nconvince \",\"to\":\" переконувати\"},{\"id\":\"81S96nlOD38MMFvwyY0Qk\",\"from\":\"\\ncreate \",\"to\":\" створювати\"},{\"id\":\"WtgjEJkIR9QXFflMN-2xs\",\"from\":\"\\ndecrease \",\"to\":\" зменшувати\"},{\"id\":\"mjA9X_72MsOa1otad3S8g\",\"from\":\"\\ndefine \",\"to\":\" визначати\"},{\"id\":\"physiM--nD3F9SmBrJUjN\",\"from\":\"\\ndelay \",\"to\":\" затримувати\"},{\"id\":\"DqTj6rpw-sZC4RBYfXxxp\",\"from\":\"\\ndemand \",\"to\":\" вимагати\"},{\"id\":\"SSdO3O9fggTnhChzzS8_w\",\"from\":\"\\ndepend \",\"to\":\" залежати\"},{\"id\":\"-GblL0hS92BzFj_5s6UrV\",\"from\":\"\\ndespite \",\"to\":\" незважаючи на\"},{\"id\":\"jCU6AcvQ3nszQoicyfkpp\",\"from\":\"\\ndetermine \",\"to\":\" визначати\"},{\"id\":\"6uO_yPn9zIFSXk9ynHLDA\",\"from\":\"\\ndevelop \",\"to\":\" розвивати\"},{\"id\":\"IJ6_Ly-K7j5l4rzxY7mP5\",\"from\":\"\\ndirect \",\"to\":\" керувати\"},{\"id\":\"JOCpTruXN96vJFlnHDVRc\",\"from\":\"\\ndiscuss \",\"to\":\" обговорювати\"},{\"id\":\"rPA2bAKKOgIiqAPuJXHaK\",\"from\":\"\\ndiscover \",\"to\":\" відкривати\"},{\"id\":\"Q1VMwjgmBrs1H7GDolPI6\",\"from\":\"\\ndoubt \",\"to\":\" сумнів\"},{\"id\":\"LVyv3Rq063cV6voipQdwW\",\"from\":\"\\neffort \",\"to\":\" зусилля\"},{\"id\":\"evmH8bYkhGUwFh-h_Kqu-\",\"from\":\"\\nenable \",\"to\":\" давати можливість\"},{\"id\":\"kYvmRv4n1sswzf5FO8Elc\",\"from\":\"\\nencourage \",\"to\":\" заохочувати\"},{\"id\":\"xxR1M5HmPt0lHCPUNeHMG\",\"from\":\"\\nengage \",\"to\":\" залучати\"},{\"id\":\"hnPiJZgmfU18d0RX1gDn8\",\"from\":\"\\nenhance \",\"to\":\" покращувати\"},{\"id\":\"yq27aMqyXRvFmMbBeR6lj\",\"from\":\"\\nensure \",\"to\":\" забезпечувати\"},{\"id\":\"mOItMFEr6TQQTGiPeCCnO\",\"from\":\"\\nestablish \",\"to\":\" встановлювати\"},{\"id\":\"dGeYaobt7Ygiz97AFVhhl\",\"from\":\"\\nestimate \",\"to\":\" оцінювати\"},{\"id\":\"Na7yTecMVKhgv7SprXipk\",\"from\":\"\\nevaluate \",\"to\":\" оцінювати\"},{\"id\":\"0OtX9WXDxs4y-UQFiiNdl\",\"from\":\"\\nevidence \",\"to\":\" доказ\"},{\"id\":\"TLPkJgItCiuXpkRy3GqUe\",\"from\":\"\\nexist \",\"to\":\" існувати\"},{\"id\":\"6maX_fuL7GBl09wRT6yJQ\",\"from\":\"\\nexpand \",\"to\":\" розширювати\"},{\"id\":\"1AsGTfRVSmJxSFy4mcfbZ\",\"from\":\"\\nexperience \",\"to\":\" досвід\"},{\"id\":\"thEkjLfgf3qXRMzWpxtvn\",\"from\":\"\\nexplain \",\"to\":\" пояснювати\"},{\"id\":\"z03mXHVvSePXzpMT3_UU-\",\"from\":\"\\nexplore \",\"to\":\" досліджувати\"},{\"id\":\"GdU2R0eaadCbwYSBAV9Fl\",\"from\":\"\\nexpress \",\"to\":\" висловлювати\"},{\"id\":\"i6UQTQURbVgUjjgBlWqJN\",\"from\":\"\\nextend \",\"to\":\" розширювати\"},{\"id\":\"z-nsSRdyFQGq74DYXUh7v\",\"from\":\"\\nfail \",\"to\":\" зазнати невдачі\"},{\"id\":\"Wz01qrIhCRnwdU9vF_saR\",\"from\":\"\\nfeature \",\"to\":\" характеристика\"},{\"id\":\"oaBAaS6xwyPOd_BBRv6o3\",\"from\":\"\\nfocus \",\"to\":\" зосереджуватись\"},{\"id\":\"3XFaCsQvpENgynamnmnrA\",\"from\":\"\\ngain \",\"to\":\" здобувати\"},{\"id\":\"Uwdvc_B5uH_iSQQXj4CbS\",\"from\":\"\\ngenerate \",\"to\":\" генерувати\"},{\"id\":\"Wu0HDdKiyztjGcqV3-nXq\",\"from\":\"\\ngoal \",\"to\":\" ціль\"},{\"id\":\"AfLz7EpBC9AHV9wXpXbUZ\",\"from\":\"\\nhandle \",\"to\":\" справлятися\"},{\"id\":\"ShnnactYiu9cVzGUJz5M0\",\"from\":\"\\nidentify \",\"to\":\" ідентифікувати\"},{\"id\":\"ZNhWRlPAJZMOt9K62XSI7\",\"from\":\"\\nimpact \",\"to\":\" вплив\"},{\"id\":\"eZqdScAoHwhYFOIvQXx97\",\"from\":\"\\nimprove \",\"to\":\" покращувати\"},{\"id\":\"kpBldCnlOkQCNjdr98fKb\",\"from\":\"\\ninclude \",\"to\":\" включати\"},{\"id\":\"kMW3wO9pEYhX4OmHhWOFb\",\"from\":\"\\nincrease \",\"to\":\" збільшувати\"},{\"id\":\"ae8dopVm3DMfogEvKN4RK\",\"from\":\"\\nindicate \",\"to\":\" вказувати\"},{\"id\":\"XLshODd-apOJwd2_cX7r6\",\"from\":\"\\ninfluence \",\"to\":\" впливати\"},{\"id\":\"lW276Sge84atNMWIcHsjZ\",\"from\":\"\\ninform \",\"to\":\" інформувати\"},{\"id\":\"fjjVWox9hRjHeiSTX6yHC\",\"from\":\"\\ninsist \",\"to\":\" наполягати\"},{\"id\":\"4VaHO36F8RJnocSJg2JwH\",\"from\":\"\\ninvolve \",\"to\":\" залучати\"},{\"id\":\"h0b_fY0wxHBzIix8YYVkN\",\"from\":\"\\nissue \",\"to\":\" проблема\"},{\"id\":\"N260QGRfakF7mLvckJE20\",\"from\":\"\\nlack \",\"to\":\" нестача\"},{\"id\":\"aOAEa9CsPjvceNO1zh1ir\",\"from\":\"\\nmaintain \",\"to\":\" підтримувати\"},{\"id\":\"KUfkix7uBifCguE2LOSNv\",\"from\":\"\\nmanage \",\"to\":\" керувати\"},{\"id\":\"1SdCpo32_kLk1bLKg6O89\",\"from\":\"\\nmention \",\"to\":\" згадувати\"},{\"id\":\"zMINvL2qvBcaDL5uqqgIR\",\"from\":\"\\nnotice \",\"to\":\" помічати\"},{\"id\":\"gI-cm-Ge18cG0yrHAaSLT\",\"from\":\"\\nobtain \",\"to\":\" отримувати\"},{\"id\":\"IqgB24p59TdxznMUNdI9u\",\"from\":\"\\noffer \",\"to\":\" пропонувати\"},{\"id\":\"jQvYn92qsrZ217hX7OyFF\",\"from\":\"\\noppose \",\"to\":\" протистояти\"},{\"id\":\"Hb-tOJUmP2VZ6n4nNDPGi\",\"from\":\"\\noption \",\"to\":\" варіант\"},{\"id\":\"gNtujEk_SOgi6McC0XIvw\",\"from\":\"\\nparticipate \",\"to\":\" брати участь\"},{\"id\":\"kU6vpyfRV3nViek9HjnS1\",\"from\":\"\\nperform \",\"to\":\" виконувати\"},{\"id\":\"aGBi3d9qZw64UPRtZuiqa\",\"from\":\"\\npersuade \",\"to\":\" переконувати\"},{\"id\":\"0sgDO1G4N6JwzmH23CTju\",\"from\":\"\\nprevent \",\"to\":\" запобігати\"},{\"id\":\"O4FbKqQ_8wShOV5-YwwVU\",\"from\":\"\\nprovide \",\"to\":\" надавати\"},{\"id\":\"K_iSSvw98zq_E8Wc2eQKu\",\"from\":\"\\nrealize \",\"to\":\" усвідомлювати\"},{\"id\":\"PFYlItEsi7V-7XeN-Zu4T\",\"from\":\"\\nrecommend \",\"to\":\" рекомендувати\"},{\"id\":\"T57vZhKuO9q_McVKASph0\",\"from\":\"\\nreduce \",\"to\":\" зменшувати\"},{\"id\":\"ZH_qrtJPt_NTTwmQm9oGs\",\"from\":\"\\nreflect \",\"to\":\" відображати\"},{\"id\":\"y-ha0Vn1dhERf3cDkFOjI\",\"from\":\"\\nrefuse \",\"to\":\" відмовлятись\"},{\"id\":\"1AVbrsMxB4JJnyWqtBwWA\",\"from\":\"\\nregret \",\"to\":\" шкодувати\"},{\"id\":\"Z9j6ygkndZ6vu084A1hvM\",\"from\":\"\\nrelate \",\"to\":\" стосуватись\"},{\"id\":\"I_gBpazLbXxCk9RT9jnyy\",\"from\":\"\\nrequire \",\"to\":\" вимагати\"},{\"id\":\"JlrmeUsizsYi1HgBUgzjQ\",\"from\":\"\\nrespond \",\"to\":\" відповідати\"},{\"id\":\"4C3SrbSMQhxntgH2T_k3x\",\"from\":\"\\nresult \",\"to\":\" результат\"},{\"id\":\"vKbmgQD3h8MRp77ETxK5w\",\"from\":\"\\nsuggest \",\"to\":\" пропонувати\"},{\"id\":\"eJJoI-AdHJa3NSQFeAchl\",\"from\":\"\\nsupport \",\"to\":\" підтримувати\"},{\"id\":\"xbaqTdsoNOsUJvgQ-2rzj\",\"from\":\"\\nsupply \",\"to\":\" постачати\"},{\"id\":\"9LIBWNuy5Uiq_DY-6izDd\",\"from\":\"\\nsurvive \",\"to\":\" виживати\"}]",
-      "id": "gUIn2NsvANOLh0y7GCKcs",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348af4001af700ee0c",
-      "$sequence": 185,
-      "$createdAt": "2025-05-26T15:39:12.147+00:00",
-      "$updatedAt": "2025-05-26T20:35:50.789+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "🧠 Інтелектуальні дії (думати, знати, аналізувати)",
       "description": "",
       "items": "[{\"id\":\"VDyE6_MTJiYSZBCrW5tfw\",\"from\":\"Analyze \",\"to\":\" аналізувати\"},{\"id\":\"NRUjM0H2uremZzJVgVZWa\",\"from\":\"Assume \",\"to\":\" припускати\"},{\"id\":\"xQnJjECvRxlDGKJTAnGeL\",\"from\":\"\\nacknowledge \",\"to\":\" визнавати\"},{\"id\":\"04q_jdj5n0OJ0s_4q44L5\",\"from\":\"\\nconsider \",\"to\":\" розглядати\"},{\"id\":\"YKWQ40iHxy4U2PLglszIh\",\"from\":\"\\nconvince \",\"to\":\" переконувати\"},{\"id\":\"trTMiXvnk4JoabYr2YgDO\",\"from\":\"\\ndefine \",\"to\":\" визначати\"},{\"id\":\"6qGsdmte36bZlCV5Lo59s\",\"from\":\"\\ndiscover \",\"to\":\" відкривати\"},{\"id\":\"fgerVf4TNZ0r0uZ9GRAmJ\",\"from\":\"\\nevaluate \",\"to\":\" оцінювати\"},{\"id\":\"UjVE0nC62gKLmlecgvZ3m\",\"from\":\"\\nexplore \",\"to\":\" досліджувати\"},{\"id\":\"T2qoV0yJkjHNPhXECtn7T\",\"from\":\"\\nidentify \",\"to\":\" ідентифікувати\"},{\"id\":\"_j7HrVucRYhobApLJPguh\",\"from\":\"\\nindicate \",\"to\":\" вказувати\"},{\"id\":\"52M8awcd9-VWYkPRqSoGi\",\"from\":\"\\ninform \",\"to\":\" інформувати\"},{\"id\":\"Ez4_T2VBVh22gDUHB1UaW\",\"from\":\"\\nnotice \",\"to\":\" помічати\"},{\"id\":\"1BHPJ_OhohdSFuKGE1V5B\",\"from\":\"\\nrealize \",\"to\":\" усвідомлювати\"},{\"id\":\"QFVquqZ55AnsYzeKLBjGI\",\"from\":\"\\nrecognize \",\"to\":\" розпізнавати\"},{\"id\":\"2ysBDXeR_lP77xQ4BB9_0\",\"from\":\"\\nrecommend \",\"to\":\" рекомендувати\"},{\"id\":\"uXry8N5lbugBjV3NaBoGl\",\"from\":\"\\nunderstand \",\"to\":\" розуміти\"},{\"id\":\"zfWN1iid_7vUFWh45FZam\",\"from\":\"\\nestimate \",\"to\":\" оцінювати\"}]",
-      "id": "vhvHMNZLwDHx17vei-a2C",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348b5d001536bb28df",
-      "$sequence": 186,
-      "$createdAt": "2025-05-26T15:40:57.068+00:00",
-      "$updatedAt": "2025-05-26T20:35:58.845+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "🗣️ Комунікація та соціальні дії",
       "description": "",
       "items": "[{\"id\":\"N34ZAe_oVanyfR3E3ulLD\",\"from\":\"announce\",\"to\":\"оголошувати\"},{\"id\":\"mcfGGawnAJEXc0eLd4UUX\",\"from\":\"\\nargue\",\"to\":\"сперечатися\"},{\"id\":\"r0Lf0zkCuPQFqJtDCAIgW\",\"from\":\"\\nclaim\",\"to\":\"стверджувати\"},{\"id\":\"Ayq0AuKZRp_eNWXLkyrkb\",\"from\":\"\\ndiscuss\",\"to\":\"обговорювати\"},{\"id\":\"bM_4lBjKdM7__Vh0bEv8g\",\"from\":\"\\nexpress\",\"to\":\"висловлювати\"},{\"id\":\"FZcTt1OjBXzI2rKdKBShn\",\"from\":\"\\nmention\",\"to\":\"згадувати\"},{\"id\":\"zBx9Ns92h8XqIAK3iLVPk\",\"from\":\"\\npersuade\",\"to\":\"переконувати\"},{\"id\":\"vMPMd6ANqvfW1QHft-UdQ\",\"from\":\"\\nrefuse\",\"to\":\"відмовлятись\"},{\"id\":\"RPhWsbae9ge4YaZgsCGWz\",\"from\":\"\\nrespond\",\"to\":\"відповідати\"},{\"id\":\"7tsgVuH9MN0coqXTjCPAW\",\"from\":\"\\nsuggest\",\"to\":\"пропонувати\"}]",
-      "id": "K4v2u7NOTfkw7bDFFkRye",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348b70002f59263481",
-      "$sequence": 187,
-      "$createdAt": "2025-05-26T15:41:16.465+00:00",
-      "$updatedAt": "2025-05-26T20:36:04.767+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "💪 Діяльність, вплив і зміни",
       "description": "",
       "items": "[{\"id\":\"9L4GwjAygo6QYJL7f5dJB\",\"from\":\"achieve \",\"to\":\" досягати\"},{\"id\":\"RcCUgib-Zv_iWVsf0MF1Q\",\"from\":\"\\nadjust \",\"to\":\" налаштовувати\"},{\"id\":\"nNS8Evb6Q3j0K8SWsslgy\",\"from\":\"\\nallow \",\"to\":\" дозволяти\"},{\"id\":\"pk9F7Pp5UkGitd1CJDmnp\",\"from\":\"\\navoid \",\"to\":\" уникати\"},{\"id\":\"NO0qIp0jQbyoeTyDMd-td\",\"from\":\"\\ncombine \",\"to\":\" поєднувати\"},{\"id\":\"-Wjdb-VLgSE05Hh5VWV9o\",\"from\":\"\\ncontribute \",\"to\":\" робити внесок\"},{\"id\":\"49H3HjkRvoF0f__x9UZiF\",\"from\":\"\\ncreate \",\"to\":\" створювати\"},{\"id\":\"FTvj3a6GErSOVvu2nd3t-\",\"from\":\"\\ndevelop \",\"to\":\" розвивати\"},{\"id\":\"GCM6OLgsg4OogWbhABhHZ\",\"from\":\"\\nenable \",\"to\":\" давати можливість\"},{\"id\":\"vaglap34ONhtb0F6huyTA\",\"from\":\"\\nencourage \",\"to\":\" заохочувати\"},{\"id\":\"kCtaUB0aGQVg1sg5rTA9G\",\"from\":\"\\nenhance \",\"to\":\" покращувати\"},{\"id\":\"z7oPNRTl7ZAFRGsKepSNA\",\"from\":\"\\nexpand \",\"to\":\" розширювати\"},{\"id\":\"BW0aocVcODWh6Gqp0axWw\",\"from\":\"\\ngenerate \",\"to\":\" генерувати\"},{\"id\":\"JvC2HMyOBAfGWdygrjTMY\",\"from\":\"\\nhandle \",\"to\":\" справлятися\"},{\"id\":\"F3zC0qnqA-6HOXTi15NGO\",\"from\":\"\\nimprove \",\"to\":\" покращувати\"},{\"id\":\"wrVcUvNxmrzuuHrPUhVAZ\",\"from\":\"\\nincrease \",\"to\":\" збільшувати\"},{\"id\":\"BDTc8Q3rsXL7D33RZza8r\",\"from\":\"\\nmaintain \",\"to\":\" підтримувати\"},{\"id\":\"aEfXHZVYFZUmUHyqrmRud\",\"from\":\"\\nmanage \",\"to\":\" керувати\"},{\"id\":\"xJb04h994xZE1V4EAB2nC\",\"from\":\"\\nprevent \",\"to\":\" запобігати\"},{\"id\":\"SQ89qq4VBpDTcSrUSLsnV\",\"from\":\"\\nprovide \",\"to\":\" надавати\"},{\"id\":\"HyS8-B-5j8J8t0iIgp1kq\",\"from\":\"\\nreduce \",\"to\":\" зменшувати\"},{\"id\":\"0hvgarD_vkaoRBvwVB71L\",\"from\":\"\\nrequire \",\"to\":\" вимагати\"},{\"id\":\"76IWyVHrA3mwC5yrPjqbm\",\"from\":\"\\nsupport \",\"to\":\" підтримувати\"},{\"id\":\"UHu084gQFpRFn3o1OWvR-\",\"from\":\"\\nsupply \",\"to\":\" постачати\"}]",
-      "id": "wq1epwOZJsUp1TfMwxJc3",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348b8b003b45ec6389",
-      "$sequence": 188,
-      "$createdAt": "2025-05-26T15:41:43.681+00:00",
-      "$updatedAt": "2025-05-26T20:35:39.519+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "📊 Бізнес і організація",
       "description": "",
       "items": "[{\"id\":\"O9d9Yh-WRy7FyO1qsehjt\",\"from\":\"approach \",\"to\":\" підхід\"},{\"id\":\"hpJgweriEhlfCh3T39d3s\",\"from\":\"\\narrange \",\"to\":\" організовувати\"},{\"id\":\"JS61quuM3ZBJXhGZkzTXg\",\"from\":\"\\nbudget \",\"to\":\" бюджет\"},{\"id\":\"zZoXLaULTZCqYYH-ndC7R\",\"from\":\"\\ncompany \",\"to\":\" компанія\"},{\"id\":\"dR-BO3iUBUtJlY7B8gELO\",\"from\":\"\\nconfirm \",\"to\":\" підтверджувати\"},{\"id\":\"IRk-936XNLyZQQpby1kpX\",\"from\":\"\\nestablish \",\"to\":\" встановлювати\"},{\"id\":\"mPh99mZNxXE3XTB47hfIw\",\"from\":\"\\ngoal \",\"to\":\" ціль\"},{\"id\":\"66QBf1hmdsgKZ9syB6ZZf\",\"from\":\"\\nincome \",\"to\":\" дохід\"},{\"id\":\"UGDHcMNBImW0BsVWblI1e\",\"from\":\"\\ninvest \",\"to\":\" інвестувати\"},{\"id\":\"t4pzVGvcpyllimt6RZzQ6\",\"from\":\"\\noffer \",\"to\":\" пропонувати\"},{\"id\":\"6AOUjLq6OKDoyWgzVBkyW\",\"from\":\"\\noption \",\"to\":\" варіант\"},{\"id\":\"L51MuYFKXaF2SQPJJZdmq\",\"from\":\"\\nparticipate \",\"to\":\" брати участь\"},{\"id\":\"0r8pzeo49BQJh_rpHLMhg\",\"from\":\"\\nperform \",\"to\":\" виконувати\"},{\"id\":\"XmMIffG9ma801Q7D5ErlH\",\"from\":\"\\nproject \",\"to\":\" проєкт\"},{\"id\":\"_StRpiofS1pGy53PdKFw9\",\"from\":\"\\nresult \",\"to\":\" результат\"},{\"id\":\"ul1FfSHE14ZAa28ZqRYTa\",\"from\":\"\\nstrategy \",\"to\":\" стратегія\"}]",
-      "id": "yuRtxIjGlhfx6MocRu-A5",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348ba00021cb91643d",
-      "$sequence": 189,
-      "$createdAt": "2025-05-26T15:42:04.303+00:00",
-      "$updatedAt": "2025-05-26T20:36:10.937+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "😌 Почуття, емоції, ставлення",
       "description": "",
       "items": "[{\"id\":\"U9jj-Be-oKUMnV4LiLC2R\",\"from\":\"attitude\",\"to\":\"ставлення\"},{\"id\":\"lHnFE_WK9pKXsMW5TJhme\",\"from\":\"\\naware\",\"to\":\"усвідомлений\"},{\"id\":\"KN1VKtMFwuMRc5NILFrKy\",\"from\":\"\\nconcern\",\"to\":\"турбота\"},{\"id\":\"DnGfXW4KJIgQ_ZRO1aLP4\",\"from\":\"\\ndoubt\",\"to\":\"сумнів\"},{\"id\":\"hmBFp9njee3YLlvzYRDL8\",\"from\":\"\\nfeel\",\"to\":\"почувати\"},{\"id\":\"2OCNAyYcnCtxZ5o-u3Orf\",\"from\":\"\\ninterest\",\"to\":\"інтерес\"},{\"id\":\"KqnxdmjlKsyWe7pLGV5gs\",\"from\":\"\\nregret\",\"to\":\"шкодувати\"},{\"id\":\"Uh0-a4T2RHPqi1sAeM4Ex\",\"from\":\"\\nsuffer\",\"to\":\"страждати\"},{\"id\":\"Bm7lUDHkqDYv7vuATV34r\",\"from\":\"\\nsurvive\",\"to\":\"виживати\"},{\"id\":\"qOSpVGqKrfy0JdiQvX9UZ\",\"from\":\"\\ntrust\",\"to\":\"довіряти\"}]",
       "id": "_WDaxZSHhcSe4723T87dj",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348bb90033bbd829d3",
-      "$sequence": 190,
-      "$createdAt": "2025-05-26T15:42:29.542+00:00",
-      "$updatedAt": "2025-05-26T20:36:16.386+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "🧩Загальні абстрактні слова",
       "description": "",
       "items": "[{\"id\":\"iJ6-Amqy-JTcUF56BMI6F\",\"from\":\"amount\",\"to\":\"кількість\"},{\"id\":\"1EyM93ES7hPvLEgENoAdm\",\"from\":\"\\nbehavior\",\"to\":\"поведінка\"},{\"id\":\"3IRpFfb8ZHYYwANgmwKEt\",\"from\":\"\\nbenefit\",\"to\":\"вигода\"},{\"id\":\"-P0qF2chG_Xziq7UKcR1s\",\"from\":\"\\nchallenge\",\"to\":\"виклик\"},{\"id\":\"ongRGD6Jy0Mb4teP9bptw\",\"from\":\"\\nchance\",\"to\":\"шанс\"},{\"id\":\"dLOgrDQRHopCN2HLvgMBv\",\"from\":\"\\nchange\",\"to\":\"зміна\"},{\"id\":\"qVQp4S1-pSg-CVZfX2eXf\",\"from\":\"\\ncomplex\",\"to\":\"складний\"},{\"id\":\"sRWXQZ_BxD0VOgMf4J9Lm\",\"from\":\"\\ndifficulty\",\"to\":\"труднощі\"},{\"id\":\"EMnxEfjOFaLdKiBayulXP\",\"from\":\"\\nevidence\",\"to\":\"доказ\"},{\"id\":\"9Je3V0aTDvay4JuZP_DOS\",\"from\":\"\\nimpact\",\"to\":\"вплив\"},{\"id\":\"d3WEUo4VgfSuMkJAjt2YH\",\"from\":\"\\nissue\",\"to\":\"проблема\"},{\"id\":\"Ub7nt4WgPvKWlhv6ercZn\",\"from\":\"\\nlack\",\"to\":\"нестача\"},{\"id\":\"_MArhIBSAjsAyrWrfq8ck\",\"from\":\"\\nrisk\",\"to\":\"ризик\"},{\"id\":\"FBP9rRneyOhSfSovw93KO\",\"from\":\"\\nvalue\",\"to\":\"цінність\"}]",
       "id": "5L5o82HbOMV_azUjk27O8",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348bcf0010896f97e1",
-      "$sequence": 191,
-      "$createdAt": "2025-05-26T15:42:50.955+00:00",
-      "$updatedAt": "2025-06-03T19:25:26.273+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "You can add words for dictionary You can add words for dictionary You can add words for dictionary",
       "description": "",
       "items": "[]",
-      "id": "OeQ_DNbkSlixHpGdp4QUS",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "68348eaf003e4c60623d",
-      "$sequence": 192,
-      "$createdAt": "2025-05-26T15:55:07.694+00:00",
-      "$updatedAt": "2025-05-26T20:35:27.270+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "test",
       "description": "asdasdasdasdasd\nasdasdasda\nasdasdasdasdasdasdasdasd\nasdasdasda\nasdasdasd\n\nasdasdasdasdasd\nasdasdasda\nasdasdasd",
       "items": "[]",
-      "id": "Yi6Bs5ZV_PG_DuoRAhVSk",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "6834d057002499ffacbd",
-      "$sequence": 194,
-      "$createdAt": "2025-05-26T20:35:14.908+00:00",
-      "$updatedAt": "2025-05-26T20:36:41.711+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     },
     {
       "title": "Test",
       "description": "",
       "items": "[{\"id\":\"adJhZSfcLbUlEpqG7uRhj\",\"from\":\"apple\",\"to\":\"яблуко\"},{\"id\":\"CcLeZ-kArLEDdYWpU_fxl\",\"from\":\"book\",\"to\":\"книга\"},{\"id\":\"jPAv0zyG4fB-Dfu1cHWBw\",\"from\":\"car\",\"to\":\"автомобіль\"},{\"id\":\"aSMCqa-rl0pQuzgeB4-KQ\",\"from\":\"house\",\"to\":\"будинок\"},{\"id\":\"Wl2r6HGxD3SRohLRxNicj\",\"from\":\"tree\",\"to\":\"дерево\"},{\"id\":\"edsVvK4RgtZo-0adFFoI7\",\"from\":\"water\",\"to\":\"вода\"},{\"id\":\"e5BEm9-iF1buB5pqmtADr\",\"from\":\"sun\",\"to\":\"сонце\"},{\"id\":\"94qlUZS3yPNMOQO1QxX07\",\"from\":\"friend\",\"to\":\"друг\"},{\"id\":\"7kYPfOLpgJhX11VZw0ENw\",\"from\":\"time\",\"to\":\"час\"},{\"id\":\"x-oGHGKbw69APJDbnm8Nq\",\"from\":\"love\",\"to\":\"любов\"}]",
-      "id": "QXBLfDIHVOu8QyeLgO7Gq",
-      "userId": "67e5b91cd1236e3e6772",
-      "$id": "687159f1003afb8ad80f",
-      "$sequence": 200,
-      "$createdAt": "2025-07-11T18:38:39.772+00:00",
-      "$updatedAt": "2025-07-11T18:38:39.772+00:00",
-      "$permissions": [
-        "read(\"user:67e5b91cd1236e3e6772\")",
-        "update(\"user:67e5b91cd1236e3e6772\")",
-        "delete(\"user:67e5b91cd1236e3e6772\")"
-      ],
-      "$databaseId": "67cb6ff70013f6816889",
-      "$collectionId": "67cb7016002b5277f9fb"
+      "userId": "112829444278453234267"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Account, OAuthProvider } from 'appwrite';
+import { Client, Databases, ID, OAuthProvider, Query } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -7,7 +7,6 @@ const client = new Client();
 
 client.setEndpoint(import.meta.env.VITE_CLOUD_SERVICE_URL).setProject(import.meta.env.VITE_PROJECT_ID);
 
-const account = new Account(client);
 const database = new Databases(client);
 
 export { database, client, ID };
@@ -48,9 +47,9 @@ export class ApiService {
     }
   }
 
-  async getAll<T extends object>(): Promise<EntityAPI<T>[]> {
+  async getAll<T extends object>(userId: string): Promise<EntityAPI<T>[]> {
     try {
-      const res = await database.listDocuments(this.dbId, this.collectionId);
+      const res = await database.listDocuments(this.dbId, this.collectionId, [Query.equal('userId', userId)]);
       return res.documents as EntityAPI<T>[];
     } catch (error) {
       this.handleError(error, `list documents in collection ${this.collectionId}`);
@@ -77,9 +76,7 @@ export class ApiService {
       error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))),
       timestamp: new Date().toISOString()
     };
-    console.log(`[ApiService Error]`, JSON.parse(JSON.stringify(errorDetails, null, 2)));
+    console.log('[ApiService Error]', JSON.parse(JSON.stringify(errorDetails, null, 2)));
     throw new Error(`Failed in ${context}: ${errorMessage}`);
   }
 }
-
-export { account, OAuthProvider };
