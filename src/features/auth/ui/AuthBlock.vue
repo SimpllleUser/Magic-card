@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Colors, Variants } from '@/core/models/enums';
-import { Icons } from '@/core/models/icons';
+  import { Icons } from '@/core/models/icons';
   import { useAuthStore } from '@/stores/auth';
 
   const authStore = useAuthStore();
@@ -14,16 +14,16 @@ import { Icons } from '@/core/models/icons';
   <div class="d-flex items-center justify-center">
     <div v-if="authStore.isAuthenticated">
       <v-chip
-        :variant="Variants.Flat"
         :color="Colors.Info"
+        :variant="Variants.Flat"
       >
         <b> {{ authStore.userName }}</b>
       </v-chip>
       <VBtn
         class="ml-2"
         :color="Colors.Error"
-        :variant="Variants.Text"
         :icon="Icons.Logout"
+        :variant="Variants.Text"
         @click="authStore.singOut"
       >
       </VBtn>
@@ -33,7 +33,12 @@ import { Icons } from '@/core/models/icons';
         :color="Colors.Primary"
         @click="authStore.signIn"
       >
-        Sign in <VIcon :icon="Icons.Google" :color="Colors.Warning" class="ml-2" />
+        <span> Sign in </span>
+        <VIcon
+          class="ml-2"
+          :color="Colors.Warning"
+          :icon="Icons.Google"
+        />
       </VBtn>
     </div>
   </div>
