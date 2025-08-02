@@ -2,6 +2,8 @@
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs/index.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
   import ThemeButton from '@/shared/ui/ThemeButton.vue';
+
+  const router = useRouter();
 </script>
 
 <template>
@@ -12,11 +14,16 @@
   >
     <VAppBarTitle>
       <div class="d-flex align-center mr-auto">
-        <img
-          alt="MagicCardLogo"
-          src="../../assets/logo-main.svg"
-          width="25px"
-        />
+        <VBtn
+          icon
+          @click="router.push({ path: '/' })"
+        >
+          <img
+            alt="MagicCardLogo"
+            src="../../assets/logo-main.svg"
+            width="25px"
+          />
+        </VBtn>
         <div class="title-wrapper justify-center mx-auto">
           <Breadcrumbs />
         </div>
