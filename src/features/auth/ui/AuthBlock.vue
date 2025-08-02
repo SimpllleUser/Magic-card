@@ -24,8 +24,8 @@
         <VAvatar>
           <img
             alt="avatar"
+            class="avatar-image"
             :src="authStore.userData.picture"
-            style="object-fit: cover; border-radius: 50%; width: 40px; height: 40px"
           />
           <VMenu activator="parent">
             <VList class="px-2">
@@ -67,3 +67,12 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .avatar-image {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+</style>
