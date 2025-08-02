@@ -1,24 +1,9 @@
 <script setup lang="ts">
-  import { Themes } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
-  import { useStorage } from '@vueuse/core';
-  import { useTheme } from 'vuetify';
-  import { computed } from 'vue';
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
+  import ThemeButton from '@/shared/ui/ThemeButton.vue';
 
-  const themeConfig = useTheme();
-  const theme = useStorage('theme', themeConfig.global.name.value);
 
-  themeConfig.global.name.value = theme.value;
-
-  const toggleTheme = () => {
-    const isDarkMode = themeConfig.global.current.value.dark;
-    theme.value = isDarkMode ? Themes.Light : Themes.Dark;
-    themeConfig.global.name.value = theme.value;
-  };
-
-  const themeIcon = computed(() => (theme.value === Themes.Light ? Icons.Moon : Icons.Sun));
 </script>
 
 <template>
@@ -34,10 +19,7 @@
     </v-app-bar-title>
 
     <template #append>
-      <VBtn
-        :icon="themeIcon"
-        @click="toggleTheme"
-      />
+      <ThemeButton />
       <AuthBlock class="ml-4" />
     </template>
   </VToolbar>
