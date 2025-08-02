@@ -15,6 +15,7 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const modalStore = useModalStore();
   const dictionaryStatistics = useDictionaryStatistics();
@@ -59,6 +60,7 @@
   /// TODO separte into useComposable -- END
 
   const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
@@ -107,44 +109,106 @@
                 selectable
               >
                 <template #header-actions>
-                  <ExportButton
-                    class="mr-4"
-                    :data="getDictionaryForExport()"
-                    :title="dictionary.title"
-                  />
                   <VBtn
-                    class="mr-4"
+                    v-if="isMobile"
                     :color="Colors.Primary"
-                    :variant="Variants.Outlined"
-                    @click="modalStore.show(Modals.DictionaryStatistic)"
+                    icon
                   >
-                    <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                    <VIcon :icon="Icons.Menu" />
+                    <VMenu activator="parent">
+                      <VList>
+                        <VListItem>
+                          <QuizeModeMenu
+                            label="Play"
+                            @select="
+                              goToQuiz({
+                                dictionaryId: dictionaryId,
+                                words: selectedWords,
+                                type: $event
+                              })
+                            "
+                          />
+                        </VListItem>
+                        <VListItem>
+                          <VBtn
+                            :append-icon="Icons.File"
+                            class="mr-4"
+                            :color="Colors.Primary"
+                            :disabled="!selectedWords.length"
+                            :variant="Variants.Elevated"
+                            @click="
+                              goToViewMode({
+                                dictionaryId: dictionaryId,
+                                words: selectedWords
+                              })
+                            "
+                          >
+                            View cards
+                          </VBtn>
+                        </VListItem>
+                        <VListItem>
+                          <VBtn
+                            class="mr-4"
+                            :color="Colors.Primary"
+                            :variant="Variants.Outlined"
+                            @click="modalStore.show(Modals.DictionaryStatistic)"
+                          >
+                            <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                          </VBtn>
+                        </VListItem>
+                        <VListItem>
+                          <ExportButton
+                            class="mr-4"
+                            :data="getDictionaryForExport()"
+                            :title="dictionary.title"
+                          />
+                        </VListItem>
+                      </VList>
+                    </VMenu>
                   </VBtn>
-                  <VBtn
-                    :append-icon="Icons.File"
-                    class="mr-4"
-                    :color="Colors.Primary"
-                    :disabled="!selectedWords.length"
-                    :variant="Variants.Elevated"
-                    @click="
-                      goToViewMode({
-                        dictionaryId: dictionaryId,
-                        words: selectedWords
-                      })
-                    "
+                  <div
+                    v-if="!isMobile"
+                    class="d-flex items-center"
                   >
-                    View cards
-                  </VBtn>
-                  <QuizeModeMenu
-                    label="Play"
-                    @select="
-                      goToQuiz({
-                        dictionaryId: dictionaryId,
-                        words: selectedWords,
-                        type: $event
-                      })
-                    "
-                  />
+                    <ExportButton
+                      class="mr-4"
+                      :data="getDictionaryForExport()"
+                      :title="dictionary.title"
+                    />
+                    <VBtn
+                      class="mr-4"
+                      :color="Colors.Primary"
+                      :variant="Variants.Outlined"
+                      @click="modalStore.show(Modals.DictionaryStatistic)"
+                    >
+                      <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                    </VBtn>
+                    <VBtn
+                      :append-icon="Icons.File"
+                      class="mr-4"
+                      :color="Colors.Primary"
+                      :disabled="!selectedWords.length"
+                      :variant="Variants.Elevated"
+                      @click="
+                        goToViewMode({
+                          dictionaryId: dictionaryId,
+                          words: selectedWords
+                        })
+                      "
+                    >
+                      View cards
+                    </VBtn>
+                    <QuizeModeMenu
+                      label="Play"
+                      @select="
+                        goToQuiz({
+                          dictionaryId: dictionaryId,
+                          words: selectedWords,
+                          type: $event
+                        })
+                      "
+                    />
+                  </div>
                 </template>
                 <template #empty-text>
                   <div>
