@@ -13,8 +13,26 @@ interface IUser {
   emailVerified: boolean;
 }
 
+interface UserInfoResponse {
+  sub: string;
+  email: string;
+  name: string;
+  picture: string;
+  given_name: string;
+  family_name: string;
+  email_verified: boolean;
+}
+
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
+const USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo';
+
+const GOOGLE_LOGIN_PARAMS = {
+  client_id: import.meta.env.VITE_GOOGLE_TOKEN,
+  scope: 'email profile openid',
+  prompt: 'select_account',
+  ux_mode: 'popup'
+};
 
 export const useAuthStore = defineStore('auth', () => {
   const user: RemovableRef<IUser> = useStorage(USER_KEY, { id: '' });
@@ -23,24 +41,37 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!token.value?.length && !!userData.value?.id);
   const isLoading = ref(false);
 
-  const USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo';
-
-  const getUserData = async () => {
-    return googleTokenLogin({
-      clientId: import.meta.env.VITE_GOOGLE_TOKEN,
-      scope: 'email profile openid',
-      prompt: 'select_account',
-      ux_mode: 'popup'
+  const fetchWithToken = async (url: string, token: string): Promise<any> => {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
   };
+
+  const mapUserInfoToIUser = (payload: UserInfoResponse): IUser => ({
+    id: payload.sub,
+    email: payload.email,
+    name: payload.name,
+    picture: payload.picture,
+    givenName: payload.given_name,
+    familyName: payload.family_name,
+    emailVerified: payload.email_verified
+  });
 
   const checkTokenValidity = async (): Promise<boolean> => {
     if (!token.value) return false;
 
     try {
-      const response = await getUserData();
-
-      return response.ok;
+      await fetchWithToken(USER_INFO_URL, token.value);
+      return true;
     } catch (e) {
       console.error('Token validation failed:', e);
       return false;
@@ -54,31 +85,12 @@ export const useAuthStore = defineStore('auth', () => {
         return;
       }
 
-      const res = await getUserData();
+      const res = await googleTokenLogin(GOOGLE_LOGIN_PARAMS);
 
       token.value = res.access_token;
 
-      const userResponse = await fetch(USER_INFO_URL, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${res.access_token}`
-        }
-      });
-
-      if (!userResponse.ok) {
-        throw new Error(`HTTP error! status: ${userResponse.status}`);
-      }
-
-      const payload = await userResponse.json();
-      const userData = {
-        id: payload.sub,
-        email: payload.email,
-        name: payload.name,
-        picture: payload.picture,
-        givenName: payload.given_name,
-        familyName: payload.family_name,
-        emailVerified: payload.email_verified
-      };
+      const payload = await fetchWithToken(USER_INFO_URL, res.access_token);
+      const userData = mapUserInfoToIUser(payload);
 
       if (userData) {
         user.value = userData;
@@ -97,8 +109,6 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       token.value = '';
       user.value = { id: '' };
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
     } catch (e) {
       console.error('Logout error:', e);
     }
@@ -122,6 +132,9 @@ export const useAuthStore = defineStore('auth', () => {
     userData,
     logout,
     clearAuth,
-    login
+    login,
+    checkTokenValidity
   };
 });
+
+export type AuthStore = ReturnType<typeof useAuthStore>;
