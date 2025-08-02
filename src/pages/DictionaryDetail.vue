@@ -156,14 +156,14 @@
                             :variant="Variants.Outlined"
                             @click="modalStore.show(Modals.DictionaryStatistic)"
                           >
-                            <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                            <span class="pr-2"> Statistics </span> <VIcon :icon="Icons.Chart"></VIcon>
                           </VBtn>
                         </VListItem>
                         <VListItem>
                           <ExportButton
-                            :is-mobile="isMobile"
                             class="mr-4"
                             :data="getDictionaryForExport()"
+                            :is-mobile="isMobile"
                             :title="dictionary.title"
                           />
                         </VListItem>
@@ -185,7 +185,7 @@
                       :variant="Variants.Outlined"
                       @click="modalStore.show(Modals.DictionaryStatistic)"
                     >
-                      <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
+                      <span class="pr-2"> Statistics </span> <VIcon :icon="Icons.Chart" />
                     </VBtn>
                     <VBtn
                       :append-icon="Icons.File"
