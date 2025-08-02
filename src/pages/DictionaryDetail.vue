@@ -90,7 +90,7 @@
             </AnimationFade>
             <div
               class="list-wrapper"
-              :class="{ 'is-alert': !canPlayQuize }"
+              :class="{ 'is-alert': !canPlayQuize, 'is-mobile': isMobile }"
             >
               <BaseList
                 v-model:selected-items="selectedWords"
@@ -138,8 +138,20 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .is-mobile {
+    :deep(.v-table) {
+      header.v-toolbar {
+        position: fixed;
+        z-index: 9;
+        left: 0;
+        top: 0;
+        margin-top: 4rem;
+      }
+    }
+  }
   .list-wrapper {
+    margin-top: 1.5rem;
     position: relative;
     transition: all 0.3s ease-out;
   }

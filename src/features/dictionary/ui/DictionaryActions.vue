@@ -29,7 +29,7 @@
   >
     <VIcon :icon="Icons.Menu" />
     <VMenu activator="parent">
-      <VList>
+      <VList class="list-actions-menu">
         <VListItem>
           <QuizModeMenu
             :is-mobile="isMobile"
@@ -107,4 +107,9 @@
     />
   </div>
 </template>
-```
+<style lang="scss" scoped>
+  .list-actions-menu {
+    width: 100vw !important;
+    left: -20px;
+  }
+</style>

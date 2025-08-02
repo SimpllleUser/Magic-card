@@ -4,8 +4,8 @@
 </script>
 
 <template>
-  <v-app>
-    <DefaultHeader />
+  <VApp class="app-wrapper">
+    <DefaultHeader class="default-header" />
     <v-main class="mt-4 mb-8 mx-auto main-content">
       <div class="transition-wrapper">
         <AnimationFade>
@@ -18,10 +18,14 @@
         </AnimationFade>
       </div>
     </v-main>
-    <AppFooter />
-  </v-app>
+  </VApp>
 </template>
 <style lang="scss" scoped>
+  .default-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
   .main-content {
     max-width: calc(1200px + 2rem);
     width: 100%;

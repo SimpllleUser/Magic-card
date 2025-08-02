@@ -2,14 +2,9 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { useAuthStore } from '@/stores/auth';
-  import { GoogleLogin } from 'vue3-google-login';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const authStore = useAuthStore();
-
-  onMounted(async () => {
-    await authStore.refreshUserData();
-  });
 
   const { isMobile } = useBreakPointsApp();
 </script>
@@ -59,11 +54,17 @@
       />
     </div>
     <div v-if="!authStore.isAuthenticated">
-      <GoogleLogin
-        auto-login
-        :callback="authStore.handleGoogleLogin"
-        prompt
-      />
+      <VBtn
+        :color="Colors.Primary"
+        :variant="Variants.Outlined"
+        @click="authStore.login"
+      >
+        <span class="pr-2">Login</span>
+        <VIcon
+          :color="Colors.Warning"
+          :icon="Icons.Google"
+        />
+      </VBtn>
     </div>
   </div>
 </template>
