@@ -1,14 +1,7 @@
 import { defineStore } from 'pinia';
 import { RemovableRef, useStorage } from '@vueuse/core';
-import { onMounted } from 'vue';
+import { computed, readonly, ref } from 'vue';
 import { googleTokenLogin } from 'vue3-google-login';
-
-interface ILoginData {
-  clientId: string;
-  client_id: string;
-  credential: string;
-  select_by: string;
-}
 
 interface IUser {
   id?: string;
@@ -30,31 +23,42 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!token.value?.length && !!userData.value?.id);
   const isLoading = ref(false);
 
-  const logout = () => {
+  const USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo';
+
+  const getUserData = async () => {
+    return googleTokenLogin({
+      clientId: import.meta.env.VITE_GOOGLE_TOKEN,
+      scope: 'email profile openid',
+      prompt: 'select_account',
+      ux_mode: 'popup'
+    });
+  };
+
+  const checkTokenValidity = async (): Promise<boolean> => {
+    if (!token.value) return false;
+
     try {
-      token.value = '';
-      user.value = '';
+      const response = await getUserData();
+
+      return response.ok;
     } catch (e) {
-      console.error('Logout error:', e);
+      console.error('Token validation failed:', e);
+      return false;
     }
   };
 
-  const clearAuth = () => {
-    logout();
-  };
-
   const login = async () => {
+    isLoading.value = true;
     try {
-      const res = await googleTokenLogin({
-        clientId: import.meta.env.VITE_GOOGLE_TOKEN,
-        scope: 'email profile openid',
-        prompt: 'select_account',
-        ux_mode: 'popup'
-      });
+      if (token.value && (await checkTokenValidity())) {
+        return;
+      }
+
+      const res = await getUserData();
 
       token.value = res.access_token;
 
-      const userResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      const userResponse = await fetch(USER_INFO_URL, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${res.access_token}`
@@ -83,8 +87,32 @@ export const useAuthStore = defineStore('auth', () => {
       }
     } catch (e) {
       console.error('Failed to authenticate', e);
+      clearAuth();
+    } finally {
+      isLoading.value = false;
     }
   };
+
+  const logout = () => {
+    try {
+      token.value = '';
+      user.value = { id: '' };
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  };
+
+  const clearAuth = () => {
+    logout();
+  };
+
+  onMounted(async () => {
+    if (token.value && !(await checkTokenValidity())) {
+      clearAuth();
+    }
+  });
 
   return {
     user: readonly(user),
@@ -97,5 +125,3 @@ export const useAuthStore = defineStore('auth', () => {
     login
   };
 });
-
-export type AuthStore = ReturnType<typeof useAuthStore>;
