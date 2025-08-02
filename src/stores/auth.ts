@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { RemovableRef, useStorage } from '@vueuse/core';
 import { onMounted } from 'vue';
+import { googleTokenLogin } from 'vue3-google-login';
 
 interface ILoginData {
   clientId: string;
@@ -28,92 +29,6 @@ export const useAuthStore = defineStore('auth', () => {
   const userData = computed((): IUser => user.value);
   const isAuthenticated = computed(() => !!token.value?.length && !!userData.value?.id);
   const isLoading = ref(false);
-  const error = ref(null);
-
-  const parseJwt = (token) => {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        window
-          .atob(base64)
-          .split('')
-          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
-      );
-      return JSON.parse(jsonPayload);
-    } catch (e) {
-      console.error('Error parsing JWT:', e);
-      return null;
-    }
-  };
-
-  const isTokenValid = (tokenPayload) => {
-    if (!tokenPayload) return false;
-
-    const currentTime = Math.floor(Date.now() / 1000);
-    return tokenPayload.exp > currentTime;
-  };
-
-  const saveAuthData = (authToken: string, userData: IUser) => {
-    try {
-      token.value = authToken;
-      user.value = userData;
-    } catch (e) {
-      console.error('Error saving auth data:', e);
-      error.value = 'Помилка збереження даних авторизації';
-    }
-  };
-
-  const loadSavedAuth = () => {
-    try {
-      if (token.value && user.value?.id) {
-        const tokenPayload = parseJwt(token.value);
-        if (isTokenValid(tokenPayload)) {
-          return true;
-        } else {
-          clearAuth();
-          return false;
-        }
-      }
-      return false;
-    } catch (e) {
-      console.error('Error loading saved auth:', e);
-      clearAuth();
-      return false;
-    }
-  };
-
-  const handleGoogleLogin = async (response: ILoginData) => {
-    try {
-      isLoading.value = true;
-
-      const credential = response.credential;
-      const payload = parseJwt(credential);
-
-      if (!payload) {
-        throw new Error('Не вдалося розпарсити токен');
-      }
-
-      const userData = {
-        id: payload.sub,
-        email: payload.email,
-        name: payload.name,
-        picture: payload.picture,
-        givenName: payload.given_name,
-        familyName: payload.family_name,
-        emailVerified: payload.email_verified
-      };
-      saveAuthData(credential, userData);
-
-      return userData;
-    } catch (e) {
-      error.value = e.message || 'Помилка авторизації';
-      throw e;
-    } finally {
-      isLoading.value = false;
-    }
-  };
 
   const logout = () => {
     try {
@@ -128,29 +43,48 @@ export const useAuthStore = defineStore('auth', () => {
     logout();
   };
 
-  const getAuthHeaders = () => {
-    if (!token.value) return {};
-
-    return {
-      Authorization: `Bearer ${token.value}`,
-      'Content-Type': 'application/json'
-    };
-  };
-
-  const refreshUserData = async () => {
+  const login = async () => {
     try {
-      if (!isAuthenticated.value) return null;
+      const res = await googleTokenLogin({
+        clientId: import.meta.env.VITE_GOOGLE_TOKEN,
+        scope: 'email profile openid',
+        prompt: 'select_account',
+        ux_mode: 'popup'
+      });
 
-      return user.value;
+      token.value = res.access_token;
+
+      const userResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${res.access_token}`
+        }
+      });
+
+      if (!userResponse.ok) {
+        throw new Error(`HTTP error! status: ${userResponse.status}`);
+      }
+
+      const payload = await userResponse.json();
+      const userData = {
+        id: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        picture: payload.picture,
+        givenName: payload.given_name,
+        familyName: payload.family_name,
+        emailVerified: payload.email_verified
+      };
+
+      if (userData) {
+        user.value = userData;
+      } else {
+        console.error('Failed to fetch user data');
+      }
     } catch (e) {
-      console.error('Error refreshing user data:', e);
-      return null;
+      console.error('Failed to authenticate', e);
     }
   };
-
-  onMounted(async () => {
-    loadSavedAuth();
-  });
 
   return {
     user: readonly(user),
@@ -158,12 +92,9 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     isLoading: readonly(isLoading),
     userData,
-    handleGoogleLogin,
     logout,
     clearAuth,
-    getAuthHeaders,
-    refreshUserData,
-    loadSavedAuth
+    login
   };
 });
 
