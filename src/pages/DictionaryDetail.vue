@@ -119,6 +119,7 @@
                       <VList>
                         <VListItem>
                           <QuizeModeMenu
+                            :is-mobile="isMobile"
                             label="Play"
                             @select="
                               goToQuiz({
@@ -133,6 +134,7 @@
                           <VBtn
                             :append-icon="Icons.File"
                             class="mr-4"
+                            :class="{ 'w-100': isMobile }"
                             :color="Colors.Primary"
                             :disabled="!selectedWords.length"
                             :variant="Variants.Elevated"
@@ -149,6 +151,7 @@
                         <VListItem>
                           <VBtn
                             class="mr-4"
+                            :class="{ 'w-100': isMobile }"
                             :color="Colors.Primary"
                             :variant="Variants.Outlined"
                             @click="modalStore.show(Modals.DictionaryStatistic)"
@@ -158,6 +161,7 @@
                         </VListItem>
                         <VListItem>
                           <ExportButton
+                            :is-mobile="isMobile"
                             class="mr-4"
                             :data="getDictionaryForExport()"
                             :title="dictionary.title"
