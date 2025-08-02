@@ -10,6 +10,7 @@
   import { Dictionary } from '@/features/dictionary/model/types';
   import { useSessionStorage } from '@vueuse/core';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const router = useRouter();
   const modal = useModalStore();
@@ -43,6 +44,7 @@
     useSessionStorage('dictionaryCopy', makeCopyDictionary(dictionary));
   };
 
+  const { isMobile } = useBreakPointsApp();
 
   onMounted(async () => {
     await dictionaryStore.fetchDictionarys();
@@ -68,6 +70,7 @@
           >
             <DictionaryCard
               :dictionary="dictionary"
+              :is-mobile="isMobile"
               @copy="onCopy"
               @remove="onRemoveDictionary"
               @sync="dictionaryStore.saveToCloud"
@@ -77,6 +80,7 @@
           <VCol key="add-button">
             <VBtn
               class="big-square-button"
+              :class="{ 'is-mobile-button-add': isMobile }"
               :color="Colors.Primary"
               :variant="Variants.Tonal"
               @click="createDictionary"
@@ -93,6 +97,10 @@
   </VRow>
 </template>
 <style lang="scss" scoped>
+  .is-mobile-button-add {
+    width: 100% !important;
+  }
+
   .big-square-button {
     width: 125px;
     height: 125px;
