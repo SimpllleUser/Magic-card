@@ -8,7 +8,6 @@
   import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
   import { PageNames } from '@/router/types';
   import { Dictionary } from '@/features/dictionary/model/types';
-  import { VueDraggableNext } from 'vue-draggable-next';
   import { useSessionStorage } from '@vueuse/core';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
 
@@ -44,7 +43,6 @@
     useSessionStorage('dictionaryCopy', makeCopyDictionary(dictionary));
   };
 
-  const allowMove = (evt) => Boolean(evt.draggedContext.element);
 
   onMounted(async () => {
     await dictionaryStore.fetchDictionarys();
@@ -57,44 +55,38 @@
     <TransitionGroup name="list">
       <VContainer>
         <VRow>
-          <VueDraggableNext
-            v-model="dictionaryStore.items"
-            class="v-row"
-            :move="allowMove"
+          <VCol
+            v-for="dictionary in dictionaryStore.items"
+            :key="dictionary.id"
+            cols="12"
+            lg="4"
+            md="4"
+            sm="12"
+            xl="4"
+            xs="12"
+            xxl="4"
           >
-            <VCol
-              v-for="dictionary in dictionaryStore.items"
-              :key="dictionary.id"
-              cols="12"
-              lg="4"
-              md="4"
-              sm="12"
-              xl="4"
-              xs="12"
-              xxl="4"
+            <DictionaryCard
+              :dictionary="dictionary"
+              @copy="onCopy"
+              @remove="onRemoveDictionary"
+              @sync="dictionaryStore.saveToCloud"
+              @update="updateDictionary"
+            />
+          </VCol>
+          <VCol key="add-button">
+            <VBtn
+              class="big-square-button"
+              :color="Colors.Primary"
+              :variant="Variants.Tonal"
+              @click="createDictionary"
             >
-              <DictionaryCard
-                :dictionary="dictionary"
-                @copy="onCopy"
-                @remove="onRemoveDictionary"
-                @sync="dictionaryStore.saveToCloud"
-                @update="updateDictionary"
+              <VIcon
+                :icon="Icons.Add"
+                :size="Sizes.XLarge"
               />
-            </VCol>
-            <VCol key="add-button">
-              <VBtn
-                class="big-square-button"
-                :color="Colors.Primary"
-                :variant="Variants.Tonal"
-                @click="createDictionary"
-              >
-                <VIcon
-                  :icon="Icons.Add"
-                  :size="Sizes.XLarge"
-                />
-              </VBtn>
-            </VCol>
-          </VueDraggableNext>
+            </VBtn>
+          </VCol>
         </VRow>
       </VContainer>
     </TransitionGroup>
