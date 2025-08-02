@@ -54,7 +54,17 @@
       />
     </div>
     <div v-if="!authStore.isAuthenticated">
-      <VBtn @click="authStore.login"> Login </VBtn>
+      <VBtn
+        :color="Colors.Primary"
+        :variant="Variants.Outlined"
+        @click="authStore.login"
+      >
+        <span class="pr-2">Login</span>
+        <VIcon
+          :color="Colors.Warning"
+          :icon="Icons.Google"
+        />
+      </VBtn>
     </div>
   </div>
 </template>
