@@ -7,7 +7,7 @@
   import { Icons } from '@/core/models/icons';
   import { useAuthStore } from '@/stores/auth';
 
-  const props = defineProps<{ dictionary: Dictionary }>();
+  const props = defineProps<{ dictionary: Dictionary; isMobile?: boolean }>();
   const authStore = useAuthStore();
   const emit = defineEmits<{
     (event: 'remove', id: string): void;
@@ -80,7 +80,7 @@
           </div>
         </div>
         <div>
-          <VMenu>
+          <VMenu v-if="!isMobile">
             <template #activator="{ props }">
               <VBtn
                 :icon="Icons.DotsVertical"
@@ -128,6 +128,22 @@
     <VCardSubtitle>
       <div class="text-truncate description">
         {{ props.dictionary.description }}
+      </div>
+      <div
+        v-if="isMobile"
+        class="py-2 d-flex justify-space-between align-center"
+      >
+        <VBtn
+          v-for="(item, index) in items"
+          :key="index"
+          :variant="Variants.Contained"
+          @click="item.action"
+        >
+          <VIcon
+            :color="item.color"
+            :icon="item.icon"
+          />
+        </VBtn>
       </div>
     </VCardSubtitle>
   </VCard>

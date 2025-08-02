@@ -88,9 +88,10 @@
                 class="mb-4"
               />
             </AnimationFade>
+            <!--            'is-alert': !canPlayQuize,-->
             <div
               class="list-wrapper"
-              :class="{ 'is-alert': !canPlayQuize, 'is-mobile': isMobile }"
+              :class="{ 'is-mobile': isMobile }"
             >
               <BaseList
                 v-model:selected-items="selectedWords"
