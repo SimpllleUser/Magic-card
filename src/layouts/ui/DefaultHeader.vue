@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
+  import Breadcrumbs from '@/layouts/ui/Breadcrumbs/index.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
   import ThemeButton from '@/shared/ui/ThemeButton.vue';
 </script>
@@ -10,11 +10,18 @@
     color="surface-light"
     :elevation="1"
   >
-    <v-app-bar-title>
-      <div class="title-wrapper">
-        <Breadcrumbs />
+    <VAppBarTitle>
+      <div class="d-flex align-center mr-auto">
+        <img
+          alt="MagicCardLogo"
+          src="../../assets/logo-main.svg"
+          width="25px"
+        />
+        <div class="title-wrapper justify-center mx-auto">
+          <Breadcrumbs />
+        </div>
       </div>
-    </v-app-bar-title>
+    </VAppBarTitle>
 
     <template #append>
       <ThemeButton />
