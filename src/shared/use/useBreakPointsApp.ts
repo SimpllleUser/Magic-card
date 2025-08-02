@@ -20,8 +20,11 @@ export function useBreakPointsApp() {
     return active.value === breakPoint;
   };
 
+  const isMobile = computed(() => isActive('xs') || isActive('sm'))
+
   return {
     active,
-    isActive
+    isActive,
+    isMobile
   };
 }
