@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
-  import { QuestionItem } from '../model/composables/useSelectWord';
+  import { type QuestionItem } from '../model/composables/useSelectWord';
   import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { Icons } from '@/core/models/icons';
@@ -12,6 +12,7 @@
   import { useQuizStore } from '@/stores/quiz';
   import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
   const props = withDefaults(
@@ -51,7 +52,6 @@
   };
 
   const correctQuestionsQuantity = computed(() => props.questions.filter((item) => item.isCorrect).length);
-  const total = computed(() => `${correctQuestionsQuantity.value}/${props.questions.length}`);
 
   const onRetry = (action?: CallableFunction) => {
     emit('retry');
@@ -67,19 +67,39 @@
     emit('retry');
     action && action();
   };
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
   <BaseModal
     :id="Modals.FinishQuiz"
+    :fullscreen="isMobile"
     title="Result of quiz!"
   >
     <template #default="{ hide }">
+      <div class="d-flex align-center justify-center">
+        <div>Right answers</div>
+        <VChip
+          class="ml-4"
+          :color="Colors.Info"
+          label
+          >{{ correctQuestionsQuantity }}</VChip
+        >
+        <span class="pl-4">from</span>
+        <VChip
+          class="ml-4"
+          :color="Colors.Warning"
+          label
+          >{{ questions.length }}</VChip
+        >
+      </div>
+      <VDivider class="border-opacity-25 my-2" />
+
       <div>
         <BaseList
           :data="props.questions"
           header-sticky
-          height="20rem"
+          height="30rem"
           hide-footer
           :keys="QUIZ_RESULT_HEADER_KEYS"
           :map-item="mapItem"
@@ -91,32 +111,29 @@
           </template>
         </BaseList>
         <VDivider class="border-opacity-25 my-2" />
-        <div class="total d-flex justify-center">
-          <div>
-            <VChip
-              class="ma-2"
-              :color="Colors.Primary"
-              label
-            >
-              <b>{{ total }}</b>
-            </VChip>
-          </div>
-        </div>
-        <div class="total d-flex justify-center pt-4">
+        <div
+          class="total d-flex justify-center"
+          :class="{
+            'pt-4': !isMobile,
+            'flex-wrap': isMobile
+          }"
+        >
           <VBtn
+            :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }"
             :color="Colors.Primary"
             @click="onRetry(hide)"
             >Try again</VBtn
           >
-          <div class="mx-4">
+          <div :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }">
             <QuizeModeMenu
-              class="mx-4"
               :color="Colors.Primary"
+              :is-mobile="isMobile"
               label="Try again with wrong answers"
               @select="retryWithWrongAnswers($event, hide)"
             />
           </div>
           <VBtn
+            :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }"
             :color="Colors.Secondary"
             :to="{ name: PageNames.DictionaryDetail, params: { id: moduleId } }"
           >

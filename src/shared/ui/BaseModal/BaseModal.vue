@@ -30,7 +30,7 @@
     v-bind="attrs"
     :class="`base-modal ${id}`"
     data-testId="base-modal-wrapper"
-    max-width="700px"
+    :max-width="attrs?.maxWidth || '700px'"
     @hide="modalHide"
     @show="modalShow"
   >
