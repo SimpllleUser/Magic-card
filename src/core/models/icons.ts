@@ -168,5 +168,6 @@ export enum Icons {
   DelteOutline = 'mdi-delete-outline',
   ContentCopy = 'mdi-content-copy',
   PencilOutline = 'mdi-pencil-outline',
-  InformationOutline = 'mdi-information-outline'
+  InformationOutline = 'mdi-information-outline',
+  Chart = 'mdi-chart-areaspline'
 }

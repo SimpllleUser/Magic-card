@@ -3,12 +3,15 @@
   import { Icons } from '@/core/models/icons';
   import { useAuthStore } from '@/stores/auth';
   import { GoogleLogin } from 'vue3-google-login';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const authStore = useAuthStore();
 
   onMounted(async () => {
     await authStore.refreshUserData();
   });
+
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
@@ -21,22 +24,39 @@
         <VAvatar>
           <img
             alt="avatar"
+            class="avatar-image"
             :src="authStore.userData.picture"
-            style="object-fit: cover; border-radius: 50%; width: 40px; height: 40px"
           />
+          <VMenu activator="parent">
+            <VList class="px-2">
+              <span>
+                <b> {{ authStore.userData.name }}</b>
+              </span>
+              <VBtn
+                class="ml-2"
+                :color="Colors.Error"
+                :icon="Icons.Logout"
+                :variant="Variants.Text"
+                @click="authStore.logout"
+              />
+            </VList>
+          </VMenu>
         </VAvatar>
       </div>
-      <span class="pl-2">
+      <span
+        v-if="!isMobile"
+        class="pl-2"
+      >
         <b> {{ authStore.userData.name }}</b>
       </span>
       <VBtn
+        v-if="!isMobile"
         class="ml-2"
         :color="Colors.Error"
         :icon="Icons.Logout"
         :variant="Variants.Text"
         @click="authStore.logout"
-      >
-      </VBtn>
+      />
     </div>
     <div v-if="!authStore.isAuthenticated">
       <GoogleLogin
@@ -47,3 +67,12 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .avatar-image {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+</style>

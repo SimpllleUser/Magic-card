@@ -55,38 +55,48 @@
   <VRow class="pa-4">
     <ConfirmModal :id="Modals.DictionaryConfirmRemove" />
     <TransitionGroup name="list">
-      <VueDraggableNext
-        v-model="dictionaryStore.items"
-        class="v-row"
-        :move="allowMove"
-      >
-        <VCol
-          v-for="dictionary in dictionaryStore.items"
-          :key="dictionary.id"
-          cols="4"
-        >
-          <DictionaryCard
-            :dictionary="dictionary"
-            @copy="onCopy"
-            @remove="onRemoveDictionary"
-            @sync="dictionaryStore.saveToCloud"
-            @update="updateDictionary"
-          />
-        </VCol>
-        <VCol key="add-button">
-          <VBtn
-            class="big-square-button"
-            :color="Colors.Primary"
-            :variant="Variants.Tonal"
-            @click="createDictionary"
+      <VContainer>
+        <VRow>
+          <VueDraggableNext
+            v-model="dictionaryStore.items"
+            class="v-row"
+            :move="allowMove"
           >
-            <VIcon
-              :icon="Icons.Add"
-              :size="Sizes.XLarge"
-            />
-          </VBtn>
-        </VCol>
-      </VueDraggableNext>
+            <VCol
+              v-for="dictionary in dictionaryStore.items"
+              :key="dictionary.id"
+              cols="12"
+              lg="4"
+              md="4"
+              sm="12"
+              xl="4"
+              xs="12"
+              xxl="4"
+            >
+              <DictionaryCard
+                :dictionary="dictionary"
+                @copy="onCopy"
+                @remove="onRemoveDictionary"
+                @sync="dictionaryStore.saveToCloud"
+                @update="updateDictionary"
+              />
+            </VCol>
+            <VCol key="add-button">
+              <VBtn
+                class="big-square-button"
+                :color="Colors.Primary"
+                :variant="Variants.Tonal"
+                @click="createDictionary"
+              >
+                <VIcon
+                  :icon="Icons.Add"
+                  :size="Sizes.XLarge"
+                />
+              </VBtn>
+            </VCol>
+          </VueDraggableNext>
+        </VRow>
+      </VContainer>
     </TransitionGroup>
   </VRow>
 </template>

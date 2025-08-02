@@ -5,6 +5,7 @@
   interface Props {
     title: string;
     data: any;
+    isMobile?: boolean;
   }
   const props = withDefaults(defineProps<Props>(), {
     title: 'File Export',
@@ -26,6 +27,7 @@
 <template>
   <VBtn
     activator="parent"
+    :class="{ 'w-100': isMobile }"
     :color="Colors.Primary"
     :variant="Variants.Outlined"
   >

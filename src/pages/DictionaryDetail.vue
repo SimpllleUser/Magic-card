@@ -3,18 +3,15 @@
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   /// TODO FIX convert into entry point
   import { useDictionaryStore } from '../stores/dictionary';
-  import { Icons } from '@/core/models/icons';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { PageNames } from '@/router/types';
-  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
   import { Colors, Variants } from '@/core/models/enums';
-  import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
-  import { omit } from 'lodash';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import { Modals } from '@/core/models/modals';
   import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+  import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
 
   const modalStore = useModalStore();
   const dictionaryStatistics = useDictionaryStatistics();
@@ -55,10 +52,8 @@
 
   const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
-  const getDictionaryForExport = () => selectedWords.value.map((item) => omit(item, ['id']));
-  /// TODO separte into useComposable -- END
-
   const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
@@ -67,15 +62,12 @@
     :title="dictionary.title"
   />
   <div class="content-wrapper mx-auto">
-    <VRow>
+    <VRow v-if="dictionary?.description.trim()">
       <VCol>
         <VCard
           class="py-4"
           elevation="2"
         >
-          <VCardTitle>
-            <h3 class="text-h3">{{ dictionary?.title }}</h3>
-          </VCardTitle>
           <VCardSubtitle>
             <p>{{ dictionary?.description }}</p>
           </VCardSubtitle>
@@ -84,7 +76,10 @@
     </VRow>
     <VRow>
       <VCol>
-        <VCard elevation="2">
+        <VCard
+          elevation="2"
+          no-body
+        >
           <VCardText>
             <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
               <VAlert
@@ -107,44 +102,17 @@
                 selectable
               >
                 <template #header-actions>
-                  <ExportButton
-                    class="mr-4"
-                    :data="getDictionaryForExport()"
-                    :title="dictionary.title"
-                  />
-                  <VBtn
-                    class="mr-4"
-                    :color="Colors.Primary"
-                    :variant="Variants.Outlined"
-                    @click="modalStore.show(Modals.DictionaryStatistic)"
-                  >
-                    <span class="pr-2"> Statistics </span> <VIcon icon="mdi-chart-areaspline"></VIcon>
-                  </VBtn>
-                  <VBtn
-                    :append-icon="Icons.File"
-                    class="mr-4"
-                    :color="Colors.Primary"
-                    :disabled="!selectedWords.length"
-                    :variant="Variants.Elevated"
-                    @click="
-                      goToViewMode({
-                        dictionaryId: dictionaryId,
-                        words: selectedWords
-                      })
-                    "
-                  >
-                    View cards
-                  </VBtn>
-                  <QuizeModeMenu
-                    label="Play"
-                    @select="
-                      goToQuiz({
-                        dictionaryId: dictionaryId,
-                        words: selectedWords,
-                        type: $event
-                      })
-                    "
-                  />
+                  <div class="pr-2">
+                    <DictionaryActions
+                      :dictionary-id="dictionaryId"
+                      :dictionary-title="dictionary.title"
+                      :go-to-quiz="goToQuiz"
+                      :go-to-view-mode="goToViewMode"
+                      :is-mobile="isMobile"
+                      :selected-words="selectedWords"
+                      :show-modal="modalStore.show"
+                    />
+                  </div>
                 </template>
                 <template #empty-text>
                   <div>

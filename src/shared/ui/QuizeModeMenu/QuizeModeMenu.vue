@@ -11,6 +11,7 @@
       color?: Colors;
       variant?: Variants;
       disabled?: boolean;
+      isMobile?: boolean;
     }>(),
     {
       color: Colors.Secondary,
@@ -38,6 +39,7 @@
     <template #activator="{ props }">
       <VBtn
         :append-icon="Icons.ChevronDown"
+        :class="{ 'w-100': isMobile}"
         :color="color"
         :disabled="disabled"
         :variant="variant"
@@ -54,7 +56,7 @@
         :key="index"
         :value="index"
       >
-        <template v-slot:default="{ isHovering, props }">
+        <template #default="{ isHovering, props }">
           <VListItem
             class="menu-item"
             :style="getStyleOnHover(isHovering)"
