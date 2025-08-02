@@ -4,6 +4,7 @@
   import { Icons } from '@/core/models/icons';
   import { QuestionItem } from '../../features/quiz/model/composables/useSelectWord';
   import { DictionaryItem } from '@/features/dictionary/model/types';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const props = withDefaults(defineProps<{ words: DictionaryItem[] | QuestionItem[]; infinitySlide?: boolean }>(), {
     words: () => [],
@@ -29,10 +30,11 @@
     return props.infinitySlide ? false : internalIndex.value === props.words?.length - 1;
   });
 
-const disablePrev = computed(() => {
+  const disablePrev = computed(() => {
     return props.infinitySlide ? false : internalIndex.value === 0;
   });
 
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
@@ -41,7 +43,7 @@ const disablePrev = computed(() => {
       v-model="internalIndex"
       height="22rem"
       hide-delimiters
-      show-arrows="hover"
+      :show-arrows="!isMobile"
     >
       <template #prev="{ props }">
         <VBtn
