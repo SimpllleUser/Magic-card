@@ -2,8 +2,6 @@
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
   import ThemeButton from '@/shared/ui/ThemeButton.vue';
-
-
 </script>
 
 <template>
