@@ -62,23 +62,12 @@
     :title="dictionary.title"
   />
   <div class="content-wrapper mx-auto">
-    <VRow>
+    <VRow v-if="dictionary?.description.trim()">
       <VCol>
         <VCard
           class="py-4"
           elevation="2"
         >
-          <VCardTitle>
-            <div
-              class="text-wrap"
-              :class="{
-                'text-h5': isMobile,
-                'text-h3': !isMobile
-              }"
-            >
-              {{ dictionary?.title }}
-            </div>
-          </VCardTitle>
           <VCardSubtitle>
             <p>{{ dictionary?.description }}</p>
           </VCardSubtitle>

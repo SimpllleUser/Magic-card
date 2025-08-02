@@ -16,12 +16,12 @@
   <div class="w-100">
     <div class="px-2 d-flex align-center justify-center">
       <div
-        class="text-truncate"
-        style="max-width: 80%"
+        v-if="!isOne"
+        class="mobile-title text-truncate pr-2"
       >
         {{ actualTitle }}
       </div>
-      <div>
+      <div v-if="!isOne">
         <VBtn icon>
           <VIcon :icon="Icons.ChevronDown" />
           <VMenu
@@ -35,7 +35,7 @@
               >
                 <VBtn
                   class="w-100"
-                  :color="!isOne && isLast(index) ? Colors.Primary : Colors.Grey"
+                  :color="isLast(index) ? Colors.Primary : Colors.Grey"
                   :variant="Variants.Text"
                   @click="router.push(item.to)"
                 >
@@ -51,3 +51,9 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .mobile-title {
+    max-width: 90%;
+  }
+</style>
