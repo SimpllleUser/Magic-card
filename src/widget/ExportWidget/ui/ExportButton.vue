@@ -27,11 +27,17 @@
 <template>
   <VBtn
     activator="parent"
-    :class="{ 'w-100': isMobile }"
     :color="Colors.Primary"
     :variant="Variants.Outlined"
   >
-    <span class="pr-4">Export</span> <VIcon :icon="Icons.ChevronDown" />
+    <div v-if="!isMobile">
+      <span> Export </span>
+      <VIcon :icon="Icons.ChevronDown" />
+    </div>
+    <span v-if="isMobile">
+      <VIcon :icon="Icons.Download" />
+    </span>
+
     <VMenu activator="parent">
       <VList>
         <VListItem

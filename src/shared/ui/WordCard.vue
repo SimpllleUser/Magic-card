@@ -22,7 +22,7 @@
     :class="{ flipped }"
     @click="toggleFlip"
   >
-    <div class="flipper">
+    <div class="flipper text-center">
       <div class="flip-card front">
         <div class="d-flex flex-column align-center justify-center">
           <h3 class="text-h3 mt-2 font-weight-bold">{{ getWord(word.from) }}</h3>
