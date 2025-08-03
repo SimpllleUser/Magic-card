@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { Icons } from '@/core/models/icons';
   import { Colors, Variants } from '@/core/models/enums';
   import type Router from '@/router';
 
