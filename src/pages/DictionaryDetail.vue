@@ -140,19 +140,17 @@
 </template>
 
 <style lang="scss" scoped>
-  .is-mobile {
-    :deep(.v-table) {
-      header.v-toolbar {
-        position: fixed;
-        z-index: 9;
-        left: 0;
-        top: 0;
-        margin-top: 4rem;
-      }
+  :deep(.v-table) {
+    height: 85vh;
+    header.v-toolbar {
+      position: sticky;
+      z-index: 9;
+      left: 0;
+      top: 0;
+      transition: none !important;
     }
   }
   .list-wrapper {
-    margin-top: 1.5rem;
     position: relative;
     transition: all 0.3s ease-out;
   }
