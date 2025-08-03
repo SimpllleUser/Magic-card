@@ -22,57 +22,42 @@
 </script>
 
 <template>
-  <VBtn
+  <div
     v-if="isMobile"
-    :color="Colors.Primary"
-    icon
+    class="d-flex items-center justify-space-between"
   >
-    <VIcon :icon="Icons.Menu" />
-    <VMenu activator="parent">
-      <VList class="list-actions-menu">
-        <VListItem>
-          <QuizModeMenu
-            :is-mobile="isMobile"
-            label="Play"
-            @select="goToQuiz({ dictionaryId, words: selectedWords, type: $event })"
-          />
-        </VListItem>
-        <VListItem>
-          <VBtn
-            :append-icon="Icons.File"
-            class="mr-4"
-            :class="{ 'w-100': isMobile }"
-            :color="Colors.Primary"
-            :disabled="!selectedWords.length"
-            :variant="Variants.Elevated"
-            @click="goToViewMode({ dictionaryId, words: selectedWords })"
-          >
-            View cards
-          </VBtn>
-        </VListItem>
-        <VListItem>
-          <VBtn
-            class="mr-4"
-            :class="{ 'w-100': isMobile }"
-            :color="Colors.Primary"
-            :variant="Variants.Outlined"
-            @click="showModal(Modals.DictionaryStatistic)"
-          >
-            <span class="pr-2"> Statistics </span>
-            <VIcon :icon="Icons.Chart" />
-          </VBtn>
-        </VListItem>
-        <VListItem>
-          <ExportButton
-            class="mr-4"
-            :data="getDictionaryForExport()"
-            :is-mobile="isMobile"
-            :title="dictionaryTitle"
-          />
-        </VListItem>
-      </VList>
-    </VMenu>
-  </VBtn>
+    <QuizModeMenu
+      :is-mobile="isMobile"
+      label="Play"
+      @select="goToQuiz({ dictionaryId, words: selectedWords, type: $event })"
+    />
+
+    <VBtn
+      class="mx-2"
+      :color="Colors.Primary"
+      :disabled="!selectedWords.length"
+      :variant="Variants.Elevated"
+      @click="goToViewMode({ dictionaryId, words: selectedWords })"
+    >
+      <VIcon :icon="Icons.Eye" />
+    </VBtn>
+
+    <VBtn
+      class="mr-2"
+      :color="Colors.Primary"
+      :variant="Variants.Outlined"
+      @click="showModal(Modals.DictionaryStatistic)"
+    >
+      <VIcon :icon="Icons.Chart" />
+    </VBtn>
+
+    <ExportButton
+      class="mr-2"
+      :data="getDictionaryForExport()"
+      :is-mobile="isMobile"
+      :title="dictionaryTitle"
+    />
+  </div>
   <div
     v-else
     class="d-flex items-center"

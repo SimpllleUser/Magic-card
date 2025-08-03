@@ -23,7 +23,7 @@
             :src="authStore.userData.picture"
           />
           <VMenu activator="parent">
-            <VList class="px-2">
+            <VList class="pl-4">
               <span>
                 <b> {{ authStore.userData.name }}</b>
               </span>
@@ -46,7 +46,7 @@
       </span>
       <VBtn
         v-if="!isMobile"
-        class="ml-2"
+        class="ml-2 mr-6"
         :color="Colors.Error"
         :icon="Icons.Logout"
         :variant="Variants.Text"

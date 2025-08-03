@@ -32,7 +32,7 @@
 
     <template #append>
       <ThemeButton />
-      <AuthBlock class="ml-4" />
+      <AuthBlock class="ml-4 mr-4" />
     </template>
   </VToolbar>
 </template>

@@ -11,10 +11,12 @@
   import { useSessionStorage } from '@vueuse/core';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+  import { useAuthStore } from '@/stores/auth';
 
   const router = useRouter();
   const modal = useModalStore();
 
+  const authStore = useAuthStore();
   const dictionaryStore = useDictionaryStore();
 
   const updateDictionary = (dictionary: Dictionary | Record<string, unknown>) => {
@@ -46,9 +48,16 @@
 
   const { isMobile } = useBreakPointsApp();
 
-  onMounted(async () => {
-    await dictionaryStore.fetchDictionarys();
-  });
+  watch(
+    () => authStore.isAuthenticated,
+    async (state) => {
+      if (!state) return;
+      await dictionaryStore.fetchDictionarys();
+    },
+    {
+      immediate: true
+    }
+  );
 </script>
 
 <template>

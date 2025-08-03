@@ -38,16 +38,20 @@
   <VMenu>
     <template #activator="{ props }">
       <VBtn
-        :append-icon="Icons.ChevronDown"
-        :class="{ 'w-100': isMobile}"
         :color="color"
         :disabled="disabled"
         :variant="variant"
         v-bind="props"
       >
-        <slot name="label">
-          {{ label }}
-        </slot>
+        <div v-if="!isMobile">
+          <span>
+            {{ label }}
+          </span>
+          <span> <VIcon :icon="Icons.ChevronDown" /> </span>
+        </div>
+        <span v-else>
+          <VIcon :icon="Icons.Play" />
+        </span>
       </VBtn>
     </template>
     <VList>

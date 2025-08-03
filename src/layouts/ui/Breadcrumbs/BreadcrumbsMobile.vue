@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { Icons } from '@/core/models/icons';
   import { Colors, Variants } from '@/core/models/enums';
   import type Router from '@/router';
 
@@ -15,15 +14,9 @@
 <template>
   <div class="w-100">
     <div class="px-2 d-flex align-center justify-center">
-      <div
-        v-if="!isOne"
-        class="mobile-title text-truncate pr-2"
-      >
-        {{ actualTitle }}
-      </div>
       <div v-if="!isOne">
-        <VBtn icon>
-          <VIcon :icon="Icons.ChevronDown" />
+        <span class="text-primary">
+          {{ actualTitle }}
           <VMenu
             activator="parent"
             location="bottom"
@@ -46,7 +39,7 @@
               </VListItem>
             </VList>
           </VMenu>
-        </VBtn>
+        </span>
       </div>
     </div>
   </div>

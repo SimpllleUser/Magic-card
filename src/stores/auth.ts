@@ -114,15 +114,27 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  const clearAuth = () => {
-    logout();
+  const validateToken = async () => {
+    if (!token.value) return false;
+
+    try {
+      const response = await fetch(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token.value}`);
+      return response.ok;
+    } catch {
+      return false;
+    }
   };
 
   onMounted(async () => {
-    if (token.value && !(await checkTokenValidity())) {
+    const isOk = await validateToken();
+    if (!isOk) {
       clearAuth();
     }
   });
+
+  const clearAuth = () => {
+    logout();
+  };
 
   return {
     user: readonly(user),
