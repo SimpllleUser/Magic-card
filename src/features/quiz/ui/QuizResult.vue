@@ -68,13 +68,17 @@
     action && action();
   };
   const { isMobile } = useBreakPointsApp();
+
+  const modalWidth = computed(() => (isMobile.value ? '100%' : '80%'));
 </script>
 
 <template>
   <BaseModal
     :id="Modals.FinishQuiz"
     :fullscreen="isMobile"
+    :max-width="modalWidth"
     title="Result of quiz!"
+    :width="modalWidth"
   >
     <template #default="{ hide }">
       <div class="d-flex align-center justify-center">
@@ -111,33 +115,32 @@
           </template>
         </BaseList>
         <VDivider class="border-opacity-25 my-2" />
-        <div
-          class="total d-flex justify-center"
-          :class="{
-            'pt-4': !isMobile,
-            'flex-wrap': isMobile
-          }"
-        >
+        <div class="total d-flex flex-wrap justify-center">
           <VBtn
-            :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }"
+            class="mr-4"
             :color="Colors.Primary"
             @click="onRetry(hide)"
-            >Try again</VBtn
           >
-          <div :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }">
-            <QuizeModeMenu
-              :color="Colors.Primary"
-              :is-mobile="isMobile"
-              label="Try again with wrong answers"
-              @select="retryWithWrongAnswers($event, hide)"
-            />
-          </div>
+            <span v-if="isMobile">
+              <VIcon :icon="Icons.Refresh" />
+            </span>
+            <span v-else> Try again </span>
+          </VBtn>
+          <QuizeModeMenu
+            :color="Colors.Primary"
+            :is-mobile="isMobile"
+            label="Try again with wrong answers"
+            @select="retryWithWrongAnswers($event, hide)"
+          />
           <VBtn
-            :class="{ 'w-100 mb-4': isMobile, 'ml-4': !isMobile }"
+            class="ml-4"
             :color="Colors.Secondary"
             :to="{ name: PageNames.DictionaryDetail, params: { id: moduleId } }"
           >
-            Go to the module
+            <span v-if="isMobile">
+              <VIcon :icon="Icons.Info" />
+            </span>
+            <span v-else> Go to the module</span>
           </VBtn>
         </div>
       </div>

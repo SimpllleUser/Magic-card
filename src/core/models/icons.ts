@@ -169,5 +169,6 @@ export enum Icons {
   ContentCopy = 'mdi-content-copy',
   PencilOutline = 'mdi-pencil-outline',
   InformationOutline = 'mdi-information-outline',
-  Chart = 'mdi-chart-areaspline'
+  Chart = 'mdi-chart-areaspline',
+  FlagCheckered = 'mdi-flag-checkered'
 }
