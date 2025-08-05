@@ -1,5 +1,10 @@
 <script setup lang="ts">
+  import { Icons } from '@/core/models/icons';
   import { Colors } from '@/core/models/enums';
+
+  defineProps<{
+    isMobile?: boolean;
+  }>();
 
   defineEmits<{
     (event: 'restart'): void;
@@ -13,12 +18,20 @@
       class="mr-4"
       :color="Colors.Primary"
       @click="$emit('restart')"
-      >Restart</VBtn
     >
+      <span v-if="isMobile">
+        <VIcon :icon="Icons.Refresh" />
+      </span>
+      <span v-else>Restart</span>
+    </VBtn>
     <VBtn
       :color="Colors.Primary"
       @click="$emit('finish')"
-      >Finish</VBtn
     >
+      <span v-if="isMobile">
+        <VIcon :icon="Icons.FlagCheckered" />
+      </span>
+      <span v-else>Finish</span>
+    </VBtn>
   </div>
 </template>

@@ -8,8 +8,9 @@
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
   import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
   import { QuestionItem } from '@/features/quiz/model/types';
-  import { DictionaryStatisticPrams } from '@/features/dictionary/model/types';
   import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+  import { DictionaryStatisticPrams } from '@/features/dictionary-statistics';
 
   const quizStore = useQuizStore();
   const dictionaryStatistics = useDictionaryStatistics();
@@ -52,6 +53,8 @@
   onMounted(() => {
     trackingTimeQuiz.initTime(quizStore.activeModuleId);
   });
+  const { isMobile } = useBreakPointsApp();
+
 </script>
 
 <template>
@@ -74,6 +77,7 @@
           <!--          @init="iniDynamicQuiz"-->
           <template #controls="{ finish, reset }">
             <QuizControls
+              :is-mobile="isMobile"
               @finish="finish"
               @restart="reset"
             />

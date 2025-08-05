@@ -28,8 +28,9 @@
     v-model="state"
     :attach="true"
     v-bind="attrs"
-    :class="`base-modal ${id}`"
+    :class="`base-modal ${id} ${fullscreen ? 'base-modal--fullscreen' : ''}`"
     data-testId="base-modal-wrapper"
+    :fullscreen="fullscreen"
     :max-width="attrs?.maxWidth || '700px'"
     @hide="modalHide"
     @show="modalShow"
@@ -64,6 +65,12 @@
       position: sticky;
       top: 0;
       z-index: 10;
+    }
+  }
+  .base-modal--fullscreen {
+    .base-modal__title {
+      position: relative !important;
+      margin-top: 3.5rem;
     }
   }
 </style>
