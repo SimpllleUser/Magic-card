@@ -29,7 +29,7 @@
     const listData = props.statistics;
     listData.forEach((item) => {
       statisticKeys.forEach(({ key }) => {
-        item[key] = item[key].toString().includes('.') ? Number(item[key]).toFixed(1) : item[key];
+        item[key] = item[key]?.toString().includes('.') ? Number(item[key]).toFixed(1) : item[key];
       });
     });
     return listData;
