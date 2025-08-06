@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { QuestionItem } from '../../model/composables/useSelectWord';
+  import { QuestionItem } from '@/features/quiz/model/types';
 
   const props = defineProps<{
     actualQuestion: QuestionItem;
@@ -17,7 +17,7 @@
     <VOtpInput
       v-model="answer"
       :length="actualQuestion?.from.length"
-      :min-width="actualQuestion?.from.length * 50"
+      min-width="100%"
       type="text"
       @update:model-value="$emit('setAnswer', { question: actualQuestion, value: $event })"
     />

@@ -70,7 +70,7 @@
   .base-modal--fullscreen {
     .base-modal__title {
       position: relative !important;
-      margin-top: 3.5rem;
+      //margin-top: 3.5rem;
     }
   }
 </style>

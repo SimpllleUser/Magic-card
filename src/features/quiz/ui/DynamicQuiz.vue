@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useQuizFactory } from '../model/composables/useQuizFactory';
-  import { QuizType } from '../model/types';
-  import { QuestionItem } from '../model/composables/useSelectWord';
+  import { QuestionItem, QuizType } from '../model/types';
   import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import WordSlider from '@/shared/ui/WordSlider.vue';
