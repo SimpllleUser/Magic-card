@@ -1,16 +1,15 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
   import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
-  import { type QuestionItem } from '../model/composables/useSelectWord';
   import { Colors } from '@/core/models/enums';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
   import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
   import { PageNames } from '@/router/types';
-  import { QuizType } from '../model/types';
+  import { QuestionItem, QuizType } from '../model/types';
   import { useQuizStore } from '@/stores/quiz';
-  import QuizeModeMenu from '@/shared/ui/QuizeModeMenu/QuizeModeMenu.vue';
+  import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
@@ -75,8 +74,10 @@
 <template>
   <BaseModal
     :id="Modals.FinishQuiz"
+    class="quiz-result-modal"
     :fullscreen="isMobile"
     :max-width="modalWidth"
+    style="margin-top: 3.75rem"
     title="Result of quiz!"
     :width="modalWidth"
   >
@@ -126,7 +127,7 @@
             </span>
             <span v-else> Try again </span>
           </VBtn>
-          <QuizeModeMenu
+          <QuizModeMenu
             :color="Colors.Primary"
             :is-mobile="isMobile"
             label="Try again with wrong answers"

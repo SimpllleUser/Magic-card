@@ -5,6 +5,7 @@
   import { IDictionaryStatistics } from '../model/types';
   import DictionaryStatistics from './DictionaryStatisticGraphic.vue';
   import DictionaryStatisticList from './DictionaryStatisticList.vue';
+  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   interface Props {
     title: string;
@@ -26,13 +27,16 @@
   };
 
   const togglePanelButtonLabel = computed(() => (openPanel.value.length > 0 ? 'Hide graphic' : 'Show graphic'));
+
+  const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
   <BaseModal
     :id="Modals.DictionaryStatistic"
-    max-height="60vh"
-    min-width="75%"
+    :fullscreen="isMobile"
+    :max-height="isMobile && '80vh'"
+    :min-width="!isMobile && `75%`"
     :title="modalTitle"
   >
     <div>
