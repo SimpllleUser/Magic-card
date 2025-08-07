@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-import { PageNames } from '@/router/types';
+  import { PageNames } from '@/router/types';
 
   const router = useRouter();
 
@@ -14,10 +14,19 @@ import { PageNames } from '@/router/types';
 
 <template>
   <div class="page-404">
-    <VEmptyState headline="Whoops, 404" :icon="Icons.Search" title="Page not found">
+    <VEmptyState
+      headline="Whoops, 404"
+      :icon="Icons.Search"
+      title="Page not found"
+    >
       <template #text>
         <div>
-          <VBtn :append-icon="Icons.Home" :color="Colors.Primary" :variant="Variants.Tonal" @click="goToHome">
+          <VBtn
+            :append-icon="Icons.Home"
+            :color="Colors.Primary"
+            :variant="Variants.Tonal"
+            @click="goToHome"
+          >
             Pleas try go to home page</VBtn
           >
         </div>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   /// TODO FIX convert into entry point
-  import { useDictionaryStore } from '../stores/dictionary';
-  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
+  import { useDictionaryStore } from '@/stores/dictionary';
+  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS } from '@/features/quiz/model/constants';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
@@ -18,13 +18,12 @@
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
 
-  /// TODO separte into useComposable -- START
   const dictionaryStore = useDictionaryStore();
 
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
   const selectedWords = ref([...dictionary.value?.items]);
-  const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
+  // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
   const { isMobile } = useBreakPointsApp();

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
+  import { useModalStore } from '@/shared/ui/BaseModal';
   import { useAuthStore } from '@/stores/auth';
 
   const props = defineProps<{ dictionary: Dictionary; isMobile?: boolean }>();
@@ -81,11 +81,11 @@
         </div>
         <div>
           <VMenu v-if="!isMobile">
-            <template #activator="{ props }">
+            <template #activator="{ props: menuProps }">
               <VBtn
                 :icon="Icons.DotsVertical"
                 :variant="Variants.Text"
-                v-bind="props"
+                v-bind="menuProps"
               ></VBtn>
             </template>
 
@@ -94,15 +94,15 @@
                 v-for="(item, index) in items"
                 :key="index"
               >
-                <template #default="{ isHovering, props }">
+                <template #default="{ isHovering, props: hoverProps }">
                   <VListItem
                     :base-color="isHovering ? item.color : ''"
                     :value="index"
-                    v-bind="props"
+                    v-bind="hoverProps"
                     @click="item.action"
                   >
                     <template #prepend>
-                      <v-icon :icon="item.icon"></v-icon>
+                      <VIcon :icon="item.icon" />
                     </template>
                     <VListItem-title>{{ item.title }}</VListItem-title>
                   </VListItem>

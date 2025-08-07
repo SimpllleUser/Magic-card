@@ -3,11 +3,11 @@
 </script>
 
 <template>
-  <v-app>
-    <v-main>
+  <VApp>
+    <VMain>
       <AnimationFade>
         <router-view />
       </AnimationFade>
-    </v-main>
-  </v-app>
+    </VMain>
+  </VApp>
 </template>

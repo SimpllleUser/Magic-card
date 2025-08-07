@@ -1,4 +1,3 @@
-import { useAuthStore } from '@/stores/auth';
 
 export interface User {
   $id: string;

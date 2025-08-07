@@ -3,12 +3,12 @@
   import { shuffle } from 'lodash';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
   import WordCard from '@/shared/ui/WordCard.vue';
   import WordSlider from '@/shared/ui/WordSlider.vue';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
-  import { useQuizStore } from '@/stores/quiz';
   import ButtonCopy from '@/shared/ui/WordButtonActions/ButtonCopy.vue';
   import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
+  import { useQuizStore } from '@/stores/quiz';
 
   const quizStore = useQuizStore();
   const isFlipped = ref(false);
@@ -46,10 +46,7 @@
       :words="words"
       @change-slide="onChangeSlide"
     >
-      <template
-        #header="{ titleSlide }"
-        name="header"
-      >
+      <template #header="{ titleSlide }">
         <div class="d-flex justify-space-between align-center">
           <div class="title-card text-surface-variant-text">{{ titleSlide }}</div>
           <div>
@@ -68,10 +65,10 @@
       <template #default="{ word }">
         <div class="word-card--wrapper">
           <WordCard
+            class="pb-4"
             :flipped="isFlipped"
             :word="word"
             @flipp="setFlipped"
-            class="pb-4"
           />
         </div>
       </template>
