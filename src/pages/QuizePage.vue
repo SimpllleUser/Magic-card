@@ -54,7 +54,6 @@
     trackingTimeQuiz.initTime(quizStore.activeModuleId);
   });
   const { isMobile } = useBreakPointsApp();
-
 </script>
 
 <template>
