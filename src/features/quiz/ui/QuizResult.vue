@@ -35,7 +35,11 @@
 
   const mapItem = (item: QuestionItem, index: number): ItemResult => {
     const mappedItem = omit(item, 'answerId');
-    return { ...mappedItem, number: index + 1, answer: mappedItem.answer || '-' };
+    return {
+      ...mappedItem,
+      number: index + 1,
+      answer: mappedItem.answer || '-'
+    } as ItemResult;
   };
 
   const getIconAnswer = (value: boolean) => {
