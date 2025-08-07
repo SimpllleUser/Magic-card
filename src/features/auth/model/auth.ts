@@ -70,7 +70,6 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     clearAuth,
     login,
-    checkTokenValidity: authApi.checkTokenValidity
   };
 });
 

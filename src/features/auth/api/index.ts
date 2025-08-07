@@ -1,6 +1,6 @@
-import { GOOGLE_LOGIN_PARAMS, GOOGLE_TOKEN_INFO_URL, USER_INFO_URL } from '@/features/auth/model/constants';
 import { googleTokenLogin } from 'vue3-google-login';
 import { IUser, IUserInfoResponse } from '@/features/auth/model/types';
+import { GOOGLE_LOGIN_PARAMS, GOOGLE_TOKEN_INFO_URL, USER_INFO_URL } from '@/features/auth/model/constants';
 
 export class AuthApi {
   async fetchUserDataByToken(token: string): Promise<any> {
