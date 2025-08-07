@@ -6,7 +6,7 @@
 <template>
   <VApp class="app-wrapper">
     <DefaultHeader class="default-header" />
-    <v-main class="mt-2 mb-8 mx-auto main-content">
+    <VMain class="mt-2 mb-8 mx-auto main-content">
       <div class="transition-wrapper">
         <AnimationFade>
           <div
@@ -17,7 +17,7 @@
           </div>
         </AnimationFade>
       </div>
-    </v-main>
+    </VMain>
   </VApp>
 </template>
 <style lang="scss" scoped>

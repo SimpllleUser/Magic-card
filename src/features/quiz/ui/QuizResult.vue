@@ -1,17 +1,18 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
-  import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
   import { Colors } from '@/core/models/enums';
+  import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
+  import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
-  import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
+  import { LIST_TITLES } from '../model/constants';
   import { PageNames } from '@/router/types';
   import { QuestionItem, QuizType } from '../model/types';
   import { useQuizStore } from '@/stores/quiz';
-  import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 
   const props = withDefaults(
@@ -35,7 +36,11 @@
 
   const mapItem = (item: QuestionItem, index: number): ItemResult => {
     const mappedItem = omit(item, 'answerId');
-    return { ...mappedItem, number: index + 1, answer: mappedItem.answer || '-' };
+    return {
+      ...mappedItem,
+      number: index + 1,
+      answer: mappedItem.answer || '-'
+    } as ItemResult;
   };
 
   const getIconAnswer = (value: boolean) => {
@@ -88,8 +93,9 @@
           class="ml-4"
           :color="Colors.Info"
           label
-          >{{ correctQuestionsQuantity }}</VChip
         >
+          {{ correctQuestionsQuantity }}
+        </VChip>
         <span class="pl-4">from</span>
         <VChip
           class="ml-4"
@@ -106,7 +112,7 @@
           header-sticky
           height="30rem"
           hide-footer
-          :keys="QUIZ_RESULT_HEADER_KEYS"
+          :keys="LIST_TITLES"
           :map-item="mapItem"
         >
           <template #item.isCorrect="{ value }">

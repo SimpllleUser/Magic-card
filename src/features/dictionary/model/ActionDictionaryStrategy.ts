@@ -1,4 +1,4 @@
-import { EnitityAPI } from '@/shared/index/types';
+import { EntityAPI } from '@/shared/index/types';
 import { Dictionary } from './types';
 
 export const setActionsStrategy =
@@ -8,7 +8,7 @@ export const setActionsStrategy =
     localAction,
     cloudAction
   }: {
-    dictionary: Dictionary | EnitityAPI<Dictionary>;
+    dictionary: Dictionary | EntityAPI<Dictionary>;
     localAction: Function;
     cloudAction: Function;
   }) => {

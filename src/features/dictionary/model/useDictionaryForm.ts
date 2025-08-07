@@ -2,9 +2,9 @@ import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
 import { Dictionary, DictionaryItem } from './types';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
 import input from 'base-form/src/shared/ui/inputs/config';
-import { useAuthStore } from '@/stores/auth';
-import { EnitityAPI } from '@/shared/index/types';
+import { useAuthStore } from '@/features/auth/model/auth';
 import { ActionForm } from 'base-form/src/shared/ui/form';
+import { EntityAPI } from '@/shared/index/types';
 
 const getDefaultDictionaryItem = (
   data?: DictionaryItem = {
@@ -66,7 +66,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
   $databaseId: string;
   $collectionId: string;
 
-  constructor(data: EnitityAPI<DictionaryItem>) {
+  constructor(data: EntityAPI<DictionaryItem>) {
     super(data);
     this.$id = data.$id;
     this.$permissions = data.$permissions;
@@ -77,7 +77,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
   }
 }
 
-export const useDictionaryForm = (data?: Dictionary | EnitityAPI<DictionaryItem>, type?: ActionForm) => {
+export const useDictionaryForm = (data?: Dictionary | EntityAPI<DictionaryItem>, type?: ActionForm) => {
   if (authStore.isAuthenticated && type === ActionForm.Save) {
     return new DictionaryFormUpdateModelAuthedUser(data);
   }

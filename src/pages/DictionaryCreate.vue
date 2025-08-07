@@ -14,7 +14,7 @@
 
 <template>
   <div :class="{ 'pa-4': !isMobile }">
-    <DictionaryForm :form-data="{ ...data }" />
+    <DictionaryForm :form-data="data" />
   </div>
 </template>
 

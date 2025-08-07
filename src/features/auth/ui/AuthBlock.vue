@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/features/auth/model/auth';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const authStore = useAuthStore();

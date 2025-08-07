@@ -1,15 +1,15 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
   import { Modals } from '@/core/models/modals';
-  import { useModalStore } from '@/shared/ui/BaseModal';
   import QuizResult from '@/features/quiz/ui/QuizResult.vue';
   import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
-  import { useQuizStore } from '@/stores/quiz';
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
+  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { useQuizStore } from '@/stores/quiz';
   import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
-  import { QuestionItem } from '@/features/quiz/model/types';
   import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+  import { QuestionItem } from '@/features/quiz/model/types';
   import { DictionaryStatisticPrams } from '@/features/dictionary-statistics';
 
   const quizStore = useQuizStore();
@@ -54,7 +54,6 @@
     trackingTimeQuiz.initTime(quizStore.activeModuleId);
   });
   const { isMobile } = useBreakPointsApp();
-
 </script>
 
 <template>
@@ -62,7 +61,7 @@
     <QuizResult
       :module-id="quizStore.activeModuleId"
       :questions="finishedQuestions"
-      :quiz-type="quizStore.currentType"
+      :type="quizStore.currentType"
       @retry="onRetry"
     />
     <template #text>

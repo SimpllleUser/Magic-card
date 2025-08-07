@@ -48,10 +48,18 @@
 <template>
   <div class="row no-wrap items-center">
     <div class="full-width">
-      <VInput v-model="props.modelValue" @input="handleInput" class="full-width" v-bind="baseInputConfig" />
+      <VInput
+        v-model="props.modelValue"
+        class="full-width"
+        v-bind="baseInputConfig"
+        @input="handleInput"
+      />
     </div>
     <div>
-      <VBtn :icon="Icons.Refresh" @click="emitSeparatedValue" />
+      <VBtn
+        :icon="Icons.Refresh"
+        @click="emitSeparatedValue"
+      />
     </div>
   </div>
 </template>

@@ -1,56 +1,29 @@
 <script setup lang="ts">
-  import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import AnimationFade from '@/shared/ui/Animation/AnimationFade.vue';
   /// TODO FIX convert into entry point
-  import { useDictionaryStore } from '../stores/dictionary';
-  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, MIN_WORDS_QUANTITY } from '@/features/quiz/model/constants';
-  import { useNavigation } from '@/features/quiz/model/naigation';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
-  import { PageNames } from '@/router/types';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { useDictionaryStore } from '@/stores/dictionary';
+  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS } from '@/features/quiz/model/constants';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
+  import DictionaryList from '@/features/dictionary/ui/DictionaryList.vue';
+  import { useNavigation } from '@/features/quiz/model/naigation';
 
   const modalStore = useModalStore();
   const dictionaryStatistics = useDictionaryStatistics();
 
-  const keys = [
-    {
-      title: '#',
-      key: 'number',
-      sortable: false
-    },
-    {
-      title: 'From',
-      key: 'from',
-      sortable: false
-    },
-    {
-      title: 'To',
-      key: 'to',
-      sortable: false
-    }
-  ];
+  const { goToQuiz, goToViewMode } = useNavigation();
 
   const route = useRoute();
   const dictionaryId = computed(() => route.params?.id!);
-  const { goToQuiz, goToViewMode } = useNavigation();
 
-  /// TODO separte into useComposable -- START
   const dictionaryStore = useDictionaryStore();
 
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
-  const mapItem = (item: DictionaryItem, index: number) => ({
-    ...item,
-    number: index + 1
-  });
-
   const selectedWords = ref([...dictionary.value?.items]);
-
-  const canPlayQuize = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
+  // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
   const { isMobile } = useBreakPointsApp();
@@ -83,24 +56,18 @@
           <VCardText class="pa-0">
             <AnimationFade style="position: absolute; width: calc(100% - 2rem); margin-right: 20rem">
               <VAlert
-                v-if="!canPlayQuize && dictionary?.items.length"
                 v-bind="ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS"
                 class="mb-4"
               />
             </AnimationFade>
-            <!--            'is-alert': !canPlayQuize,-->
             <div
               class="list-wrapper"
               :class="{ 'is-mobile': isMobile }"
             >
-              <BaseList
-                v-model:selected-items="selectedWords"
-                :data="dictionary?.items"
-                header-title="Dictionary"
-                hide-footer
-                :keys="keys"
-                :map-item="mapItem"
-                selectable
+              <DictionaryList
+                :dictionary="dictionary"
+                :selected-words="selectedWords"
+                @change-selected-words="selectedWords = $event"
               >
                 <template #header-actions>
                   <div class="pr-2">
@@ -115,22 +82,7 @@
                     />
                   </div>
                 </template>
-                <template #empty-text>
-                  <div>
-                    <p>
-                      Let’s add some words
-                      <VBtn
-                        class="px-1"
-                        :color="Colors.Primary"
-                        :to="{ name: PageNames.DictionaryUpdate, params: { id: dictionaryId } }"
-                        :variant="Variants.Contained"
-                      >
-                        go to edit module
-                      </VBtn>
-                    </p>
-                  </div>
-                </template>
-              </BaseList>
+              </DictionaryList>
             </div>
           </VCardText>
         </VCard>
@@ -140,16 +92,6 @@
 </template>
 
 <style lang="scss" scoped>
-  :deep(.v-table) {
-    height: 85vh;
-    header.v-toolbar {
-      position: sticky;
-      z-index: 9;
-      left: 0;
-      top: 0;
-      transition: none !important;
-    }
-  }
   .list-wrapper {
     position: relative;
     transition: all 0.3s ease-out;

@@ -1,8 +1,7 @@
-```vue
 <script setup lang="ts">
-  import { Colors, Variants } from '@/core/models/enums';
+import { omit } from 'lodash';
+import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import { omit } from 'lodash';
   import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
   import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
   import { Modals } from '@/core/models/modals';

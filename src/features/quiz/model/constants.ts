@@ -25,7 +25,7 @@ export const QUIZ_TYPES_OPTIONS = [
   }
 ];
 
-export const QUIZ_RESULT_HEADER_KEYS = [
+export const LIST_TITLES = [
   {
     title: '#',
     key: 'number'

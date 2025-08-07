@@ -11,7 +11,7 @@
   import { useSessionStorage } from '@vueuse/core';
   import { makeCopyDictionary } from '@/features/dictionary/model/utils';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/features/auth/model/auth';
 
   const router = useRouter();
   const modal = useModalStore();

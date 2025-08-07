@@ -1,6 +1,5 @@
-import Modals from '@/core/models/modals';
 import { EntityWithId, OptionalId } from '@/core/models';
-import { EnitityAPI, EntityApiFields } from '@/shared/index/types';
+import { EntityAPI, EntityApiFields } from '@/shared/index/types';
 
 export type DictionaryItem = {
   id: string;
@@ -16,8 +15,7 @@ export type Dictionary = EntityWithId<{
 }>;
 
 export interface DictionaryFormProps {
-  formData?: Dictionary;
-  modalId: Modals.DictionaryUpdate | Modals.DictionaryCreate;
+  formData?: Dictionary | Record<string, any>;
 }
 
 export interface DictionaryFormEmits {
@@ -34,8 +32,8 @@ export type DictionaryCRUD = {
   getById: (id: string) => Dictionary | undefined;
 };
 export type DictionaryWithItemsString = Dictionary & { items: string };
-export type DictionaryAPIWithStringItems = EnitityAPI<DictionaryWithItemsString>;
-export type DictionaryApiData = EnitityAPI<Dictionary>;
+export type DictionaryAPIWithStringItems = EntityAPI<DictionaryWithItemsString>;
+export type DictionaryApiData = EntityAPI<Dictionary>;
 
 export type useDictionaryAPI = {
   create: (dictionary: Dictionary) => Promise<DictionaryApiData>;

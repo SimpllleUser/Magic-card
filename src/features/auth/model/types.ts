@@ -1,38 +1,19 @@
-import { useAuthStore } from '@/stores/auth';
-
-export interface User {
-  $id: string;
-  $createdAt: string;
-  $updatedAt: string;
-  name: string;
-  registration: string;
-  status: boolean;
-  labels: any[];
-  passwordUpdate: string;
+export interface IUser {
+  id?: string;
   email: string;
-  phone: string;
-  emailVerification: boolean;
-  phoneVerification: boolean;
-  mfa: boolean;
-  prefs: Prefs;
-  targets: Target[];
-  accessedAt: string;
-}
-
-export interface Prefs {}
-
-export interface Target {
-  $id: string;
-  $createdAt: string;
-  $updatedAt: string;
   name: string;
-  userId: string;
-  providerId: any;
-  providerType: string;
-  identifier: string;
-  expired: boolean;
+  picture: string;
+  givenName: string;
+  familyName: string;
+  emailVerified: boolean;
 }
 
-export interface AuthUser extends User {
-  $id: string;
+export interface IUserInfoResponse {
+  sub: string;
+  email: string;
+  name: string;
+  picture: string;
+  given_name: string;
+  family_name: string;
+  email_verified: boolean;
 }

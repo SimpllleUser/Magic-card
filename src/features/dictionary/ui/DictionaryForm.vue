@@ -6,7 +6,7 @@
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
   import { Colors, Variants } from '@/core/models/enums';
   import { Modals } from '@/core/models/modals';
-  import { useDictionaryStore } from '../../../stores/dictionary';
+  import { useDictionaryStore } from '@/stores/dictionary';
   import { Dictionary, DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
   import { DictionaryFormModel, useDictionaryForm } from '../model/useDictionaryForm';
   import { PageNames } from '@/router/types';
