@@ -2,37 +2,14 @@ import { defineStore } from 'pinia';
 import { RemovableRef, useStorage } from '@vueuse/core';
 import { computed, readonly, ref } from 'vue';
 import { googleTokenLogin } from 'vue3-google-login';
-
-interface IUser {
-  id?: string;
-  email: string;
-  name: string;
-  picture: string;
-  givenName: string;
-  familyName: string;
-  emailVerified: boolean;
-}
-
-interface UserInfoResponse {
-  sub: string;
-  email: string;
-  name: string;
-  picture: string;
-  given_name: string;
-  family_name: string;
-  email_verified: boolean;
-}
-
-const TOKEN_KEY = 'auth_token';
-const USER_KEY = 'auth_user';
-const USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo';
-
-const GOOGLE_LOGIN_PARAMS = {
-  client_id: import.meta.env.VITE_GOOGLE_TOKEN,
-  scope: 'email profile openid',
-  prompt: 'select_account',
-  ux_mode: 'popup'
-};
+import { IUser, IUserInfoResponse } from '@/features/auth/model/types';
+import {
+  GOOGLE_LOGIN_PARAMS,
+  GOOGLE_TOKEN_INFO_URL,
+  TOKEN_KEY,
+  USER_INFO_URL,
+  USER_KEY
+} from '@/features/auth/model/constants';
 
 export const useAuthStore = defineStore('auth', () => {
   const user: RemovableRef<IUser> = useStorage(USER_KEY, { id: '' });
@@ -56,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     return response.json();
   };
 
-  const mapUserInfoToIUser = (payload: UserInfoResponse): IUser => ({
+  const mapUserInfoToIUser = (payload: IUserInfoResponse): IUser => ({
     id: payload.sub,
     email: payload.email,
     name: payload.name,
@@ -118,7 +95,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (!token.value) return false;
 
     try {
-      const response = await fetch(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token.value}`);
+      const response = await fetch(`${GOOGLE_TOKEN_INFO_URL}${token.value}`);
       return response.ok;
     } catch {
       return false;
