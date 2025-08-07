@@ -88,8 +88,9 @@
           class="ml-4"
           :color="Colors.Info"
           label
-          >{{ correctQuestionsQuantity }}</VChip
         >
+          {{ correctQuestionsQuantity }}
+        </VChip>
         <span class="pl-4">from</span>
         <VChip
           class="ml-4"
