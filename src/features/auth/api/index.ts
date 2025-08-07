@@ -3,7 +3,7 @@ import { googleTokenLogin } from 'vue3-google-login';
 import { IUser, IUserInfoResponse } from '@/features/auth/model/types';
 
 export class AuthApi {
-  async fetchWithToken(token: string): Promise<any> {
+  async fetchUserDataByToken(token: string): Promise<any> {
     const response = await fetch(USER_INFO_URL, {
       method: 'GET',
       headers: {
@@ -18,11 +18,11 @@ export class AuthApi {
     return response.json();
   }
 
-  async checkTokenValidity(token: string): Promise<boolean> {
+  async checkUserToken(token: string): Promise<boolean> {
     if (!token) return false;
 
     try {
-      await this.fetchWithToken(token);
+      await this.fetchUserDataByToken(token);
       return true;
     } catch (e) {
       console.error('Token validation failed:', e);
@@ -31,13 +31,13 @@ export class AuthApi {
   }
 
   async loginByGoogle(token: string) {
-    if (token && (await this.checkTokenValidity(token))) {
+    if (token && (await this.checkUserToken(token))) {
       return;
     }
 
     const googleLoginResponse = await googleTokenLogin(GOOGLE_LOGIN_PARAMS);
 
-    const responseUser = await this.fetchWithToken(googleLoginResponse.access_token);
+    const responseUser = await this.fetchUserDataByToken(googleLoginResponse.access_token);
     const userData = this.toUserData(responseUser);
 
     return {
