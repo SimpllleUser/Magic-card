@@ -5,7 +5,7 @@
   import BaseList from '@/shared/ui/BaseList/BaseList.vue';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
-  import { QUIZ_RESULT_HEADER_KEYS } from '../model/constants';
+  import { LIST_TITLES } from '../model/constants';
   import { PageNames } from '@/router/types';
   import { QuestionItem, QuizType } from '../model/types';
   import { useQuizStore } from '@/stores/quiz';
@@ -106,7 +106,7 @@
           header-sticky
           height="30rem"
           hide-footer
-          :keys="QUIZ_RESULT_HEADER_KEYS"
+          :keys="LIST_TITLES"
           :map-item="mapItem"
         >
           <template #item.isCorrect="{ value }">
