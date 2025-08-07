@@ -7,4 +7,13 @@ export const GOOGLE_LOGIN_PARAMS = {
   prompt: 'select_account',
   ux_mode: 'popup'
 };
-export const GOOGLE_TOKEN_INFO_URL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token='
+export const DEFAULT_USER_DATA = {
+  email: '',
+  name: '',
+  picture: '',
+  givenName: '',
+  familyName: '',
+  emailVerified: false
+};
+
+export const GOOGLE_TOKEN_INFO_URL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';

@@ -1,42 +1,71 @@
-import { account, OAuthProvider } from '../../../shared/api/index';
-import { User } from '../model/types';
+import { GOOGLE_LOGIN_PARAMS, GOOGLE_TOKEN_INFO_URL, USER_INFO_URL } from '@/features/auth/model/constants';
+import { googleTokenLogin } from 'vue3-google-login';
+import { IUser, IUserInfoResponse } from '@/features/auth/model/types';
 
-class AuthServiceApi {
-  private redirectUrl = '/';
+export class AuthApi {
+  async fetchWithToken(token: string): Promise<any> {
+    const response = await fetch(USER_INFO_URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-  constructor(redirectUrl: string) {
-    this.redirectUrl = redirectUrl;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
   }
 
-  public async loginWithGoogle() {
+  async checkTokenValidity(token: string): Promise<boolean> {
+    if (!token) return false;
+
     try {
-      await account.createOAuth2Session(OAuthProvider.Google, this.redirectUrl);
-    } catch (error) {
-      this.handleError(error);
+      await this.fetchWithToken(token);
+      return true;
+    } catch (e) {
+      console.error('Token validation failed:', e);
+      return false;
     }
   }
 
-  public async logoutUser() {
-    try {
-      return await account.deleteSession('current');
-    } catch (error) {
-      this.handleError(error);
+  async loginByGoogle(token: string) {
+    if (token && (await this.checkTokenValidity(token))) {
+      return;
     }
+
+    const googleLoginResponse = await googleTokenLogin(GOOGLE_LOGIN_PARAMS);
+
+    const responseUser = await this.fetchWithToken(googleLoginResponse.access_token);
+    const userData = this.toUserData(responseUser);
+
+    return {
+      user: userData,
+      token: googleLoginResponse.access_token
+    };
   }
 
-  public async getUser(onError?: CallableFunction): Promise<User | null> {
-    try {
-      return (await account.get()) as User;
-    } catch (error) {
-      onError && onError(error);
-      this.handleError(error);
-      return null;
-    }
+  toUserData(payload: IUserInfoResponse): IUser {
+    return {
+      id: payload.sub,
+      email: payload.email,
+      name: payload.name,
+      picture: payload.picture,
+      givenName: payload.given_name,
+      familyName: payload.family_name,
+      emailVerified: payload.email_verified
+    };
   }
 
-  private handleError(error: any) {
-    console.error(error);
+  async validateToken(token: string) {
+    if (!token) return false;
+
+    try {
+      const response = await fetch(`${GOOGLE_TOKEN_INFO_URL}${token}`);
+      return response.ok;
+    } catch {
+      return false;
+    }
   }
 }
-
-export const authServiceApi = new AuthServiceApi(window.location.origin);
