@@ -2,6 +2,7 @@
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs/index.vue';
   import AuthBlock from '@/features/auth/ui/AuthBlock.vue';
   import ThemeButton from '@/shared/ui/ThemeButton.vue';
+  import GoogleAuth from '@/features/auth/ui/GoogleAuth.vue';
 
   const router = useRouter();
 </script>
@@ -24,6 +25,9 @@
             width="25px"
           />
         </VBtn>
+        <div class="mx-6">
+          <GoogleAuth />
+        </div>
         <div class="title-wrapper justify-center mx-auto">
           <Breadcrumbs />
         </div>
