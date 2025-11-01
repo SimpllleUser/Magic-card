@@ -6,17 +6,25 @@
 
   const authStore = useAuthStore();
 
+  const loginUser = async () => {
+    await authStore.login();
+    await authStore.initUser();
+  };
+
   const { isMobile } = useBreakPointsApp();
+  onMounted(async () => {
+    await authStore.initUser();
+  });
 </script>
 
 <template>
   <div class="d-flex items-center justify-center">
     <div
-      v-if="authStore.isAuthenticated"
+      v-if="authStore.isAuth"
       class="d-flex align-center"
     >
       <div>
-        <VAvatar>
+        <!-- <VAvatar>
           <img
             alt="avatar"
             class="avatar-image"
@@ -36,13 +44,13 @@
               />
             </VList>
           </VMenu>
-        </VAvatar>
+        </VAvatar> -->
       </div>
       <span
         v-if="!isMobile"
         class="pl-2"
       >
-        <b> {{ authStore.userData.name }}</b>
+        <b> {{ authStore.user?.name }}</b>
       </span>
       <VBtn
         v-if="!isMobile"
@@ -53,11 +61,11 @@
         @click="authStore.logout"
       />
     </div>
-    <div v-if="!authStore.isAuthenticated">
+    <div v-if="!authStore.isAuth">
       <VBtn
         :color="Colors.Primary"
         :variant="Variants.Outlined"
-        @click="authStore.login"
+        @click="loginUser"
       >
         <span class="pr-2">Login</span>
         <VIcon

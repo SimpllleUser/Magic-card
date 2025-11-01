@@ -1,4 +1,4 @@
-import { Client, Databases, ID, OAuthProvider, Query } from 'appwrite';
+import { Account, Client, Databases, ID, OAuthProvider, Query } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
@@ -7,9 +7,10 @@ const client = new Client();
 
 client.setEndpoint(import.meta.env.VITE_CLOUD_SERVICE_URL).setProject(import.meta.env.VITE_PROJECT_ID);
 
+const account = new Account(client);
 const database = new Databases(client);
 
-export { database, client, ID };
+export { database, client, ID, account };
 
 export class ApiService {
   dbId: string;
