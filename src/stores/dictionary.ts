@@ -26,7 +26,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
   const createWithCloud = async (dictionary: Dictionary) => {
     let dictionaryData = mappedDictionaryItems({ ...dictionary, id: generateId() });
-    if (authStore.isAuthenticated) {
+    if (authStore.isAuth) {
       dictionaryData = await dictionaryApi.create(dictionaryData);
     }
 
@@ -39,7 +39,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   };
 
   const saveToCloud = async (dictionary: Dictionary) => {
-    const dictionaryForCloud = { ...dictionary, userId: authStore.isAuthenticated };
+    const dictionaryForCloud = { ...dictionary, userId: authStore.isAuth };
     const dictionaryFromCloud = await dictionaryApi.create(dictionaryForCloud);
     dictionaryCrud.update(dictionaryFromCloud);
   };
@@ -47,13 +47,13 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   const localDictionarys = computed(() => dictionaryCrud.data.value.filter((item) => !item?.$id));
 
   const items = computed(() => {
-    if (!authStore.isAuthenticated) return localDictionarys.value;
+    if (!authStore.isAuth) return localDictionarys.value;
 
     return dictionaryCrud.data.value;
   });
 
   const fetchDictionarys = async () => {
-    const dictionarysFromCloud = await dictionaryApi.getAll(authStore.user.id);
+    const dictionarysFromCloud = await dictionaryApi.getAll(authStore.user.$id);
     const dictionarysFromStorage = localDictionarys.value;
 
     dictionaryCrud.set([...dictionarysFromCloud, ...dictionarysFromStorage]);

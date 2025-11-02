@@ -111,7 +111,7 @@
             </VList>
           </VMenu>
           <VBtn
-            v-if="!authStore.isAuthenticated"
+            v-if="!dictionary?.userId"
             :size="Sizes.Small"
             :variant="Variants.Text"
             @click.stop="onSync"

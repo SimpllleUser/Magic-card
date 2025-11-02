@@ -6,6 +6,7 @@ import {
   DictionaryWithItemsString,
   useDictionaryAPI
 } from '../model/types';
+import { useAuthStore } from '@/features/auth/model/auth';
 
 const serialize = (dictionary: Dictionary): Dictionary & { items: string } => ({
   ...dictionary,
@@ -23,6 +24,8 @@ const apiService = new ApiService({
 
 export function useDictionaryApi(): useDictionaryAPI {
   const create = async (dictionary: Dictionary) => {
+    const user = useAuthStore().user;
+    dictionary.userId = user?.$id;
     const result = await apiService.create<DictionaryWithItemsString>(serialize(dictionary));
     return deserialize(result);
   };

@@ -49,7 +49,7 @@
   const { isMobile } = useBreakPointsApp();
 
   watch(
-    () => authStore.isAuthenticated,
+    () => authStore.isAuth,
     async (state) => {
       if (!state) return;
       await dictionaryStore.fetchDictionarys();

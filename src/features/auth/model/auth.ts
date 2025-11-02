@@ -1,4 +1,4 @@
-import { Models, OAuthProvider } from 'appwrite';
+import { Models } from 'appwrite';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { AuthService } from '../api';
@@ -11,7 +11,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   });
 
-  const user = useLocalStorage('user', null as null | Models.User<Models.Preferences>);
+  const userData = useLocalStorage('user', {} as Models.User<Models.Preferences>);
+  const user = computed(() => userData.value);
   const isAuth = computed(() => !!user.value);
 
   async function login() {
@@ -22,12 +23,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const initUser = async () => {
-    user.value = await authService.getUser();
+    userData.value = await authService.getUser();
   };
 
   async function logout() {
     await authService.logout();
-    user.value = null;
+    userData.value = null;
   }
 
   const getSession = async () => {
