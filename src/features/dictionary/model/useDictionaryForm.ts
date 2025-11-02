@@ -34,7 +34,7 @@ export class DictionaryFormModel {
   description: TextareaInput;
   items: InputList<{ from: TextInput; to: TextInput }>;
 
-  constructor(data?: DictionaryItem) {
+  constructor(data?: Dictionary) {
     this.id = data?.id || '';
     this.title = input.text({
       value: data?.title,
@@ -49,7 +49,7 @@ export class DictionaryFormModel {
   }
 }
 
-export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
+export class DictionaryFormCreateModelAuthedUser extends DictionaryFormModel {
   userId: string;
 
   constructor(data?: DictionaryItem) {
@@ -58,7 +58,7 @@ export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
   }
 }
 
-export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAutheduUser {
+export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAuthedUser {
   id: string;
   $permissions: string[];
   $createdAt: string;
@@ -82,7 +82,7 @@ export const useDictionaryForm = (data?: Dictionary | EntityAPI<DictionaryItem>,
     return new DictionaryFormUpdateModelAuthedUser(data);
   }
   if (authStore.isAuth && type === ActionForm.Create) {
-    return new DictionaryFormCreateModelAutheduUser(data);
+    return new DictionaryFormCreateModelAuthedUser(data);
   }
   return new DictionaryFormModel(data);
 };

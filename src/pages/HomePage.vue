@@ -52,7 +52,7 @@
     () => authStore.isAuth,
     async (state) => {
       if (!state) return;
-      await dictionaryStore.fetchDictionarys();
+      await dictionaryStore.fetchDictionaries();
     },
     {
       immediate: true
