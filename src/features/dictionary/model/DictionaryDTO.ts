@@ -1,6 +1,5 @@
 import {
   BaseDictionary,
-  Dictionary,
   DictionaryItem,
   DictionaryParamsForUpdate,
   IDictionaryBaseDTO,
@@ -9,9 +8,6 @@ import {
   IDictionaryGetParamsDTO,
   IDictionaryUpdateDTO
 } from '@/features/dictionary/model/types';
-import { EntityAPI, ReplaceField } from '@/shared/index/types';
-import { ca } from 'vuetify/locale';
-
 export class DictionaryBaseDTO implements IDictionaryBaseDTO {
   title: string;
   description: string;
