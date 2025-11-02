@@ -54,12 +54,12 @@ export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
 
   constructor(data?: DictionaryItem) {
     super(data);
-    this.userId = authStore.user?.id || '';
+    this.userId = authStore.user?.$id || '';
   }
 }
 
 export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAutheduUser {
-  $id: string;
+  id: string;
   $permissions: string[];
   $createdAt: string;
   $updatedAt: string;
@@ -68,7 +68,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
 
   constructor(data: EntityAPI<DictionaryItem>) {
     super(data);
-    this.$id = data.$id;
+    this.id = data.id;
     this.$permissions = data.$permissions;
     this.$createdAt = data.$createdAt;
     this.$updatedAt = data.$updatedAt;
