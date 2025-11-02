@@ -5,10 +5,8 @@
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import { useAuthStore } from '@/features/auth/model/auth';
 
   const props = defineProps<{ dictionary: Dictionary; isMobile?: boolean }>();
-  const authStore = useAuthStore();
   const emit = defineEmits<{
     (event: 'remove', id: string): void;
     (event: 'sync', dictionary: Dictionary): void;
