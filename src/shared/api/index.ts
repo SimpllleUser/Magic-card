@@ -2,6 +2,7 @@ import { Account, Client, Databases, ID, Query } from 'appwrite';
 import { omit } from 'lodash';
 import { EntityAPI } from '../index/types';
 import { ENTITY_API_KEYS } from './constants';
+import { DictionaryCreateDTO } from '@/features/dictionary/model/DictionaryDTO';
 
 const client = new Client();
 
@@ -21,7 +22,7 @@ export class ApiService {
     this.collectionId = data.collectionId;
   }
 
-  async create<T extends object>(data: T): Promise<T> {
+  async create<T extends object>(data: DictionaryCreateDTO): Promise<T> {
     try {
       const res = await database.createDocument(this.dbId, this.collectionId, ID.unique(), data);
       return res as T;
