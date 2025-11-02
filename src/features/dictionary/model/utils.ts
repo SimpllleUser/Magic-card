@@ -3,7 +3,7 @@ import { generateId } from '@/shared/utils/id-generate';
 import { Dictionary, DictionaryItem } from '../model/types';
 import { ENTITY_API_KEYS } from '@/shared/api/constants';
 
-export const mappedDictionaryItems = (dictionaryParams: Dictionary): Dictionary => ({
+export const mappedDictionaryItems = <T extends { items: DictionaryItem[] }>(dictionaryParams: T): T => ({
   ...dictionaryParams,
   items: dictionaryParams.items.map(
     (item: Omit<DictionaryItem, 'id'>): DictionaryItem => ({

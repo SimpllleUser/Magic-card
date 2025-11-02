@@ -1,5 +1,5 @@
 import { EntityWithId, OptionalId } from '@/core/models';
-import { EntityAPI, EntityApiFields } from '@/shared/index/types';
+import { EntityAPI, EntityApiFields, RemoveFields, ReplaceField } from '@/shared/index/types';
 
 export type DictionaryItem = {
   id: string;
@@ -7,12 +7,16 @@ export type DictionaryItem = {
   to: string;
 } & Partial<EntityApiFields>;
 
-export type Dictionary = EntityWithId<{
+export interface BaseDictionary {
   title: string;
   description: string;
   items: Array<DictionaryItem>;
   userId?: string;
-}>;
+}
+
+export type Dictionary = EntityWithId<BaseDictionary>;
+export type DictionaryStrong = Required<Dictionary>;
+export type BaseDictionaryStrong = Required<BaseDictionary>;
 
 export interface DictionaryFormProps {
   formData?: Dictionary | Record<string, any>;
@@ -33,11 +37,14 @@ export type DictionaryCRUD = {
 };
 export type DictionaryWithItemsString = Dictionary & { items: string };
 export type DictionaryAPIWithStringItems = EntityAPI<DictionaryWithItemsString>;
-export type DictionaryApiData = EntityAPI<Dictionary>;
+export type DictionaryApiData = EntityAPI<Required<Dictionary>>;
 
-export type useDictionaryAPI = {
-  create: (dictionary: Dictionary) => Promise<DictionaryApiData>;
-  update: (dictionary: Dictionary) => Promise<DictionaryApiData>;
-  getAll: () => Promise<DictionaryApiData[]>;
-  remove: (id: string) => Promise<unknown>;
-};
+export type DictionaryApiEntity = EntityAPI<ReplaceField<BaseDictionaryStrong, 'items', string>>;
+export type IDictionaryBaseDtoParams = RemoveFields<EntityAPI<DictionaryStrong>, 'id' | 'items'>;
+export type DictionaryParamsForUpdate = RemoveFields<EntityAPI<DictionaryStrong>, '$id'>;
+// export type IDictionaryBaseDTO = RemoveField<EntityAPI<RemoveField<Dictionary, 'items'>, '$id'>
+export type IDictionaryBaseDTO = RemoveFields<EntityAPI<Dictionary>, '$id' | 'id' | 'items'>;
+export type IDictionaryCreateDTO = ReplaceField<BaseDictionary, 'items', string>;
+export type IDictionaryGetDTO = RemoveFields<EntityAPI<Required<Dictionary>>, '$id'>;
+export type IDictionaryUpdateDTO = DictionaryApiEntity;
+export type IDictionaryGetParamsDTO = DictionaryApiEntity;

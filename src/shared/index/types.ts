@@ -22,3 +22,11 @@ export type ErrorEntityAPi = {
   type: string;
   response: ErrorResponse;
 };
+
+export type ReplaceField<T, K extends keyof T, NewType> = {
+  [P in keyof T]: P extends K ? NewType : T[P];
+};
+
+export type RemoveFields<T, K extends keyof T> = {
+  [P in keyof T as P extends K ? never : P]: T[P];
+};

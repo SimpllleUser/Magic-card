@@ -34,7 +34,7 @@ export class DictionaryFormModel {
   description: TextareaInput;
   items: InputList<{ from: TextInput; to: TextInput }>;
 
-  constructor(data?: DictionaryItem) {
+  constructor(data?: Dictionary) {
     this.id = data?.id || '';
     this.title = input.text({
       value: data?.title,
@@ -49,17 +49,17 @@ export class DictionaryFormModel {
   }
 }
 
-export class DictionaryFormCreateModelAutheduUser extends DictionaryFormModel {
+export class DictionaryFormCreateModelAuthedUser extends DictionaryFormModel {
   userId: string;
 
   constructor(data?: DictionaryItem) {
     super(data);
-    this.userId = authStore.user?.id || '';
+    this.userId = authStore.user?.$id || '';
   }
 }
 
-export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAutheduUser {
-  $id: string;
+export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateModelAuthedUser {
+  id: string;
   $permissions: string[];
   $createdAt: string;
   $updatedAt: string;
@@ -68,7 +68,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
 
   constructor(data: EntityAPI<DictionaryItem>) {
     super(data);
-    this.$id = data.$id;
+    this.id = data.id;
     this.$permissions = data.$permissions;
     this.$createdAt = data.$createdAt;
     this.$updatedAt = data.$updatedAt;
@@ -78,11 +78,11 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
 }
 
 export const useDictionaryForm = (data?: Dictionary | EntityAPI<DictionaryItem>, type?: ActionForm) => {
-  if (authStore.isAuthenticated && type === ActionForm.Save) {
+  if (authStore.isAuth && type === ActionForm.Save) {
     return new DictionaryFormUpdateModelAuthedUser(data);
   }
-  if (authStore.isAuthenticated && type === ActionForm.Create) {
-    return new DictionaryFormCreateModelAutheduUser(data);
+  if (authStore.isAuth && type === ActionForm.Create) {
+    return new DictionaryFormCreateModelAuthedUser(data);
   }
   return new DictionaryFormModel(data);
 };
