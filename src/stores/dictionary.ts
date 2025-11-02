@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
-import { Dictionary } from '@/features/dictionary/model/types';
+import { Dictionary, DictionaryParamsForUpdate } from '@/features/dictionary/model/types';
 import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
-import { useDictionaryApi } from '@/features/dictionary/api';
+import { DictionaryApi } from '@/features/dictionary/api';
 import { useAuthStore } from '../features/auth/model/auth';
 import { generateId } from '@/shared/utils/id-generate';
 
-const dictionaryApi = useDictionaryApi();
+const dictionaryApi = new DictionaryApi();
 
 export const useDictionaryStore = defineStore('dictionary', () => {
   const authStore = useAuthStore();
@@ -15,9 +15,9 @@ export const useDictionaryStore = defineStore('dictionary', () => {
   const create = (dictionary: Dictionary) => dictionaryCrud.create(mappedDictionaryItems(dictionary));
   const update = (dictionary: Dictionary) => dictionaryCrud.update(mappedDictionaryItems(dictionary));
 
-  const updateWithCloud = async (dictionary: Dictionary) => {
+  const updateWithCloud = async (dictionary: DictionaryParamsForUpdate) => {
     let dictionaryData = dictionary;
-    if (dictionary?.$id) {
+    if (dictionary?.id) {
       dictionaryData = await dictionaryApi.update(dictionary);
     }
 
@@ -35,16 +35,16 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
   const removeWithCloud = async (dictionary: Dictionary) => {
     dictionaryCrud.remove(dictionary.id);
-    if (dictionary?.$id) await dictionaryApi.remove(dictionary?.$id);
+    if (dictionary?.id) await dictionaryApi.remove(dictionary?.id);
   };
 
   const saveToCloud = async (dictionary: Dictionary) => {
-    const dictionaryForCloud = { ...dictionary, userId: authStore.isAuth };
+    const dictionaryForCloud = { ...dictionary, userId: authStore.user.$id };
     const dictionaryFromCloud = await dictionaryApi.create(dictionaryForCloud);
     dictionaryCrud.update(dictionaryFromCloud);
   };
 
-  const localDictionarys = computed(() => dictionaryCrud.data.value.filter((item) => !item?.$id));
+  const localDictionarys = computed(() => dictionaryCrud.data.value.filter((item) => !item?.id));
 
   const items = computed(() => {
     if (!authStore.isAuth) return localDictionarys.value;

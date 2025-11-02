@@ -6,14 +6,16 @@ import {
   IDictionaryBaseDTO,
   IDictionaryCreateDTO,
   IDictionaryGetDTO,
+  IDictionaryGetParamsDTO,
   IDictionaryUpdateDTO
 } from '@/features/dictionary/model/types';
-import { EntityAPI } from '@/shared/index/types';
+import { EntityAPI, ReplaceField } from '@/shared/index/types';
+import { ca } from 'vuetify/locale';
 
 export class DictionaryBaseDTO implements IDictionaryBaseDTO {
   title: string;
   description: string;
-  userId?: string | undefined;
+  userId: string;
   $permissions: string[];
   $databaseId: string;
   $collectionId: string;
@@ -42,7 +44,7 @@ export class DictionaryUpdateDTO extends DictionaryBaseDTO implements IDictionar
   }
 
   private serializeItems(items: DictionaryItem[]): string {
-    return items.map((item) => JSON.stringify(item)).join(',');
+    return JSON.stringify(items);
   }
 }
 
@@ -52,15 +54,15 @@ export class DictionaryCreateDTO implements IDictionaryCreateDTO {
   description: string;
   userId: string;
 
-  constructor(dictionary: Required<BaseDictionary>) {
+  constructor(dictionary: BaseDictionary, userId: string) {
     this.title = dictionary.title;
     this.description = dictionary.description;
-    this.userId = dictionary.userId;
+    this.userId = userId;
     this.items = this.serializeItems(dictionary.items);
   }
 
   private serializeItems(items: DictionaryItem[]): string {
-    return items.map((item) => JSON.stringify(item)).join(',');
+    return JSON.stringify(items);
   }
 }
 
@@ -76,8 +78,8 @@ export class DictionaryGetDTO implements IDictionaryGetDTO {
   $databaseId: string;
   $collectionId: string;
 
-  constructor(dictionary: EntityAPI<Dictionary>) {
-    this.items = dictionary.items;
+  constructor(dictionary: IDictionaryGetParamsDTO) {
+    this.items = this.serializeItems(dictionary.items);
     this.title = dictionary.title;
     this.description = dictionary.description;
     this.userId = dictionary.userId;
@@ -88,20 +90,8 @@ export class DictionaryGetDTO implements IDictionaryGetDTO {
     this.$databaseId = dictionary.$databaseId;
     this.$collectionId = dictionary.$collectionId;
   }
-}
 
-// export class DictionaryGetDTO {
-//   dictionary: EntityAPI<Dictionary> & { id: string };
-//
-//   constructor(dictionary: EntityAPI<DictionaryWithItemsString>) {
-//     this.dictionary = this.serialize(dictionary);
-//   }
-//
-//   serialize(dictionary: EntityAPI<DictionaryWithItemsString>): EntityAPI<Dictionary> {
-//     return {
-//       ...dictionary,
-//       id: dictionary.$id,
-//       items: dictionary?.items ? JSON.parse(dictionary?.items) : []
-//     };
-//   }
-// }
+  private serializeItems(items: string): DictionaryItem[] {
+    return items.trim().length ? JSON.parse(items) : [];
+  }
+}

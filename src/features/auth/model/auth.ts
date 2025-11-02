@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const userData = useLocalStorage('user', {} as Models.User<Models.Preferences>);
   const user = computed(() => userData.value);
-  const isAuth = computed(() => !!user.value);
+  const isAuth = computed(() => !!user.value.$id);
 
   async function login() {
     const error = await authService.login();

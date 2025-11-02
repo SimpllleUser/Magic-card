@@ -1,40 +1,37 @@
 import { ApiService } from '@/shared/api';
-import {
-  Dictionary,
-  DictionaryApiData,
-  DictionaryWithItemsString,
-} from '../model/types';
+import { Dictionary, DictionaryApiEntity, DictionaryParamsForUpdate } from '../model/types';
 import { useAuthStore } from '@/features/auth/model/auth';
 import { DictionaryCreateDTO, DictionaryGetDTO, DictionaryUpdateDTO } from '@/features/dictionary/model/DictionaryDTO';
 
-const apiService = new ApiService({
+const _apiService = new ApiService({
   dbId: import.meta.env.VITE_DB_ID,
   collectionId: import.meta.env.VITE_DICTIONARY_COLLECTION_ID
 });
 
 export class DictionaryApi {
-  constructor(private apiService: ApiService) {}
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private apiService: ApiService = _apiService) {}
 
   async create(dictionary: Dictionary) {
     const user = useAuthStore().user;
     const dictionaryParams = new DictionaryCreateDTO(dictionary, user.$id);
-    const result = await apiService.create<DictionaryWithItemsString>(dictionaryParams);
+    const result = await this.apiService.create<DictionaryApiEntity>(dictionaryParams);
     return new DictionaryGetDTO(result);
   }
 
-  async updateDictionary(dictionary: DictionaryApiData): Promise<DictionaryGetDTO> {
+  async update(dictionary: DictionaryParamsForUpdate): Promise<DictionaryGetDTO> {
     const dictionaryParams = new DictionaryUpdateDTO(dictionary);
 
-    const result = await apiService.update<DictionaryWithItemsString>(dictionaryParams);
+    const result = await this.apiService.update<DictionaryApiEntity>(dictionaryParams);
     return new DictionaryGetDTO(result);
   }
 
   async getAll(userId: string) {
-    const res = await apiService.getAll<DictionaryWithItemsString>(userId);
+    const res = await this.apiService.getAll<DictionaryApiEntity>(userId);
     return res.map((item) => new DictionaryGetDTO(item));
   }
 
   async remove(id: string) {
-    return apiService.remove(id);
+    return this.apiService.remove(id);
   }
 }
