@@ -6,40 +6,24 @@
   import QuizControls from '@/features/quiz/ui/QuizControls.vue';
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { useQuizStore } from '@/stores/quiz';
-  import { useTrackingTime } from '@/features/quiz/model/composables/useTrackingTime';
-  import { useDictionaryStatistics } from '@/features/dictionary-statistics/model/useDictionaryStatistics';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import { QuestionItem } from '@/features/quiz/model/types';
-  import { DictionaryStatisticPrams } from '@/features/dictionary-statistics';
+
 
   const quizStore = useQuizStore();
-  const dictionaryStatistics = useDictionaryStatistics();
-  const trackingTimeQuiz = useTrackingTime();
   const modal = useModalStore();
 
   const finishedQuestions = ref<QuestionItem[]>([]);
 
-  const getStatisticParamsFromQuestions = (questions: QuestionItem[], timeOfQuiz): DictionaryStatisticPrams => ({
-    dictionaryId: quizStore.activeModuleId,
-    correctAnswers: questions.filter((item: QuestionItem) => item.isCorrect).length,
-    incorrectAnswers: questions.filter((item) => !item.isCorrect).length,
-    totalQuestions: questions.length,
-    timeTaken: timeOfQuiz
-  });
-
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
     modal.show(Modals.FinishQuiz);
-    dictionaryStatistics.saveStatistics(getStatisticParamsFromQuestions(questions, trackingTimeQuiz.value.value));
-    trackingTimeQuiz.reset();
   };
 
   const quizKey = ref(uuid.v4());
 
   const onRetry = () => {
     quizKey.value = uuid.v4();
-    trackingTimeQuiz.reset();
-    trackingTimeQuiz.initTime(quizStore.activeModuleId);
   };
 
   // const onChangeQuestion = (question: QuestionItem) => {
@@ -50,9 +34,6 @@
   //   trackingTimeQuestion.initTime(actualQuestion.id);
   // };
 
-  onMounted(() => {
-    trackingTimeQuiz.initTime(quizStore.activeModuleId);
-  });
   const { isMobile } = useBreakPointsApp();
 </script>
 

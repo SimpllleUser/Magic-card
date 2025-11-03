@@ -4,14 +4,12 @@
   import { useDictionaryStore } from '@/stores/dictionary';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS } from '@/features/quiz/model/constants';
   import { useModalStore } from '@/shared/ui/BaseModal';
-  import { DictionaryStatisticModal, useDictionaryStatistics } from '@/features/dictionary-statistics';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
   import DictionaryList from '@/features/dictionary/ui/DictionaryList.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
 
   const modalStore = useModalStore();
-  const dictionaryStatistics = useDictionaryStatistics();
 
   const { goToQuiz, goToViewMode } = useNavigation();
 
@@ -25,15 +23,10 @@
   const selectedWords = ref([...dictionary.value?.items]);
   // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
-  const statistics = computed(() => dictionaryStatistics.getByDictionaryId(dictionaryId.value));
   const { isMobile } = useBreakPointsApp();
 </script>
 
 <template>
-  <DictionaryStatisticModal
-    :statistics="statistics"
-    :title="dictionary.title"
-  />
   <div class="content-wrapper mx-auto">
     <VRow v-if="dictionary?.description.trim()">
       <VCol>
