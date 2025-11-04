@@ -7,7 +7,6 @@ export enum QuizType {
   InputWord = 'InputWord'
 }
 
-
 export type QuestionItem = DictionaryItem & {
   isCorrect: boolean;
   answer: Nullable<string>;

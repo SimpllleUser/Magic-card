@@ -8,15 +8,27 @@
   import { useQuizStore } from '@/stores/quiz';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import { QuestionItem } from '@/features/quiz/model/types';
-
+  import { useKnowledgeLevelStore } from '@/stores/statistics';
 
   const quizStore = useQuizStore();
   const modal = useModalStore();
+  const knowledgeLevelStore = useKnowledgeLevelStore();
 
   const finishedQuestions = ref<QuestionItem[]>([]);
 
+  const saveKnowledgeLevel = (questions: QuestionItem[]) => {
+    questions.forEach((item) => {
+      knowledgeLevelStore.updateWord({
+        wordId: item.id,
+        isCorrect: item.isCorrect,
+        quizType: quizStore.currentType
+      });
+    });
+  };
+
   const onFinishedQuiz = (questions: QuestionItem[]) => {
     finishedQuestions.value = questions;
+    saveKnowledgeLevel(finishedQuestions.value);
     modal.show(Modals.FinishQuiz);
   };
 

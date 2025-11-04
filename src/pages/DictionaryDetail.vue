@@ -8,9 +8,10 @@
   import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
   import DictionaryList from '@/features/dictionary/ui/DictionaryList.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
+  import { useKnowledgeLevelStore } from '@/stores/statistics';
 
   const modalStore = useModalStore();
-
+  const knowledgeLevelStore = useKnowledgeLevelStore();
   const { goToQuiz, goToViewMode } = useNavigation();
 
   const route = useRoute();
@@ -24,10 +25,32 @@
   // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const { isMobile } = useBreakPointsApp();
+
+  onMounted(() => {
+    knowledgeLevelStore.init(dictionary.value.id, dictionary.value.userId!);
+  });
 </script>
 
 <template>
   <div class="content-wrapper mx-auto">
+    <div>
+      <div>
+        totalScore:
+        <pre>{{ knowledgeLevelStore.totalScore }}</pre>
+      </div>
+      <div>
+        dueWords:
+        <pre>{{ knowledgeLevelStore.dueWords }}</pre>
+      </div>
+      <div>
+        learnedWords:
+        <pre>{{ knowledgeLevelStore.learnedWords }}</pre>
+      </div>
+      <div>
+        weakWords:
+        <pre>{{ knowledgeLevelStore.weakWords }}</pre>
+      </div>
+    </div>
     <VRow v-if="dictionary?.description.trim()">
       <VCol>
         <VCard
