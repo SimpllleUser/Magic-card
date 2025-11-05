@@ -1,3 +1,6 @@
+import { Colors } from '@/core/models/enums';
+import { Icons } from '@/core/models/icons';
+
 export enum KnowledgeLevel {
   New = 'New',
   Beginner = 'Beginner',
@@ -36,8 +39,16 @@ export function getMemoryLabel(strength: number): string {
 }
 
 export function getMemoryColor(strength: number): string {
-  if (strength < 0.3) return '#ef4444'; // red
-  if (strength < 0.6) return '#f59e0b'; // amber
-  if (strength < 0.8) return '#10b981'; // green
-  return '#0ea5e9'; // blue
+  if (strength < 0.3) return Colors.Error; // red
+  if (strength < 0.6) return Colors.Warning; // amber
+  if (strength < 0.8) return Colors.Success; // green
+  return Colors.Primary; // blue
+}
+
+export function getKnowledgeIcon(score: number): string {
+  if (score < 0.2) return Icons.LightbulbOffOutline; // new / not known
+  if (score < 0.4) return Icons.LightbulbOutline; // beginner
+  if (score < 0.6) return Icons.LightbulbOnOutline; // learning
+  if (score < 0.8) return Icons.LightbulbOn; // familiar
+  return Icons.StarCircle; // mastered
 }
