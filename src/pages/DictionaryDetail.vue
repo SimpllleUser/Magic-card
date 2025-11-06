@@ -24,7 +24,6 @@
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
   const selectedWords = useLocalStorage(`selectedWords_${dictionaryId.value}`, [...dictionary.value?.items]);
-  // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const { isMobile } = useBreakPointsApp();
 </script>

@@ -52,7 +52,7 @@
     }
   ];
 
-  const selectedWords = ref([...props.dictionary?.items]);
+  const selectedWords = ref(props.selectedWords);
 
   watch(
     () => selectedWords.value,
