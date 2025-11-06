@@ -39,7 +39,12 @@
 
   const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item.id));
   const items = computed(() => props.data?.map(props.mapItem));
-  const headers = computed(() => props.keys?.map(props.mapKey));
+  const headers = computed(() =>
+    props.keys?.map(props.mapKey).map((item) => ({
+      sortable: false,
+      ...item
+    }))
+  );
   const perPage = computed(() => (props.hideFooter ? items.value.length : 10));
   const onSelectItemOfList = (itemIds: string[]) => {
     const items = props.data.filter((item) => itemIds.includes(item.id));
@@ -67,7 +72,10 @@
         @update:model-value="onSelectItemOfList"
       >
         <template #top>
-          <VToolbar v-if="headerTitle && !hideHeader" flat>
+          <VToolbar
+            v-if="headerTitle && !hideHeader"
+            flat
+          >
             <VToolbarTitle>
               <slot name="header-title">{{ headerTitle }}</slot>
             </VToolbarTitle>
@@ -77,8 +85,15 @@
         <template #no-data>
           <slot name="empty-text">{{ emptyText }}</slot>
         </template>
-        <template v-for="slotName in Object.keys($slots)" :key="slotName" #[slotName]="props">
-          <slot :name="slotName" v-bind="props"></slot>
+        <template
+          v-for="slotName in Object.keys($slots)"
+          :key="slotName"
+          #[slotName]="props"
+        >
+          <slot
+            :name="slotName"
+            v-bind="props"
+          ></slot>
         </template>
       </VDataTable>
     </div>

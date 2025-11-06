@@ -170,5 +170,10 @@ export enum Icons {
   PencilOutline = 'mdi-pencil-outline',
   InformationOutline = 'mdi-information-outline',
   Chart = 'mdi-chart-areaspline',
-  FlagCheckered = 'mdi-flag-checkered'
+  FlagCheckered = 'mdi-flag-checkered',
+  LightbulbOffOutline = 'mdi-lightbulb-off-outline',
+  LightbulbOutline = 'mdi-lightbulb-outline',
+  LightbulbOnOutline = 'mdi-lightbulb-on-outline',
+  LightbulbOn = 'mdi-lightbulb-on',
+  StarCircle = 'mdi-star-circle'
 }
