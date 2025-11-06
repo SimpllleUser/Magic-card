@@ -8,10 +8,12 @@
   import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
   import DictionaryList from '@/features/dictionary/ui/DictionaryList.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
-  import { useKnowledgeLevelStore } from '@/stores/statistics';
   import KnowledgeTotal from '@/features/knowledgeLevel/ui/KnowledgeTotal.vue';
+  import { useKnowledgeLevelStore } from '@/stores/statistics';
+  import { useLocalStorage } from '@vueuse/core';
 
   const modalStore = useModalStore();
+  const knowledgeLevelStore = useKnowledgeLevelStore();
   const { goToQuiz, goToViewMode } = useNavigation();
 
   const route = useRoute();
@@ -21,7 +23,7 @@
 
   const dictionary = computed(() => dictionaryStore.getById(dictionaryId.value)!);
 
-  const selectedWords = ref([...dictionary.value?.items]);
+  const selectedWords = useLocalStorage(`selectedWords_${dictionaryId.value}`, [...dictionary.value?.items]);
   // const canPlayQuiz = computed(() => selectedWords.value.length >= MIN_WORDS_QUANTITY);
 
   const { isMobile } = useBreakPointsApp();
@@ -31,7 +33,7 @@
   <div>
     <KnowledgeTotal
       :dictionary-id="dictionaryId"
-      :user-id="dictionary.userId"
+      :user-id="dictionary.userId!"
     />
   </div>
   <div class="content-wrapper mx-auto">
@@ -66,7 +68,10 @@
             >
               <DictionaryList
                 :dictionary="dictionary"
+                :due-words="knowledgeLevelStore.dueWords"
+                :learned-words="knowledgeLevelStore.learnedWords"
                 :selected-words="selectedWords"
+                :weak-words="knowledgeLevelStore.weakWords"
                 @change-selected-words="selectedWords = $event"
               >
                 <template #header-actions>

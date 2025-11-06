@@ -53,3 +53,9 @@ export interface StorageAdapter {
   setItem(key: string, value: string): void;
   removeItem(key: string): void;
 }
+
+export enum KnowledgeType {
+  Learned = 'learned',
+  Due = 'due',
+  Weak = 'weak'
+}

@@ -4,10 +4,15 @@
   import { PageNames } from '@/router/types';
   import BaseList from '../../../shared/ui/BaseList/BaseList.vue';
   import { Dictionary, DictionaryItem } from '@/features/dictionary/model/types';
+  import { WordProgress } from '@/features/knowledgeLevel/model/types';
+  import KnowledgeItem from '@/features/knowledgeLevel/ui/KnowledgeItem.vue';
 
   const props = defineProps<{
     dictionary: Dictionary;
     selectedWords: DictionaryItem[];
+    learnedWords: WordProgress[];
+    dueWords: WordProgress[];
+    weakWords: WordProgress[];
   }>();
 
   const emit = defineEmits<{
@@ -16,24 +21,34 @@
 
   const mapItem = (item: DictionaryItem, index: number) => ({
     ...item,
-    number: index + 1
+    number: index + 1,
+    knowledgeLevel: getKnowledgeLabelAndColorOfWordById(item.id)
   });
+
+  const getKnowledgeLabelAndColorOfWordById = (id: string) => {
+    if (props.learnedWords.find(({ wordId }) => wordId === id)) return { label: 'Learned', color: Colors.Success };
+    else if (props.dueWords.find(({ wordId }) => wordId === id)) return { label: 'Due', color: Colors.Warning };
+    else if (props.weakWords.find(({ wordId }) => wordId === id)) return { label: 'Weak', color: Colors.Error };
+    return null;
+  };
 
   const LIST_TITLES = [
     {
       title: '#',
-      key: 'number',
-      sortable: false
+      key: 'number'
     },
     {
       title: 'From',
-      key: 'from',
-      sortable: false
+      key: 'from'
     },
     {
       title: 'To',
-      key: 'to',
-      sortable: false
+      key: 'to'
+    },
+    {
+      title: 'Knowledge level',
+      key: 'knowledgeLevel',
+      align: 'center'
     }
   ];
 
@@ -59,6 +74,15 @@
   >
     <template #header-actions>
       <slot name="header-actions" />
+    </template>
+    <template #item.knowledgeLevel="{ value }">
+      <div v-if="!value">-</div>
+      <div v-else>
+        <KnowledgeItem
+          :color="value.color"
+          :label="value.label"
+        />
+      </div>
     </template>
     <template #empty-text>
       <div>
