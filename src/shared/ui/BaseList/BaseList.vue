@@ -37,7 +37,7 @@
     (event: 'update:selectedItems', payload: string[]): void;
   }>();
 
-  const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item.id));
+  const selectedIds = ref<Array<unknown>>(props.selectedItems?.map((item) => item?.id).filter(Boolean));
   const items = computed(() => props.data?.map(props.mapItem));
   const headers = computed(() =>
     props.keys?.map(props.mapKey).map((item) => ({

@@ -30,3 +30,7 @@ export type ReplaceField<T, K extends keyof T, NewType> = {
 export type RemoveFields<T, K extends keyof T> = {
   [P in keyof T as P extends K ? never : P]: T[P];
 };
+
+export interface EmitEvents<T extends Record<string, unknown>> {
+  <K extends keyof T>(event: K, payload: T[K]): void;
+}
