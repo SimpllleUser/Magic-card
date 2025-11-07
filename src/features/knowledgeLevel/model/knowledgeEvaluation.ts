@@ -1,5 +1,6 @@
 import { QuizType } from '@/features/quiz/model/types';
 import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from './types';
+import { getDate } from '@/shared/utils/date';
 /**
  * KnowledgeEvaluator encapsulates learning progress logic:
  * - success/fail stats, streak bonus
@@ -116,8 +117,9 @@ export class KnowledgeEvaluator {
 
   /** List words due for review (nextReview <= now) */
   getWordsToReview(): WordProgress[] {
-    const now = Date.now();
-    return Object.values(this.progress.words).filter((w) => !w.nextReview || w.nextReview <= now);
+    return Object.values(this.progress.words).filter(
+      (w) => !w.nextReview || getDate(new Date(w.nextReview)) === getDate(new Date())
+    );
   }
 
   /** Percentage of words considered learned (knowledgeScore >= 0.7) */

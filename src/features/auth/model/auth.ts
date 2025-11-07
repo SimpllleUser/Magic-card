@@ -4,6 +4,8 @@ import { defineStore } from 'pinia';
 import { AuthService } from '../api';
 
 export const useAuthStore = defineStore('auth', () => {
+  const router = useRouter();
+
   const authService = new AuthService({
     redirect: {
       success: `${window.location.origin}/`,
@@ -15,6 +17,11 @@ export const useAuthStore = defineStore('auth', () => {
   const user = computed(() => userData.value);
   const isAuth = computed(() => !!user.value.$id);
 
+  const resetUserData = () => {
+    userData.value = null;
+    router.push({ name: 'HomePage' });
+  };
+
   async function login() {
     const error = await authService.login();
     if (error) {
@@ -23,7 +30,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const initUser = async () => {
-    userData.value = await authService.getUser();
+    try {
+      userData.value = await authService.getUser();
+    } catch (error) {
+      resetUserData();
+    }
   };
 
   async function logout() {
