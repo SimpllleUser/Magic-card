@@ -8,7 +8,7 @@
   import { useQuizStore } from '@/stores/quiz';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import { QuestionItem } from '@/features/quiz/model/types';
-  import { useKnowledgeLevelStore } from '@/stores/statistics';
+  import { useKnowledgeLevelStore } from '@/stores/knowledge';
 
   const quizStore = useQuizStore();
   const modal = useModalStore();

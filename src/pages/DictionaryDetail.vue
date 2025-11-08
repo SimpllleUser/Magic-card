@@ -8,10 +8,9 @@
   import DictionaryActions from '@/features/dictionary/ui/DictionaryActions.vue';
   import DictionaryList from '@/features/dictionary/ui/DictionaryList.vue';
   import { useNavigation } from '@/features/quiz/model/naigation';
-  import KnowledgeTotal from '@/features/knowledgeLevel/ui/KnowledgeTotal.vue';
-  import { useKnowledgeLevelStore } from '@/stores/statistics';
+  import { KnowledgeRemined, KnowledgeTotal } from '@/features/knowledge';
+  import { useKnowledgeLevelStore } from '@/stores/knowledge';
   import { useLocalStorage } from '@vueuse/core';
-  import KnowledgeRemined from '@/features/knowledgeLevel/ui/KnowledgeRemined.vue';
   import { DictionaryItem } from '@/features/dictionary/model/types';
 
   const modalStore = useModalStore();

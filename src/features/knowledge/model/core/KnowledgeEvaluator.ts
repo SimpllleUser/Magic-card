@@ -1,7 +1,7 @@
 import { KnowledgeMath } from './KnowledgeMath';
 import { SpacedRepetition } from './SpacedRepetition';
 import { ProgressStorage } from './ProgressStorage';
-import { DictionaryProgress, WordProgress, UpdateOptions, QuizType, StorageAdapter } from '../types';
+import { DictionaryProgress, QuizType, StorageAdapter, UpdateOptions, WordProgress } from '../types';
 
 export class KnowledgeEvaluator {
   private streakBonusCap = 0.25;
