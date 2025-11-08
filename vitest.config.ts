@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, './src')
     }
   },
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: 'jsdom', // або 'happy-dom' для швидших тестів
     css: false,
     setupFiles: './vitest.setup.ts',
     deps: {
