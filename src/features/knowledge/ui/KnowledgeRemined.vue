@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { WordProgress } from '@/features/knowledgeLevel/model/types';
+  import { WordProgress } from '../model/helpers/types';
   import { DictionaryItem } from '@/features/dictionary/model/types';
   import { Colors, Variants } from '@/core/models/enums';
   import { EmitEvents } from '@/shared/index/types';
