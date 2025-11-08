@@ -11,7 +11,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom', // або 'happy-dom' для швидших тестів
+    environment: 'jsdom',
     css: false,
     setupFiles: './vitest.setup.ts',
     deps: {
@@ -23,7 +23,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'json-summary', 'html'],
       reportsDirectory: './coverage',
       exclude: ['node_modules', 'dist', '**/*.config.{ts,js}', '**/index.ts', '**/types.ts'],
-      reportOnFailure: true
+      reportOnFailure: false
     }
   }
 });
