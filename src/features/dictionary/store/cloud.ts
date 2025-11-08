@@ -1,11 +1,10 @@
-import { setActionsStrategy } from '../model/ActionDictionaryStrategy';
-import { useDictionaryApi } from '../api';
+import { DictionaryApi, setActionsStrategy } from '@/features/dictionary';
 import type { EntityAPI } from '@/shared/index/types';
 import { Dictionary, DictionaryCRUD } from '../model/types';
 import { AuthStore } from '@/features/auth/model/auth';
 
 export const useDictionaryCloud = (authStore: AuthStore, crudMethods: DictionaryCRUD) => {
-  const dictionaryApi = useDictionaryApi();
+  const dictionaryApi = new DictionaryApi();
   const actionsStrategy = setActionsStrategy(authStore.isAuthenticated);
 
   const createWithCloud = (dictionary: EntityAPI<Dictionary> | Dictionary) =>

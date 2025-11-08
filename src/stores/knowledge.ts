@@ -29,7 +29,7 @@ export const useKnowledgeLevelStore = defineStore('knowledgeLevel', {
   actions: {
     init(dictionaryId: string, userId: string) {
       const p: DictionaryProgress = { dictionaryId, userId, words: {}, totalScore: 0 };
-      this.evaluator = new KnowledgeEvaluator(p);
+      this.evaluator = new KnowledgeEvaluation(p);
     },
 
     updateWord({ wordId, isCorrect, quizType }: { wordId: string; isCorrect: boolean; quizType: QuizType }) {

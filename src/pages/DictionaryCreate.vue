@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useSessionStorage } from '@vueuse/core';
-  import DictionaryForm from '@/features/dictionary/ui/DictionaryForm.vue';
+  import { DictionaryForm } from '@/features/dictionary';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const data = useSessionStorage('dictionaryCopy', {});

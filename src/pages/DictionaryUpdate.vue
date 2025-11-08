@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useDictionaryStore } from '@/stores/dictionary';
   import { useRoute } from 'vue-router';
-  import DictionaryForm from '@/features/dictionary/ui/DictionaryForm.vue';
+  import { DictionaryForm } from '@/features/dictionary';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   const route = useRoute();
