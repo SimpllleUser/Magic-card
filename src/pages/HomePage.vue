@@ -1,15 +1,11 @@
 <script lang="ts" setup>
   import { useDictionaryStore } from '@/stores/dictionary';
-  import { Colors, Sizes, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
-  import { useModalStore } from '@/shared/ui/BaseModal';
-  import { Modals } from '@/core/models/modals';
-  import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
+  import { Colors, Icons, Modals, Sizes, Variants } from '@/core';
+  import { ConfirmModal, useBreakPointsApp, useModalStore } from '@/shared';
   import { Dictionary, DictionaryCard, makeCopyDictionary } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
   import { useSessionStorage } from '@vueuse/core';
-  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
-  import { useAuthStore } from '@/features/auth/model/auth';
+  import { useAuthStore } from '@/features/auth';
 
   const router = useRouter();
   const modal = useModalStore();

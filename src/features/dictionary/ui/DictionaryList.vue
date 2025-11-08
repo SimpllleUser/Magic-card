@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { defineEmits } from 'vue';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { Colors, Variants } from '@/core';
   import { PageNames } from '@/router/types';
-  import BaseList from '../../../shared/ui/BaseList/BaseList.vue';
+  import { BaseList } from '@/shared';
   import { Dictionary, DictionaryItem } from '@/features/dictionary';
   import { KnowledgeItem, WordProgress } from '@/features/knowledge';
 

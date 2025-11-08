@@ -1,6 +1,6 @@
 import { useRouter } from 'vue-router';
-import { QuizType } from '@/features/quiz/model/types';
-import { DictionaryItem } from '@/features/dictionary/model/types';
+import { QuizType } from '@/features/quiz';
+import { DictionaryItem } from '@/features/dictionary';
 import { useQuizStore } from '@/stores/quiz';
 import { PageNames } from '@/router/types';
 

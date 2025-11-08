@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { QuestionItem } from '../../model/composables/useSelectWord';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { Colors, Variants } from '@/core';
 
   const props = defineProps<{
     actualQuestion: QuestionItem;

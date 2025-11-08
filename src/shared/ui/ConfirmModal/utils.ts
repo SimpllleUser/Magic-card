@@ -1,4 +1,4 @@
-import { Icons } from '@/core/models/icons';
+import { Colors, Icons } from '@/core';
 
 export const getIconByColor = (color: Colors): Icons => {
   const icons: Record<string, Icons> = {

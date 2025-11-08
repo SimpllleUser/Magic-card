@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Variants } from '@/core';
   import { useClipboard } from '@vueuse/core';
   import { ref } from 'vue';
 
@@ -18,7 +17,6 @@
     copied.value = true;
   };
 
-
   const onLeave = () => {
     setTimeout(() => {
       copied.value = false;
@@ -29,18 +27,18 @@
     return {
       text: copied.value ? 'Copied!' : 'Copy',
       openOnHover: !copied.value,
-      openOnClick: copied.value,
+      openOnClick: copied.value
     };
   });
 </script>
 
 <template>
   <VBtn
+    v-tooltip="tooltipConfig"
+    :color="Colors.Primary"
     :icon="Icons.Copy"
+    :variant="Variants.Plain"
     @click.stop="toCopy"
     @mouseleave="onLeave"
-    :color="Colors.Primary"
-    :variant="Variants.Plain"
-    v-tooltip="tooltipConfig"
   />
 </template>

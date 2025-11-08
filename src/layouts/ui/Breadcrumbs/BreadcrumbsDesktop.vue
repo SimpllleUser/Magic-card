@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { Icons } from '@/core/models/icons';
-  import { Colors, Variants } from '@/core/models/enums';
-  import type Router from '@/router';
+  import { Router } from 'vue-router';
+  import { Colors, Icons, Variants } from '@/core';
 
   defineProps<{
     router: Router;

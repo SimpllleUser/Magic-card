@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { Colors, Variants } from '@/core/models/enums';
-  import type Router from '@/router';
+  import { Colors, Variants } from '@/core';
+  import { Router } from 'vue-router';
 
   defineProps<{
     actualTitle: string;

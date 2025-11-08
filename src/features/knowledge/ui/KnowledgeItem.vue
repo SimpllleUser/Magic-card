@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { Colors } from '@/core/models/enums';
+  import { Colors } from '@/core';
   defineOptions({
     name: 'KnowledgeItem'
   });

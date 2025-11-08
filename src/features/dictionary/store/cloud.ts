@@ -1,7 +1,7 @@
 import { DictionaryApi, setActionsStrategy } from '@/features/dictionary';
-import type { EntityAPI } from '@/shared/index/types';
+import type { EntityAPI } from '@/shared';
 import { Dictionary, DictionaryCRUD } from '../model/types';
-import { AuthStore } from '@/features/auth/model/auth';
+import { AuthStore } from '@/features/auth';
 
 export const useDictionaryCloud = (authStore: AuthStore, crudMethods: DictionaryCRUD) => {
   const dictionaryApi = new DictionaryApi();

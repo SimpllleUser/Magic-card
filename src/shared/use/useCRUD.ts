@@ -1,7 +1,7 @@
 import { ref, Ref } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
-import { EntityWithId, OptionalId } from '@/core/models';
-import { generateId } from '@/shared/utils/id-generate';
+import { EntityWithId, OptionalId } from '@/core';
+import { generateId } from '@/shared';
 
 interface EntityId {
   id: string;

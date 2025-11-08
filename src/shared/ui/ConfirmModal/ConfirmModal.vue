@@ -1,9 +1,8 @@
 <script lang="ts" setup>
   import { defineEmits, defineProps, ref } from 'vue';
-  import { Icons } from '@/core/models/icons';
-  import { Colors, Variants } from '@/core/models/enums';
+  import { Icons, Colors, Variants } from '@/core';
   import { ConfirmModalContent, ModalParams, Props } from './types';
-  import { useModalState } from '../BaseModal/composable';
+  import { useModalState } from '@/shared';
   import { getIconByColor } from './utils';
 
   interface Emits {
@@ -60,15 +59,32 @@
 </script>
 
 <template>
-  <VDialog v-model="state" v-bind="$attr" max-width="700px" @hide="modalHide" @show="modalShow">
+  <VDialog
+    v-model="state"
+    v-bind="$attr"
+    max-width="700px"
+    @hide="modalHide"
+    @show="modalShow"
+  >
     <VCard>
       <VCardTitle class="d-flex hide-center align-center justify-space-between">
-        <slot :close="modalHide" name="header" :title="modalContent.title">
+        <slot
+          :close="modalHide"
+          name="header"
+          :title="modalContent.title"
+        >
           <div>
-            <VIcon :color="modalContent.type" :icon="modalContent.icon" />
+            <VIcon
+              :color="modalContent.type"
+              :icon="modalContent.icon"
+            />
             <span class="ml-4">{{ modalContent.title }}</span>
           </div>
-          <VBtn :icon="Icons.Close" :variant="Variants.Plain" @click="modalHide" />
+          <VBtn
+            :icon="Icons.Close"
+            :variant="Variants.Plain"
+            @click="modalHide"
+          />
         </slot>
       </VCardTitle>
       <VCardSubtitle>
@@ -80,8 +96,16 @@
       </VCardSubtitle>
       <VCardActions>
         <div class="d-flex justify-end ga-4">
-          <VBtn v-bind="modalContent.confirmBtn" @click="onConfirm">Confirm</VBtn>
-          <VBtn v-bind="modalContent.cancelBtn" @click="onCancel">Cancel</VBtn>
+          <VBtn
+            v-bind="modalContent.confirmBtn"
+            @click="onConfirm"
+            >Confirm</VBtn
+          >
+          <VBtn
+            v-bind="modalContent.cancelBtn"
+            @click="onCancel"
+            >Cancel</VBtn
+          >
         </div>
       </VCardActions>
     </VCard>

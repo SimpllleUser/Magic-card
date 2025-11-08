@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { WordProgress } from '../model/types';
   import { DictionaryItem } from '@/features/dictionary/model/types';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { EmitEvents } from '@/shared/index/types';
+  import { Colors, Variants } from '@/core';
+  import { EmitEvents } from '@/shared';
 
   defineOptions({ name: 'KnowledgeRemined' });
 

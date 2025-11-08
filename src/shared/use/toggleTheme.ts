@@ -1,8 +1,7 @@
 import { useStorage } from '@vueuse/core/index';
 import { useTheme } from 'vuetify';
-import { Themes } from '@/core/models/enums';
+import { Icons, Themes } from '@/core';
 import { computed } from 'vue';
-import { Icons } from '@/core/models/icons';
 
 export function useToggleTheme() {
   const themeConfig = useTheme();

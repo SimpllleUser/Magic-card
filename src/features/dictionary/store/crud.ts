@@ -1,4 +1,4 @@
-import { useCRUD } from '@/shared/use/useCRUD';
+import { useCRUD } from '@/shared';
 import { mappedDictionaryItems } from '../model/utils';
 import type { Dictionary, DictionaryCRUD } from '../model/types';
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { watchEffect } from 'vue';
   import { separateByString } from '../helpers/separates';
-  import { Icons } from '@/core/models/icons';
+  import { Icons } from '@/core';
 
   interface Props {
     modelValue: string;

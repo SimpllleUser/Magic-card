@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import { VCard, VCardTitle, VCardText } from 'vuetify/components';
-  import type { ToastOptions } from './index';
+  import { computed, ref } from 'vue';
+  import { VCard, VCardText, VCardTitle } from 'vuetify/components';
+  import type { ToastOptions } from './composables';
 
   const props = defineProps<{ location: string }>();
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useToggleTheme } from '@/shared/use/toggleTheme';
+  import { useToggleTheme } from '@/shared';
 
   const { themeIcon, toggle } = useToggleTheme();
 </script>

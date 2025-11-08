@@ -1,24 +1,5 @@
-import { toCsv, toJson, toTxt } from '@/shared/utils/exportData';
-
-export enum FileFormat {
-  TEXT_CSV = 'text/csv',
-  APPLICATION_JSON = 'application/json',
-  TEXT_PLAIN = 'text/plain'
-}
-
-export enum FileExtension {
-  TXT = 'txt',
-  JSON = 'json',
-  CSV = 'csv'
-}
-
-export interface ExportFormat {
-  id: string;
-  title: string;
-  mime: FileFormat;
-  extension: FileExtension;
-  action: (data: any) => string;
-}
+import { toCsv, toJson, toTxt } from '@/shared';
+import { ExportFormat, FileExtension, FileFormat } from './types';
 
 const EXTENSION_TO_MIME: Record<FileExtension, FileFormat> = {
   [FileExtension.TXT]: FileFormat.TEXT_PLAIN,

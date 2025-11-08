@@ -1,4 +1,4 @@
-import { AuthStore } from '@/features/auth/model/auth';
+import { AuthStore } from '@/features/auth';
 import { Dictionary, useDictionaryAPI } from '../model/types';
 
 export const syncDataBetweenStorages = async (

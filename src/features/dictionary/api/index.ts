@@ -1,7 +1,13 @@
-import { ApiService } from '@/shared/api';
-import { Dictionary, DictionaryApiEntity, DictionaryParamsForUpdate } from '../model/types';
-import { useAuthStore } from '@/features/auth/model/auth';
-import { DictionaryCreateDTO, DictionaryGetDTO, DictionaryUpdateDTO } from '@/features/dictionary/model/DictionaryDTO';
+import { ApiService } from '@/shared';
+import { useAuthStore } from '@/features/auth';
+import {
+  Dictionary,
+  DictionaryApiEntity,
+  DictionaryCreateDTO,
+  DictionaryGetDTO,
+  DictionaryParamsForUpdate,
+  DictionaryUpdateDTO
+} from '@/features/dictionary';
 
 const _apiService = new ApiService({
   dbId: import.meta.env.VITE_DB_ID,

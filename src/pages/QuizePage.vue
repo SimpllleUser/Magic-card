@@ -1,13 +1,9 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
-  import { Modals } from '@/core/models/modals';
-  import QuizResult from '@/features/quiz/ui/QuizResult.vue';
-  import DynamicQuiz from '@/features/quiz/ui/DynamicQuiz.vue';
-  import QuizControls from '@/features/quiz/ui/QuizControls.vue';
-  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { Modals } from '@/core';
+  import { DynamicQuiz, QuestionItem, QuizControls, QuizResult } from '@/features/quiz';
+  import { useBreakPointsApp, useModalStore } from '@/shared';
   import { useQuizStore } from '@/stores/quiz';
-  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
-  import { QuestionItem } from '@/features/quiz/model/types';
   import { useKnowledgeLevelStore } from '@/stores/knowledge';
 
   const quizStore = useQuizStore();

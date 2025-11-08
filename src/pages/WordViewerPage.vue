@@ -1,13 +1,9 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { shuffle } from 'lodash';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
-  import WordCard from '@/shared/ui/WordCard.vue';
-  import WordSlider from '@/shared/ui/WordSlider.vue';
-  import ButtonCopy from '@/shared/ui/WordButtonActions/ButtonCopy.vue';
-  import ButtonVoice from '@/shared/ui/WordButtonActions/ButtonVoice.vue';
+  import { Colors, Icons, Variants } from '@/core';
+  import { DictionaryItem } from '@/features/dictionary';
+  import { ButtonCopy, ButtonVoice, WordCard, WordSlider } from '@/shared';
   import { useQuizStore } from '@/stores/quiz';
 
   const quizStore = useQuizStore();

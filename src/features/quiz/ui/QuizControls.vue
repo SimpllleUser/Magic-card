@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { Icons } from '@/core/models/icons';
-  import { Colors } from '@/core/models/enums';
+  import { Colors, Icons } from '@/core';
 
   defineProps<{
     isMobile?: boolean;

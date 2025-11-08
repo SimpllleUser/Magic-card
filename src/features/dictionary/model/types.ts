@@ -1,5 +1,5 @@
-import { EntityWithId, OptionalId } from '@/core/models';
-import { EntityAPI, EntityApiFields, RemoveFields, ReplaceField } from '@/shared/index/types';
+import { EntityWithId, OptionalId } from '@/core';
+import { EntityAPI, EntityApiFields, RemoveFields, ReplaceField } from '@/shared';
 
 export type DictionaryItem = {
   id: string;

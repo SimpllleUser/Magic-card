@@ -1,8 +1,7 @@
 import { Account, Client, Databases, ID, Query } from 'appwrite';
 import { omit } from 'lodash';
-import { EntityAPI } from '../index/types';
-import { ENTITY_API_KEYS } from './constants';
-import { DictionaryCreateDTO } from '@/features/dictionary/model/DictionaryDTO';
+import { ENTITY_API_KEYS, EntityAPI } from '@/shared';
+import { DictionaryCreateDTO } from '@/features/dictionary';
 
 const client = new Client();
 

@@ -2,9 +2,8 @@
   import { computed } from 'vue';
   import { useQuizFactory } from '../model/composables/useQuizFactory';
   import { QuestionItem, QuizType } from '../model/types';
-  import { Breakpoints, literalBreakpoint } from '@/shared/use/usebreakPoints';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
-  import WordSlider from '@/shared/ui/WordSlider.vue';
+  import { Breakpoints, literalBreakpoint, WordSlider } from '@/shared';
+  import { DictionaryItem } from '@/features/dictionary';
 
   interface Emits {
     (event: 'finished', payload: QuestionItem[]): void;

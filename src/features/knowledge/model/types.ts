@@ -1,4 +1,4 @@
-import { QuizType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz';
 
 /**
  * Represents learning progress for a single word.

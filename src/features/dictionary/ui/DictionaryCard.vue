@@ -1,10 +1,8 @@
 <script setup lang="ts">
-  import { Modals } from '@/core/models/modals';
-  import { Colors, Sizes, Variants } from '@/core/models/enums';
+  import { Colors, Icons, Modals, Sizes, Variants } from '@/core';
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
-  import { Icons } from '@/core/models/icons';
-  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { useModalStore } from '@/shared';
 
   const props = defineProps<{ dictionary: Dictionary; isMobile?: boolean }>();
   const emit = defineEmits<{

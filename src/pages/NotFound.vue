@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Variants } from '@/core';
   import { PageNames } from '@/router/types';
 
   const router = useRouter();

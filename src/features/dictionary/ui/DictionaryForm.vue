@@ -1,14 +1,18 @@
 <script setup lang="ts">
   import { ActionForm, BaseForm, OnSubmitPayload } from 'base-form/src/shared/ui/form/BaseForm';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { BaseModal, useModalStore } from '@/shared/ui/BaseModal';
-  import ParserTextToDictionary from '../../../widget/ParserTextToDictionary/index.vue';
+  import { BaseModal, useModalStore } from '@/shared';
+  import { ParserTextToDictionary } from '@/widgets';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Modals } from '@/core/models/modals';
+  import { Colors, Modals, Variants } from '@/core';
   import { useDictionaryStore } from '@/stores/dictionary';
-  import { Dictionary, DictionaryFormEmits, DictionaryFormProps } from '@/features/dictionary/model/types';
-  import { DictionaryFormModel, useDictionaryForm } from '../model/useDictionaryForm';
+  import {
+    Dictionary,
+    DictionaryFormEmits,
+    DictionaryFormModel,
+    DictionaryFormProps,
+    useDictionaryForm
+  } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
 
   const router = useRouter();

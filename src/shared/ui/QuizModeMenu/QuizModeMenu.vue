@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-  import { Colors, Variants } from '@/core/models/enums';
-  import { QUIZ_TYPES_OPTIONS } from '@/features/quiz/model/constants';
-  import { QuizType } from '@/features/quiz/model/types';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Variants } from '@/core';
+  import { QUIZ_TYPES_OPTIONS, QuizType } from '@/features/quiz';
   import { Nullable } from 'base-form/src/core/types/common';
 
   const props = withDefaults(
