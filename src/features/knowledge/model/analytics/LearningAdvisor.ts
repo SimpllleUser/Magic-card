@@ -1,4 +1,4 @@
-import { DictionaryProgress } from '../helpers/types';
+import { DictionaryProgress } from '../types';
 import { LearningMetrics } from './LearningMetrics';
 import { KnowledgeAnalytics } from './KnowledgeAnalytics';
 

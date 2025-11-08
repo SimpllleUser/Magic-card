@@ -1,5 +1,5 @@
 import { QuizType } from '@/features/quiz/model/types';
-import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from './helpers/types';
+import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from './types';
 import { getDate } from '@/shared/utils/date';
 /**
  * KnowledgeEvaluator encapsulates learning progress logic:

@@ -1,4 +1,4 @@
-import { WordProgress, DictionaryProgress } from '../helpers/types';
+import { WordProgress, DictionaryProgress } from '../types';
 
 export class LearningMetrics {
   /**

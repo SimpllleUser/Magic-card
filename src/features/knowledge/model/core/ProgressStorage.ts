@@ -1,4 +1,4 @@
-import { DictionaryProgress, StorageAdapter } from '../helpers/types';
+import { DictionaryProgress, StorageAdapter } from '../types';
 
 export class ProgressStorage {
   constructor(private key: string, private storage?: StorageAdapter) {}

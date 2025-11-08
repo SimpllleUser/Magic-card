@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { useKnowledgeLevelStore } from '@/stores/statistics';
-  import { getKnowledgeIcon, getMemoryColor, getMemoryLabel } from '@/features/knowledgeLevel/model/utils';
+  import { getKnowledgeIcon, getMemoryColor, getMemoryLabel } from '../model/helpers/utils';
   import { Colors } from '@/core/models/enums';
   import KnowledgeItem from '@/features/knowledgeLevel/ui/KnowledgeItem.vue';
-  import { KnowledgeType } from '@/features/knowledgeLevel/model/types';
+  import { KnowledgeType } from '../model/types';
 
   defineOptions({
     name: 'KnowledgeTotal'
