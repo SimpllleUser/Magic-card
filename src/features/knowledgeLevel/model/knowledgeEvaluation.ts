@@ -36,6 +36,19 @@ export class KnowledgeEvaluator {
       totalScore: this.progress.totalScore,
       words: this.progress.words
     };
+    // <template>
+    //   <v-card v-if="analytics" class="pa-4">
+    //   <v-card-title>📊 Learning Overview</v-card-title>
+    // <v-card-text>
+    // <p>🌟 Mastery: {{ analytics.masteryPercent.toFixed(1) }}%</p>
+    // <p>🧠 Avg Recall: {{ (analytics.averageRecall * 100).toFixed(0) }}%</p>
+    // <p>⚠️ Avg Difficulty: {{ analytics.averageDifficulty.toFixed(2) }}</p>
+    // <p>🔴 Weak Words: {{ analytics.weakWords }}</p>
+    // <p>🟢 Strong Words: {{ analytics.strongWords }}</p>
+    // <p>📘 Total Words: {{ analytics.totalWords }}</p>
+    // </v-card-text>
+    // </v-card>
+    // </template>
   }
 
   private scheduleNextReview(score: number, now: number): number {

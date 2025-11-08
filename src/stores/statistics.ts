@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { QuizType } from '@/features/quiz/model/types';
 import { KnowledgeEvaluator } from '@/features/knowledgeLevel/model/knowledgeEvaluation';
 import { DictionaryProgress } from '@/features/knowledgeLevel/model/types';
+import { KnowledgeAnalytics } from '@/features/knowledgeLevel/model/KnowledgeAnalytics';
 
 export const useKnowledgeLevelStore = defineStore('knowledgeLevel', {
   state: () => ({
@@ -9,6 +10,7 @@ export const useKnowledgeLevelStore = defineStore('knowledgeLevel', {
   }),
 
   getters: {
+    analytics: (s) => !s.evaluator ? null : KnowledgeAnalytics.getSummary(s.evaluator.getResult()),
     totalScore: (s) => s.evaluator?.getResult().totalScore ?? 0,
     dueWords: (s) => s.evaluator?.getWordsToReview() ?? [],
     learnedWords: (s) => s.evaluator?.getLearnedWords() ?? [],
