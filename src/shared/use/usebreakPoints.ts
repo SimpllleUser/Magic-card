@@ -1,3 +1,4 @@
+import { computed } from 'vue';
 import { useBreakpoints } from '@vueuse/core';
 
 export enum Breakpoints {
