@@ -11,6 +11,8 @@
   import KnowledgeTotal from '@/features/knowledgeLevel/ui/KnowledgeTotal.vue';
   import { useKnowledgeLevelStore } from '@/stores/statistics';
   import { useLocalStorage } from '@vueuse/core';
+  import KnowledgeRemined from '@/features/knowledgeLevel/ui/KnowledgeRemined.vue';
+  import { DictionaryItem } from '@/features/dictionary/model/types';
 
   const modalStore = useModalStore();
   const knowledgeLevelStore = useKnowledgeLevelStore();
@@ -26,9 +28,22 @@
   const selectedWords = useLocalStorage(`selectedWords_${dictionaryId.value}`, [...dictionary.value?.items]);
 
   const { isMobile } = useBreakPointsApp();
+
+  const existDueWords = computed(() => knowledgeLevelStore.dueWords.length);
+  const selectWordsDue = (words: DictionaryItem[]) => {
+    selectedWords.value = words;
+  };
 </script>
 
 <template>
+  <div>
+    <KnowledgeRemined
+      v-if="existDueWords"
+      :dictionary-items="dictionary.items"
+      :due-words="knowledgeLevelStore.dueWords"
+      @select-words-due="selectWordsDue"
+    />
+  </div>
   <div>
     <KnowledgeTotal
       :dictionary-id="dictionaryId"
@@ -66,6 +81,7 @@
               :class="{ 'is-mobile': isMobile }"
             >
               <DictionaryList
+                :key="selectedWords.length"
                 :dictionary="dictionary"
                 :due-words="knowledgeLevelStore.dueWords"
                 :learned-words="knowledgeLevelStore.learnedWords"
