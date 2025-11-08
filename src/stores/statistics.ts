@@ -3,6 +3,7 @@ import { QuizType } from '@/features/quiz/model/types';
 import { KnowledgeEvaluator } from '@/features/knowledgeLevel/model/knowledgeEvaluation';
 import { DictionaryProgress } from '@/features/knowledgeLevel/model/types';
 import { KnowledgeAnalytics } from '@/features/knowledgeLevel/model/KnowledgeAnalytics';
+import { LearningAdvisor } from '@/features/knowledgeLevel/model/LearningAdvisor';
 
 export const useKnowledgeLevelStore = defineStore('knowledgeLevel', {
   state: () => ({
@@ -10,6 +11,10 @@ export const useKnowledgeLevelStore = defineStore('knowledgeLevel', {
   }),
 
   getters: {
+    advisor: (s) => {
+      const progress = s.evaluator?.getResult();
+      return progress ? LearningAdvisor.getNextActions(progress) : [];
+    },
     analytics: (s) => !s.evaluator ? null : KnowledgeAnalytics.getSummary(s.evaluator.getResult()),
     totalScore: (s) => s.evaluator?.getResult().totalScore ?? 0,
     dueWords: (s) => s.evaluator?.getWordsToReview() ?? [],
