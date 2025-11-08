@@ -2,9 +2,8 @@
   import { AnimationFade, useBreakPointsApp, useModalStore } from '@/shared';
   /// TODO FIX convert into entry point
   import { useDictionaryStore } from '@/stores/dictionary';
-  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS } from '@/features/quiz/model/constants';
+  import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, useNavigation } from '@/features/quiz';
   import { DictionaryActions, DictionaryItem, DictionaryList } from '@/features/dictionary';
-  import { useNavigation } from '@/features/quiz/model/naigation';
   import { KnowledgeRemined, KnowledgeTotal } from '@/features/knowledge';
   import { useKnowledgeLevelStore } from '@/stores/knowledge';
   import { useLocalStorage } from '@vueuse/core';

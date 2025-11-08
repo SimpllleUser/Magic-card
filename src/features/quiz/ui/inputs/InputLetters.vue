@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { QuestionItem } from '@/features/quiz/model/types';
+  import { QuestionItem } from '@/features/quiz';
 
   const props = defineProps<{
     actualQuestion: QuestionItem;

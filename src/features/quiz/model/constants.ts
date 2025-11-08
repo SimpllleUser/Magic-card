@@ -1,5 +1,5 @@
 import { Colors, Variants } from '@/core/models/enums';
-import { QuizType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz';
 
 export const MIN_WORDS_QUANTITY = 5;
 

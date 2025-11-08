@@ -6,9 +6,8 @@
   import { Modals } from '@/core/models/modals';
   import { LIST_TITLES } from '../model/constants';
   import { PageNames } from '@/router/types';
-  import { QuestionItem, QuizType } from '../model/types';
   import { useQuizStore } from '@/stores/quiz';
-  import { useNavigation } from '@/features/quiz/model/naigation';
+  import { QuestionItem, QuizType, useNavigation } from '@/features/quiz';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 

@@ -2,7 +2,7 @@
   import { defineProps, ref, withDefaults } from 'vue';
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import { QuestionItem } from '../../features/quiz/model/composables/useSelectWord';
+  import { QuestionItem } from '@/features/quiz';
   import { DictionaryItem } from '@/features/dictionary';
   import { useBreakPointsApp } from '@/shared';
 

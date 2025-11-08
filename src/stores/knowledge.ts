@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
-import { QuizType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz';
 import {
   DictionaryProgress,
   KnowledgeAnalytics,
   KnowledgeEvaluation,
-  KnowledgeEvaluator,
   LearningAdvisor
 } from '@/features/knowledge';
 

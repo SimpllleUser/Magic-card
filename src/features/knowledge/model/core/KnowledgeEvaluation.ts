@@ -1,4 +1,4 @@
-import { QuizType } from '@/features/quiz/model/types';
+import { QuizType } from '@/features/quiz';
 import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from '../types';
 import { getDate } from '@/shared';
 /**
