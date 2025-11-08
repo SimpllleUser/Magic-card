@@ -1,5 +1,5 @@
 import { Colors, Variants } from '@/core';
-import { QuizType } from '@/features/quiz';
+import { QuizType } from '../model/types';
 
 export const MIN_WORDS_QUANTITY = 5;
 
