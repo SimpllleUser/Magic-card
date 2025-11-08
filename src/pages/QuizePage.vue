@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import * as uuid from 'uuid';
-  import { Modals } from '@/core/models/modals';
+  import { Modals } from '@/core';
   import { DynamicQuiz, QuestionItem, QuizControls, QuizResult } from '@/features/quiz';
   import { useBreakPointsApp, useModalStore } from '@/shared';
   import { useQuizStore } from '@/stores/quiz';

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
   import { defineEmits, useAttrs } from 'vue';
-  import { Icons } from '@/core/models/icons';
-  import { Variants } from '@/core/models/enums';
+  import { Icons, Variants } from '@/core';
   import { EmitActions, Emits, Props } from './types';
-  import { useModalState } from './composable';
+  import { useModalState } from '@/shared';
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();

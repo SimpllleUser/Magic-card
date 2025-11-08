@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { defineProps, ref, withDefaults } from 'vue';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Variants, Icons } from '@/core';
   import { QuestionItem } from '@/features/quiz';
   import { DictionaryItem } from '@/features/dictionary';
   import { useBreakPointsApp } from '@/shared';

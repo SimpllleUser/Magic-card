@@ -1,9 +1,7 @@
 <script lang="ts" setup>
   import { useDictionaryStore } from '@/stores/dictionary';
-  import { Colors, Sizes, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Modals, Sizes, Variants } from '@/core';
   import { ConfirmModal, useBreakPointsApp, useModalStore } from '@/shared';
-  import { Modals } from '@/core/models/modals';
   import { Dictionary, DictionaryCard, makeCopyDictionary } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
   import { useSessionStorage } from '@vueuse/core';

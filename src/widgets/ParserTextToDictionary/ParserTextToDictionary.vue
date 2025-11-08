@@ -1,9 +1,7 @@
 <script setup lang="ts">
   import { defineEmits, ref } from 'vue';
-  import InputSeparatedSymbol from './_components/InputSeparatedSymbol.vue';
-  import { Icons } from '@/core/models/icons';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { separateByString } from './helpers/separates';
+  import { InputSeparatedSymbol, separateByString } from '@/widgets';
+  import { Colors, Icons, Variants } from '@/core';
 
   interface Emits {
     (event: 'set-words', payload: Array<Array<string>>): void;

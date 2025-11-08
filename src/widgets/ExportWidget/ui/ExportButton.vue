@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { Colors, Variants } from '@/core/models/enums';
-  import { downloadFile, exportFormats, FileExtension, FileFormat } from './index';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Variants } from '@/core';
+  import { FileExtension, FileFormat } from '../types';
+  import { downloadFile, exportFormats } from '../helpers';
   interface Props {
     title: string;
     data: any;

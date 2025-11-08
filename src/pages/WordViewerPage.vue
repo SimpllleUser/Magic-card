@@ -1,9 +1,8 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { shuffle } from 'lodash';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
+  import { Colors, Icons, Variants } from '@/core';
+  import { DictionaryItem } from '@/features/dictionary';
   import { ButtonCopy, ButtonVoice, WordCard, WordSlider } from '@/shared';
   import { useQuizStore } from '@/stores/quiz';
 

@@ -1,13 +1,10 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
-  import { Colors } from '@/core/models/enums';
+  import { Colors, Icons, Modals } from '@/core';
   import { BaseList, BaseModal, QuizModeMenu, useBreakPointsApp } from '@/shared';
-  import { Icons } from '@/core/models/icons';
-  import { Modals } from '@/core/models/modals';
-  import { LIST_TITLES } from '../model/constants';
   import { PageNames } from '@/router/types';
   import { useQuizStore } from '@/stores/quiz';
-  import { QuestionItem, QuizType, useNavigation } from '@/features/quiz';
+  import { LIST_TITLES, QuestionItem, QuizType, useNavigation } from '@/features/quiz';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 

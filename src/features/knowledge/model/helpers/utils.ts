@@ -1,5 +1,4 @@
-import { Colors } from '@/core/models/enums';
-import { Icons } from '@/core/models/icons';
+import { Colors, Icons } from '@/core';
 
 export enum KnowledgeLevel {
   New = 'New',

@@ -1,11 +1,9 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Variants, Icons, Modals } from '@/core';
   import { QuizModeMenu } from '@/shared';
-  import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
-  import { Modals } from '@/core/models/modals';
-  import type { DictionaryItem } from '@/features/dictionary/model/types';
+  import { ExportButton } from '@/widgets';
+  import type { DictionaryItem } from '@/features/dictionary';
 
   const props = defineProps<{
     isMobile: boolean;

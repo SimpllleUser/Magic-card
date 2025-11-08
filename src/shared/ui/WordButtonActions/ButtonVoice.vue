@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-  import { Colors, Variants } from '@/core/models/enums';
-  import { Icons } from '@/core/models/icons';
+  import { Colors, Icons, Variants } from '@/core';
   import { useSpeechSynthesis } from '@vueuse/core';
-
 
   const VOICE_LANG = 'en-US';
 
@@ -20,9 +18,9 @@
 </script>
 <template>
   <VBtn
-    :icon="Icons.VolumeSource"
-    @click="speak()"
     :color="Colors.Primary"
+    :icon="Icons.VolumeSource"
     :variant="Variants.Plain"
+    @click="speak()"
   />
 </template>

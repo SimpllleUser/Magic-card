@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import BaseToast from './BaseToast.vue';
-import { Colors, Variants } from '@/core/models/enums';
+import { Colors, Variants } from '@/core';
 import vuetify from '@/plugins/vuetify';
 
 let containerApp: any = null;
