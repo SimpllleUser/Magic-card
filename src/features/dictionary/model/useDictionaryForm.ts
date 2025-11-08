@@ -4,7 +4,7 @@ import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/
 import input from 'base-form/src/shared/ui/inputs/config';
 import { useAuthStore } from '@/features/auth';
 import { ActionForm } from 'base-form/src/shared/ui/form';
-import { EntityAPI } from '@/shared/index/types';
+import { EntityAPI } from '@/shared';
 
 const getDefaultDictionaryItem = (
   data?: DictionaryItem = {

@@ -1,4 +1,4 @@
-import { EntityAPI } from '@/shared/index/types';
+import { EntityAPI } from '@/shared';
 import { Dictionary } from './types';
 
 export const setActionsStrategy =

@@ -1,6 +1,6 @@
 import { Account, Client, Databases, ID, Query } from 'appwrite';
 import { omit } from 'lodash';
-import { EntityAPI } from '../index/types';
+import { EntityAPI } from '../types/index';
 import { ENTITY_API_KEYS } from './constants';
 import { DictionaryCreateDTO } from '@/features/dictionary/model/DictionaryDTO';
 

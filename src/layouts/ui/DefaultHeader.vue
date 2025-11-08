@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import Breadcrumbs from '@/layouts/ui/Breadcrumbs/index.vue';
   import { AuthBlock } from '@/features/auth/';
-  import ThemeButton from '@/shared/ui/ThemeButton.vue';
-  // import GoogleAuth from '@/features/auth/ui/GoogleAuth.vue';
+  import { ThemeButton } from '@/shared';
 
   const router = useRouter();
 </script>

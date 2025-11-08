@@ -1,4 +1,4 @@
-import { useSecondsCounter } from '@/shared/use/useSecondsCounter';
+import { useSecondsCounter } from '@/shared';
 
 export function useTrackingTime() {
   const actualId = ref('');

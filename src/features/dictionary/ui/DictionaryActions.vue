@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { omit } from 'lodash';
-import { Colors, Variants } from '@/core/models/enums';
+  import { omit } from 'lodash';
+  import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
+  import { QuizModeMenu } from '@/shared';
   import ExportButton from '@/widget/ExportWidget/ui/ExportButton.vue';
   import { Modals } from '@/core/models/modals';
   import type { DictionaryItem } from '@/features/dictionary/model/types';

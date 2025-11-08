@@ -1,5 +1,5 @@
 import { DictionaryApi, setActionsStrategy } from '@/features/dictionary';
-import type { EntityAPI } from '@/shared/index/types';
+import type { EntityAPI } from '@/shared';
 import { Dictionary, DictionaryCRUD } from '../model/types';
 import { AuthStore } from '@/features/auth';
 

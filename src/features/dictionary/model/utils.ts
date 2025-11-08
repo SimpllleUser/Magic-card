@@ -1,7 +1,7 @@
 import { omit } from 'lodash';
-import { generateId } from '@/shared/utils/id-generate';
+import { generateId } from '@/shared';
 import { Dictionary, DictionaryItem } from '../model/types';
-import { ENTITY_API_KEYS } from '@/shared/api/constants';
+import { ENTITY_API_KEYS } from '@/shared';
 
 export const mappedDictionaryItems = <T extends { items: DictionaryItem[] }>(dictionaryParams: T): T => ({
   ...dictionaryParams,

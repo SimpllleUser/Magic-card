@@ -1,4 +1,4 @@
-import { toCsv, toJson, toTxt } from '@/shared/utils/exportData';
+import { toCsv, toJson, toTxt } from '@/shared';
 
 export enum FileFormat {
   TEXT_CSV = 'text/csv',

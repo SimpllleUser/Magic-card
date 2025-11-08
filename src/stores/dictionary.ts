@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
-import { Dictionary, DictionaryParamsForUpdate } from '@/features/dictionary/model/types';
-import { useCRUD } from '@/shared/use/useCRUD';
-import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
-import { DictionaryApi } from '@/features/dictionary/api';
+import { generateId, useCRUD } from '@/shared';
+import { mappedDictionaryItems } from '@/features/dictionary';
+import { Dictionary, DictionaryApi, DictionaryParamsForUpdate } from '@/features/dictionary/api';
 import { useAuthStore } from '@/features/auth';
-import { generateId } from '@/shared/utils/id-generate';
 
 const dictionaryApi = new DictionaryApi();
 

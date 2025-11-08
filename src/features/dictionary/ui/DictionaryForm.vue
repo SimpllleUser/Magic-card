@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ActionForm, BaseForm, OnSubmitPayload } from 'base-form/src/shared/ui/form/BaseForm';
   import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { BaseModal, useModalStore } from '@/shared/ui/BaseModal';
+  import { BaseModal, useModalStore } from '@/shared';
   import ParserTextToDictionary from '../../../widget/ParserTextToDictionary/index.vue';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
   import { Colors, Variants } from '@/core/models/enums';

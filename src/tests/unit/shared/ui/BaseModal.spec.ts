@@ -1,9 +1,8 @@
 import { mount } from '@vue/test-utils';
-import BaseModal from '../../../../shared/ui/BaseModal/BaseModal.vue';
+import { BaseModal, Props } from '@/shared';
 import { describe, it, beforeEach, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import { testIdSelector } from '../../utils';
-import { Props } from '@/shared/ui/BaseModal/types';
 
 let props: Props;
 const defaultProps = {

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { ModalAction } from '@/shared/ui/BaseModal/types';
-import { ModalParams } from '../ConfirmModal/types';
+import { ModalAction, ModalParams } from '@/shared';
 
 export const useModalStore = defineStore('modal', () => {
   const modalList = ref<Record<string, ModalAction>>({});

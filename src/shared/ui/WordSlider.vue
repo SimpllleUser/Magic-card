@@ -3,8 +3,8 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
   import { QuestionItem } from '../../features/quiz/model/composables/useSelectWord';
-  import { DictionaryItem } from '@/features/dictionary/model/types';
-  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
+  import { DictionaryItem } from '@/features/dictionary';
+  import { useBreakPointsApp } from '@/shared';
 
   const props = withDefaults(defineProps<{ words: DictionaryItem[] | QuestionItem[]; infinitySlide?: boolean }>(), {
     words: () => [],

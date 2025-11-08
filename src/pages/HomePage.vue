@@ -2,13 +2,11 @@
   import { useDictionaryStore } from '@/stores/dictionary';
   import { Colors, Sizes, Variants } from '@/core/models/enums';
   import { Icons } from '@/core/models/icons';
-  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { ConfirmModal, useBreakPointsApp, useModalStore } from '@/shared';
   import { Modals } from '@/core/models/modals';
-  import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
   import { Dictionary, DictionaryCard, makeCopyDictionary } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
   import { useSessionStorage } from '@vueuse/core';
-  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import { useAuthStore } from '@/features/auth';
 
   const router = useRouter();

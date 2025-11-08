@@ -1,9 +1,7 @@
 <script setup lang="ts">
   import { omit } from 'lodash';
   import { Colors } from '@/core/models/enums';
-  import BaseModal from '@/shared/ui/BaseModal/BaseModal.vue';
-  import QuizModeMenu from '@/shared/ui/QuizModeMenu/QuizModeMenu.vue';
-  import BaseList from '@/shared/ui/BaseList/BaseList.vue';
+  import { BaseList, BaseModal, QuizModeMenu, useBreakPointsApp } from '@/shared';
   import { Icons } from '@/core/models/icons';
   import { Modals } from '@/core/models/modals';
   import { LIST_TITLES } from '../model/constants';
@@ -11,7 +9,6 @@
   import { QuestionItem, QuizType } from '../model/types';
   import { useQuizStore } from '@/stores/quiz';
   import { useNavigation } from '@/features/quiz/model/naigation';
-  import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
 
   type ItemResult = Omit<QuestionItem & { number: number }, 'answerId'>;
 

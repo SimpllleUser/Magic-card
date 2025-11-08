@@ -4,7 +4,7 @@
   import { Dictionary } from '../model/types';
   import { PageNames } from '@/router/types';
   import { Icons } from '@/core/models/icons';
-  import { useModalStore } from '@/shared/ui/BaseModal';
+  import { useModalStore } from '@/shared';
 
   const props = defineProps<{ dictionary: Dictionary; isMobile?: boolean }>();
   const emit = defineEmits<{

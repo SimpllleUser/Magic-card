@@ -1,4 +1,4 @@
-import { account } from '@/shared/api';
+import { account } from '@/shared';
 import { Account, OAuthProvider } from 'appwrite';
 
 interface AuthServiceData {
