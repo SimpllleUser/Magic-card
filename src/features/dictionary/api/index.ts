@@ -1,6 +1,6 @@
 import { ApiService } from '@/shared/api';
 import { Dictionary, DictionaryApiEntity, DictionaryParamsForUpdate } from '../model/types';
-import { useAuthStore } from '@/features/auth/model/auth';
+import { useAuthStore } from '@/features/auth';
 import { DictionaryCreateDTO, DictionaryGetDTO, DictionaryUpdateDTO } from '@/features/dictionary/model/DictionaryDTO';
 
 const _apiService = new ApiService({

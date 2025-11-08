@@ -3,7 +3,7 @@ import { Dictionary, DictionaryParamsForUpdate } from '@/features/dictionary/mod
 import { useCRUD } from '@/shared/use/useCRUD';
 import { mappedDictionaryItems } from '@/features/dictionary/model/utils';
 import { DictionaryApi } from '@/features/dictionary/api';
-import { useAuthStore } from '../features/auth/model/auth';
+import { useAuthStore } from '@/features/auth';
 import { generateId } from '@/shared/utils/id-generate';
 
 const dictionaryApi = new DictionaryApi();

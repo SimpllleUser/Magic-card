@@ -2,7 +2,7 @@ import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
 import { Dictionary, DictionaryItem } from './types';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
 import input from 'base-form/src/shared/ui/inputs/config';
-import { useAuthStore } from '@/features/auth/model/auth';
+import { useAuthStore } from '@/features/auth';
 import { ActionForm } from 'base-form/src/shared/ui/form';
 import { EntityAPI } from '@/shared/index/types';
 

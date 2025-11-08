@@ -9,7 +9,7 @@
   import { PageNames } from '@/router/types';
   import { useSessionStorage } from '@vueuse/core';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
-  import { useAuthStore } from '@/features/auth/model/auth';
+  import { useAuthStore } from '@/features/auth';
 
   const router = useRouter();
   const modal = useModalStore();
