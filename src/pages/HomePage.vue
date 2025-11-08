@@ -5,11 +5,9 @@
   import { useModalStore } from '@/shared/ui/BaseModal';
   import { Modals } from '@/core/models/modals';
   import ConfirmModal from '@/shared/ui/ConfirmModal/ConfirmModal.vue';
-  import DictionaryCard from '@/features/dictionary/ui/DictionaryCard.vue';
+  import { Dictionary, DictionaryCard, makeCopyDictionary } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
-  import { Dictionary } from '@/features/dictionary/model/types';
   import { useSessionStorage } from '@vueuse/core';
-  import { makeCopyDictionary } from '@/features/dictionary/model/utils';
   import { useBreakPointsApp } from '@/shared/use/useBreakPointsApp';
   import { useAuthStore } from '@/features/auth/model/auth';
 

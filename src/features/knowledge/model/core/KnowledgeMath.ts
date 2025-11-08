@@ -1,4 +1,4 @@
-import { WordProgress } from './types';
+import { WordProgress } from '../types';
 
 export class KnowledgeMath {
   static computeStability(totalAttempts: number): number {

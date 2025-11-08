@@ -1,5 +1,5 @@
 import { QuizType } from '@/features/quiz/model/types';
-import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from './types';
+import { DictionaryProgress, StorageAdapter, UpdateOptions, WordProgress } from '../types';
 import { getDate } from '@/shared/utils/date';
 /**
  * KnowledgeEvaluator encapsulates learning progress logic:
@@ -8,7 +8,7 @@ import { getDate } from '@/shared/utils/date';
  * - spaced repetition scheduling (nextReview)
  * - optional persistence (via provided StorageAdapter or window.localStorage)
  */
-export class KnowledgeEvaluator {
+export class KnowledgeEvaluation {
   private decayRate = 0.98; // daily forgetting multiplier (lower => faster forgetting)
   private streakBonusStep = 0.05; // +5% per correct in a row
   private streakBonusCap = 0.25; // max +25%

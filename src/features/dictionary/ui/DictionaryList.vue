@@ -3,9 +3,8 @@
   import { Colors, Variants } from '@/core/models/enums';
   import { PageNames } from '@/router/types';
   import BaseList from '../../../shared/ui/BaseList/BaseList.vue';
-  import { Dictionary, DictionaryItem } from '@/features/dictionary/model/types';
-  import { WordProgress } from '@/features/knowledgeLevel/model/types';
-  import KnowledgeItem from '@/features/knowledgeLevel/ui/KnowledgeItem.vue';
+  import { Dictionary, DictionaryItem } from '@/features/dictionary';
+  import { KnowledgeItem, WordProgress } from '@/features/knowledge';
 
   const props = defineProps<{
     dictionary: Dictionary;
