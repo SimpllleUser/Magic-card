@@ -1,5 +1,5 @@
 import { TextareaInput, TextInput } from 'base-form/src/shared/ui/inputs';
-import { Dictionary, DictionaryItem } from './types';
+import { Dictionary, DictionaryItem } from '@/features/dictionary';
 import { InputList } from 'base-form/src/shared/ui/inputs/components/input-list/model';
 import input from 'base-form/src/shared/ui/inputs/config';
 import { useAuthStore } from '@/features/auth';
@@ -25,8 +25,6 @@ const getDefaultDictionaryItem = (
     rules: { required: true }
   })
 });
-
-const authStore = useAuthStore();
 
 export class DictionaryFormModel {
   id: string;
@@ -54,7 +52,7 @@ export class DictionaryFormCreateModelAuthedUser extends DictionaryFormModel {
 
   constructor(data?: DictionaryItem) {
     super(data);
-    this.userId = authStore.user?.$id || '';
+    this.userId = useAuthStore().user?.$id || '';
   }
 }
 
