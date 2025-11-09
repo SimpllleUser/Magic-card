@@ -1,15 +1,14 @@
+import { DEFAULT_LANGUAGE, WIKTIONARY_STORAGE_KEY } from '../constants';
 import { http, LocalStorageService } from '@/shared';
 import { WiktionaryEntity } from '../model/types';
 const API_URL = 'https://freedictionaryapi.com/api/v1/entries';
-const DEFAULT_LANGUAGE = 'en';
-export const STORAGE_KEY = 'wiktionary-results';
 
 export class WiktionaryApi {
-  language: string;
+  private language: string;
   private storageService: LocalStorageService;
   constructor(language?: string) {
     this.language = language || DEFAULT_LANGUAGE;
-    this.storageService = new LocalStorageService<WiktionaryEntity>(STORAGE_KEY);
+    this.storageService = new LocalStorageService<WiktionaryEntity>(WIKTIONARY_STORAGE_KEY);
   }
 
   private getUrlForWord(word: string) {
