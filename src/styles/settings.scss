@@ -12,3 +12,8 @@
 .v-btn {
   text-transform: none;
 }
+
+@for $i from 1 through 20 {
+  .w-#{$i} { width: #{$i}rem; }
+  .h-#{$i} { height: #{$i}rem; }
+}
