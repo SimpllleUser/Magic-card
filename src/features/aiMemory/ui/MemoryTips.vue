@@ -68,7 +68,7 @@
       />
     </VCardText>
     <VCardText
-      v-if="tips.sentences"
+      v-if="tips.sentences.length"
       class="tip mb-2"
     >
       <div class="tip_label text-grey-lighten-1">Sentences:</div>
