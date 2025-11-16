@@ -8,25 +8,27 @@ function highlightWord(text: string, word: string) {
 export const useMemoryTips = (word: ComputedRef<string>) => {
   const tipsData = ref<{
     mnemonic: string;
-    sentences: string;
+    sentences: string[];
   }>({
     mnemonic: '',
-    sentences: ''
+    sentences: []
   });
 
   const memoryService = new MemoryService();
 
   const generateMnemonic = async () => {
-    tipsData.value.mnemonic = await memoryService.generateMnemonic(word.value);
+    const { mnemonic = '' } = await memoryService.generateMnemonic(word.value);
+    tipsData.value.mnemonic = mnemonic;
   };
   const generateSentences = async () => {
-    tipsData.value.sentences = await memoryService.generateExampleSentences(word.value);
+    const { examples } = await memoryService.generateExampleSentences(word.value);
+    tipsData.value.sentences = examples;
   };
 
-  const existSomeTip = computed(() => !!tipsData.value.mnemonic || !!tipsData.value.sentences);
+  const existSomeTip = computed(() => !!tipsData.value.mnemonic || !!tipsData.value.sentences.length);
   const tips = computed(() => ({
     mnemonic: highlightWord(tipsData.value.mnemonic, word.value),
-    sentences: highlightWord(tipsData.value.sentences, word.value)
+    sentences: tipsData.value.sentences.map((example) => highlightWord(example, word.value))
   }));
 
   return { tips, generateMnemonic, generateSentences, existSomeTip };

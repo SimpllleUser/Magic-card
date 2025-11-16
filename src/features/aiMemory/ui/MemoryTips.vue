@@ -59,7 +59,7 @@
   >
     <VCardText
       v-if="tips.mnemonic"
-      class="tip d-flex justify-space-between align-center mb-2"
+      class="tip center mb-2"
     >
       <div class="tip_label text-grey-lighten-1">Mnemonic:</div>
       <div
@@ -69,13 +69,21 @@
     </VCardText>
     <VCardText
       v-if="tips.sentences"
-      class="tip d-flex justify-space-between align-center mb-2"
+      class="tip mb-2"
     >
       <div class="tip_label text-grey-lighten-1">Sentences:</div>
       <div
-        class="tip_value"
-        v-html="tips.sentences"
-      />
+        v-for="(sentence, index) in tips.sentences"
+        :key="sentence"
+        class="tip_sentence d-flex align-start"
+        :class="{ 'mt-2': index }"
+      >
+        <div class="pr-1">{{ index + 1 }})</div>
+        <div
+          class="tip_value"
+          v-html="sentence"
+        />
+      </div>
     </VCardText>
   </VCard>
 </template>
@@ -85,6 +93,6 @@
     max-width: 20rem;
   }
   .memory-tips_result {
-    max-width: 25rem;
+    max-width: 35rem;
   }
 </style>
