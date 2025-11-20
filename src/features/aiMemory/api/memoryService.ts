@@ -1,4 +1,5 @@
 import { AIService } from '@/features/aiMemory/api';
+import { WordTipsCacheService } from '@/features/aiMemory/api/wordTIpsCache';
 import { PROMPTS } from '@/features/aiMemory/constants';
 const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
 
@@ -10,6 +11,7 @@ export interface AIMemoryResult<T> {
 }
 
 export class MemoryService {
+  cacheService = new WordTipsCacheService();
   constructor(private aiService = new AIService()) {}
 
   private async generateAIData<T>(
@@ -31,6 +33,10 @@ export class MemoryService {
 
       try {
         const parsed = JSON.parse(cleaned) as T;
+        await this.cacheService.create({
+          word,
+          response: JSON.stringify(parsed)
+        });
         return { success: true, data: parsed, raw: cleaned };
       } catch (err) {
         console.warn('⚠️ Failed to parse AI JSON:', cleaned, err);
@@ -66,6 +72,10 @@ export class MemoryService {
         .split(/\n|•|-/)
         .map((s) => s.trim())
         .filter(Boolean);
+      await this.cacheService.create({
+        word,
+        response: JSON.stringify(examples)
+      });
       return { word, examples };
     }
 
