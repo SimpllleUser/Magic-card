@@ -1,6 +1,10 @@
 <script setup lang="ts">
   import { Colors, Icons, Sizes, Variants } from '@/core';
   import { useMemoryTips } from '@/features/aiMemory/model/useMemoryTips';
+  import { LoadingKeys } from '@/shared';
+  import { useLoadingStore } from '@/stores/loading';
+
+  const loadingStore = useLoadingStore();
 
   defineOptions({ name: 'MemoryTips' });
 
@@ -13,6 +17,8 @@
   const currentWord = computed(() => props.word);
 
   const { tips, existSomeTip, generateSentences, generateMnemonic } = useMemoryTips(currentWord);
+
+  const isLoadingTips = computed(() => loadingStore.isLoadings([LoadingKeys.AI_SENTENCES, LoadingKeys.AI_MNEMONIC]));
 </script>
 
 <template>
@@ -24,6 +30,7 @@
       <VChip
         class="pa-2 d-flex justify-center align-center"
         :color="Colors.Info"
+        style="transition: all 0.5s ease-in-out"
       >
         <VIcon
           class="d-block"
@@ -31,6 +38,14 @@
           :size="24"
         />
         <span class="pl-2"> Generate </span>
+        <Transition>
+          <VProgressCircular
+            v-if="isLoadingTips"
+            class="ml-2"
+            indeterminate
+            :size="20"
+          />
+        </Transition>
       </VChip>
     </div>
     <div class="d-flex justify-center pt-4">
@@ -94,5 +109,14 @@
   }
   .memory-tips_result {
     max-width: 35rem;
+  }
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
   }
 </style>

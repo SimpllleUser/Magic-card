@@ -1,4 +1,6 @@
 import { MemoryService } from '@/features/aiMemory';
+import { LoadingKeys } from '@/shared';
+import { useLoadingStore } from '@/stores/loading';
 
 function highlightWord(text: string, word: string) {
   const regex = new RegExp(`(${word})`, 'gi');
@@ -6,6 +8,7 @@ function highlightWord(text: string, word: string) {
 }
 
 export const useMemoryTips = (word: ComputedRef<string>) => {
+  const loadingStore = useLoadingStore();
   const tipsData = ref<{
     mnemonic: string;
     sentences: string[];
@@ -17,11 +20,15 @@ export const useMemoryTips = (word: ComputedRef<string>) => {
   const memoryService = new MemoryService();
 
   const generateMnemonic = async () => {
-    const { mnemonic = '' } = await memoryService.generateMnemonic(word.value);
+    const { mnemonic = '' } = await loadingStore.loadingWrapper(LoadingKeys.AI_MNEMONIC, () =>
+      memoryService.generateMnemonic(word.value)
+    );
     tipsData.value.mnemonic = mnemonic;
   };
   const generateSentences = async () => {
-    const { examples } = await memoryService.generateExampleSentences(word.value);
+    const { examples } = await loadingStore.loadingWrapper(LoadingKeys.AI_SENTENCES, () =>
+      memoryService.generateExampleSentences(word.value)
+    );
     tipsData.value.sentences = examples;
   };
 

@@ -1,0 +1,4 @@
+export enum LoadingKeys {
+  AI_MNEMONIC = 'AI_MEMORY_TIPS',
+  AI_SENTENCES = 'AI_SENTENCES'
+}
