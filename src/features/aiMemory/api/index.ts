@@ -5,7 +5,7 @@ const ai = new GoogleGenAI({
   apiKey: import.meta.env.VITE_AI_API_KEY
 });
 
-const MODEL = import.meta.env.VITE_AI_MODEL;
+const MODEL = 'gemini-2.0-flash-lite';
 
 interface IGenerateContentConfig {
   history?: IHistory;
