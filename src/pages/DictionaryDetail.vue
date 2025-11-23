@@ -1,6 +1,6 @@
 <script setup lang="ts">
+  import { MemoryService } from '@/features/aiMemory';
   import { AnimationFade, useBreakPointsApp, useModalStore } from '@/shared';
-  /// TODO FIX convert into entry point
   import { useDictionaryStore } from '@/stores/dictionary';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, useNavigation } from '@/features/quiz';
   import { DictionaryActions, DictionaryItem, DictionaryList } from '@/features/dictionary';
@@ -27,10 +27,29 @@
   const selectWordsDue = (words: DictionaryItem[]) => {
     selectedWords.value = words;
   };
+
+  // const memoryService = new MemoryService();
+  //
+  // const delay = async (ms: number): Promise<void> => {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // };
+  // const getAllTipsFromDictionary = async () => {
+  //   for (const item of dictionary.value.items) {
+  //     await memoryService.generateMnemonic(item.from);
+  //     await memoryService.generateExampleSentences(item.from);
+  //     await delay(5000);
+  //   }
+  // };
 </script>
 
 <template>
   <div>
+    <!--    <VBtn-->
+    <!--      :color="Colors.Error"-->
+    <!--      @click="getAllTipsFromDictionary"-->
+    <!--    >-->
+    <!--      Run get tips from all words-->
+    <!--    </VBtn>-->
     <KnowledgeRemined
       v-if="existDueWords"
       :dictionary-items="dictionary.items"

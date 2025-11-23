@@ -1,6 +1,6 @@
 import { AIService } from '@/features/aiMemory/api';
-import { WordTipsCacheService } from '@/features/aiMemory/api/wordTIpsCache';
 import { PROMPTS } from '@/features/aiMemory/constants';
+import { RemoteCacheStorageService } from '@/shared';
 const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
 
 export interface AIMemoryResult<T> {
@@ -11,7 +11,7 @@ export interface AIMemoryResult<T> {
 }
 
 export class MemoryService {
-  cacheService = new WordTipsCacheService();
+  cacheService = new RemoteCacheStorageService<{ key: string; value: string }>();
   constructor(private aiService = new AIService()) {}
 
   private async generateAIData<T>(
@@ -33,10 +33,6 @@ export class MemoryService {
 
       try {
         const parsed = JSON.parse(cleaned) as T;
-        await this.cacheService.create({
-          word,
-          response: JSON.stringify(parsed)
-        });
         return { success: true, data: parsed, raw: cleaned };
       } catch (err) {
         console.warn('⚠️ Failed to parse AI JSON:', cleaned, err);
@@ -56,7 +52,7 @@ export class MemoryService {
     );
 
     if (!result.success || !result.data) return { word, mnemonic: result.raw || '' };
-
+    await this.cacheService.set(`mnemonic_${word}`, result.data);
     return result.data;
   }
 
@@ -72,12 +68,12 @@ export class MemoryService {
         .split(/\n|•|-/)
         .map((s) => s.trim())
         .filter(Boolean);
-      await this.cacheService.create({
-        word,
-        response: JSON.stringify(examples)
-      });
-      return { word, examples };
+      if (!examples.length) return { word, examples: [] };
     }
+
+    try {
+      await this.cacheService.set(`sentences_${word}`, result.data);
+    } catch {}
 
     return result.data;
   }
