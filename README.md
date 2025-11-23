@@ -22,3 +22,6 @@ To build your project for production, use:
 ```bash
 yarn build
 ```
+
+### Dictionary api
+https://freedictionaryapi.com

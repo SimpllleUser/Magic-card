@@ -175,5 +175,6 @@ export enum Icons {
   LightbulbOutline = 'mdi-lightbulb-outline',
   LightbulbOnOutline = 'mdi-lightbulb-on-outline',
   LightbulbOn = 'mdi-lightbulb-on',
-  StarCircle = 'mdi-star-circle'
+  StarCircle = 'mdi-star-circle',
+  Creation = 'mdi-creation'
 }

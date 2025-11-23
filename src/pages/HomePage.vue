@@ -1,11 +1,12 @@
 <script lang="ts" setup>
   import { useDictionaryStore } from '@/stores/dictionary';
   import { Colors, Icons, Modals, Sizes, Variants } from '@/core';
-  import { ConfirmModal, useBreakPointsApp, useModalStore } from '@/shared';
+  import { ConfirmModal, http, useBreakPointsApp, useModalStore } from '@/shared';
   import { Dictionary, DictionaryCard, makeCopyDictionary } from '@/features/dictionary';
   import { PageNames } from '@/router/types';
   import { useSessionStorage } from '@vueuse/core';
   import { useAuthStore } from '@/features/auth';
+  import { GoogleGenAI } from '@google/genai';
 
   const router = useRouter();
   const modal = useModalStore();

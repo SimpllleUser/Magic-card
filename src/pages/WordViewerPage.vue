@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import { MemoryTips } from '@/features/aiMemory';
   import { ref } from 'vue';
   import { shuffle } from 'lodash';
   import { Colors, Icons, Variants } from '@/core';
@@ -69,6 +70,9 @@
         </div>
       </template>
     </WordSlider>
+    <div class="pt-2">
+      <MemoryTips :word="words[currentWordIndex]?.from" />
+    </div>
   </div>
 </template>
 

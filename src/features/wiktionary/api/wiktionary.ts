@@ -1,0 +1,34 @@
+import { DEFAULT_LANGUAGE, WIKTIONARY_STORAGE_KEY } from '../constants';
+import { http, LocalStorageService } from '@/shared';
+import { WiktionaryEntity } from '../model/types';
+const API_URL = 'https://freedictionaryapi.com/api/v1/entries';
+
+export class WiktionaryApi {
+  private language: string;
+  private storageService: LocalStorageService;
+  constructor(language?: string) {
+    this.language = language || DEFAULT_LANGUAGE;
+    this.storageService = new LocalStorageService<WiktionaryEntity>(WIKTIONARY_STORAGE_KEY);
+  }
+
+  private getUrlForWord(word: string) {
+    return `${API_URL}/${this.language}/${word}`;
+  }
+
+  private getFromStorage(word: string): WiktionaryEntity {
+    return this.storageService.get()[word];
+  }
+
+  async getWord(word: string): Promise<WiktionaryEntity> {
+    if (this.storageService.deepHas(word)) {
+      return this.getFromStorage(word);
+    }
+
+    const url = this.getUrlForWord(word);
+    const result = await http.get<WiktionaryEntity>(url);
+    this.storageService.set({
+      [word]: result
+    });
+    return result;
+  }
+}
