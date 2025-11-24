@@ -1,46 +1,52 @@
 <script setup lang="ts">
-  import { ActionForm, BaseForm, OnSubmitPayload } from 'base-form/src/shared/ui/form/BaseForm';
-  import { InputForm } from 'base-form/src/shared/ui/inputs/components/input-form';
-  import { BaseModal, useModalStore } from '@/shared';
-  import { ParserTextToDictionary } from '@/widgets';
-  import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
-  import { Colors, Modals, Variants } from '@/core';
-  import { useDictionaryStore } from '@/stores/dictionary';
-  import {
-    Dictionary,
-    DictionaryFormEmits,
-    DictionaryFormModel,
-    DictionaryFormProps,
-    useDictionaryForm
-  } from '@/features/dictionary';
-  import { PageNames } from '@/router/types';
+import { ActionForm, BaseForm, OnSubmitPayload } from "base-form/src/shared/ui/form/BaseForm";
+import { InputForm } from "base-form/src/shared/ui/inputs/components/input-form";
+import { BaseModal, useModalStore } from "@/shared";
+import { ParserTextToDictionary } from "@/widgets";
+import InputList from "base-form/src/shared/ui/inputs/components/input-list/InputList.vue";
+import { Colors, Modals, Variants } from "@/core";
+import { useDictionaryStore } from "@/stores/dictionary";
+import {
+  Dictionary,
+  DictionaryFormEmits,
+  DictionaryFormModel,
+  DictionaryFormProps,
+  useDictionaryForm
+} from "@/features/dictionary";
+import { PageNames } from "@/router/types";
+import DictionaryItemsGeneration from "@/features/dictionary/ui/DictionaryItemsGeneration.vue";
 
-  const router = useRouter();
-  const modal = useModalStore();
-  const props = withDefaults(defineProps<DictionaryFormProps>(), {
-    formData: {}
+const router = useRouter();
+const modal = useModalStore();
+const props = withDefaults(defineProps<DictionaryFormProps>(), {
+  formData: {}
+});
+defineEmits<DictionaryFormEmits>();
+
+const dictionaryStore = useDictionaryStore();
+
+const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
+
+const onSubmit = async (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, "id">>>) => {
+  if (!params.isValid) return;
+
+  const action =
+    params.action === ActionForm.Create ? dictionaryStore.createWithCloud : dictionaryStore.updateWithCloud;
+  await action(params.value);
+  router.push({ name: PageNames.Home });
+};
+
+const onSetWords = (words: Array<Array<string>>, dicationary: unknown) => {
+  words.forEach(([from, to]) => {
+    dicationary.addByData({ from, to });
   });
-  defineEmits<DictionaryFormEmits>();
+  modal.hide(Modals.ImportWords);
+};
 
-  const dictionaryStore = useDictionaryStore();
-
-  const action = computed(() => (props.formData?.id ? ActionForm.Save : ActionForm.Create));
-
-  const onSubmit = async (params: OnSubmitPayload<Ref<Dictionary | Omit<Dictionary, 'id'>>>) => {
-    if (!params.isValid) return;
-
-    const action =
-      params.action === ActionForm.Create ? dictionaryStore.createWithCloud : dictionaryStore.updateWithCloud;
-    await action(params.value);
-    router.push({ name: PageNames.Home });
-  };
-
-  const onSetWords = (words: Array<Array<string>>, dicationary: unknown) => {
-    words.forEach(([from, to]) => {
-      dicationary.addByData({ from, to });
-    });
-    modal.hide(Modals.ImportWords);
-  };
+const setGeneratedData = (data) => {
+  props.formData.items.value = data.items
+  props.formData.title.value = data.title
+}
 </script>
 
 <template>
@@ -51,8 +57,21 @@
   >
     <template #default="{ form }: { form: DictionaryFormModel }">
       <div class="py-4 px-4 bg-surface mb-4 elevation-1 rounded animated-container">
-        <div class="mb-4">
-          <InputForm v-model="form.title" />
+        <div class="mb-4 d-flex justify-space-between align-center">
+          <div class="w-100">
+            <InputForm v-model="form.title" />
+          </div>
+          <div class="pt-6">
+            <DictionaryItemsGeneration
+              :disabled="!form.title.value.trim().length"
+              class="generation-button fill-height"
+              :variant="Variants.Text"
+              :with-label="false"
+              :title="form.title.value"
+              @generate-success="setGeneratedData"
+            />
+          </div>
+
         </div>
         <div>
           <InputForm v-model="form.description" />
@@ -74,7 +93,7 @@
             <div class="text-h6 text-on-surface-variant">{{ label }}</div>
           </template>
           <template #btn-add="{ addItem }">
-            <div>
+            <div class="d-flex justify-end align-center py-2" style="gap: 1rem">
               <VBtn
                 :color="Colors.Primary"
                 :variant="Variants.Text"
@@ -87,7 +106,8 @@
                 :color="Colors.Secondary"
                 :variant="Variants.Text"
                 @click="addItem"
-                >Add</VBtn
+              >Add
+              </VBtn
               >
             </div>
           </template>
