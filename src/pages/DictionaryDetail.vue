@@ -29,13 +29,12 @@
     selectedWords.value = words;
   };
 
-  const aiService = new AIService();
-
-  const generateDictionary = async () => {
-    const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
-    const data = await aiService.generateTextContent(PROMPTS.dictionary('Sport', 10), SYSTEM_INSTRUCTION);
-    console.log('Generated Dictionary Data:', data);
-  };
+  // const aiService = new AIService();
+  //
+  // const generateDictionary = async () => {
+  //   const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
+  //   await aiService.generateTextContent(PROMPTS.dictionary('Sport', 10), SYSTEM_INSTRUCTION);
+  // };
 
   onMounted(async () => {
     await generateDictionary();
