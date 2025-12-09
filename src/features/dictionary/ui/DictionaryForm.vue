@@ -4,7 +4,7 @@
   import { BaseModal, useModalStore } from '@/shared';
   import { ParserTextToDictionary } from '@/widgets';
   import InputList from 'base-form/src/shared/ui/inputs/components/input-list/InputList.vue';
-  import { Colors, Modals, Variants } from '@/core';
+  import { Colors, Icons, Modals, Variants } from '@/core';
   import { useDictionaryStore } from '@/stores/dictionary';
   import {
     Dictionary,
@@ -41,18 +41,29 @@
     });
     modal.hide(Modals.ImportWords);
   };
+  const formRef = ref<InstanceType<typeof BaseForm>>();
 </script>
 
 <template>
   <BaseForm
+    ref="formRef"
     :config="useDictionaryForm(formData, action)"
     :params="{ action }"
     @on-submit="onSubmit"
   >
     <template #default="{ form }: { form: DictionaryFormModel }">
       <div class="py-4 px-4 bg-surface mb-4 elevation-1 rounded animated-container">
-        <div class="mb-4">
-          <InputForm v-model="form.title" />
+        <div class="mb-4 d-flex align-center">
+          <div class="w-100">
+            <InputForm v-model="form.title" />
+          </div>
+          <VBtn
+            :disabled="form.title.value.trim().length < 3"
+            class="mt-5 ml-2 rounded-sm"
+            :color="Colors.Info"
+            :icon="Icons.Creation"
+            :variant="Variants.Text"
+          />
         </div>
         <div>
           <InputForm v-model="form.description" />

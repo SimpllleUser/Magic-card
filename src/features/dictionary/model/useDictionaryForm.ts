@@ -76,6 +76,7 @@ export class DictionaryFormUpdateModelAuthedUser extends DictionaryFormCreateMod
 }
 
 export const useDictionaryForm = (data?: Dictionary | EntityAPI<DictionaryItem>, type?: ActionForm) => {
+  const authStore = useAuthStore();
   if (authStore.isAuth && type === ActionForm.Save) {
     return new DictionaryFormUpdateModelAuthedUser(data);
   }
