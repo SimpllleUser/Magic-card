@@ -36,9 +36,9 @@
   //   await aiService.generateTextContent(PROMPTS.dictionary('Sport', 10), SYSTEM_INSTRUCTION);
   // };
 
-  onMounted(async () => {
-    await generateDictionary();
-  });
+  // onMounted(async () => {
+  //   await generateDictionary();
+  // });
   // const memoryService = new MemoryService();
   //
   // const delay = async (ms: number): Promise<void> => {
