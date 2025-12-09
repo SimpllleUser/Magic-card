@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { IHistory } from '../model/types';
+import { IHistory } from '../../features/aiMemory/model/types';
 
 const ai = new GoogleGenAI({
   apiKey: import.meta.env.VITE_AI_API_KEY

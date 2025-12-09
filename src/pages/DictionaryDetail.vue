@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { MemoryService } from '@/features/aiMemory';
-  import { AnimationFade, useBreakPointsApp, useModalStore } from '@/shared';
+  import { PROMPTS } from '@/features/aiMemory/constants';
+  import { AIService, AnimationFade, useBreakPointsApp, useModalStore } from '@/shared';
   import { useDictionaryStore } from '@/stores/dictionary';
   import { ALERT_CONFIG_INSUFFICIENT_QUANTITY_WORDS, useNavigation } from '@/features/quiz';
   import { DictionaryActions, DictionaryItem, DictionaryList } from '@/features/dictionary';
@@ -28,6 +29,16 @@
     selectedWords.value = words;
   };
 
+  // const aiService = new AIService();
+  //
+  // const generateDictionary = async () => {
+  //   const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
+  //   await aiService.generateTextContent(PROMPTS.dictionary('Sport', 10), SYSTEM_INSTRUCTION);
+  // };
+
+  // onMounted(async () => {
+  //   await generateDictionary();
+  // });
   // const memoryService = new MemoryService();
   //
   // const delay = async (ms: number): Promise<void> => {

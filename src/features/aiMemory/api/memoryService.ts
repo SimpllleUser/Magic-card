@@ -1,6 +1,5 @@
-import { AIService } from '@/features/aiMemory/api';
 import { PROMPTS } from '@/features/aiMemory/constants';
-import { RemoteCacheStorageService } from '@/shared';
+import { AIService, RemoteCacheStorageService } from '@/shared';
 const SYSTEM_INSTRUCTION = 'Respond only with valid JSON — no text outside the JSON object.';
 
 export interface AIMemoryResult<T> {
